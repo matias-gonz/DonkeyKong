@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-Platform::Platform(int pos, int amount) {
+Platform::Platform(Position pos, int amount) {
     myPos = pos;
     myAmount = amount;
 }

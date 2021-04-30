@@ -1,6 +1,7 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_PLATFORM_H
 #define TALLER_PROG_I_2021_1C_KIWI_PLATFORM_H
 
+#include "Position.h"
 
 class Platform {
 private:
