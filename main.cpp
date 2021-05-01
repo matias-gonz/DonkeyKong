@@ -2,12 +2,15 @@
 #include "SDL2/SDL_image.h"
 #include <stdio.h>
 
+
 bool running;
 const int SCREEN_WIDTH = 980;
+
 const int SCREEN_HEIGHT = 720;
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+
 
 void initializeScreen(){
     //Initialize SDL
@@ -54,4 +57,5 @@ int main( int argc, char* args[] ) {
     SDL_Quit();
 
     return 0;
+
 }
