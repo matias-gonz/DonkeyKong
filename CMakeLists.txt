@@ -13,7 +13,10 @@ set(SOURCE_FILES main.cpp
         src/model/mario.h
         src/model/Position.cpp
         src/model/Position.h
-        src/view/background.cpp)
+        src/view/background.cpp
+        src/view/background.h
+        src/model/barril.cpp
+        src/model/barril.h)
 
 # change to personal project name (as above)
 add_executable(Taller_Prog_I_2021_1C_KIWI ${SOURCE_FILES})
