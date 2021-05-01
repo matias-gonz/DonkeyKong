@@ -7,18 +7,18 @@ Position::Position(double x, double y){
 }
 
 double Position::getX(){
-    return myX;
+    return posX;
 }
 
 double Position::getY(){
-    return myY;
+    return posY;
 }
 
 void Position::setX(double x){
-    myX = x;
+    posX = x;
 }
 
 void Position::setY(double y){
-    myY = y;
+    posY = y;
 }
 
