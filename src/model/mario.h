@@ -3,8 +3,20 @@
 #define TALLER_PROG_I_2021_1C_KIWI_MARIO_H
 
 
-class mario {
-    bool seCreoBien();
+#include "Position.h"
+
+class Mario {
+    private:
+        Position pos;
+        bool isGrounded;
+
+    public:
+        Mario(double xInit,double yInit);
+        void moveLeft();
+        void moveRight();
+        void jumpUp();
+
+
 };
 
 
