@@ -22,3 +22,7 @@ void Position::setY(double y){
     posY = y;
 }
 
+void Position::add(double x, double y) {
+    posX += x;
+    posY += y;
+}
