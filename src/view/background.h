@@ -15,10 +15,13 @@ class Background {
 
   public:
       // functions
+      Background();
+
       void renderImage();
       void closeWindow();
       int getWidth();
       int getHeight();
+      SDL_Renderer* getRenderer();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BACKGROUND_H

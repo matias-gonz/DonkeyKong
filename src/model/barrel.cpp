@@ -1,6 +1,6 @@
-#include "barril.h"
+#include "barrel.h"
 
-Barril::Barril() {
+Barrel::Barrel() {
   //Initialize the offsets
   this->posX = 0;
   this-> posY = 0;
@@ -10,19 +10,8 @@ Barril::Barril() {
   this->velY = 0;
 }
 
-Barril::Barril(Background* background) {
-  //Initialize the offsets
-  this->posX = 0;
-  this->posY = 0;
 
-  //Initialize the velocity
-  this->velX = 0;
-  this->velY = 0;
-
-  this->background = background;
-}
-
-void Barril::handleEvent(SDL_Event &event) {
+void Barrel::handleEvent(SDL_Event &event) {
   //If a key was pressed
   if( event.type == SDL_KEYDOWN && event.key.repeat == 0 ) {
     //Adjust the velocity
@@ -44,7 +33,7 @@ void Barril::handleEvent(SDL_Event &event) {
   }
 }
 
-void Barril::move() {
+void Barrel::move() {
   //Move the dot left or right
   posX += velX;
 
@@ -54,7 +43,7 @@ void Barril::move() {
     //Move back
     posX -= velX;
   }
-  //Move the dot up or down
+  //Move the barril up or down
   posY += velY;
 
   //If the dot went too far up or down
@@ -64,3 +53,16 @@ void Barril::move() {
     posY -= velY;
   }
 }
+void Barrel::setTexture(LTexture textura)
+{
+    //Show the dot
+    this->texturaBarril = textura;
+}
+
+void Barrel::render()
+{
+    //Show the dot
+    texturaBarril.render( this->posX, this->posY );
+}
+
+

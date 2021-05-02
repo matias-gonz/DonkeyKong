@@ -1,5 +1,10 @@
 #include "background.h"
 
+Background::Background(){
+    window = SDL_CreateWindow("Donkey Kong 2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
+                              SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+}
 void Background::renderImage() {
   //Initialize SDL
   if(SDL_Init( SDL_INIT_VIDEO ) < 0) {
@@ -37,4 +42,8 @@ int Background::getHeight() {
 
 int Background::getWidth() {
   return this->SCREEN_WIDTH;
+}
+
+SDL_Renderer* Background::getRenderer() {
+    return this->renderer;
 }

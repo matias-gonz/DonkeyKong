@@ -1,11 +1,12 @@
-#ifndef TALLER_PROG_I_2021_1C_KIWI_BARRIL_H
-#define TALLER_PROG_I_2021_1C_KIWI_BARRIL_H
+#ifndef TALLER_PROG_I_2021_1C_KIWI_BARREL_H
+#define TALLER_PROG_I_2021_1C_KIWI_BARREL_H
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../view/background.h"
+#include "../view/ltexture.h"
 
-class Barril {
+class Barrel {
   public:
       //The dimensions of the dot
       static const int DOT_WIDTH = 50;
@@ -15,9 +16,8 @@ class Barril {
       static const int DOT_VEL = 10;
 
       //Initializes the variables
-      Barril();
+      Barrel();
 
-      Barril(Background* background);
 
       //Takes key presses and adjusts the dot's velocity
       void handleEvent(SDL_Event& event);
@@ -25,13 +25,17 @@ class Barril {
       //Moves the dot
       void move();
 
+      void setTexture(LTexture textura);
+
       //Shows the dot on the screen
       void render();
+
 
   private:
       int posX, posY;
       int velX, velY;
       Background* background;
+      LTexture texturaBarril;
 };
 
-#endif //TALLER_PROG_I_2021_1C_KIWI_BARRIL_H
+#endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H
