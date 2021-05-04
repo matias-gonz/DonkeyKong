@@ -6,36 +6,37 @@
 #include "../view/background.h"
 #include "../view/ltexture.h"
 
-class Barrel {
-  public:
-      //The dimensions of the dot
-      static const int DOT_WIDTH = 50;
-      static const int DOT_HEIGHT = 50;
+//The dot that will move around on the screen
+class Barrel
+{
+public:
+    //The dimensions of the dot
+    static const int DOT_WIDTH = 20;
+    static const int DOT_HEIGHT = 20;
 
-      //Maximum axis velocity of the dot
-      static const int DOT_VEL = 10;
+    //Maximum axis velocity of the dot
+    static const int DOT_VEL = 10;
 
-      //Initializes the variables
-      Barrel();
+    //Initializes the variables
+    Barrel();
 
+    //Initializes the variables
+    Barrel(LTexture bTexture);
 
-      //Takes key presses and adjusts the dot's velocity
-      void handleEvent(SDL_Event& event);
+    //Moves the dot
+    void move();
 
-      //Moves the dot
-      void move();
+    //Shows the dot on the screen
+    void render();
 
-      void setTexture(LTexture textura);
+private:
+    //The X and Y offsets of the dot
+    int posX, posY;
 
-      //Shows the dot on the screen
-      void render();
+    //The velocity of the dot
+    int velX, velY;
 
-
-  private:
-      int posX, posY;
-      int velX, velY;
-      Background* background;
-      LTexture texturaBarril;
+    LTexture barrelTexture;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H
