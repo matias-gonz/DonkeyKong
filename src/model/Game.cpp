@@ -1,8 +1,8 @@
 #include "Game.h"
-#include "../view/TextureLoader.h"
+#include "../view/TextureManager.h"
+#include "Level.h"
 
 SDL_Renderer* Game::renderer = NULL;
-SDL_Texture* sans = NULL;
 
 Game::Game(){}
 
@@ -19,9 +19,12 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
         this->renderer = SDL_CreateRenderer(this->window, -1, 0);
         if(this->renderer){
-            SDL_SetRenderDrawColor(this->renderer, 255, 128, 128, 255);
+            SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
         }
-        sans = TextureLoader::loadTexture("/home/matiti/Documents/Taller1/Taller-Prog-I-2021-1C-KIWI/resources/sprites/sans_left.png");
+
+        this->level = new Level();
+        this->level->loadLevel();
+
 
         this->isRunning = true;
     }else{
@@ -45,7 +48,8 @@ void Game::handleEvents() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer,sans,NULL,NULL);
+
+    this->level->drawLevel();
 
     SDL_RenderPresent(renderer);
 }

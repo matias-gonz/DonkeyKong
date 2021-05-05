@@ -9,14 +9,14 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
-        src/model/mario.cpp
-        src/model/mario.h
-        src/model/Position.cpp
-        src/model/Position.h
         src/model/Game.cpp
         src/model/Game.h
-        src/view/TextureLoader.cpp
-        src/view/TextureLoader.h)
+        src/view/TextureManager.cpp
+        src/view/TextureManager.h
+        src/model/Level.h
+        src/model/Level.cpp
+        src/model/Platform.cpp
+        src/model/Platform.h)
 
 # change to personal project name (as above)
 add_executable(Taller_Prog_I_2021_1C_KIWI ${SOURCE_FILES})
