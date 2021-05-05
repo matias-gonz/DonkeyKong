@@ -18,7 +18,9 @@ set(SOURCE_FILES main.cpp
         src/model/barrel.cpp
         src/model/barrel.h
         src/view/ltexture.cpp
-        src/view/ltexture.h)
+        src/view/ltexture.h
+        src/view/viewManager.cpp
+        src/view/viewManager.h)
 
 # change to personal project name (as above)
 add_executable(Taller_Prog_I_2021_1C_KIWI ${SOURCE_FILES})
