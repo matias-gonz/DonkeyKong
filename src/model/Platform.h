@@ -17,6 +17,8 @@ public:
 private:
     Position pos;
     int count;
+    SDL_Rect* srcRect;
+    SDL_Rect* destRect;
 };
 
 
