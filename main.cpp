@@ -51,7 +51,7 @@ int main(int argc, char *args[]) {
   if (!viewManager->successfulInitialitization()) {
     printf("Failed to initialize!\n");
   } else {
-    LTexture* barrelTexture = viewManager->loadTexture("/home/nico/Documents/FIUBA/Taller I/TP1/Taller-Prog-I-2021-1C-KIWI/resources/sprites/search.png");
+    LTexture* barrelTexture = viewManager->loadTexture("resources/sprites/search.png");
     //Main loop flag
     bool quit = false;
 
