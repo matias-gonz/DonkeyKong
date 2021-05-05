@@ -39,10 +39,20 @@ void Game::handleEvents() {
         default:
             break;
     }
-    switch(event.key.keysym.sym){
-        case SDLK_LEFT: player->addLeftVel(); break;
-        case SDLK_RIGHT: player->addRightVel(); break;
+    if(event.type == SDL_KEYDOWN){
+        switch(event.key.keysym.sym){
+            case SDLK_LEFT: player->addLeftVel(); break;
+            case SDLK_RIGHT: player->addRightVel(); break;
+            case SDLK_UP: player->jumpUp();break;
+        }
     }
+    if(event.type == SDL_KEYUP){
+        switch(event.key.keysym.sym){
+            case SDLK_LEFT: player->resetVel(); break;
+            case SDLK_RIGHT: player->resetVel(); break;
+        }
+    }
+
 }
 
 void Game::render() {
