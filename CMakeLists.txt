@@ -9,8 +9,8 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
-        src/model/mario.cpp
-        src/model/mario.h
+        src/model/Player.cpp
+        src/model/Player.h
         src/model/Position.cpp
         src/model/Position.h
         src/model/Game.cpp
