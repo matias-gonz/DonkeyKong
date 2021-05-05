@@ -1,9 +1,7 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <stdio.h>
-#include <string.h>
 #include<SDL2/SDL_events.h>
 #include "src/view/ltexture.h"
 #include "src/model/barrel.h"
