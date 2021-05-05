@@ -12,6 +12,7 @@ int main( int argc, char* args[] ) {
         game->render();
     }
     game->clean();
-
+  
     return 0;
 }
+
