@@ -29,6 +29,8 @@ public:
     //Shows the dot on the screen
     void render();
 
+    void setTexture(LTexture bTexture);
+
 private:
     //The X and Y offsets of the dot
     int posX, posY;

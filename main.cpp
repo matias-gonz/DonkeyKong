@@ -8,8 +8,8 @@
 #include "src/view/ltexture.h"
 #include "src/model/barrel.h"
 //Screen dimension constants
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
 
 
@@ -212,8 +212,9 @@ int main( int argc, char* args[] )
             //Event handler
             SDL_Event e;
 
-            //The barrel that will be moving on the screen
-            Barrel barrel (barrilTexture);
+            //The barrel that will be moving around on the screen
+            Barrel barrel;
+            barrel.setTexture(barrilTexture);
 
             //While application is running
             while( !quit )

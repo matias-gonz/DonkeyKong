@@ -34,3 +34,7 @@ void Barrel::render()
     //Show the dot
     barrelTexture.render(posX, posY );
 }
+
+void Barrel:: setTexture(LTexture bTexture){
+    this->barrelTexture =bTexture;
+}
