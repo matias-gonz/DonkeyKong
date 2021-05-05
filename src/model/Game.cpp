@@ -1,9 +1,10 @@
 #include "Game.h"
 #include "../view/TextureLoader.h"
 #include "Player.h"
+#include "../view/TextureManager.h"
+#include "Level.h"
 
 SDL_Renderer* Game::renderer = NULL;
-SDL_Texture* sans = NULL;
 
 Game::Game(){}
 
@@ -20,8 +21,13 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
         this->renderer = SDL_CreateRenderer(this->window, -1, 0);
         if(this->renderer){
-            SDL_SetRenderDrawColor(this->renderer, 255, 128, 128, 255);//aca deberiamos poner el fondo
+            SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
         }
+
+        this->level = new Level();
+        this->level->loadLevel();
+
+
         this->isRunning = true;
     }else{
         this->isRunning = false;
@@ -52,12 +58,15 @@ void Game::handleEvents() {
             case SDLK_RIGHT: player->resetVel(); break;
         }
     }
-
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
+  
+    this->level->drawLevel();
+  
     player->show(renderer);
+
     SDL_RenderPresent(renderer);
 }
 

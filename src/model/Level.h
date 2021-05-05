@@ -2,6 +2,7 @@
 #define TALLER_PROG_I_2021_1C_KIWI_LEVEL_H
 
 #include "SDL2/SDL_image.h"
+#include "Platform.h"
 
 class Level {
 
@@ -13,8 +14,10 @@ public:
     void drawLevel();
 
 private:
-    SDL_Rect src,dest;
-    SDL_Texture* platform;
+
+    Platform** platforms;
+    int platformCount;
+    SDL_Texture* platformTexture;
 
 };
 

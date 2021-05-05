@@ -11,7 +11,7 @@ SDL_Texture* playerTexture;
 int main(int argc, char* args[] ) {
 
     game = new Game();
-    game->init("Donkey Kong",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,false);
+    game->init("Donkey Kong",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1024,576,false);
 
     loadImages();
     if (playerTexture == NULL){
@@ -35,3 +35,4 @@ int main(int argc, char* args[] ) {
 void loadImages() {
     playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
 }
+
