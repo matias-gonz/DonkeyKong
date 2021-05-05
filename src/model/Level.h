@@ -14,7 +14,7 @@ public:
     void drawLevel();
 
 private:
-    Platform* platforms;
+    Platform** platforms;
     int platformCount;
     SDL_Texture* platformTexture;
 

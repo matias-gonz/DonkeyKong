@@ -2,6 +2,8 @@
 #define TALLER_PROG_I_2021_1C_KIWI_PLATFORM_H
 #include "SDL2/SDL_image.h"
 
+#define HEIGHT 576
+#define WIDTH 1024
 
 typedef struct Position{
     int x;

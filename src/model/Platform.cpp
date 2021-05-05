@@ -1,14 +1,16 @@
 #include "Platform.h"
 #include "../view/TextureManager.h"
 
+
 Platform::Platform(Position position, int count) {
     this->srcRect = NULL;
     this->destRect = new SDL_Rect();
 
-    this->destRect->x = 0;
-    this->destRect->y = 0;
-    this->destRect->h = 64;
-    this->destRect->w = 64;
+    this->destRect->x = position.x;
+    this->destRect->y = position.y;
+    this->destRect->w = WIDTH/32;
+    this->destRect->h = this->destRect->w/1.5;
+
 
     this->count = count;
 }
