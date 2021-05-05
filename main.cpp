@@ -33,5 +33,5 @@ int main(int argc, char* args[] ) {
 }
 
 void loadImages() {
-    playerTexture = TextureLoader::loadTexture("/home/jay/Desktop/Taller/Taller-Prog-I-2021-1C-KIWI/resources/sprites/sans_left.png");
+    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
 }
