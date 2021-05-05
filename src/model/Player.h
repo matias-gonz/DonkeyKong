@@ -7,16 +7,15 @@
 
 class Player {
     private:
-        Position pos = Position(0, 0);
+        Position pos = Position(0, 400);
         bool isGrounded;
         int velX;
         int velY;
-        void jumpUp();
         SDL_Texture* playerTexture;
 
 
     public:
-        static const int VEL = 10;
+        static const int VEL = 1;
         explicit Player(SDL_Texture* playerTexture);
         void show(SDL_Renderer *pRenderer);
 
@@ -25,6 +24,10 @@ class Player {
         void addRightVel();
 
         void update();
+
+        void jumpUp();
+
+        void resetVel();
 };
 
 

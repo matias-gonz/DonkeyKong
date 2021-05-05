@@ -13,23 +13,40 @@ Player::Player(SDL_Texture* playerTexture){
 
 
 void Player::update() {
+    if(pos.getY() >= 200){
+        pos.setY(200);
+        velY = 0;
+    }
     pos.add(velX,velY);
 }
 
 void Player::addLeftVel(){
+    if(velX != 0){
+        return;
+    }
     velX -= VEL;
 }
 void Player::addRightVel(){
+    if(velX != 0){
+        return;
+    }
     velX += VEL;
 }
 void Player::jumpUp() {
-    if (isGrounded){
+    if (!isGrounded){
         return;
     }
+    velY += 10*VEL;
+    isGrounded = false;
+}
+
+void Player::resetVel(){
+    this->velX = 0;
 }
 
 void Player::show(SDL_Renderer* renderer) {
-    SDL_Rect dstrect = {static_cast<int>(pos.getX()), static_cast<int>(pos.getY()), 50, 100 };
+    if(!isGrounded){velY -= 1;}
+    SDL_Rect dstrect = {static_cast<int>(pos.getX()), static_cast<int>(pos.getY()), 25, 50 };
     SDL_RenderCopy(renderer,this->playerTexture,NULL,&dstrect);
 }
 
