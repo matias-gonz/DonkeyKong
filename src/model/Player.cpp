@@ -4,10 +4,11 @@
 #include "Player.h"
 #include "Position.h"
 
-Player::Player(double xInit, double yInit): pos(xInit, yInit){
-    pos = Position(xInit, yInit);
+Player::Player(SDL_Texture* playerTexture){
+    this->playerTexture = playerTexture;
     velX = 0;
     velY = 0;
+    isGrounded = true;
 }
 
 
@@ -31,4 +32,8 @@ void Player::jumpUp() {
     }
 }
 
+void Player::show(SDL_Renderer* renderer) {
+    SDL_Rect dstrect = {static_cast<int>(pos.getX()), static_cast<int>(pos.getY()), 100, 200 };
+    SDL_RenderCopy(renderer,this->playerTexture,NULL,&dstrect);
+}
 
