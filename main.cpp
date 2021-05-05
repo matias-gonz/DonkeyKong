@@ -214,7 +214,7 @@ int main( int argc, char* args[] )
 
             //The barrel that will be moving around on the screen
             Barrel barrel;
-            barrel.setTexture(barrilTexture);
+            barrel.setTexture(&barrilTexture);
 
             //While application is running
             while( !quit )

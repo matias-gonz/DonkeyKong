@@ -35,6 +35,6 @@ void Barrel::render()
     barrelTexture.render(posX, posY );
 }
 
-void Barrel:: setTexture(LTexture bTexture){
-    this->barrelTexture =bTexture;
+void Barrel:: setTexture(LTexture* bTexture){
+    this->barrelTexture = *bTexture;
 }

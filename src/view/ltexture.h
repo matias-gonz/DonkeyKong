@@ -15,6 +15,8 @@ public:
     //Initializes variables
     LTexture(SDL_Renderer* gRenderer);
 
+    LTexture( const LTexture &texture);
+
     //Deallocates memory
     ~LTexture();
 
@@ -44,6 +46,10 @@ public:
     //Gets image dimensions
     int getWidth();
     int getHeight();
+
+    SDL_Renderer* getRenderer();
+    SDL_Texture* getTexture();
+
 
     void setRenderer(SDL_Renderer* aRenderer);
 

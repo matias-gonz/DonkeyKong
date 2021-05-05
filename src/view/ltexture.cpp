@@ -16,6 +16,15 @@ LTexture::LTexture( SDL_Renderer* aRenderer)
     this-> height = 0;
 }
 
+LTexture::LTexture( const LTexture& texture)
+{
+    //Initialize
+    this-> gRenderer = texture.gRenderer;
+    this-> texture = texture.texture;
+    this-> width = texture.width;
+    this-> height = texture.height;
+}
+
 LTexture::~LTexture()
 {
     //Deallocate
@@ -127,4 +136,13 @@ int LTexture::getWidth()
 int LTexture::getHeight()
 {
     return height;
+}
+
+SDL_Renderer* LTexture::getRenderer()
+{
+    return this->gRenderer;
+}
+SDL_Texture* LTexture::getTexture()
+{
+    return this->texture;
 }
