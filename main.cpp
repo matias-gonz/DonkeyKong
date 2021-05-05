@@ -9,55 +9,6 @@
 #include "src/model/barrel.h"
 #include "src/view/viewManager.h"
 
-//The application time based timer
-class LTimer {
-public:
-    //Initializes variables
-    LTimer();
-
-    //The various clock actions
-    void start();
-
-    void stop();
-
-    void pause();
-
-    void unpause();
-
-    //Gets the timer's time
-    Uint32 getTicks();
-
-    //Checks the status of the timer
-    bool isStarted();
-
-    bool isPaused();
-
-private:
-    //The clock time when the timer started
-    Uint32 mStartTicks;
-
-    //The ticks stored when the timer was paused
-    Uint32 mPausedTicks;
-
-    //The timer status
-    bool mPaused;
-    bool mStarted;
-};
-
-ViewManager *viewManager = new ViewManager();
-
-//Loads media
-bool loadMedia();
-
-//Frees media and shuts down SDL
-void close();
-
-//Loads individual image
-SDL_Surface *loadSurface(std::string path);
-
-//Scene textures
-LTexture barrilTexture;
-
 #if defined(SDL_TTF_MAJOR_VERSION)
 bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
 {
@@ -95,63 +46,46 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 }
 #endif
 
-bool loadMedia() {
-  barrilTexture.setRenderer(viewManager->getRenderer());
-  //Loading success flag
-  bool success = true;
-
-  //Load dot texture
-  if (!barrilTexture.loadFromFile(
-          "/home/nico/Documents/FIUBA/Taller I/TP1/Taller-Prog-I-2021-1C-KIWI/resources/sprites/search.png")) {
-    printf("Failed to load dot texture!\n");
-    success = false;
-  }
-
-  return success;
-}
+ViewManager *viewManager = new ViewManager();
 
 int main(int argc, char *args[]) {
   //Start up SDL and create window
   if (!viewManager->successfulInitialitization()) {
     printf("Failed to initialize!\n");
   } else {
-    //Load media
-    if (!loadMedia()) {
-      printf("Failed to load media!\n");
-    } else {
-      //Main loop flag
-      bool quit = false;
+    LTexture* barrelTexture = viewManager->loadTexture("/home/nico/Documents/FIUBA/Taller I/TP1/Taller-Prog-I-2021-1C-KIWI/resources/sprites/search.png");
+    //Main loop flag
+    bool quit = false;
 
-      //Event handler
-      SDL_Event e;
+    //Event handler
+    SDL_Event event;
 
-      //The barrel that will be moving around on the screen
-      Barrel barrel;
-      barrel.setTexture(&barrilTexture);
+    //The barrel that will be moving around on the screen
+    Barrel barrel;
+    barrel.setTexture(barrelTexture);
 
-      //While application is running
-      while (!quit) {
-        //Handle events on queue
-        while (SDL_PollEvent(&e) != 0) {
-          //User requests quit
-          if (e.type == SDL_QUIT) {
-            quit = true;
-          }
+    //While application is running
+    while (!quit) {
+      //Handle events on queue
+      while (SDL_PollEvent(&event) != 0) {
+        //User requests quit
+        if (event.type == SDL_QUIT) {
+          quit = true;
         }
-
-        //Move the barrel
-        barrel.move();
-
-        //Clear screen
-        SDL_SetRenderDrawColor(viewManager->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(viewManager->getRenderer());
-
-        //Render objects
-        barrel.render();
-
-        //Update screen
-        SDL_RenderPresent(viewManager->getRenderer());
       }
+
+      //Move the barrel
+      barrel.move();
+
+      //Clear screen
+      SDL_SetRenderDrawColor(viewManager->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+      SDL_RenderClear(viewManager->getRenderer());
+
+      //Render objects
+      barrel.render();
+
+      //Update screen
+      SDL_RenderPresent(viewManager->getRenderer());
     }
   }
 

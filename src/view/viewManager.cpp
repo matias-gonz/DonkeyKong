@@ -76,3 +76,14 @@ void ViewManager::close() {
   IMG_Quit();
   SDL_Quit();
 }
+
+LTexture* ViewManager::loadTexture(char *path) {
+  LTexture* texture = new LTexture();
+  texture->setRenderer(this->getRenderer());
+
+  if (!texture->loadFromFile(path)) {
+    printf("Failed to load texture!\n");
+  }
+
+  return texture;
+}

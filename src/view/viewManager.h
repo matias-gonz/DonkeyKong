@@ -6,26 +6,19 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 #include <stdio.h>
+#include "ltexture.h"
 
 class ViewManager {
 public:
     ViewManager();
 
-    void showSDLError(char *message);
-
-    void setTextureLinear();
-
-    void createWindow();
-
-    SDL_Renderer* getRenderer();
-
-    void createRenderer();
-
-    void initializeRendererColor();
+    SDL_Renderer *getRenderer();
 
     bool successfulInitialitization();
 
     void close();
+
+    LTexture* loadTexture(char* path);
 
 private:
     SDL_Renderer *renderer;
@@ -33,6 +26,17 @@ private:
     bool success;
     int screen_width = 1280;
     int screen_height = 720;
+
+    void setTextureLinear();
+
+    void showSDLError(char *message);
+
+    void createWindow();
+
+    void createRenderer();
+
+    void initializeRendererColor();
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H
