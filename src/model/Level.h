@@ -1,19 +1,23 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_LEVEL_H
 #define TALLER_PROG_I_2021_1C_KIWI_LEVEL_H
 
-#include<string>
-#include"platform.h"
+#include "SDL2/SDL_image.h"
+#include "Platform.h"
 
 class Level {
-private:
-    Platform* platforms;
-    int count;
-    void setPlatforms(string dir);
 
 public:
-    Level(string dir);
-    Platform* getPlatforms();
-    int getCount();
+    Level();
+    ~Level();
+
+    void loadLevel();
+    void drawLevel();
+
+private:
+    Platform** platforms;
+    int platformCount;
+    SDL_Texture* platformTexture;
+
 };
 
 
