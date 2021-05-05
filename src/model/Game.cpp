@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "../view/TextureLoader.h"
+#include "Player.h"
 #include "../view/TextureManager.h"
 #include "Level.h"
 
@@ -36,26 +38,40 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
-    switch(event.type){
-        case SDL_QUIT:
+    switch(event.type) {
+        case SDL_QUIT://añadir evento de minimizar
             this->isRunning = false;
             break;
-
         default:
             break;
+    }
+    if(event.type == SDL_KEYDOWN){
+        switch(event.key.keysym.sym){
+            case SDLK_LEFT: player->addLeftVel(); break;
+            case SDLK_RIGHT: player->addRightVel(); break;
+            case SDLK_UP: player->jumpUp();break;
+        }
+    }
+    if(event.type == SDL_KEYUP){
+        switch(event.key.keysym.sym){
+            case SDLK_LEFT: player->resetVel(); break;
+            case SDLK_RIGHT: player->resetVel(); break;
+        }
     }
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
-
+  
     this->level->drawLevel();
+  
+    player->show(renderer);
 
     SDL_RenderPresent(renderer);
 }
 
 void Game::update() {
-
+    player->update();
 }
 
 void Game::clean() {
@@ -67,7 +83,4 @@ void Game::clean() {
 bool Game::running() {
     return this->isRunning;
 }
-
-
-
 

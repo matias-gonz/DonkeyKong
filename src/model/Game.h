@@ -1,6 +1,7 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_GAME_H
 #define TALLER_PROG_I_2021_1C_KIWI_GAME_H
 #include "SDL2/SDL.h"
+#include "Player.h"
 #include "Level.h"
 
 class Game {
@@ -18,6 +19,8 @@ public:
     bool running();
 
     static SDL_Renderer* renderer;
+    Player* player = NULL;
+
 
 private:
     bool isRunning;
