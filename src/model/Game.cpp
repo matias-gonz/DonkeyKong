@@ -20,7 +20,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
         this->renderer = SDL_CreateRenderer(this->window, -1, 0);
         if(this->renderer){
-            SDL_SetRenderDrawColor(this->renderer, 255, 128, 128, 255);
+            SDL_SetRenderDrawColor(this->renderer, 255, 128, 128, 255);//aca deberiamos poner el fondo
         }
         this->isRunning = true;
     }else{
@@ -32,13 +32,16 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
-    switch(event.type){
-        case SDL_QUIT:
+    switch(event.type) {
+        case SDL_QUIT://añadir evento de minimizar
             this->isRunning = false;
             break;
-
         default:
             break;
+    }
+    switch(event.key.keysym.sym){
+        case SDLK_LEFT: player->addLeftVel(); break;
+        case SDLK_RIGHT: player->addRightVel(); break;
     }
 }
 
@@ -49,7 +52,7 @@ void Game::render() {
 }
 
 void Game::update() {
-
+    player->update();
 }
 
 void Game::clean() {

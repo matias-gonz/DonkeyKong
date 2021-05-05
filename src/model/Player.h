@@ -12,17 +12,19 @@ class Player {
         int velX;
         int velY;
         void jumpUp();
-        void move();
         SDL_Texture* playerTexture;
 
 
     public:
         static const int VEL = 10;
         explicit Player(SDL_Texture* playerTexture);
-        void handleEvent(SDL_Event &e);
         void show(SDL_Renderer *pRenderer);
 
-        SDL_Texture *getTexture();
+        void addLeftVel();
+
+        void addRightVel();
+
+        void update();
 };
 
 
