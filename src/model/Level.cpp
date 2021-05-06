@@ -6,7 +6,7 @@ Level::Level() {
     this->platforms = NULL;
     this->platformCount = 0;
     this->platformTexture = TextureManager::LoadTexture(
-            "resources/sprites/platform.png");
+            "resources/sprites/redplat.png");
     this->stairs = NULL;
     this->stairCount = 0;
     this->stairTexture = TextureManager::LoadTexture("resources/sprites/stair.png");
