@@ -3,6 +3,8 @@
 
 #include "SDL2/SDL_image.h"
 #include "Platform.h"
+#include "Stair.h"
+#include "../view/TextureManager.h"
 
 class Level {
 
@@ -15,10 +17,18 @@ public:
 
 private:
 
+
     Platform** platforms;
     int platformCount;
     SDL_Texture* platformTexture;
 
+    Stair** stairs;
+    int stairCount;
+    SDL_Texture* stairTexture;
+
+    void loadPlatforms();
+
+    void loadStairs();
 };
 
 
