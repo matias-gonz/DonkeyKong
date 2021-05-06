@@ -1,31 +1,32 @@
 #include "src/model/Game.h"
 #include "src/view/TextureLoader.h"
 
-Game* game = NULL;
+Game *game = NULL;
 
 void loadImages();
 
-SDL_Texture* playerTexture;
+SDL_Texture *playerTexture;
 
 
-int main(int argc, char* args[] ) {
+int main(int argc, char *args[]) {
 
     game = new Game();
-    game->init("Donkey Kong",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1024,576,false);
+    game->init("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, false);
 
     loadImages();
-    if (playerTexture == NULL){
-        printf("%s",SDL_GetError());
+    if (playerTexture == NULL) {
+        printf("%s", SDL_GetError());
     }
 
     Player player = Player(playerTexture);
     game->player = &player;
 
-    while(game->running()){
+    while (game->running()) {
         game->handleEvents();
         game->update();
         game->render();
 
+        //SDL_Delay(1000/50);
     }
     game->clean();
 
