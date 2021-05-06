@@ -7,7 +7,7 @@
 
 class Player {
     private:
-        Position pos = Position(0, 400);
+        Position pos = Position(0, 576);
         bool isGrounded;
         int velX;
         int velY;

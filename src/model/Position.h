@@ -4,10 +4,13 @@
 
 class Position {
 private:
+
     double posX;
     double posY;
 
 public:
+
+    Position();
     Position(double x, double y);
     double getX();
     double getY();

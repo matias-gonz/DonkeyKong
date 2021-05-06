@@ -1,24 +1,28 @@
 #include "Position.h"
 
+Position::Position() {
+    setX(0);
+    setY(0);
+}
 
-Position::Position(double x, double y){
+Position::Position(double x, double y) {
     setX(x);
     setY(y);
 }
 
-double Position::getX(){
+double Position::getX() {
     return posX;
 }
 
-double Position::getY(){
+double Position::getY() {
     return posY;
 }
 
-void Position::setX(double x){
+void Position::setX(double x) {
     posX = x;
 }
 
-void Position::setY(double y){
+void Position::setY(double y) {
     posY = y;
 }
 
