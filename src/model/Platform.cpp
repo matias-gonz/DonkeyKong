@@ -6,8 +6,8 @@ Platform::Platform(Position position, int count) {
     this->srcRect = NULL;
     this->destRect = new SDL_Rect();
 
-    this->destRect->x = position.x;
-    this->destRect->y = position.y;
+    this->destRect->x = position.getX();
+    this->destRect->y = position.getY();
     this->destRect->w = WIDTH/32;
     this->destRect->h = this->destRect->w/1.5;
 
