@@ -29,6 +29,8 @@ private:
     void loadPlatforms();
 
     void loadStairs();
+
+    void loadMovPlatforms();
 };
 
 
