@@ -1,6 +1,6 @@
-#include "Stair.h"
+#include "Ladder.h"
 
-Stair::Stair(Position position, int count) {
+Ladder::Ladder(Position position, int count) {
     this->srcRect = NULL;
     this->destRect = NULL;
 
@@ -15,7 +15,7 @@ Stair::Stair(Position position, int count) {
     this->count = count;
 }
 
-void Stair::draw(SDL_Texture *texture) {
+void Ladder::draw(SDL_Texture *texture) {
 
     SDL_Rect* tmpRect = new SDL_Rect();
     tmpRect->x = this->destRect->x;

@@ -24,8 +24,8 @@ set(SOURCE_FILES main.cpp
         src/model/Level.cpp
         src/model/Platform.cpp
         src/model/Platform.h
-        src/model/Stair.h
-        src/model/Stair.cpp)
+        src/model/Ladder.h
+        src/model/Ladder.cpp)
 
 
 # change to personal project name (as above)

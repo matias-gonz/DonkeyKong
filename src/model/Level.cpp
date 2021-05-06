@@ -52,11 +52,11 @@ void Level::loadStairs(){
     int x, dx, y, dy, count;
     int read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
     while (read == 5) {
-        this->stairs = (Stair **) (realloc(this->stairs, (this->stairCount + 1) * sizeof(Stair *)));
+        this->stairs = (Ladder **) (realloc(this->stairs, (this->stairCount + 1) * sizeof(Ladder *)));
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 21 - dy);
-        Stair* stair = new Stair(pos,count);
+        Ladder* stair = new Ladder(pos,count);
         this->stairs[this->stairCount] = stair;
         this->stairCount++;
         read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
