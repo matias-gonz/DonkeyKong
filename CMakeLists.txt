@@ -30,7 +30,7 @@ set(SOURCE_FILES main.cpp
         src/model/Platform.cpp
         src/model/Platform.h
         src/model/Ladder.h
-        src/model/Ladder.cpp)
+        src/model/Ladder.cpp src/controller/Configuration.cpp src/controller/Configuration.h)
 
 
 # change to personal project name (as above)

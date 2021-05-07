@@ -1,13 +1,15 @@
 
-#include "src/model/Game.h"
-#include "src/view/TextureLoader.h"
-#include <iostream>
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#include<SDL2/SDL_events.h>
+#include <SDL2/SDL_events.h>
+#include <iostream>
+
+#include "src/model/Game.h"
+#include "src/view/TextureLoader.h"
 #include "src/view/ltexture.h"
 #include "src/model/barrel.h"
 #include "src/view/viewManager.h"
+#include "src/controller/Configuration.h"
 
 Game* game = NULL;
 
@@ -20,7 +22,7 @@ void renderBarrel();
 
 int main(int argc, char* args[] ) {
 
-    game = new Game();
+    /* game = new Game();
     game->init("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, false);
 
     loadImages();
@@ -40,16 +42,30 @@ int main(int argc, char* args[] ) {
     game->clean();
 
     renderBarrel();
+     */
 
-    return 0;
+  //printObjectkeys(jsonConfigRoot, true, 1);
+  Configuration* configuration = new Configuration();
+  std::cout << to_string(configuration->log.at("level")) + "\n";
 
+  return 0;
 }
 
 void loadImages() {
     playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
 }
 
-
+/* void printObjectkeys(const nlohmann::json& jsonObject, bool recursive, int ident) {
+  if (jsonObject.is_object() || jsonObject.is_array()) {
+    for (auto &it : jsonObject.items()) {
+      std::cout << std::string(ident, ' ')
+                << it.key() << " -> "
+                << it.value().type_name() << std::endl;
+      if (recursive && (it.value().is_object() || it.value().is_array()))
+        printObjectkeys(it.value(), recursive, ident + 4);
+    }
+  }
+} */
 
 void renderBarrel() {
   //Start up SDL and create window
