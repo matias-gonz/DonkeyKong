@@ -1,4 +1,6 @@
 
+#include "src/model/Game.h"
+#include "src/view/TextureLoader.h"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <stdio.h>
@@ -7,14 +9,47 @@
 #include "src/model/barrel.h"
 #include "src/view/viewManager.h"
 
+Game* game = NULL;
+
+void loadImages();
+
+SDL_Texture* playerTexture;
 
 ViewManager *viewManager = new ViewManager();
 void renderBarrel();
 
-int main(int argc, char *args[]) {
+int main(int argc, char* args[] ) {
+
+    game = new Game();
+    game->init("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, false);
+
+    loadImages();
+    if (playerTexture == NULL) {
+        printf("%s", SDL_GetError());
+    }
+
+    Player player = Player(playerTexture);
+    game->player = &player;
+
+    while (game->running()) {
+        game->handleEvents();
+        game->update();
+        game->render();
+
+    }
+    game->clean();
+
     renderBarrel();
+
     return 0;
+
 }
+
+void loadImages() {
+    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
+}
+
+
 
 void renderBarrel() {
   //Start up SDL and create window

@@ -4,15 +4,21 @@
 
 class Position {
 private:
+
     double posX;
     double posY;
 
 public:
+
+    Position();
     Position(double x, double y);
     double getX();
     double getY();
     void setX(double x);
     void setY(double y);
+
+    void add(double x, double y);
+
 };
 
 
