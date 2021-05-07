@@ -72,6 +72,7 @@ void Game::render() {
 
 void Game::update() {
     player->update();
+    this->level->update();
 }
 
 void Game::clean() {

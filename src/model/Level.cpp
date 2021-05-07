@@ -80,3 +80,7 @@ void Level::drawLevel() {
     }
 
 }
+
+void Level::update(){
+
+}

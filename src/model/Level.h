@@ -14,6 +14,7 @@ public:
 
     void loadLevel();
     void drawLevel();
+    void update();
 
 private:
 
