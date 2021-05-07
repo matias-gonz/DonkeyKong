@@ -24,7 +24,5 @@ void PlatformMovement::update(SDL_Rect *rect) {
     }else if(rect->x == 864){
         rect->x = 96;
     }
-
     rect->x += this->speed*direction;
-
 }
