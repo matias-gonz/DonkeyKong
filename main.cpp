@@ -1,6 +1,6 @@
 
 #include "src/model/Game.h"
-#include "src/view/TextureLoader.h"
+#include "src/view/TextureManager.h"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <stdio.h>
@@ -39,14 +39,11 @@ int main(int argc, char* args[] ) {
     }
     game->clean();
 
-    renderBarrel();
-
     return 0;
-
 }
 
 void loadImages() {
-    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
+    playerTexture = TextureManager::LoadTexture("resources/sprites/sans_left.png");
 }
 
 
