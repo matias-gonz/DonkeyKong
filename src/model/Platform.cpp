@@ -10,8 +10,6 @@ Platform::Platform(Position position, int count) {
     this->destRect->y = position.getY();
     this->destRect->w = WIDTH/32;
     this->destRect->h = this->destRect->w/1.5;
-
-
     this->count = count;
 }
 
