@@ -9,11 +9,18 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
-
         src/model/Player.cpp
         src/model/Player.h
         src/model/Position.cpp
         src/model/Position.h
+        src/view/background.cpp
+        src/view/background.h
+        src/model/barrel.cpp
+        src/model/barrel.h
+        src/view/ltexture.cpp
+        src/view/ltexture.h
+        src/view/viewManager.cpp
+        src/view/viewManager.h
         src/model/Game.cpp
         src/model/Game.h
         src/view/TextureLoader.cpp
