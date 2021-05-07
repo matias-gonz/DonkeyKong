@@ -7,46 +7,16 @@
 #include "src/model/barrel.h"
 #include "src/view/viewManager.h"
 
-#if defined(SDL_TTF_MAJOR_VERSION)
-bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
-{
-  //Get rid of preexisting texture
-  free();
-
-  //Render text surface
-  SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
-  if( textSurface != NULL )
-  {
-    //Create texture from surface pixels
-        texture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
-    if( texture == NULL )
-    {
-      printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
-    }
-    else
-    {
-      //Get image dimensions
-      width = textSurface->w;
-      height = textSurface->h;
-    }
-
-    //Get rid of old surface
-    SDL_FreeSurface( textSurface );
-  }
-  else
-  {
-    printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
-  }
-
-
-  //Return success
-  return texture != NULL;
-}
-#endif
 
 ViewManager *viewManager = new ViewManager();
+void renderBarrel();
 
 int main(int argc, char *args[]) {
+    renderBarrel();
+    return 0;
+}
+
+void renderBarrel() {
   //Start up SDL and create window
   if (!viewManager->successfulInitialitization()) {
     printf("Failed to initialize!\n");
@@ -89,6 +59,4 @@ int main(int argc, char *args[]) {
 
   //Free resources and close SDL
   viewManager->close();
-
-  return 0;
 }
