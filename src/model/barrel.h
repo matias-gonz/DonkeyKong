@@ -3,7 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "../view/background.h"
 #include "../view/ltexture.h"
 
 //The dot that will move around on the screen

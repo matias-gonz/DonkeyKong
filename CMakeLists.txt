@@ -13,8 +13,6 @@ set(SOURCE_FILES main.cpp
         src/model/Player.h
         src/model/Position.cpp
         src/model/Position.h
-        src/view/background.cpp
-        src/view/background.h
         src/model/barrel.cpp
         src/model/barrel.h
         src/view/ltexture.cpp
