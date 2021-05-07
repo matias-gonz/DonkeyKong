@@ -15,7 +15,7 @@ void loadImages();
 
 SDL_Texture* playerTexture;
 
-ViewManager *viewManager = new ViewManager();
+//ViewManager *viewManager = new ViewManager();
 void renderBarrel();
 
 int main(int argc, char* args[] ) {
@@ -39,7 +39,7 @@ int main(int argc, char* args[] ) {
     }
     game->clean();
 
-    renderBarrel();
+    //renderBarrel();
 
     return 0;
 
@@ -50,7 +50,7 @@ void loadImages() {
 }
 
 
-
+/*
 void renderBarrel() {
   //Start up SDL and create window
   if (!viewManager->successfulInitialitization()) {
@@ -95,3 +95,4 @@ void renderBarrel() {
   //Free resources and close SDL
   viewManager->close();
 }
+*/

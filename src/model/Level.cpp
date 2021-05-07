@@ -20,7 +20,7 @@ void Level::loadPlatforms(){
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 21 - dy);
-        Platform *platform = new Platform(pos, count);
+        Platform *platform = new Platform(pos, count,false);
         this->platforms[this->platformCount] = platform;
         this->platformCount++;
         read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
@@ -38,10 +38,12 @@ void Level::loadMovPlatforms(){
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 21 - dy);
-        Platform *platform = new Platform(pos, count);
+        printf("x: %f\ny: %f\n\n",pos.getX(),pos.getY());
+        Platform *platform = new Platform(pos, count,true);
         this->platforms[this->platformCount] = platform;
         this->platformCount++;
         read = fscanf(file, "%i;%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count, &direction);
+
     }
     fclose(file);
 }
@@ -82,5 +84,7 @@ void Level::drawLevel() {
 }
 
 void Level::update(){
-
+    for (int i = 0; i < this->platformCount; i++) {
+        this->platforms[i]->update();
+    }
 }
