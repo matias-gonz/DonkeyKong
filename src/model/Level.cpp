@@ -77,7 +77,7 @@ void Level::loadFire() {
         this->fires = (Fire **) (realloc(this->fires, (this->fireCount + 1) * sizeof(Fire *)));
         Position pos;
         pos.setX(x * 32 + dx);
-        pos.setY(HEIGHT - (1 + y) * 21 - dy);
+        pos.setY(HEIGHT - (1 + y) * 32 - dy);
         Fire* fire = new Fire(pos,count);
         this->fires[this->fireCount] = fire;
         this->fireCount++;

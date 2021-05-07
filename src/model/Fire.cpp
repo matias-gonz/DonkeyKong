@@ -3,16 +3,16 @@
 
 Fire::Fire(Position position, int count) {
     this->srcRect = new SDL_Rect();
-    this->destRect->x = 0;
-    this->destRect->y = 0;
-    this->destRect->w = 130;
-    this->destRect->h = 150;
+    this->srcRect->x = 0;
+    this->srcRect->y = 0;
+    this->srcRect->w = 13;
+    this->srcRect->h = 15;
 
     this->destRect = new SDL_Rect();
 
     this->destRect->x = position.getX();
     this->destRect->y = position.getY();
-    this->destRect->w = WIDTH/64;
+    this->destRect->w = WIDTH/32;
     this->destRect->h = this->destRect->w;
 
 
@@ -35,5 +35,5 @@ void Fire::draw(SDL_Texture *texture) {
 }
 
 void Fire::update() {
-
+    this->srcRect->x = this->srcRect->w*(rand()%4);
 }
