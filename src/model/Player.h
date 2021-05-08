@@ -4,6 +4,7 @@
 
 
 #include "Position.h"
+#include "../view/Animator.h"
 
 class Player {
     private:
@@ -12,10 +13,11 @@ class Player {
         int velX;
         int velY;
         SDL_Texture* playerTexture;
-
+        Animator animator;
+        int kindOfAnimation;
 
     public:
-        static const int VEL = 10;
+        static const int VEL = 5;
         explicit Player(SDL_Texture* playerTexture);
         void show(SDL_Renderer *pRenderer);
 
@@ -28,6 +30,8 @@ class Player {
         void jumpUp();
 
         void resetVel();
+
+
 };
 
 
