@@ -1,6 +1,10 @@
 #include "TextureManager.h"
 #include "../model/Game.h"
 
+TextureManager::TextureManager(SDL_Renderer* aRenderer){
+    this->renderer = aRenderer;
+}
+
 SDL_Texture* TextureManager::LoadTexture(const char *file) {
     SDL_Surface* tmpSurface = IMG_Load(file);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::renderer,tmpSurface);
@@ -35,4 +39,8 @@ SDL_Texture* TextureManager::LoadTexture(const char* path,SDL_Renderer* aRendere
 }
 void TextureManager::DrawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect) {
     SDL_RenderCopy(Game::renderer,texture,srcRect,destRect);
+}
+
+SDL_Texture* TextureManager::loadPlayerTexture(){
+    return TextureManager::LoadTexture("resources/sprites/sans_left.png");
 }

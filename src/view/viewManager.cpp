@@ -1,6 +1,6 @@
 #include "viewManager.h"
 
-ViewManager::ViewManager() {
+ViewManager::ViewManager(Game* aGame) {
   this->success = true;
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
@@ -11,6 +11,9 @@ ViewManager::ViewManager() {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
     this->success = false;
   }
+
+  this->game = aGame;
+  this->textureManager = new TextureManager(this->renderer);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -85,5 +88,20 @@ LTexture* ViewManager::loadTexture(char *path) {
 
   return texture;
 }
+void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect) {
+    SDL_RenderCopy(renderer,texture,srcRect,destRect);
+}
+
+void ViewManager::renderWindow() {
+    SDL_RenderClear(renderer);
+
+    game->getLevel()->drawLevel();
 
 
+    //render player
+    Player* player  = game->getPlayer();
+    SDL_Rect dstrect = {static_cast<int>(player->getXPosition()), static_cast<int>(player->getYPosition()), 25, 50 };
+    SDL_RenderCopy(renderer,this->textureManager->loadPlayerTexture(),NULL,&dstrect);
+
+    SDL_RenderPresent(renderer);
+}

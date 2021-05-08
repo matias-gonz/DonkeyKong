@@ -7,10 +7,12 @@
 #include <string>
 #include <stdio.h>
 #include "ltexture.h"
+#include "../model/Level.h"
+#include "../model/Game.h"
 
 class ViewManager {
 public:
-    ViewManager();
+    ViewManager(Game* );
 
     SDL_Renderer *getRenderer();
 
@@ -20,12 +22,19 @@ public:
 
     LTexture* loadTexture(char* path);
 
+    void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+
+    void renderWindow();
+
+
 private:
     SDL_Renderer *renderer;
     SDL_Window *window;
     bool success;
     int screen_width = 1280;
     int screen_height = 720;
+    Game* game;
+    TextureManager* textureManager;
 
     void setTextureLinear();
 
