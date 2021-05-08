@@ -16,8 +16,6 @@ set(SOURCE_FILES main.cpp
         src/model/Position.h
         src/model/Game.cpp
         src/model/Game.h
-        src/view/TextureLoader.cpp
-        src/view/TextureLoader.h
         src/view/TextureManager.cpp
         src/view/TextureManager.h
         src/model/Level.h

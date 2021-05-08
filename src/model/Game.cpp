@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "../view/TextureLoader.h"
 #include "Player.h"
 #include "../view/TextureManager.h"
 #include "Level.h"

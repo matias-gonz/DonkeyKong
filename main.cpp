@@ -1,5 +1,5 @@
 #include "src/model/Game.h"
-#include "src/view/TextureLoader.h"
+#include "src/view/TextureManager.h"
 
 Game *game = NULL;
 
@@ -34,6 +34,6 @@ int main(int argc, char *args[]) {
 }
 
 void loadImages() {
-    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
+    playerTexture = TextureManager::LoadTexture("resources/sprites/sans_walk.png");
 }
 
