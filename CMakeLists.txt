@@ -23,7 +23,9 @@ set(SOURCE_FILES main.cpp
         src/model/Level.h
         src/model/Level.cpp
         src/model/Platform.cpp
-        src/model/Platform.h)
+        src/model/Platform.h
+        src/view/Animator.cpp
+        src/view/Animator.h)
 
 
 # change to personal project name (as above)
