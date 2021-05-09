@@ -4,6 +4,7 @@
 
 
 #include "Position.h"
+#include "../view/Animator.h"
 
 class Player {
     private:
@@ -11,9 +12,11 @@ class Player {
         bool isGrounded;
         int velX;
         int velY;
+        int distance;
+        int kindOfAnimation;
 
     public:
-        static const int VEL = 1;
+        static const int VEL = 5;
         explicit Player();
 
         void addLeftVel();
