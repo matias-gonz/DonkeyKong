@@ -5,13 +5,7 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->renderer = aRenderer;
 }
 
-SDL_Texture* TextureManager::LoadTexture(const char *file) {
-    SDL_Surface* tmpSurface = IMG_Load(file);
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer,tmpSurface);
-    SDL_FreeSurface(tmpSurface);
-    return texture;
-}
-SDL_Texture* TextureManager::loadTexture(const char* path, SDL_Renderer* aRenderer ) {
+SDL_Texture* TextureManager::loadTexture(const char *path) {
     //The final texture
     SDL_Texture* newTexture = NULL;
 
@@ -20,7 +14,7 @@ SDL_Texture* TextureManager::loadTexture(const char* path, SDL_Renderer* aRender
     if( loadedSurface != NULL )
     {
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(aRenderer, loadedSurface );
+        newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface );
         if( newTexture == NULL )
         {
             printf( "Unable to create texture from %s! SDL SDL_Renderer*Error: %s\n", path, SDL_GetError() );
@@ -37,27 +31,24 @@ SDL_Texture* TextureManager::loadTexture(const char* path, SDL_Renderer* aRender
 
     return newTexture;
 }
-void TextureManager::DrawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect) {
-    SDL_RenderCopy(this->renderer,texture,srcRect,destRect);
-}
 
 SDL_Texture* TextureManager::loadPlayerTexture(){
     SDL_Texture* textura =NULL;
-    textura = this->LoadTexture("resources/sprites/sans_left.png");
+    textura = this->loadTexture("resources/sprites/sans_left.png");
     if(textura == NULL) printf("No se cargo la textura del personaje");
     return textura;
 }
 
 SDL_Texture* TextureManager::loadPlatformTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->LoadTexture("resources/sprites/blueplat.png");
+    texture = this->loadTexture("resources/sprites/blueplat.png");
     if(texture == NULL) printf("No se cargo la textura de la plataforma");
     return texture;
 }
 
 SDL_Texture* TextureManager::loadLadderTexture(){
     SDL_Texture* texture =NULL;
-    texture = TextureManager::LoadTexture("resources/sprites/yelstair.png");
+    texture = this->loadTexture("resources/sprites/yelstair.png");
     if(texture == NULL) printf("No se cargo la textura de la escalera");
     return texture;
 }
