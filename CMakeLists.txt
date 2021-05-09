@@ -34,7 +34,7 @@ set(SOURCE_FILES main.cpp
         src/controller/GameController.cpp
         src/controller/GameController.h
         src/controller/PlayerController.cpp
-        src/controller/PlayerController.h)
+        src/controller/PlayerController.h src/model/Enemy.cpp src/model/Enemy.h)
 
 
 # change to personal project name (as above)

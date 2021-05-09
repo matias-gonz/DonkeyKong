@@ -9,6 +9,7 @@
 #include "ltexture.h"
 #include "../model/Level.h"
 #include "../model/Game.h"
+#include "../model/Enemy.h"
 
 class ViewManager {
 public:
@@ -26,6 +27,11 @@ public:
 
     void renderWindow();
 
+    void setEnemies(Enemy* enemy, int quantity);
+
+    void setEnemiesCount(int numberEnemies);
+
+    int getEnemiesCount();
 
 private:
     SDL_Renderer *renderer;
@@ -36,6 +42,13 @@ private:
     Game* game;
     TextureManager* textureManager;
 
+    int enemiesCount;
+    struct enemy {
+      Enemy* enemyType;
+      int quantity;
+    };
+    struct enemy enemies[];
+
     void setTextureLinear();
 
     void showSDLError(char *message);
@@ -45,6 +58,7 @@ private:
     void createRenderer();
 
     void initializeRendererColor();
+
 
 };
 

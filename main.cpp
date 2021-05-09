@@ -27,6 +27,10 @@ int main(int argc, char* args[] ) {
         viewManager->renderWindow();
     }
 
+
+    Configuration* configuration = new Configuration();
+    std::cout << to_string(configuration->log.at("level")) + "\n";
+
     return 0;
 }
 
@@ -37,9 +41,6 @@ void Game::render() {
 
     SDL_RenderPresent(renderer);
 }
-
-Configuration* configuration = new Configuration();
-std::cout << to_string(configuration->log.at("level")) + "\n";
 
 /*
 void renderBarrel() {

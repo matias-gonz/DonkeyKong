@@ -1,7 +1,3 @@
-//
-// Created by agustin on 7/5/21.
-//
-
 #ifndef TALLER_PROG_I_2021_1C_KIWI_PLAYERCONTROLLER_H
 #define TALLER_PROG_I_2021_1C_KIWI_PLAYERCONTROLLER_H
 
