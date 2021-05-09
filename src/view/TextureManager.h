@@ -6,8 +6,22 @@
 class TextureManager {
 
 public:
-    static SDL_Texture* LoadTexture(const char* file);
-    static void DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+    TextureManager(SDL_Renderer* aRenderer);
+
+     SDL_Texture* LoadTexture(const char* file);
+
+     void DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+
+     SDL_Texture* loadTexture(const char *path, SDL_Renderer *aRenderer);
+
+    SDL_Texture* loadPlayerTexture();
+
+    SDL_Texture* loadPlatformTexture();
+
+    SDL_Texture* loadLadderTexture();
+
+private:
+    SDL_Renderer* renderer;
 
 };
 

@@ -1,56 +1,41 @@
 
 #include "src/model/Game.h"
-#include "src/view/TextureLoader.h"
 #include <iostream>
 #include <SDL2/SDL.h>
-#include <stdio.h>
-#include<SDL2/SDL_events.h>
 #include "src/view/ltexture.h"
-#include "src/model/barrel.h"
 #include "src/view/viewManager.h"
+#include "src/controller/GameController.h"
 
-Game* game = NULL;
 
-void loadImages();
+int main(int argc, char *args[]) {
+    Game *game = new Game();
+    game->start();
 
-SDL_Texture* playerTexture;
+    GameController *gameController = new GameController(game);
+    ViewManager *viewManager = new ViewManager(game, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                               1024, 576, false);
 
-ViewManager *viewManager = new ViewManager();
-void renderBarrel();
-
-int main(int argc, char* args[] ) {
-
-    game = new Game();
-    game->init("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, false);
-
-    loadImages();
-    if (playerTexture == NULL) {
-        printf("%s", SDL_GetError());
-    }
-
-    Player player = Player(playerTexture);
-    game->player = &player;
-
-    while (game->running()) {
-        game->handleEvents();
-        game->update();
-        game->render();
+    while (game->isRunning()) {
+        gameController->handleEvents();
+        gameController->update();
+        viewManager->renderWindow();
 
     }
-    game->clean();
-
-    renderBarrel();
 
     return 0;
-
 }
+/*
+void Game::render() {
+    SDL_RenderClear(renderer);
 
-void loadImages() {
-    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
+    this->level->drawLevel();
+
+    SDL_RenderPresent(renderer);
 }
+*/
 
 
-
+/*
 void renderBarrel() {
   //Start up SDL and create window
   if (!viewManager->successfulInitialitization()) {
@@ -95,3 +80,4 @@ void renderBarrel() {
   //Free resources and close SDL
   viewManager->close();
 }
+*/
