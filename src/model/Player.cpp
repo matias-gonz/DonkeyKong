@@ -17,7 +17,7 @@ Player::Player(){
     velX = 0;
     velY = 0;
     isGrounded = true;
-    this->animator = Animator(playerTexture, LEFTSTARTW, LEFTSTARTH, RIGHTSTARTW, RIGHTSTARTH,texW,texH,SEPARATIONW);
+    //this->animator = Animator(playerTexture, LEFTSTARTW, LEFTSTARTH, RIGHTSTARTW, RIGHTSTARTH,texW,texH,SEPARATIONW);
     kindOfAnimation = right;
     distance = 0;
 }

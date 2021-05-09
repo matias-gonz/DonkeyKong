@@ -13,6 +13,7 @@ class Player {
         int velX;
         int velY;
         int distance;
+        int kindOfAnimation;
 
     public:
         static const int VEL = 5;
