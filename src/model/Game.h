@@ -10,21 +10,19 @@ public:
     Game();
     ~Game();
 
-    void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+    void start();
 
-    void handleEvents();
-    void update();
-    void render();
-    void clean();
-    bool running();
+    void quit();
 
-    static SDL_Renderer* renderer;
-    Player* player = NULL;
+    bool isRunning();
 
+    Level* getLevel();
+
+    Player* getPlayer();
 
 private:
-    bool isRunning;
-    SDL_Window* window;
+    Player* player = NULL;
+    bool running;
     Level* level;
 };
 

@@ -13,8 +13,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-Player::Player(SDL_Texture *playerTexture) {
-    this->playerTexture = playerTexture;
+Player::Player(){
     velX = 0;
     velY = 0;
     isGrounded = true;
@@ -66,8 +65,11 @@ void Player::resetVel() {
     this->velX = 0;
 }
 
-
-void Player::show(SDL_Renderer *renderer) {
-    this->animator.draw(renderer,this->kindOfAnimation,&pos,distance);
+double Player::getXPosition(){
+    return pos.getX();
 }
 
+
+double Player::getYPosition(){
+    return pos.getY();
+}

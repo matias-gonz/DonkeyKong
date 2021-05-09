@@ -9,11 +9,16 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
-
         src/model/Player.cpp
         src/model/Player.h
         src/model/Position.cpp
         src/model/Position.h
+        src/model/barrel.cpp
+        src/model/barrel.h
+        src/view/ltexture.cpp
+        src/view/ltexture.h
+        src/view/viewManager.cpp
+        src/view/viewManager.h
         src/model/Game.cpp
         src/model/Game.h
         src/view/TextureManager.cpp
@@ -22,8 +27,8 @@ set(SOURCE_FILES main.cpp
         src/model/Level.cpp
         src/model/Platform.cpp
         src/model/Platform.h
-        src/view/Animator.cpp
-        src/view/Animator.h)
+        src/model/Ladder.h
+        src/model/Ladder.cpp src/controller/GameController.cpp src/controller/GameController.h src/controller/PlayerController.cpp src/controller/PlayerController.h src/view/LevelDrawer.cpp src/view/LevelDrawer.h)
 
 
 # change to personal project name (as above)

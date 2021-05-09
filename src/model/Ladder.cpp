@@ -1,26 +1,28 @@
-#include "Platform.h"
-#include "../view/TextureManager.h"
+#include "Ladder.h"
 
-
-Platform::Platform(Position position, int count) {
+Ladder::Ladder(Position position, int count) {
     this->srcRect = NULL;
+    this->destRect = NULL;
+
     this->destRect = new SDL_Rect();
 
     this->destRect->x = position.getX();
     this->destRect->y = position.getY();
     this->destRect->w = WIDTH/32;
-    this->destRect->h = this->destRect->w/1.5;
+    this->destRect->h = this->destRect->w/4;
+
+
     this->count = count;
 }
 
-SDL_Rect *Platform::getDestRect() {
+SDL_Rect *Ladder::getDestRect() {
     return destRect;
 }
 
-int Platform::getCount() {
+int Ladder::getCount() {
     return count;
 }
 
-const SDL_Rect *Platform::getSrcRect() {
+const SDL_Rect *Ladder::getSrcRect() {
     return srcRect;
 }
