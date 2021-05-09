@@ -1,73 +1,47 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <iostream>
 #include <stdio.h>
 #include <SDL2/SDL_events.h>
-#include <iostream>
 
-#include "src/view/TextureManager.h"
 #include "src/model/Game.h"
 #include "src/view/ltexture.h"
-#include "src/model/barrel.h"
+#include "src/view/TextureManager.h"
 #include "src/view/viewManager.h"
+#include "src/controller/GameController.h"
 #include "src/controller/Configuration.h"
 
 Game* game = NULL;
 
-void loadImages();
-
-SDL_Texture* playerTexture;
-
-ViewManager *viewManager = new ViewManager();
-void renderBarrel();
-
 int main(int argc, char* args[] ) {
+    Game* game = new Game();
+    game->start();
 
-    /* game = new Game();
-    game->init("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, false);
+    GameController* gameController = new GameController(game);
+    ViewManager* viewManager = new ViewManager(game);
 
-    loadImages();
-    if (playerTexture == NULL) {
-        printf("%s", SDL_GetError());
+    while (game->isRunning()) {
+        gameController->handleEvents();
+        gameController->update();
+        viewManager->renderWindow();
     }
 
-    Player player = Player(playerTexture);
-    game->player = &player;
-
-    while (game->running()) {
-        game->handleEvents();
-        game->update();
-        game->render();
-
-    }
-    game->clean();
-
-    renderBarrel();
-     */
-
-  //printObjectkeys(jsonConfigRoot, true, 1);
-  Configuration* configuration = new Configuration();
-  std::cout << to_string(configuration->log.at("level")) + "\n";
-
-  return 0;
+    return 0;
 }
 
-void loadImages() {
-    playerTexture = TextureManager::LoadTexture("resources/sprites/sans_left.png");
+void Game::render() {
+    SDL_RenderClear(renderer);
+
+    this->level->drawLevel();
+
+    SDL_RenderPresent(renderer);
 }
 
-/* void printObjectkeys(const nlohmann::json& jsonObject, bool recursive, int ident) {
-  if (jsonObject.is_object() || jsonObject.is_array()) {
-    for (auto &it : jsonObject.items()) {
-      std::cout << std::string(ident, ' ')
-                << it.key() << " -> "
-                << it.value().type_name() << std::endl;
-      if (recursive && (it.value().is_object() || it.value().is_array()))
-        printObjectkeys(it.value(), recursive, ident + 4);
-    }
-  }
-} */
+Configuration* configuration = new Configuration();
+std::cout << to_string(configuration->log.at("level")) + "\n";
 
+/*
 void renderBarrel() {
   //Start up SDL and create window
   if (!viewManager->successfulInitialitization()) {
@@ -112,3 +86,4 @@ void renderBarrel() {
   //Free resources and close SDL
   viewManager->close();
 }
+*/

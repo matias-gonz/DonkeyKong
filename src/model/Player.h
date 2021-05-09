@@ -11,13 +11,10 @@ class Player {
         bool isGrounded;
         int velX;
         int velY;
-        SDL_Texture* playerTexture;
-
 
     public:
         static const int VEL = 1;
-        explicit Player(SDL_Texture* playerTexture);
-        void show(SDL_Renderer *pRenderer);
+        explicit Player();
 
         void addLeftVel();
 
@@ -28,6 +25,12 @@ class Player {
         void jumpUp();
 
         void resetVel();
+
+        double getXPosition();
+
+        double getYPosition();
+
+
 };
 
 

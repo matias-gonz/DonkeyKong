@@ -28,7 +28,13 @@ set(SOURCE_FILES main.cpp
         src/model/Platform.cpp
         src/model/Platform.h
         src/model/Ladder.h
-        src/model/Ladder.cpp src/controller/Configuration.cpp src/controller/Configuration.h)
+        src/model/Ladder.cpp
+        src/controller/Configuration.cpp
+        src/controller/Configuration.h
+        src/controller/GameController.cpp
+        src/controller/GameController.h
+        src/controller/PlayerController.cpp
+        src/controller/PlayerController.h)
 
 
 # change to personal project name (as above)
