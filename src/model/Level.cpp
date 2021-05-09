@@ -8,7 +8,7 @@ Level::Level() {
 }
 
 void Level::loadPlatforms(){
-    FILE *file = fopen("src/model/levels/level2.txt", "r");
+    FILE *file = fopen("src/model/levels/level1.txt", "r");
 
     int x, dx, y, dy, count;
     int read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);

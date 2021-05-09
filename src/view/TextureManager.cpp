@@ -43,21 +43,21 @@ void TextureManager::DrawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Re
 
 SDL_Texture* TextureManager::loadPlayerTexture(){
     SDL_Texture* textura =NULL;
-    textura = this->LoadTexture("/home/agustin/CLionProjects/Taller-Prog-I-2021-1C-KIWI/resources/sprites/sans_left.png");
-    if(textura = NULL) printf("No se cargo la textura del personaje");
+    textura = this->LoadTexture("resources/sprites/sans_left.png");
+    if(textura == NULL) printf("No se cargo la textura del personaje");
     return textura;
 }
 
 SDL_Texture* TextureManager::loadPlatformTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->LoadTexture("/home/agustin/CLionProjects/Taller-Prog-I-2021-1C-KIWI/resources/sprites/blueplat.png");
-    if(texture = NULL) printf("No se cargo la textura de la plataforma");
+    texture = this->LoadTexture("resources/sprites/blueplat.png");
+    if(texture == NULL) printf("No se cargo la textura de la plataforma");
     return texture;
 }
 
 SDL_Texture* TextureManager::loadLadderTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->LoadTexture("/home/agustin/CLionProjects/Taller-Prog-I-2021-1C-KIWI/resources/sprites/yelstair.png");
-    if(texture = NULL) printf("No se cargo la textura de la escalera");
+    texture = TextureManager::LoadTexture("resources/sprites/yelstair.png");
+    if(texture == NULL) printf("No se cargo la textura de la escalera");
     return texture;
 }

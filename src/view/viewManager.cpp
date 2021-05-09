@@ -87,16 +87,6 @@ void ViewManager::close() {
     SDL_Quit();
 }
 
-LTexture *ViewManager::loadTexture(char *path) {
-    LTexture *texture = new LTexture();
-    texture->setRenderer(this->getRenderer());
-
-    if (!texture->loadFromFile(path)) {
-        printf("Failed to load texture!\n");
-    }
-
-    return texture;
-}
 
 void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect) {
     SDL_RenderCopy(renderer, texture, srcRect, destRect);
@@ -105,31 +95,14 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 void ViewManager::renderWindow() {
     SDL_RenderClear(renderer);
 
+    //Draw level
+    levelDrawer->draw(game->getLevel());
 
     //render player
     Player *player = game->getPlayer();
     SDL_Rect dstrect = {static_cast<int>(player->getXPosition()), static_cast<int>(player->getYPosition()), 25, 50};
     SDL_RenderCopy(renderer, this->textureManager->loadPlayerTexture(), NULL, &dstrect);
 
-    //render level
-    /*void Platform::draw(SDL_Texture *texture) {
-        SDL_Rect* tmpRect = new SDL_Rect();
-        tmpRect->x = this->destRect->x;
-        tmpRect->y = this->destRect->y;
-        tmpRect->h = this->destRect->h;
-        tmpRect->w = this->destRect->w;
-
-        for(int i = 0; i < this->count; i++){
-            TextureManager::DrawTexture(texture,this->srcRect,tmpRect);
-            tmpRect->x += this->destRect->w;
-        }
-
-    }
-
-*/
-
-    //Draw level
-    levelDrawer->draw(game->getLevel());
 
     SDL_RenderPresent(renderer);
 }

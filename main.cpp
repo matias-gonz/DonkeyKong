@@ -1,6 +1,5 @@
 
 #include "src/model/Game.h"
-#include "src/view/TextureManager.h"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "src/view/ltexture.h"
