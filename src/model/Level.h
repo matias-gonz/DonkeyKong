@@ -15,16 +15,22 @@ public:
     void loadLevel();
     void drawLevel();
 
+    int getStairCount();
+
+    Ladder *getLedder(int i);
+
+    int getPlatformCount();
+
+    Platform *getPlatform(int i);
+
 private:
 
 
     Platform** platforms;
     int platformCount;
-    SDL_Texture* platformTexture;
 
     Ladder** stairs;
     int stairCount;
-    SDL_Texture* stairTexture;
 
     void loadPlatforms();
 

@@ -12,17 +12,10 @@ public:
 
     void start();
 
-    void handleEvents();
-
-    void update();
-
-    void render();
-
     void quit();
 
     bool isRunning();
 
-    static SDL_Renderer* renderer;
     Player* player = NULL;
 
 

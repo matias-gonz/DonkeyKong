@@ -1,8 +1,5 @@
 #include "Game.h"
 
-
-SDL_Renderer *Game::renderer = NULL;
-
 Game::Game() {}
 
 Game::~Game() {}

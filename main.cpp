@@ -8,13 +8,13 @@
 #include "src/controller/GameController.h"
 
 
-
-int main(int argc, char* args[] ) {
-    Game* game = new Game();
+int main(int argc, char *args[]) {
+    Game *game = new Game();
     game->start();
 
-    GameController* gameController = new GameController(game);
-    ViewManager* viewManager = new ViewManager(game);
+    GameController *gameController = new GameController(game);
+    ViewManager *viewManager = new ViewManager(game, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                               1024, 576, false);
 
     while (game->isRunning()) {
         gameController->handleEvents();
@@ -25,7 +25,7 @@ int main(int argc, char* args[] ) {
 
     return 0;
 }
-
+/*
 void Game::render() {
     SDL_RenderClear(renderer);
 
@@ -33,6 +33,7 @@ void Game::render() {
 
     SDL_RenderPresent(renderer);
 }
+*/
 
 
 /*

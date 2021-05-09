@@ -3,11 +3,8 @@
 Level::Level() {
     this->platforms = NULL;
     this->platformCount = 0;
-    this->platformTexture = TextureManager::LoadTexture(
-            "resources/sprites/blueplat.png");
     this->stairs = NULL;
     this->stairCount = 0;
-    this->stairTexture = TextureManager::LoadTexture("resources/sprites/yelstair.png");
 }
 
 void Level::loadPlatforms(){
@@ -70,13 +67,20 @@ void Level::loadLevel() {
     this->loadMovPlatforms();
 }
 
-void Level::drawLevel() {
-
-    for(int i = 0; i < this->stairCount; i++){
-        this->stairs[i]->draw(this->stairTexture);
-    }
-    for (int i = 0; i < this->platformCount; i++) {
-        this->platforms[i]->draw(this->platformTexture);
-    }
-
+int Level::getStairCount() {
+    return stairCount;
 }
+
+Ladder *Level::getLedder(int i) {
+    return stairs[i];
+}
+
+int Level::getPlatformCount() {
+    return platformCount;
+}
+
+Platform *Level::getPlatform(int i) {
+    return platforms[i];
+}
+
+

@@ -10,7 +10,12 @@
 class Ladder {
 public:
     Ladder(Position position, int count);
-    void draw(SDL_Texture* texture);
+
+    SDL_Rect *getDestRect();
+
+    int getCount();
+
+    const SDL_Rect *getSrcRect();
 
 private:
     Position pos;
