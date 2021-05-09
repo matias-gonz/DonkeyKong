@@ -1,11 +1,12 @@
 
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <SDL2/SDL_events.h>
 #include <iostream>
 
+#include "src/view/TextureManager.h"
 #include "src/model/Game.h"
-#include "src/view/TextureLoader.h"
 #include "src/view/ltexture.h"
 #include "src/model/barrel.h"
 #include "src/view/viewManager.h"
@@ -52,7 +53,7 @@ int main(int argc, char* args[] ) {
 }
 
 void loadImages() {
-    playerTexture = TextureLoader::loadTexture("resources/sprites/sans_left.png");
+    playerTexture = TextureManager::LoadTexture("resources/sprites/sans_left.png");
 }
 
 /* void printObjectkeys(const nlohmann::json& jsonObject, bool recursive, int ident) {

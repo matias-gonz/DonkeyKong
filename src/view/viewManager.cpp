@@ -63,14 +63,12 @@ bool ViewManager::successfulInitialitization() {
 }
 
 void ViewManager::close() {
-  //Free loaded images
-  //barrilTexture.free();
 
   //Destroy window
-  SDL_DestroyRenderer(this->renderer);
+  SDL_DestroyRenderer(ViewManager::renderer);
   SDL_DestroyWindow(this->window);
   this->window = NULL;
-  this->renderer = NULL;
+  ViewManager::renderer = NULL;
 
   //Quit SDL subsystems
   IMG_Quit();
@@ -87,3 +85,5 @@ LTexture* ViewManager::loadTexture(char *path) {
 
   return texture;
 }
+
+
