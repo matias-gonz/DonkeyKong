@@ -16,14 +16,12 @@ public:
 
     bool isRunning();
 
-    Player* player = NULL;
-
-
     Level* getLevel();
 
     Player* getPlayer();
 
 private:
+    Player* player = NULL;
     bool running;
     Level* level;
 };

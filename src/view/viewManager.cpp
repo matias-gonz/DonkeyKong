@@ -93,7 +93,7 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 }
 
 void ViewManager::renderWindow() {
-    SDL_RenderClear(renderer);
+    SDL_RenderClear(this->renderer);
 
     //Draw level
     levelDrawer->draw(game->getLevel());
@@ -101,7 +101,7 @@ void ViewManager::renderWindow() {
     //render player
     Player *player = game->getPlayer();
     SDL_Rect dstrect = {static_cast<int>(player->getXPosition()), static_cast<int>(player->getYPosition()), 25, 50};
-    SDL_RenderCopy(renderer, this->textureManager->loadPlayerTexture(), NULL, &dstrect);
+    SDL_RenderCopy(this->renderer, this->textureManager->loadPlayerTexture(), NULL, &dstrect);
 
 
     SDL_RenderPresent(renderer);
