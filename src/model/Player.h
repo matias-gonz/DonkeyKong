@@ -15,6 +15,7 @@ class Player {
         SDL_Texture* playerTexture;
         Animator animator;
         int kindOfAnimation;
+        int distance;
 
     public:
         static const int VEL = 5;

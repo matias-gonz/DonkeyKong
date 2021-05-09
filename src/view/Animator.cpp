@@ -1,28 +1,27 @@
 
 #include "Animator.h"
-enum kindOfAnimation { left, right};
 
-Animator::Animator(SDL_Texture *pTexture,int leftStartW,int leftStartH,int rightStartW,int rightStartH,int texW,int texH) {
+enum kindOfAnimation {
+    left, right
+};
+
+Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
+                    int rightStartW, int rightStartH, int texW, int texH, int separationW) {
 
     this->texture = pTexture;
-    this->leftStart[0]= &leftStartW;
-    this->leftStart[1] = &leftStartH;
-    this->rightStart[0] = &rightStartW;
-    this->rightStart[1] = &rightStartH;
-    this->texWH[0] = &texW;
-    this->texWH[1] = &texH;
+    this->leftStartW = leftStartW;
+    this->leftStartH = leftStartH;
+    this->rightStartW = rightStartW;
+    this->rightStartH = rightStartH;
+    this->texW = texW;
+    this->texH = texH;
+    this->separationW = separationW;
 
 }
 
-void Animator::draw(SDL_Renderer *pRenderer, int kind,Position* pos) {
-    SDL_Rect srcrect;
-    if (kind == left){
-        srcrect = {0,0,17,30};//{ *leftStart[0],*leftStart[1] , *texWH[0], *texWH[1]};
-    }
-    else{
-        srcrect = {0,52,17,30};//{ *rightStart[0],*rightStart[1] , *texWH[0], *texWH[1]};
-    }
+void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
 
+    SDL_Rect srcrect = updateAnimation( direction, distance);
     SDL_Rect dstrect = {static_cast<int>(pos->getX()), static_cast<int>(pos->getY()), 25, 50};
     SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
 
@@ -33,7 +32,34 @@ void Animator::start() {
 
 }
 
-void Animator::updateAnimation(int direction) {
+SDL_Rect Animator::updateAnimation(int direction, int distance) {
+    int amount = 0;
+    if(distance>10 && distance < 30){
+        amount = 1;
+    }
+    else if( distance < 50){
+        amount = 2;
+    }
+    else if(distance < 70) {
+        amount = 3;
+    }
+    if (direction == left){
+        return {leftStartW+(amount)*(texW+separationW), 0, texW, texH};
+        /*if(distance < 10){
+            return {leftStartW, leftStartH, texW, texH};
+        }
+        if (distance < 20){
+            return {leftStartW+texW+separationW,leftStartH,texW,texH};
+        }
+        if(distance < 30){
+            return {leftStartW+2*(texW+separationW),leftStartH,texW,texH};
+        }
+        if (distance < 40){
+            return {leftStartW+3*(texW+separationW),leftStartH,texW,texH};
+        }*/
+    }
+    return {rightStartW+(amount)*(texW+separationW),rightStartH,texW,texH};
+
 
 }
 
