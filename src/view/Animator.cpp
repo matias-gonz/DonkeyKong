@@ -44,19 +44,8 @@ SDL_Rect Animator::updateAnimation(int direction, int distance) {
         amount = 3;
     }
     if (direction == left){
-        return {leftStartW+(amount)*(texW+separationW), 0, texW, texH};
-        /*if(distance < 10){
-            return {leftStartW, leftStartH, texW, texH};
-        }
-        if (distance < 20){
-            return {leftStartW+texW+separationW,leftStartH,texW,texH};
-        }
-        if(distance < 30){
-            return {leftStartW+2*(texW+separationW),leftStartH,texW,texH};
-        }
-        if (distance < 40){
-            return {leftStartW+3*(texW+separationW),leftStartH,texW,texH};
-        }*/
+        return {leftStartW+(amount)*(texW+separationW), leftStartH, texW, texH};
+
     }
     return {rightStartW+(amount)*(texW+separationW),rightStartH,texW,texH};
 
