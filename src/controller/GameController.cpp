@@ -2,7 +2,7 @@
 
 GameController::GameController(Game* aGame){
     this->game = aGame;
-    this->player = new Player();
+    this->player = game->getPlayer();
 }
 void GameController::handleEvents() {
     SDL_Event event;
@@ -40,5 +40,5 @@ void GameController::handleEvents() {
 }
 
 void GameController::update() {
-    player->update();
+    this->player->update();
 }
