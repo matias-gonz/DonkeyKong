@@ -10,6 +10,7 @@
 #include "../model/Level.h"
 #include "../model/Game.h"
 #include "LevelDrawer.h"
+#include "Animator.h"
 
 class ViewManager {
 public:
@@ -37,6 +38,7 @@ private:
     Game* game;
     TextureManager* textureManager;
     LevelDrawer* levelDrawer;
+    Animator* animator;
 
     void setTextureLinear();
 

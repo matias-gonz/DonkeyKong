@@ -5,19 +5,10 @@
 #include "Position.h"
 enum kindOfAnimation { left, right};
 
-const int LEFTSTARTW = 0;
-const int LEFTSTARTH = 30;
-const int RIGHTSTARTW = 0;
-const int RIGHTSTARTH = 52;
-const int SEPARATIONW = 5;
-const int texW = 17;
-const int texH = 30;
-
 Player::Player(){
     velX = 0;
     velY = 0;
     isGrounded = true;
-    //this->animator = Animator(playerTexture, LEFTSTARTW, LEFTSTARTH, RIGHTSTARTW, RIGHTSTARTH,texW,texH,SEPARATIONW);
     kindOfAnimation = right;
     distance = 0;
 }
@@ -72,4 +63,16 @@ double Player::getXPosition(){
 
 double Player::getYPosition(){
     return pos.getY();
+}
+
+Position* Player::getPos() {
+    return &pos;
+}
+
+int Player::getDistance() {
+    return distance;
+}
+
+int Player::getDirection() {
+    return kindOfAnimation;
 }
