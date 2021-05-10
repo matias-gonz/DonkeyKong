@@ -16,6 +16,11 @@ void Game::quit() {
     running = false;
 }
 
+
+void Game::update() {
+    this->level->update();
+}
+
 bool Game::isRunning() {
     return this->running;
 }

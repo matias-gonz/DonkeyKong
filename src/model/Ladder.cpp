@@ -2,8 +2,6 @@
 
 Ladder::Ladder(Position position, int count) {
     this->srcRect = NULL;
-    this->destRect = NULL;
-
     this->destRect = new SDL_Rect();
 
     this->destRect->x = position.getX();

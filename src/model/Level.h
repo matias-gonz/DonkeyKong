@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Ladder.h"
 #include "../view/TextureManager.h"
+#include "Fire.h"
 
 class Level {
 
@@ -14,6 +15,7 @@ public:
 
     void loadLevel();
     void drawLevel();
+    void update();
 
     int getStairCount();
 
@@ -32,11 +34,17 @@ private:
     Ladder** stairs;
     int stairCount;
 
+    Fire** fires;
+    int fireCount;
+    SDL_Texture* fireTexture;
+
     void loadPlatforms();
 
     void loadStairs();
 
     void loadMovPlatforms();
+
+    void loadFire();
 };
 
 

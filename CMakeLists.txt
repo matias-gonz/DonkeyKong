@@ -28,7 +28,11 @@ set(SOURCE_FILES main.cpp
         src/model/Platform.cpp
         src/model/Platform.h
         src/model/Ladder.h
-        src/model/Ladder.cpp
+        src/model/Ladder.cpp )
+        src/model/PlatformMovement.cpp
+        src/model/PlatformMovement.h
+        src/model/Fire.cpp
+        src/model/Fire.h
         src/controller/GameController.cpp
         src/controller/GameController.h
         src/controller/PlayerController.cpp

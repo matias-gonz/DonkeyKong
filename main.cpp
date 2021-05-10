@@ -15,6 +15,7 @@ int main(int argc, char *args[]) {
     ViewManager *viewManager = new ViewManager(game, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                                1024, 576, false);
 
+
     while (game->isRunning()) {
         gameController->handleEvents();
         gameController->update();
