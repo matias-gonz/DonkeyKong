@@ -4,20 +4,20 @@
 
 
 #include "Position.h"
+#include "../view/Animator.h"
 
 class Player {
     private:
-        Position pos = Position(0, 576);
+        Position pos = Position(200, 200);
         bool isGrounded;
         int velX;
         int velY;
-        SDL_Texture* playerTexture;
-
+        int distance;
+        int kindOfAnimation;
 
     public:
-        static const int VEL = 1;
-        explicit Player(SDL_Texture* playerTexture);
-        void show(SDL_Renderer *pRenderer);
+        static const int VEL = 5;
+        Player();
 
         void addLeftVel();
 
@@ -28,6 +28,16 @@ class Player {
         void jumpUp();
 
         void resetVel();
+
+        double getXPosition();
+
+        double getYPosition();
+
+        Position* getPos();
+
+        int getDistance();
+
+        int getDirection();
 };
 
 

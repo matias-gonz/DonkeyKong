@@ -15,8 +15,18 @@
 class Platform {
 
 public:
+
     Platform(Position position, int count, bool moving);
-    void draw(SDL_Texture* texture);
+
+
+    Platform(Position position, int count);
+
+    SDL_Rect *getDestRect();
+
+    int getCount();
+
+    const SDL_Rect *getSrcRect();
+
 
     void update();
 

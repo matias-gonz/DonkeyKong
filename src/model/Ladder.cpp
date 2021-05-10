@@ -13,18 +13,14 @@ Ladder::Ladder(Position position, int count) {
     this->count = count;
 }
 
-void Ladder::draw(SDL_Texture *texture) {
+SDL_Rect *Ladder::getDestRect() {
+    return destRect;
+}
 
-    SDL_Rect* tmpRect = new SDL_Rect();
-    tmpRect->x = this->destRect->x;
-    tmpRect->y = this->destRect->y;
-    tmpRect->h = this->destRect->h;
-    tmpRect->w = this->destRect->w;
+int Ladder::getCount() {
+    return count;
+}
 
-
-    for(int i = 0; i < this->count; i++){
-        TextureManager::DrawTexture(texture,this->srcRect,tmpRect);
-        tmpRect->y -= this->destRect->h;
-    }
-
+const SDL_Rect *Ladder::getSrcRect() {
+    return srcRect;
 }

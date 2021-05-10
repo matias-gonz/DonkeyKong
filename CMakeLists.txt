@@ -21,8 +21,6 @@ set(SOURCE_FILES main.cpp
         src/view/viewManager.h
         src/model/Game.cpp
         src/model/Game.h
-        src/view/TextureLoader.cpp
-        src/view/TextureLoader.h
         src/view/TextureManager.cpp
         src/view/TextureManager.h
         src/model/Level.h
@@ -30,7 +28,19 @@ set(SOURCE_FILES main.cpp
         src/model/Platform.cpp
         src/model/Platform.h
         src/model/Ladder.h
-        src/model/Ladder.cpp src/model/PlatformMovement.cpp src/model/PlatformMovement.h src/model/Fire.cpp src/model/Fire.h)
+        src/model/Ladder.cpp )
+        src/model/PlatformMovement.cpp
+        src/model/PlatformMovement.h
+        src/model/Fire.cpp
+        src/model/Fire.h
+        src/controller/GameController.cpp
+        src/controller/GameController.h
+        src/controller/PlayerController.cpp
+        src/controller/PlayerController.h
+        src/view/LevelDrawer.cpp
+        src/view/LevelDrawer.h
+        src/view/Animator.cpp
+        src/view/Animator.h)
 
 
 # change to personal project name (as above)
