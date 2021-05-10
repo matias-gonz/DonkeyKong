@@ -31,7 +31,7 @@ void LevelDrawer::drawLadder(Ladder *ladder) {
     tmpRect->h = destRect->h;
     tmpRect->w = destRect->w;
 
-    SDL_Texture *ladderTexture = this->textureManager->loadLadderTexture();
+    SDL_Texture *ladderTexture = this->textureManager->getLadderTexture();
 
     for (int i = 0; i < ladder->getCount(); i++) {
         SDL_RenderCopy(this->renderer, ladderTexture, ladder->getSrcRect(), tmpRect);
@@ -48,7 +48,7 @@ void LevelDrawer::drawPlatform(Platform *platform) {
     tmpRect->h = destRect->h;
     tmpRect->w = destRect->w;
 
-    SDL_Texture *platformTexture = this->textureManager->loadPlatformTexture();
+    SDL_Texture *platformTexture = this->textureManager->getPlatformTexture();
 
     for (int i = 0; i < platform->getCount(); i++) {
         SDL_RenderCopy(this->renderer, platformTexture, platform->getSrcRect(), tmpRect);
@@ -64,7 +64,7 @@ void LevelDrawer::drawFire(Fire *fire) {
     tmpRect->h = destRect->h;
     tmpRect->w = destRect->w;
 
-    SDL_Texture *fireTexture = this->textureManager->loadFireTexture();
+    SDL_Texture *fireTexture = this->textureManager->getFireTexture();
 
     for (int i = 0; i < fire->getCount(); i++) {
         SDL_RenderCopy(this->renderer, fireTexture, fire->getSrcRect(), tmpRect);
