@@ -11,6 +11,7 @@ public:
     ~Game();
 
     void start();
+    void update();
 
     void quit();
 
@@ -24,6 +25,7 @@ private:
     Player* player = NULL;
     bool running;
     Level* level;
+
 };
 
 

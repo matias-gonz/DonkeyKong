@@ -52,3 +52,10 @@ SDL_Texture* TextureManager::loadLadderTexture(){
     if(texture == NULL) printf("No se cargo la textura de la escalera");
     return texture;
 }
+
+SDL_Texture* TextureManager::loadFireTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/fire.png");
+    if(texture == NULL) printf("No se cargo la textura del fuego");
+    return texture;
+}

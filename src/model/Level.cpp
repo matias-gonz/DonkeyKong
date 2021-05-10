@@ -5,11 +5,8 @@ Level::Level() {
     this->platformCount = 0;
     this->stairs = NULL;
     this->stairCount = 0;
-    this->stairTexture = TextureManager::LoadTexture("resources/sprites/yelstair.png");
     this->fires = NULL;
     this->fireCount = 0;
-    this->fireTexture = TextureManager::LoadTexture("resources/sprites/fire.png");
-
 }
 
 void Level::loadPlatforms(){
@@ -92,7 +89,7 @@ void Level::loadLevel() {
     this->loadFire();
 }
 
-int Level::getStairCount() {
+int Level::getLadderCount() {
     return stairCount;
 }
 
@@ -105,7 +102,7 @@ void Level::update(){
     }
 }
 
-Ladder *Level::getLedder(int i) {
+Ladder *Level::getLadder(int i) {
     return stairs[i];
 }
 
@@ -115,6 +112,14 @@ int Level::getPlatformCount() {
 
 Platform *Level::getPlatform(int i) {
     return platforms[i];
+}
+
+int Level::getFireCount() {
+    return fireCount;
+}
+
+Fire *Level::getFire(int i) {
+    return fires[i];
 }
 
 

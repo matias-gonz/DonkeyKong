@@ -19,21 +19,18 @@ Fire::Fire(Position position, int count) {
     this->count = count;
 }
 
-void Fire::draw(SDL_Texture *texture) {
-    SDL_Rect* tmpRect = new SDL_Rect();
-    tmpRect->x = this->destRect->x;
-    tmpRect->y = this->destRect->y;
-    tmpRect->h = this->destRect->h;
-    tmpRect->w = this->destRect->w;
-
-
-    for(int i = 0; i < this->count; i++){
-        TextureManager::DrawTexture(texture,this->srcRect,tmpRect);
-        tmpRect->x += this->destRect->w;
-    }
-
-}
-
 void Fire::update() {
     this->srcRect->x = this->srcRect->w*(rand()%4);
+}
+
+SDL_Rect *Fire::getDestRect() {
+    return destRect;
+}
+
+SDL_Rect *Fire::getSrcRect() {
+    return srcRect;
+}
+
+int Fire::getCount() {
+    return this->count;
 }

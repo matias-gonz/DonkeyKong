@@ -10,9 +10,10 @@
 class Fire {
 public:
     Fire(Position position, int count);
-    void draw(SDL_Texture* texture);
-
+    SDL_Rect *getDestRect();
+    SDL_Rect *getSrcRect();
     void update();
+    int getCount();
 
 private:
     Position pos;

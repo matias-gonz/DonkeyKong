@@ -15,13 +15,15 @@ public:
 
     void draw(Level* Level);
 
-    void drawLadder(Ladder *ladder);
+
 
 private:
     TextureManager *textureManager;
     SDL_Renderer *renderer;
 
+    void drawLadder(Ladder *ladder);
     void drawPlatform(Platform *pPlatform);
+    void drawFire(Fire *fire);
 };
 
 

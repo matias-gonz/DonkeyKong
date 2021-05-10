@@ -17,13 +17,14 @@ public:
     void drawLevel();
     void update();
 
-    int getStairCount();
-
-    Ladder *getLedder(int i);
+    int getLadderCount();
+    Ladder *getLadder(int i);
 
     int getPlatformCount();
-
     Platform *getPlatform(int i);
+
+    int getFireCount();
+    Fire *getFire(int i);
 
 private:
 
@@ -36,7 +37,6 @@ private:
 
     Fire** fires;
     int fireCount;
-    SDL_Texture* fireTexture;
 
     void loadPlatforms();
 

@@ -40,5 +40,6 @@ void GameController::handleEvents() {
 }
 
 void GameController::update() {
+    this->game->update();
     this->player->update();
 }

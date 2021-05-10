@@ -16,6 +16,8 @@ public:
 
     SDL_Texture* loadLadderTexture();
 
+    SDL_Texture* loadFireTexture();
+
 private:
     SDL_Renderer* renderer;
 
