@@ -21,6 +21,8 @@ public:
 
     Player* getPlayer();
 
+    void loadLevel(int i);
+
 private:
     Player* player = NULL;
     bool running;

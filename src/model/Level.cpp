@@ -9,8 +9,12 @@ Level::Level() {
     this->fireCount = 0;
 }
 
-void Level::loadPlatforms(){
-    FILE *file = fopen("src/model/levels/level1.txt", "r");
+void Level::loadPlatforms(int level) {
+    char* levelDir = "src/model/levels/level1.txt";
+    if(level == 2){
+        levelDir = "src/model/levels/level2.txt";
+    }
+    FILE *file = fopen(levelDir, "r");
 
     int x, dx, y, dy, count;
     int read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
@@ -27,8 +31,12 @@ void Level::loadPlatforms(){
     fclose(file);
 }
 
-void Level::loadMovPlatforms(){
-    FILE *file = fopen("src/model/levels/level1moveplat.txt", "r");
+void Level::loadMovPlatforms(int level) {
+    char* levelDir = "src/model/levels/level1moveplat.txt";
+    if(level == 2){
+        levelDir = "src/model/levels/level2moveplat.txt";
+    }
+    FILE *file = fopen(levelDir, "r");
 
     int x, dx, y, dy, count,direction;
     int read = fscanf(file, "%i;%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count, &direction);
@@ -46,8 +54,12 @@ void Level::loadMovPlatforms(){
     fclose(file);
 }
 
-void Level::loadStairs(){
-    FILE *file = fopen("src/model/levels/level1stairs.txt", "r");
+void Level::loadStairs(int level) {
+    char* levelDir = "src/model/levels/level1stairs.txt";
+    if(level == 2){
+        levelDir = "src/model/levels/level2stairs.txt";
+    }
+    FILE *file = fopen(levelDir, "r");
 
     int x, dx, y, dy, count;
     int read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
@@ -64,8 +76,12 @@ void Level::loadStairs(){
     fclose(file);
 }
 
-void Level::loadFire() {
-    FILE *file = fopen("src/model/levels/level1fire.txt", "r");
+void Level::loadFire(int level) {
+    char* levelDir = "src/model/levels/level1fire.txt";
+    if(level == 2){
+        levelDir = "src/model/levels/level2fire.txt";
+    }
+    FILE *file = fopen(levelDir, "r");
 
     int x, dx, y, dy, count;
     int read = fscanf(file, "%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count);
@@ -82,11 +98,12 @@ void Level::loadFire() {
     fclose(file);
 }
 
-void Level::loadLevel() {
-    this->loadPlatforms();
-    this->loadStairs();
-    this->loadMovPlatforms();
-    this->loadFire();
+void Level::loadLevel(int levelnum) {
+    this->reset();
+    this->loadPlatforms(levelnum);
+    this->loadStairs(levelnum);
+    this->loadMovPlatforms(levelnum);
+    this->loadFire(levelnum);
 }
 
 int Level::getLadderCount() {
@@ -120,6 +137,15 @@ int Level::getFireCount() {
 
 Fire *Level::getFire(int i) {
     return fires[i];
+}
+
+void Level::reset() {
+    this->platforms = NULL;
+    this->platformCount = 0;
+    this->stairs = NULL;
+    this->stairCount = 0;
+    this->fires = NULL;
+    this->fireCount = 0;
 }
 
 
