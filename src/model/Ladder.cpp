@@ -13,6 +13,11 @@ Ladder::Ladder(Position position, int count) {
     this->count = count;
 }
 
+Ladder::~Ladder() {
+    delete this->srcRect;
+    delete this->destRect;
+}
+
 SDL_Rect *Ladder::getDestRect() {
     return destRect;
 }

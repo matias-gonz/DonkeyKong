@@ -10,6 +10,7 @@
 class Fire {
 public:
     Fire(Position position, int count);
+    ~Fire();
     SDL_Rect *getDestRect();
     SDL_Rect *getSrcRect();
     void update();
