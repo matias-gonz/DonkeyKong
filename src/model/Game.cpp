@@ -2,7 +2,10 @@
 
 Game::Game() {}
 
-Game::~Game() {}
+Game::~Game() {
+    delete this->player;
+    delete this->level;
+}
 
 void Game::start(){
     this->running = true;

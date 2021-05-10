@@ -14,7 +14,6 @@ public:
     ~Level();
 
     void loadLevel(int levelnum);
-    void drawLevel();
     void update();
 
     int getLadderCount();
@@ -32,8 +31,8 @@ private:
     Platform** platforms;
     int platformCount;
 
-    Ladder** stairs;
-    int stairCount;
+    Ladder** ladders;
+    int ladderCount;
 
     Fire** fires;
     int fireCount;
@@ -47,6 +46,12 @@ private:
     void loadFire(int i);
 
     void reset();
+
+    void freePlaforms();
+
+    void freeLadders();
+
+    void freeFires();
 };
 
 
