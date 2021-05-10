@@ -32,7 +32,7 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->game = aGame;
     this->textureManager = new TextureManager(this->renderer);
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-    this->animator = new Animator(this->textureManager->loadPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
+    this->animator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
 }
 
 void ViewManager::showSDLError(char *message) {

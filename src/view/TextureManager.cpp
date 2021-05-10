@@ -3,6 +3,10 @@
 
 TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->renderer = aRenderer;
+    this->loadPlatformTexture();
+    this->loadLadderTexture();
+    this->loadFireTexture();
+    this->loadPlayerTexture();
 }
 
 SDL_Texture* TextureManager::loadTexture(const char *path) {
@@ -32,30 +36,47 @@ SDL_Texture* TextureManager::loadTexture(const char *path) {
     return newTexture;
 }
 
-SDL_Texture* TextureManager::loadPlayerTexture(){
+void TextureManager::loadPlayerTexture(){
     SDL_Texture* textura =NULL;
     textura = this->loadTexture("resources/sprites/sans_walk.png");
     if(textura == NULL) printf("No se cargo la textura del personaje");
-    return textura;
+    this->playerTexture = textura;
 }
 
-SDL_Texture* TextureManager::loadPlatformTexture(){
+void TextureManager::loadPlatformTexture(){
     SDL_Texture* texture =NULL;
     texture = this->loadTexture("resources/sprites/blueplat.png");
     if(texture == NULL) printf("No se cargo la textura de la plataforma");
-    return texture;
+    this->platformTexture =  texture;
 }
 
-SDL_Texture* TextureManager::loadLadderTexture(){
+void TextureManager::loadLadderTexture(){
     SDL_Texture* texture =NULL;
     texture = this->loadTexture("resources/sprites/yelstair.png");
     if(texture == NULL) printf("No se cargo la textura de la escalera");
-    return texture;
+    this->ladderTexture = texture;
 }
 
-SDL_Texture* TextureManager::loadFireTexture(){
+void TextureManager::loadFireTexture(){
     SDL_Texture* texture =NULL;
     texture = this->loadTexture("resources/sprites/fire.png");
     if(texture == NULL) printf("No se cargo la textura del fuego");
-    return texture;
+    this->fireTexture =  texture;
 }
+
+SDL_Texture *TextureManager::getPlatformTexture() {
+    return this->platformTexture;
+}
+
+SDL_Texture *TextureManager::getLadderTexture() {
+    return this->ladderTexture;
+}
+
+SDL_Texture *TextureManager::getFireTexture() {
+    return this->fireTexture;
+}
+
+SDL_Texture *TextureManager::getPlayerTexture() {
+    return this->playerTexture;
+}
+
