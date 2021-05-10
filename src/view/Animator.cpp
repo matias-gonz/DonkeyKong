@@ -28,9 +28,6 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
 }
 
-void Animator::start() {
-
-}
 
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
     int amount = 0;

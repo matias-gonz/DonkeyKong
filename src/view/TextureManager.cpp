@@ -34,7 +34,7 @@ SDL_Texture* TextureManager::loadTexture(const char *path) {
 
 SDL_Texture* TextureManager::loadPlayerTexture(){
     SDL_Texture* textura =NULL;
-    textura = this->loadTexture("resources/sprites/sans_left.png");
+    textura = this->loadTexture("resources/sprites/sans_walk.png");
     if(textura == NULL) printf("No se cargo la textura del personaje");
     return textura;
 }

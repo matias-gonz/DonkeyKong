@@ -17,7 +17,7 @@ class Player {
 
     public:
         static const int VEL = 5;
-        explicit Player();
+        Player();
 
         void addLeftVel();
 
@@ -33,7 +33,11 @@ class Player {
 
         double getYPosition();
 
+        Position* getPos();
 
+        int getDistance();
+
+        int getDirection();
 };
 
 

@@ -1,6 +1,15 @@
 #include "viewManager.h"
 
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
+const int LEFTSTARTW = 0;
+const int LEFTSTARTH = 0;
+const int RIGHTSTARTW = 0;
+const int RIGHTSTARTH = 52;
+const int SEPARATIONW = 5;
+const int texW = 17;
+const int texH = 30;
+
+ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
+        : animator(nullptr) {
     this->screen_width = width;
     this->screen_height = height;
 
@@ -23,6 +32,7 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->game = aGame;
     this->textureManager = new TextureManager(this->renderer);
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
+    this->animator = new Animator(this->textureManager->loadPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -100,9 +110,11 @@ void ViewManager::renderWindow() {
 
     //render player
     Player *player = game->getPlayer();
-    SDL_Rect dstrect = {static_cast<int>(player->getXPosition()), static_cast<int>(player->getYPosition()), 25, 50};
-    SDL_RenderCopy(this->renderer, this->textureManager->loadPlayerTexture(), NULL, &dstrect);
+    Position* playerPos = player->getPos();
+    int direction = player->getDirection();
+    int distance = player->getDistance();
 
+    this->animator->draw(this->renderer,direction,playerPos,distance);
 
     SDL_RenderPresent(renderer);
 }

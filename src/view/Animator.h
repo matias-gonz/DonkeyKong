@@ -20,7 +20,6 @@ private:
     SDL_Texture* texture;//sprite sheet
 public:
     Animator();
-    void start();
     void draw(SDL_Renderer *pRenderer, int direction,Position* pos,int distance);
     SDL_Rect updateAnimation(int direction,int distance);
 
