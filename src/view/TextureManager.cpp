@@ -9,6 +9,13 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadPlayerTexture();
 }
 
+TextureManager::~TextureManager() {
+    delete this->playerTexture;
+    delete this->platformTexture;
+    delete this->ladderTexture;
+    delete this->fireTexture;
+}
+
 SDL_Texture* TextureManager::loadTexture(const char *path) {
     //The final texture
     SDL_Texture* newTexture = NULL;

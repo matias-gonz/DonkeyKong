@@ -7,6 +7,7 @@ class TextureManager {
 
 public:
     TextureManager(SDL_Renderer* aRenderer);
+    ~TextureManager();
 
     SDL_Texture* loadTexture(const char* file);
 
