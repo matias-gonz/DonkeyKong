@@ -25,6 +25,9 @@ void GameController::handleEvents() {
             case SDLK_UP:
                 player->jumpUp();
                 break;
+            case SDLK_l:
+                this->game->loadLevel(2);
+                break;
         }
     }
     if (event.type == SDL_KEYUP) {

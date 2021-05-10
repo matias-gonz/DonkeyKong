@@ -7,7 +7,7 @@ Game::~Game() {}
 void Game::start(){
     this->running = true;
     this->level = new Level();
-    this->level->loadLevel();
+    this->loadLevel(1);
     this->player = new Player();
 }
 
@@ -31,5 +31,9 @@ Level* Game::getLevel(){
 
 Player* Game::getPlayer() {
     return this->player;
+}
+
+void Game::loadLevel(int levelnum) {
+    this->level->loadLevel(levelnum);
 }
 

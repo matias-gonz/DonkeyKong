@@ -13,7 +13,7 @@ public:
     Level();
     ~Level();
 
-    void loadLevel();
+    void loadLevel(int levelnum);
     void drawLevel();
     void update();
 
@@ -38,13 +38,15 @@ private:
     Fire** fires;
     int fireCount;
 
-    void loadPlatforms();
+    void loadPlatforms(int i);
 
-    void loadStairs();
+    void loadStairs(int i);
 
-    void loadMovPlatforms();
+    void loadMovPlatforms(int i);
 
-    void loadFire();
+    void loadFire(int i);
+
+    void reset();
 };
 
 
