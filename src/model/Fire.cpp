@@ -19,6 +19,11 @@ Fire::Fire(Position position, int count) {
     this->count = count;
 }
 
+Fire::~Fire() {
+    delete this->srcRect;
+    delete this->destRect;
+}
+
 void Fire::update() {
     this->srcRect->x = this->srcRect->w*(rand()%4);
 }

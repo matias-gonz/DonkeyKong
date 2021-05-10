@@ -17,9 +17,7 @@ class Platform {
 public:
 
     Platform(Position position, int count, bool moving);
-
-
-    Platform(Position position, int count);
+    ~Platform();
 
     SDL_Rect *getDestRect();
 
@@ -31,7 +29,6 @@ public:
     void update();
 
 private:
-    Position pos;
     int count;
     SDL_Rect* srcRect;
     SDL_Rect* destRect;

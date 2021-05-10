@@ -14,6 +14,12 @@ Platform::Platform(Position position, int count, bool moving) {
     this->movement = new PlatformMovement(moving);
 }
 
+Platform::~Platform() {
+    delete this->srcRect;
+    delete this->destRect;
+    delete this->movement;
+}
+
 SDL_Rect *Platform::getDestRect() {
     return destRect;
 }
