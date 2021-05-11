@@ -40,11 +40,6 @@ private:
     TextureManager* textureManager;
 
     int enemiesCount;
-    struct enemy {
-      Enemy* enemyType;
-      int quantity;
-    };
-    struct enemy enemies[];
 
     void setTextureLinear();
 

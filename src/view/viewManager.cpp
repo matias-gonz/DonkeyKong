@@ -113,11 +113,3 @@ void ViewManager::setEnemiesCount(int numberEnemies) {
 int ViewManager::getEnemiesCount() {
   return this->getEnemiesCount();
 }
-
-void ViewManager::setEnemies(Enemy *enemy, int quantity) {
-  size_t i;
-  for(i = 0; i < this->getEnemiesCount(); i++) {
-    this->enemies[i].enemyType = enemy;
-    this->enemies[i].quantity = quantity;
-  }
-}
