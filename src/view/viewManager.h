@@ -9,7 +9,6 @@
 #include "ltexture.h"
 #include "../model/Level.h"
 #include "../model/Game.h"
-#include "../model/Enemy.h"
 
 class ViewManager {
 public:
@@ -26,8 +25,6 @@ public:
     void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
 
     void renderWindow();
-
-    void setEnemies(Enemy* enemy, int quantity);
 
     void setEnemiesCount(int numberEnemies);
 

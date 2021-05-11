@@ -20,16 +20,13 @@ int main(int argc, char* args[] ) {
 
     GameController* gameController = new GameController(game);
     ViewManager* viewManager = new ViewManager(game);
+    Configuration* configuration = new Configuration();
 
     while (game->isRunning()) {
         gameController->handleEvents();
         gameController->update();
         viewManager->renderWindow();
     }
-
-
-    Configuration* configuration = new Configuration();
-    std::cout << to_string(configuration->log.at("level")) + "\n";
 
     return 0;
 }

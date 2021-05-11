@@ -13,15 +13,6 @@ Configuration::Configuration() {
 
 void Configuration::setGameConfig(json &game_json) {
   this->game = configuration_json.at("game");
-
-  /* json enemies = game.at("enemies");
-  std::string enemyType = to_string(enemies.at("type"));
-  // TODO: Check enemy types
-  */
-  if(enemyType != "") {
-    enemy->setType(enemyType);
-  }
-
 }
 
 void Configuration::setLogConfig(json &log_json) {

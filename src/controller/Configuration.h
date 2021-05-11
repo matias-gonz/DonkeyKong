@@ -4,21 +4,17 @@
 #include <fstream>
 
 #include "../../resources/libraries/json.hpp"
-#include "../model/Enemy.h"
-#include "../view/viewManager.h"
 
 using json = nlohmann::json;
 
 class Configuration {
 public:
   Configuration();
-  json log;
 
 private:
   json configuration_json;
   json game;
-  Enemy* enemy;
-  ViewManager* viewManager;
+  json log;
 
   void setGameConfig(json& game_json);
 
