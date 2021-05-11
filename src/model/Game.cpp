@@ -11,7 +11,7 @@ void Game::start(){
     this->running = true;
     this->level = new Level();
     this->loadLevel(1);
-    this->player = new Player();
+    this->player = new Player(new Position(200,200));
 }
 
 
