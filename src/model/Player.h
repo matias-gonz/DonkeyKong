@@ -4,17 +4,20 @@
 
 
 #include "Position.h"
+#include "../view/Animator.h"
 
 class Player {
     private:
-        Position pos = Position(0, 576);
+        Position pos = Position(200, 200);
         bool isGrounded;
         int velX;
         int velY;
+        int distance;
+        int kindOfAnimation;
 
     public:
-        static const int VEL = 1;
-        explicit Player();
+        static const int VEL = 5;
+        Player();
 
         void addLeftVel();
 
@@ -30,7 +33,11 @@ class Player {
 
         double getYPosition();
 
+        Position* getPos();
 
+        int getDistance();
+
+        int getDirection();
 };
 
 

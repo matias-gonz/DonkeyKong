@@ -29,12 +29,20 @@ set(SOURCE_FILES main.cpp
         src/model/Platform.h
         src/model/Ladder.h
         src/model/Ladder.cpp
-        src/controller/Configuration.cpp
-        src/controller/Configuration.h
+        src/model/PlatformMovement.cpp
+        src/model/PlatformMovement.h
+        src/model/Fire.cpp
+        src/model/Fire.h
         src/controller/GameController.cpp
         src/controller/GameController.h
         src/controller/PlayerController.cpp
-        src/controller/PlayerController.h)
+        src/controller/PlayerController.h
+        src/view/LevelDrawer.cpp
+        src/view/LevelDrawer.h
+        src/controller/Configuration.cpp
+        src/controller/Configuration.h
+        src/view/Animator.cpp
+        src/view/Animator.h)
 
 
 # change to personal project name (as above)

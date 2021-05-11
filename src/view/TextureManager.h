@@ -7,18 +7,32 @@ class TextureManager {
 
 public:
     TextureManager(SDL_Renderer* aRenderer);
+    ~TextureManager();
 
-    static SDL_Texture* LoadTexture(const char* file);
+    SDL_Texture* loadTexture(const char* file);
 
-    static void DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+    SDL_Texture* getPlayerTexture();
 
-    SDL_Texture* LoadTexture(const char *path, SDL_Renderer *aRenderer);
+    SDL_Texture* getPlatformTexture();
 
-    SDL_Texture* loadPlayerTexture();
+    SDL_Texture* getLadderTexture();
+
+    SDL_Texture* getFireTexture();
+
 
 private:
     SDL_Renderer* renderer;
 
+
+    void loadPlayerTexture();
+    void loadPlatformTexture();
+    void loadLadderTexture();
+    void loadFireTexture();
+
+    SDL_Texture *playerTexture;
+    SDL_Texture *platformTexture;
+    SDL_Texture *ladderTexture;
+    SDL_Texture *fireTexture;
 };
 
 

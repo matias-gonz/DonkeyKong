@@ -1,22 +1,27 @@
 #include "Game.h"
 
-
-SDL_Renderer *Game::renderer = NULL;
-
 Game::Game() {}
 
-Game::~Game() {}
+Game::~Game() {
+    delete this->player;
+    delete this->level;
+}
 
 void Game::start(){
     this->running = true;
     this->level = new Level();
-    this->level->loadLevel();
+    this->loadLevel(1);
     this->player = new Player();
 }
 
 
 void Game::quit() {
     running = false;
+}
+
+
+void Game::update() {
+    this->level->update();
 }
 
 bool Game::isRunning() {
@@ -29,5 +34,9 @@ Level* Game::getLevel(){
 
 Player* Game::getPlayer() {
     return this->player;
+}
+
+void Game::loadLevel(int levelnum) {
+    this->level->loadLevel(levelnum);
 }
 

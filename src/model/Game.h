@@ -11,28 +11,23 @@ public:
     ~Game();
 
     void start();
-
-    void handleEvents();
-
     void update();
-
-    void render();
 
     void quit();
 
     bool isRunning();
 
-    static SDL_Renderer* renderer;
-    Player* player = NULL;
-
-
     Level* getLevel();
 
     Player* getPlayer();
 
+    void loadLevel(int i);
+
 private:
+    Player* player = NULL;
     bool running;
     Level* level;
+
 };
 
 

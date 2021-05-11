@@ -3,15 +3,20 @@
 
 TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->renderer = aRenderer;
+    this->loadPlatformTexture();
+    this->loadLadderTexture();
+    this->loadFireTexture();
+    this->loadPlayerTexture();
 }
 
-SDL_Texture* TextureManager::LoadTexture(const char *file) {
-    SDL_Surface* tmpSurface = IMG_Load(file);
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::renderer,tmpSurface);
-    SDL_FreeSurface(tmpSurface);
-    return texture;
+TextureManager::~TextureManager() {
+    delete this->playerTexture;
+    delete this->platformTexture;
+    delete this->ladderTexture;
+    delete this->fireTexture;
 }
-SDL_Texture* TextureManager::LoadTexture(const char* path,SDL_Renderer* aRenderer ) {
+
+SDL_Texture* TextureManager::loadTexture(const char *path) {
     //The final texture
     SDL_Texture* newTexture = NULL;
 
@@ -20,7 +25,7 @@ SDL_Texture* TextureManager::LoadTexture(const char* path,SDL_Renderer* aRendere
     if( loadedSurface != NULL )
     {
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(aRenderer, loadedSurface );
+        newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface );
         if( newTexture == NULL )
         {
             printf( "Unable to create texture from %s! SDL SDL_Renderer*Error: %s\n", path, SDL_GetError() );
@@ -37,10 +42,48 @@ SDL_Texture* TextureManager::LoadTexture(const char* path,SDL_Renderer* aRendere
 
     return newTexture;
 }
-void TextureManager::DrawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect) {
-    SDL_RenderCopy(Game::renderer,texture,srcRect,destRect);
+
+void TextureManager::loadPlayerTexture(){
+    SDL_Texture* textura =NULL;
+    textura = this->loadTexture("resources/sprites/sans_walk.png");
+    if(textura == NULL) printf("No se cargo la textura del personaje");
+    this->playerTexture = textura;
 }
 
-SDL_Texture* TextureManager::loadPlayerTexture(){
-    return TextureManager::LoadTexture("resources/sprites/sans_left.png");
+void TextureManager::loadPlatformTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/blueplat.png");
+    if(texture == NULL) printf("No se cargo la textura de la plataforma");
+    this->platformTexture =  texture;
 }
+
+void TextureManager::loadLadderTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/yelstair.png");
+    if(texture == NULL) printf("No se cargo la textura de la escalera");
+    this->ladderTexture = texture;
+}
+
+void TextureManager::loadFireTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/fire.png");
+    if(texture == NULL) printf("No se cargo la textura del fuego");
+    this->fireTexture =  texture;
+}
+
+SDL_Texture *TextureManager::getPlatformTexture() {
+    return this->platformTexture;
+}
+
+SDL_Texture *TextureManager::getLadderTexture() {
+    return this->ladderTexture;
+}
+
+SDL_Texture *TextureManager::getFireTexture() {
+    return this->fireTexture;
+}
+
+SDL_Texture *TextureManager::getPlayerTexture() {
+    return this->playerTexture;
+}
+

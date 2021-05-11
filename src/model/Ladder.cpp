@@ -2,8 +2,6 @@
 
 Ladder::Ladder(Position position, int count) {
     this->srcRect = NULL;
-    this->destRect = NULL;
-
     this->destRect = new SDL_Rect();
 
     this->destRect->x = position.getX();
@@ -15,18 +13,19 @@ Ladder::Ladder(Position position, int count) {
     this->count = count;
 }
 
-void Ladder::draw(SDL_Texture *texture) {
+Ladder::~Ladder() {
+    delete this->srcRect;
+    delete this->destRect;
+}
 
-    SDL_Rect* tmpRect = new SDL_Rect();
-    tmpRect->x = this->destRect->x;
-    tmpRect->y = this->destRect->y;
-    tmpRect->h = this->destRect->h;
-    tmpRect->w = this->destRect->w;
+SDL_Rect *Ladder::getDestRect() {
+    return destRect;
+}
 
+int Ladder::getCount() {
+    return count;
+}
 
-    for(int i = 0; i < this->count; i++){
-        TextureManager::DrawTexture(texture,this->srcRect,tmpRect);
-        tmpRect->y -= this->destRect->h;
-    }
-
+const SDL_Rect *Ladder::getSrcRect() {
+    return srcRect;
 }

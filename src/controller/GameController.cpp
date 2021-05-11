@@ -2,7 +2,7 @@
 
 GameController::GameController(Game* aGame){
     this->game = aGame;
-    this->player = new Player();
+    this->player = game->getPlayer();
 }
 void GameController::handleEvents() {
     SDL_Event event;
@@ -25,6 +25,9 @@ void GameController::handleEvents() {
             case SDLK_UP:
                 player->jumpUp();
                 break;
+            case SDLK_l:
+                this->game->loadLevel(2);
+                break;
         }
     }
     if (event.type == SDL_KEYUP) {
@@ -40,5 +43,6 @@ void GameController::handleEvents() {
 }
 
 void GameController::update() {
-    player->update();
+    this->game->update();
+    this->player->update();
 }
