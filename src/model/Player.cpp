@@ -5,23 +5,17 @@
 #include "Position.h"
 enum kindOfAnimation { left, right};
 
-Player::Player(){
-    velX = 0;
-    velY = 0;
-    isGrounded = true;
-    kindOfAnimation = right;
-    distance = 0;
+Player::Player(Position* pos) : Entity(pos) {
+    this->pos = pos;
 }
-
-
 void Player::update() {
 
-    if (!isGrounded && pos.getY() > 200) {
-        pos.setY(200);
+    if (!isGrounded && pos->getY() > 200) {
+        pos->setY(200);
         velY = 0;
         isGrounded = true;
     }
-    pos.add(velX, velY);
+    pos->add(velX, velY);
     distance += abs(velX);
     if (distance > 70){ distance = 0;}
 
@@ -56,23 +50,3 @@ void Player::resetVel() {
     this->velX = 0;
 }
 
-double Player::getXPosition(){
-    return pos.getX();
-}
-
-
-double Player::getYPosition(){
-    return pos.getY();
-}
-
-Position* Player::getPos() {
-    return &pos;
-}
-
-int Player::getDistance() {
-    return distance;
-}
-
-int Player::getDirection() {
-    return kindOfAnimation;
-}
