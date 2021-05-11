@@ -118,3 +118,11 @@ void ViewManager::renderWindow() {
 
     SDL_RenderPresent(renderer);
 }
+
+void ViewManager::setEnemiesCount(int numberEnemies) {
+  this->enemiesCount = numberEnemies;
+}
+
+int ViewManager::getEnemiesCount() {
+  return this->getEnemiesCount();
+}

@@ -28,6 +28,9 @@ public:
 
     void renderWindow();
 
+    void setEnemiesCount(int numberEnemies);
+
+    int getEnemiesCount();
 
 private:
     SDL_Renderer *renderer;
@@ -40,6 +43,8 @@ private:
     LevelDrawer* levelDrawer;
     Animator* animator;
 
+    int enemiesCount;
+
     void setTextureLinear();
 
     void showSDLError(char *message);
@@ -49,6 +54,7 @@ private:
     void createRenderer();
 
     void initializeRendererColor();
+
 
 };
 

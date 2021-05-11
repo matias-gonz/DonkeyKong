@@ -39,6 +39,8 @@ set(SOURCE_FILES main.cpp
         src/controller/PlayerController.h
         src/view/LevelDrawer.cpp
         src/view/LevelDrawer.h
+        src/controller/Configuration.cpp
+        src/controller/Configuration.h
         src/view/Animator.cpp
         src/view/Animator.h)
 
