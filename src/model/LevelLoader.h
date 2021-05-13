@@ -18,6 +18,7 @@ public:
 
     void loadLevel(int level, Platform*** platforms, Ladder*** ladders, Fire*** fires, int* platformCount, int* ladderCount, int* fireCount);
 
+    void writeJSON();
 
     Platform **loadPlatforms(char *levelDir, int *platformCount);
 

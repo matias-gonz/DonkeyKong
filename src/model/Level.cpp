@@ -39,11 +39,7 @@ void Level::loadMovPlatforms(int level) {
     }
     fclose(file);
 }
-
-
-
-
- */
+*/
 
 void Level::loadLevel(int levelnum) {
     this->reset();
