@@ -16,38 +16,11 @@ Level::~Level(){
     delete this->loader;
 }
 
-/*
-void Level::loadMovPlatforms(int level) {
-    char* levelDir = "src/model/levels/level1moveplat.txt";
-    if(level == 2){
-        levelDir = "src/model/levels/level2moveplat.txt";
-    }
-    FILE *file = fopen(levelDir, "r");
-
-    int x, dx, y, dy, count,direction;
-    int read = fscanf(file, "%i;%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count, &direction);
-    while (read == 6) {
-        this->platforms = (Platform **) (realloc(this->platforms, (this->platformCount + 1) * sizeof(Platform *)));
-        Position pos;
-        pos.setX(x * 32 + dx);
-        pos.setY(HEIGHT - (1 + y) * 21 - dy);
-        Platform *platform = new Platform(pos, count,true);
-        this->platforms[this->platformCount] = platform;
-        this->platformCount++;
-        read = fscanf(file, "%i;%i;%i;%i;%i;%i\n", &x, &dx, &y, &dy, &count, &direction);
-
-    }
-    fclose(file);
-}
-*/
 
 void Level::loadLevel(int levelnum) {
     this->reset();
     this->loader->loadLevel(levelnum,&this->platforms,&this->ladders,&this->fires,&this->platformCount,&this->ladderCount,&this->fireCount);
-    //this->loadPlatforms(levelnum);
-    //this->loadStairs(levelnum);
-    //this->loadMovPlatforms(levelnum);
-    //this->loadFire(levelnum);
+
 }
 
 int Level::getLadderCount() {

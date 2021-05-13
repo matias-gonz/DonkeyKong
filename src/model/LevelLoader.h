@@ -18,13 +18,13 @@ public:
 
     void loadLevel(int level, Platform*** platforms, Ladder*** ladders, Fire*** fires, int* platformCount, int* ladderCount, int* fireCount);
 
-    void writeJSON();
+    Platform **loadPlatforms(json jsonLevel, int *platformCount);
 
-    Platform **loadPlatforms(char *levelDir, int *platformCount);
+    Ladder **loadLadders(json jsonLevel, int *ladderCount);
 
-    Ladder **loadLadders(char *levelDir, int *ladderCount);
+    Fire **loadFire(json jsonLevel, int *fireCount);
 
-    Fire **loadFire(char *levelDir, int *fireCount);
+    //void writeJSON();
 };
 
 
