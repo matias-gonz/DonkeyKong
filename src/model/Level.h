@@ -6,6 +6,7 @@
 #include "Ladder.h"
 #include "../view/TextureManager.h"
 #include "Fire.h"
+#include "LevelLoader.h"
 
 class Level {
 
@@ -37,13 +38,7 @@ private:
     Fire** fires;
     int fireCount;
 
-    void loadPlatforms(int i);
-
-    void loadStairs(int i);
-
-    void loadMovPlatforms(int i);
-
-    void loadFire(int i);
+    LevelLoader* loader;
 
     void reset();
 

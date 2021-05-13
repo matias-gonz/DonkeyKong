@@ -16,7 +16,7 @@ class Platform {
 
 public:
 
-    Platform(Position position, int count, bool moving);
+    Platform(Position position, int count, int direction);
     ~Platform();
 
     SDL_Rect *getDestRect();
