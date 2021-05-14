@@ -1,8 +1,7 @@
-#include "barrel.h"
+#include "Barrel.h"
 
 
-Barrel::Barrel()
-{
+Barrel::Barrel() {
     //Initialize the offsets
     posX = 200;
     posY = 0;
@@ -11,8 +10,8 @@ Barrel::Barrel()
     velX = 1;
     velY = 1;
 }
-Barrel::Barrel(LTexture bTexture)
-{
+
+Barrel::Barrel(LTexture bTexture) {
     //Initialize the offsets
     posX = 200;
     posY = 0;
@@ -20,21 +19,19 @@ Barrel::Barrel(LTexture bTexture)
     //Initialize the velocity
     velX = 1;
     velY = 1;
-    this->barrelTexture=bTexture;
+    this->barrelTexture = bTexture;
 }
 
-void Barrel::move()
-{
+void Barrel::move() {
     //Move the dot down
     posY += velY;
 }
 
-void Barrel::render()
-{
+void Barrel::render() {
     //Show the dot
-    barrelTexture.render(posX, posY );
+    barrelTexture.render(posX, posY);
 }
 
-void Barrel:: setTexture(LTexture* bTexture){
+void Barrel::setTexture(LTexture *bTexture) {
     this->barrelTexture = *bTexture;
 }
