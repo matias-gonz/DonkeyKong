@@ -9,7 +9,8 @@ Level::Level() {
     this->fireCount = 0;
     this->loader = new LevelLoader();
 }
-Level::~Level(){
+
+Level::~Level() {
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();
@@ -19,7 +20,8 @@ Level::~Level(){
 
 void Level::loadLevel(int levelnum) {
     this->reset();
-    this->loader->loadLevel(levelnum,&this->platforms,&this->ladders,&this->fires,&this->platformCount,&this->ladderCount,&this->fireCount);
+    this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->platformCount,
+                            &this->ladderCount, &this->fireCount);
 
 }
 
@@ -27,7 +29,7 @@ int Level::getLadderCount() {
     return ladderCount;
 }
 
-void Level::update(){
+void Level::update() {
     for (int i = 0; i < this->platformCount; i++) {
         this->platforms[i]->update();
     }
@@ -69,21 +71,21 @@ void Level::reset() {
 }
 
 void Level::freePlaforms() {
-    for(int i; i < this->platformCount; i++){
+    for (int i = 0; i < this->platformCount; i++) {
         delete this->platforms[i];
     }
     free(this->platforms);
 }
 
 void Level::freeLadders() {
-    for(int i; i < this->ladderCount; i++){
+    for (int i = 0; i < this->ladderCount; i++) {
         delete this->ladders[i];
     }
     free(this->ladders);
 }
 
 void Level::freeFires() {
-    for(int i; i < this->fireCount; i++){
+    for (int i = 0; i < this->fireCount; i++) {
         delete this->fires[i];
     }
     free(this->fires);

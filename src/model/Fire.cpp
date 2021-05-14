@@ -12,7 +12,7 @@ Fire::Fire(Position position, int count) {
 
     this->destRect->x = position.getX();
     this->destRect->y = position.getY();
-    this->destRect->w = WIDTH/32;
+    this->destRect->w = WIDTH / 32;
     this->destRect->h = this->destRect->w;
 
 
@@ -25,7 +25,7 @@ Fire::~Fire() {
 }
 
 void Fire::update() {
-    this->srcRect->x = this->srcRect->w*(rand()%4);
+    this->srcRect->x = this->srcRect->w * (rand() % 4);
 }
 
 SDL_Rect *Fire::getDestRect() {

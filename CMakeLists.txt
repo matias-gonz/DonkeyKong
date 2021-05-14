@@ -13,12 +13,12 @@ set(SOURCE_FILES main.cpp
         src/model/Player.h
         src/model/Position.cpp
         src/model/Position.h
-        src/model/barrel.cpp
-        src/model/barrel.h
+        src/model/Barrel.cpp
+        src/model/Barrel.h
         src/view/ltexture.cpp
         src/view/ltexture.h
-        src/view/viewManager.cpp
-        src/view/viewManager.h
+        src/view/ViewManager.cpp
+        src/view/ViewManager.h
         src/model/Game.cpp
         src/model/Game.h
         src/view/TextureManager.cpp

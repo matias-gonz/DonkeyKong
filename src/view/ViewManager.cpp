@@ -1,4 +1,4 @@
-#include "viewManager.h"
+#include "ViewManager.h"
 
 const int LEFTSTARTW = 0;
 const int LEFTSTARTH = 0;

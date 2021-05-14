@@ -6,8 +6,7 @@
 #include "../view/ltexture.h"
 
 //The dot that will move around on the screen
-class Barrel
-{
+class Barrel {
 public:
     //The dimensions of the dot
     static const int DOT_WIDTH = 20;
@@ -28,7 +27,7 @@ public:
     //Shows the dot on the screen
     void render();
 
-    void setTexture(LTexture* bTexture);
+    void setTexture(LTexture *bTexture);
 
 private:
     //The X and Y offsets of the dot
