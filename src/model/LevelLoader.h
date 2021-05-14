@@ -6,6 +6,7 @@
 #include "../../resources/libraries/json.hpp"
 #include "Platform.h"
 #include "Ladder.h"
+#include "barrel.h"
 #include "Fire.h"
 
 using json = nlohmann::json;
@@ -16,13 +17,15 @@ public:
     LevelLoader();
     ~LevelLoader();
 
-    void loadLevel(int level, Platform*** platforms, Ladder*** ladders, Fire*** fires, int* platformCount, int* ladderCount, int* fireCount);
+    void loadLevel(int level, Platform*** platforms, Ladder*** ladders, Fire*** fires, Barrel*** barrels, int* platformCount, int* ladderCount, int* fireCount, int* barrelCount);
 
     Platform **loadPlatforms(json jsonLevel, int *platformCount);
 
     Ladder **loadLadders(json jsonLevel, int *ladderCount);
 
     Fire **loadFire(json jsonLevel, int *fireCount);
+
+    Barrel **loadBarrel(json jsonLevel, int *levelCount);
 
     //void writeJSON();
 };

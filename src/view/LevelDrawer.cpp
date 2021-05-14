@@ -19,6 +19,10 @@ void LevelDrawer::draw(Level *level) {
         Fire *aFire = level->getFire(i);
         this->drawFire(aFire);
     }
+    for (int i=0; i < level-> getBarrelCount(); i++){
+        Barrel *aBarrel = level->getBarrel(i);
+        this->drawBarrel(aBarrel);
+    }
 
 }
 
@@ -71,4 +75,21 @@ void LevelDrawer::drawFire(Fire *fire) {
         tmpRect->x += destRect->w;
     }
 }
+
+void LevelDrawer::drawBarrel(Barrel *barrel) {
+    SDL_Rect *destRect = barrel->getDestRect();
+    SDL_Rect *tmpRect = new SDL_Rect();
+    tmpRect->x = destRect->x;
+    tmpRect->y = destRect->y;
+    tmpRect->h = destRect->h;
+    tmpRect->w = destRect->w;
+
+    SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
+
+    for (int i = 0; i < barrel->getCount(); i++) {
+        SDL_RenderCopy(this->renderer, barrelTexture, barrel->getSrcRect(), tmpRect);
+        tmpRect->x += destRect->w;
+    }
+}
+
 

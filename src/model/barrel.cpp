@@ -4,13 +4,52 @@
 Barrel::Barrel()
 {
     //Initialize the offsets
-    posX = 200;
-    posY = 0;
+    //posX = 200;
+    //posY = 0;
 
     //Initialize the velocity
-    velX = 1;
-    velY = 1;
+    //velX = 1;
+    //velY = 1;
 }
+Barrel::Barrel(Position position, int count, int direction){
+    this->srcRect = NULL;
+    this->destRect = new SDL_Rect();
+
+    this->destRect->x = position.getX();
+    this->destRect->y = position.getY();
+    this->destRect->w = WIDTH/32;
+    this->destRect->h = this->destRect->w/1.5;
+    this->count = count;
+    this->movement = new BarrelMovement(direction);
+}
+Barrel::~Barrel() {
+    delete this->srcRect;
+    delete this->destRect;
+    delete this->movement;
+}
+
+void Barrel::update() {
+    if(movement){
+        movement->update(this->destRect);
+    }
+}
+
+SDL_Rect *Barrel::getDestRect() {
+    return destRect;
+}
+
+SDL_Rect *Barrel::getSrcRect() {
+    return srcRect;
+}
+
+int Barrel::getCount() {
+    return this->count;
+}
+
+
+
+
+/*
 Barrel::Barrel(LTexture bTexture)
 {
     //Initialize the offsets
@@ -38,3 +77,5 @@ void Barrel::render()
 void Barrel:: setTexture(LTexture* bTexture){
     this->barrelTexture = *bTexture;
 }
+
+*/

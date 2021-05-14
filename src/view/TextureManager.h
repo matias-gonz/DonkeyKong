@@ -19,6 +19,8 @@ public:
 
     SDL_Texture* getFireTexture();
 
+    SDL_Texture* getBarrelTexture();
+
 
 private:
     SDL_Renderer* renderer;
@@ -28,11 +30,13 @@ private:
     void loadPlatformTexture();
     void loadLadderTexture();
     void loadFireTexture();
+    void loadBarrelTexture();
 
     SDL_Texture *playerTexture;
     SDL_Texture *platformTexture;
     SDL_Texture *ladderTexture;
     SDL_Texture *fireTexture;
+    SDL_Texture *barrelTexture;
 };
 
 

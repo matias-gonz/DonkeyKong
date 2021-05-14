@@ -6,8 +6,8 @@ LevelLoader::LevelLoader() {}
 
 LevelLoader::~LevelLoader() {}
 
-void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, int *platformCount,
-                            int *ladderCount, int *fireCount) {
+void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, Barrel ***barrels, int *platformCount,
+                            int *ladderCount, int *fireCount, int *barrelCount) {
 
     //this->writeJSON();
     json jsonLevel;
@@ -22,6 +22,7 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
     *platforms = this->loadPlatforms(jsonLevel,platformCount);
     *ladders = this->loadLadders(jsonLevel,ladderCount);
     *fires = this->loadFire(jsonLevel,fireCount);
+    *barrels = this->loadBarrel(jsonLevel, barrelCount);
 }
 
 
@@ -93,8 +94,32 @@ Fire** LevelLoader::loadFire(json jsonLevel, int *fireCount) {
         tmpFires[*fireCount] = fire;
         (*fireCount)++;
     }
-
     return tmpFires;
+}
+
+Barrel** LevelLoader::loadBarrel(json jsonLevel, int *barrelCount){
+
+    Barrel** tmpBarrel = NULL;
+    int x, dx, y, dy, count, direction;
+    for (const auto& item : jsonLevel["barrels"].items())
+    {
+        x = item.value()["x"];
+        dx = item.value()["dx"];
+        y = item.value()["y"];
+        dy = item.value()["dy"];
+        count = item.value()["count"];
+        direction = item.value()["direction"];
+
+        tmpBarrel = (Barrel **) (realloc(tmpBarrel, (*barrelCount + 1) * sizeof(Barrel *)));
+        Position pos;
+        pos.setX(x * 32 + dx);
+        pos.setY(HEIGHT - (1 + y) * 21 - dy);
+        Barrel *barrel = new Barrel(pos, count,direction);
+        tmpBarrel[*barrelCount] = barrel;
+        (*barrelCount)++;
+
+    }
+    return tmpBarrel;
 }
 
 /*

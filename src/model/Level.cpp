@@ -7,10 +7,12 @@ Level::Level() {
     this->ladderCount = 0;
     this->fires = NULL;
     this->fireCount = 0;
+    this->barrels = NULL;
+    this->barrelCount = 0;
     this->loader = new LevelLoader();
 }
 Level::~Level(){
-    this->freePlaforms();
+    this->freePlatforms();
     this->freeLadders();
     this->freeFires();
     delete this->loader;
@@ -19,7 +21,7 @@ Level::~Level(){
 
 void Level::loadLevel(int levelnum) {
     this->reset();
-    this->loader->loadLevel(levelnum,&this->platforms,&this->ladders,&this->fires,&this->platformCount,&this->ladderCount,&this->fireCount);
+    this->loader->loadLevel(levelnum,&this->platforms,&this->ladders,&this->fires, &this->barrels, &this->platformCount,&this->ladderCount,&this->fireCount, &this->barrelCount);
 
 }
 
@@ -56,10 +58,19 @@ Fire *Level::getFire(int i) {
     return fires[i];
 }
 
+int Level::getBarrelCount() {
+    return barrelCount;
+}
+
+Barrel *Level::getBarrel(int i) {
+    return barrels[i];
+}
+
 void Level::reset() {
-    this->freePlaforms();
+    this->freePlatforms();
     this->freeLadders();
     this->freeFires();
+    this->freeBarrels();
     this->platforms = NULL;
     this->platformCount = 0;
     this->ladders = NULL;
@@ -68,7 +79,7 @@ void Level::reset() {
     this->fireCount = 0;
 }
 
-void Level::freePlaforms() {
+void Level::freePlatforms() {
     for(int i; i < this->platformCount; i++){
         delete this->platforms[i];
     }
@@ -87,6 +98,13 @@ void Level::freeFires() {
         delete this->fires[i];
     }
     free(this->fires);
+}
+
+void Level::freeBarrels() {
+    for(int i; i < this->barrelCount; i++){
+        delete this->barrels[i];
+    }
+    free(this->barrels);
 }
 
 

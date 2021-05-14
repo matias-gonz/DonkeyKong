@@ -7,6 +7,7 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadLadderTexture();
     this->loadFireTexture();
     this->loadPlayerTexture();
+    this->loadBarrelTexture();
 }
 
 TextureManager::~TextureManager() {
@@ -14,6 +15,7 @@ TextureManager::~TextureManager() {
     delete this->platformTexture;
     delete this->ladderTexture;
     delete this->fireTexture;
+    delete this->barrelTexture;
 }
 
 SDL_Texture* TextureManager::loadTexture(const char *path) {
@@ -71,6 +73,13 @@ void TextureManager::loadFireTexture(){
     this->fireTexture =  texture;
 }
 
+void TextureManager::loadBarrelTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/search.png");
+    if(texture == NULL) printf("No se cargo la textura del barril");
+    this->barrelTexture =  texture;
+}
+
 SDL_Texture *TextureManager::getPlatformTexture() {
     return this->platformTexture;
 }
@@ -85,5 +94,9 @@ SDL_Texture *TextureManager::getFireTexture() {
 
 SDL_Texture *TextureManager::getPlayerTexture() {
     return this->playerTexture;
+}
+
+SDL_Texture *TextureManager::getBarrelTexture() {
+    return this->barrelTexture;
 }
 
