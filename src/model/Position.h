@@ -5,19 +5,19 @@
 class Position {
 private:
 
-    double posX;
-    double posY;
+    int posX;
+    int posY;
 
 public:
 
     Position();
-    Position(double x, double y);
-    double getX();
-    double getY();
-    void setX(double x);
-    void setY(double y);
+    Position(int x, int y);
+    int getX();
+    int getY();
+    void setX(int x);
+    void setY(int y);
 
-    void add(double x, double y);
+    void add(int x, int y);
 
 };
 

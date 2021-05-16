@@ -1,19 +1,17 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_GAME_H
 #define TALLER_PROG_I_2021_1C_KIWI_GAME_H
-
 #include "SDL2/SDL.h"
 #include "Player.h"
 #include "Level.h"
+#include "EnemyFire.h"
 
 class Game {
 
 public:
     Game();
-
     ~Game();
 
     void start();
-
     void update();
 
     void quit();
@@ -26,8 +24,11 @@ public:
 
     void loadLevel(int i);
 
+    EnemyFire* getEnemyFire();
+
 private:
     Player *player = NULL;
+    EnemyFire* enemyFire = NULL;
     bool running;
     Level *level;
 

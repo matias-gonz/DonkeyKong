@@ -5,39 +5,25 @@
 
 #include "Position.h"
 #include "../view/Animator.h"
+#include "Entity.h"
 
-class Player {
+class Player: public Entity {
     private:
-        Position pos = Position(200, 200);
-        bool isGrounded;
-        int velX;
-        int velY;
-        int distance;
-        int kindOfAnimation;
 
+
+    static const int VEL = 5;
     public:
-        static const int VEL = 5;
-        Player();
+        explicit Player(Position *pos);
 
         void addLeftVel();
 
         void addRightVel();
 
-        void update();
-
         void jumpUp();
 
         void resetVel();
 
-        double getXPosition();
-
-        double getYPosition();
-
-        Position* getPos();
-
-        int getDistance();
-
-        int getDirection();
+        void update();
 };
 
 
