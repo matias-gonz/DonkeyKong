@@ -10,17 +10,22 @@
 class Fire {
 public:
     Fire(Position position, int count);
+
     ~Fire();
+
     SDL_Rect *getDestRect();
+
     SDL_Rect *getSrcRect();
+
     void update();
+
     int getCount();
 
 private:
     Position pos;
     int count;
-    SDL_Rect* srcRect;
-    SDL_Rect* destRect;
+    SDL_Rect *srcRect;
+    SDL_Rect *destRect;
 
 };
 

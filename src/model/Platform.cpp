@@ -2,7 +2,7 @@
 #include "../view/TextureManager.h"
 
 
-Platform::Platform(Position position, int count, bool moving) {
+Platform::Platform(Position position, int count, int direction) {
     this->srcRect = NULL;
     this->destRect = new SDL_Rect();
 
@@ -11,7 +11,7 @@ Platform::Platform(Position position, int count, bool moving) {
     this->destRect->w = WIDTH/32;
     this->destRect->h = this->destRect->w/1.5;
     this->count = count;
-    this->movement = new PlatformMovement(moving);
+    this->movement = new PlatformMovement(direction);
 }
 
 Platform::~Platform() {

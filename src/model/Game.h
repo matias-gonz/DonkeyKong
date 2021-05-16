@@ -18,19 +18,19 @@ public:
 
     bool isRunning();
 
-    Level* getLevel();
+    Level *getLevel();
 
-    Player* getPlayer();
+    Player *getPlayer();
 
     void loadLevel(int i);
 
     EnemyFire* getEnemyFire();
 
 private:
-    Player* player = NULL;
+    Player *player = NULL;
     EnemyFire* enemyFire = NULL;
     bool running;
-    Level* level;
+    Level *level;
 
 };
 

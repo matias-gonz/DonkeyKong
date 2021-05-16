@@ -5,12 +5,12 @@
 class PlatformMovement {
 
 public:
-    PlatformMovement(bool b);
+    PlatformMovement(int direction);
 
     void update(SDL_Rect *rect);
 
 private:
-    bool isMoving;
+    int direction;
     int speed;
 };
 

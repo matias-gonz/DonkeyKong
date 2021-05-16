@@ -6,44 +6,44 @@
 #include "Ladder.h"
 #include "../view/TextureManager.h"
 #include "Fire.h"
+#include "LevelLoader.h"
 
 class Level {
 
 public:
     Level();
+
     ~Level();
 
     void loadLevel(int levelnum);
+
     void update();
 
     int getLadderCount();
+
     Ladder *getLadder(int i);
 
     int getPlatformCount();
+
     Platform *getPlatform(int i);
 
     int getFireCount();
+
     Fire *getFire(int i);
 
 private:
 
 
-    Platform** platforms;
+    Platform **platforms;
     int platformCount;
 
-    Ladder** ladders;
+    Ladder **ladders;
     int ladderCount;
 
-    Fire** fires;
+    Fire **fires;
     int fireCount;
 
-    void loadPlatforms(int i);
-
-    void loadStairs(int i);
-
-    void loadMovPlatforms(int i);
-
-    void loadFire(int i);
+    LevelLoader *loader;
 
     void reset();
 

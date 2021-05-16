@@ -1,4 +1,5 @@
-#include "viewManager.h"
+#include "ViewManager.h"
+
 const int LEFTSTARTW = 0;
 const int LEFTSTARTH = 0;
 const int RIGHTSTARTW = 0;
@@ -7,10 +8,8 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-
-enum {plyr,fr};
-
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen){
+ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
+        : animator(nullptr) {
     this->screen_width = width;
     this->screen_height = height;
 
