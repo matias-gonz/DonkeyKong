@@ -7,14 +7,26 @@ Configuration::Configuration() {
     jsonConfigFileStream >> configuration_json;
   }
   configuration_json = configuration_json.at("configuration");
-  setLogConfig(configuration_json);
-  setGameConfig(configuration_json);
+  setLogConfig();
+  setGameConfig();
 }
 
-void Configuration::setGameConfig(json &game_json) {
+void Configuration::setGameConfig() {
   this->game = configuration_json.at("game");
+  this->sprites = game.at("sprites");
+
+  std::vector<std::string> ec_a;
+  for (auto& elem : game["enemies"])
+    ec_a.push_back(elem["type"]);
+
+  for (const auto& x : ec_a)
+    std::cout << x << "\n";
 }
 
-void Configuration::setLogConfig(json &log_json) {
+void Configuration::setLogConfig() {
   this->log = configuration_json.at("log");
+}
+
+json Configuration::getSprites() {
+  return this->sprites;
 }

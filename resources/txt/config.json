@@ -7,19 +7,23 @@
       "enemies": [
         {
           "type": "class-1",
-          "quantity": "5"
+          "quantity": "5",
+          "level": "1"
+        },
+        {
+          "type": "class-2",
+          "quantity": "4",
+          "level": "2"
         }
       ],
-    "stages": [
+    "sprites":
       {
-        "fondo1": "/home/file21.bmp",
-        "fondo2": "/home/file22.bmp"
-      },
-      {
-        "fondo1": "/home/file31.bmp",
-        "fondo2": "/home/file32.bmp"
+        "player": "resources/sprites/sans_walk.png",
+        "fire": "resources/sprites/fire.png",
+        "barrel": "resources/sprites/fire.png",
+        "yellow_stair": "resources/sprites/yelstair.png",
+        "blue_platform": "resources/sprites/blueplat.png"
       }
-     ]
     }
   }
 }

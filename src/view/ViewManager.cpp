@@ -8,7 +8,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
+ViewManager::ViewManager(Game *aGame, Configuration *configuration, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
         : animator(nullptr) {
     this->screen_width = width;
     this->screen_height = height;
@@ -30,7 +30,7 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     }
 
     this->game = aGame;
-    this->textureManager = new TextureManager(this->renderer);
+    this->textureManager = new TextureManager(this->renderer, configuration->getSprites());
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
     this->animator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
 }
@@ -117,12 +117,4 @@ void ViewManager::renderWindow() {
     this->animator->draw(this->renderer,direction,playerPos,distance);
 
     SDL_RenderPresent(renderer);
-}
-
-void ViewManager::setEnemiesCount(int numberEnemies) {
-  this->enemiesCount = numberEnemies;
-}
-
-int ViewManager::getEnemiesCount() {
-  return this->getEnemiesCount();
 }
