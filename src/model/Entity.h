@@ -11,11 +11,13 @@ protected:
     int velY;
     int velX;
     int distance;
-    int kindOfAnimation;
+    int direction;
 public:
-    Entity(Position* pos);
+    explicit Entity(Position* pos);
 
-    virtual void update();
+    Entity();
+
+    virtual void update() = 0;
 
     double getXPosition();
 

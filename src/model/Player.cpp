@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include "Player.h"
 #include "Position.h"
-enum kindOfAnimation { left, right};
+enum kindOfAnimation { left = -1, right = 1};
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
@@ -27,7 +27,7 @@ void Player::addLeftVel() {
     if (velX < 0){return;}
     if (velX > 0){ distance = 0;}
     velX -= VEL;
-    kindOfAnimation = left;
+    direction = left;
 }
 
 void Player::addRightVel() {
@@ -35,7 +35,7 @@ void Player::addRightVel() {
     if (velX > 0){return;}
     if (velX < 0){ distance = 0;}
     velX += VEL;
-    kindOfAnimation = right;
+    direction = right;
 }
 
 void Player::jumpUp() {

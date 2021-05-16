@@ -1,12 +1,14 @@
 #include "TextureManager.h"
 #include "../model/Game.h"
-
+#include "stdio.h"
 TextureManager::TextureManager(SDL_Renderer* aRenderer){
+
     this->renderer = aRenderer;
     this->loadPlatformTexture();
     this->loadLadderTexture();
     this->loadFireTexture();
     this->loadPlayerTexture();
+    this->loadEnemyTexture();
 }
 
 TextureManager::~TextureManager() {
@@ -14,6 +16,7 @@ TextureManager::~TextureManager() {
     delete this->platformTexture;
     delete this->ladderTexture;
     delete this->fireTexture;
+    delete this->enemyTexture;
 }
 
 SDL_Texture* TextureManager::loadTexture(const char *path) {
@@ -71,6 +74,12 @@ void TextureManager::loadFireTexture(){
     this->fireTexture =  texture;
 }
 
+void TextureManager::loadEnemyTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/fire_walk.png");
+    if(texture == NULL) printf("No se cargo la textura del enemigo fuego");
+    this->enemyTexture =  texture;
+}
 SDL_Texture *TextureManager::getPlatformTexture() {
     return this->platformTexture;
 }
@@ -85,5 +94,9 @@ SDL_Texture *TextureManager::getFireTexture() {
 
 SDL_Texture *TextureManager::getPlayerTexture() {
     return this->playerTexture;
+}
+
+SDL_Texture *TextureManager::getEnemyTexture() {
+    return this->enemyTexture;
 }
 

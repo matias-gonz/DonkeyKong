@@ -41,7 +41,8 @@ private:
     Game* game;
     TextureManager* textureManager;
     LevelDrawer* levelDrawer;
-    Animator* animator;
+    Animator* playerAnimator;
+    Animator* enemyAnimator;
 
     int enemiesCount;
 

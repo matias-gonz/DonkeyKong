@@ -42,7 +42,7 @@ set(SOURCE_FILES main.cpp
         src/controller/Configuration.cpp
         src/controller/Configuration.h
         src/view/Animator.cpp
-        src/view/Animator.h src/model/EnemyFire.cpp src/model/EnemyFire.h src/model/Entity.cpp src/model/Entity.h)
+        src/view/Animator.h src/model/EnemyFire.cpp src/model/EnemyFire.h src/model/Entity.cpp src/model/Entity.h src/model/Boss.cpp src/model/Boss.h)
 
 
 # change to personal project name (as above)

@@ -1,12 +1,12 @@
 #include "Entity.h"
-enum kindOfAnimation { left, right};
+enum kindOfAnimation { left = -1, right = 1};
 
 Entity::Entity(Position* pos){
     this->pos = pos;
     velX = 0;
     velY = 0;
     isGrounded = true;
-    kindOfAnimation = right;
+    direction = right;
     distance = 0;
 }
 
@@ -29,9 +29,8 @@ int Entity::getDistance() {
 }
 
 int Entity::getDirection() {
-    return kindOfAnimation;
+    return direction;
 }
 
-void Entity::update() {
+Entity::Entity() {}
 
-}

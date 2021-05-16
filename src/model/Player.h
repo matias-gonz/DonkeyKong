@@ -13,17 +13,17 @@ class Player: public Entity {
 
     static const int VEL = 5;
     public:
-        Player(Position *pos);
+        explicit Player(Position *pos);
 
         void addLeftVel();
 
         void addRightVel();
 
-        void update();
-
         void jumpUp();
 
         void resetVel();
+
+        void update();
 };
 
 

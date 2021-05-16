@@ -3,6 +3,7 @@
 #include "SDL2/SDL.h"
 #include "Player.h"
 #include "Level.h"
+#include "EnemyFire.h"
 
 class Game {
 
@@ -23,8 +24,11 @@ public:
 
     void loadLevel(int i);
 
+    EnemyFire* getEnemyFire();
+
 private:
     Player* player = NULL;
+    EnemyFire* enemyFire = NULL;
     bool running;
     Level* level;
 

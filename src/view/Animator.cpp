@@ -1,8 +1,8 @@
 
 #include "Animator.h"
-
+#include "stdio.h"
 enum kindOfAnimation {
-    left, right
+    left = -1, right = 1
 };
 
 Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
@@ -22,9 +22,8 @@ Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
 void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
 
     SDL_Rect srcrect = updateAnimation( direction, distance);
-    SDL_Rect dstrect = {static_cast<int>(pos->getX()), static_cast<int>(pos->getY()), 25, 50};
-    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
-
+    SDL_Rect dstrect = {pos->getX(), pos->getY(), static_cast<int>((1.5*texW)), static_cast<int>((1.5*texH))};
+    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);//ESTO ESTA ROMPIENDO
 
 }
 

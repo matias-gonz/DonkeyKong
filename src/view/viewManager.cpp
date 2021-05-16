@@ -1,5 +1,4 @@
 #include "viewManager.h"
-
 const int LEFTSTARTW = 0;
 const int LEFTSTARTH = 0;
 const int RIGHTSTARTW = 0;
@@ -8,8 +7,10 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
-        : animator(nullptr) {
+
+enum {plyr,fr};
+
+ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen){
     this->screen_width = width;
     this->screen_height = height;
 
@@ -32,7 +33,8 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->game = aGame;
     this->textureManager = new TextureManager(this->renderer);
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-    this->animator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
+    this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
+    this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -111,10 +113,20 @@ void ViewManager::renderWindow() {
     //render player
     Player *player = game->getPlayer();
     Position* playerPos = player->getPos();
-    int direction = player->getDirection();
-    int distance = player->getDistance();
+    int playerDirection = player->getDirection();
+    int playerDistance = player->getDistance();
 
-    this->animator->draw(this->renderer,direction,playerPos,distance);
+
+
+
+    //render fire
+    EnemyFire* enemyFire = game->getEnemyFire();
+    Position* enemyPos = enemyFire->getPos();
+    int enemyDirection = enemyFire->getDirection();
+    int enemyDistance = enemyFire->getDistance();
+
+    this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
+    this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
 
     SDL_RenderPresent(renderer);
 }
