@@ -31,6 +31,10 @@ public:
 
     Fire *getFire(int i);
 
+    Position **getSpawns();
+
+    int getSpawnCount();
+
 private:
 
     Platform **platforms;
@@ -56,6 +60,8 @@ private:
     void freeLadders();
 
     void freeFires();
+
+    void freeSpawns();
 };
 
 

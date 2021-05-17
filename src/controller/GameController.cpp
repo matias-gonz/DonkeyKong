@@ -26,7 +26,7 @@ void GameController::handleEvents() {
                 player->jumpUp();
                 break;
             case SDLK_l:
-                this->game->loadLevel(2);
+                this->game->switchLevel();
                 break;
         }
     }

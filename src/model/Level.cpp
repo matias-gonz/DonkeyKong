@@ -7,6 +7,8 @@ Level::Level() {
     this->ladderCount = 0;
     this->fires = NULL;
     this->fireCount = 0;
+    this->spawns = NULL;
+    this->spawnCount = 0;
     this->loader = new LevelLoader();
 }
 
@@ -14,6 +16,7 @@ Level::~Level() {
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();
+    this->freeSpawns();
     delete this->loader;
 }
 
@@ -62,12 +65,7 @@ void Level::reset() {
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();
-    this->platforms = NULL;
-    this->platformCount = 0;
-    this->ladders = NULL;
-    this->ladderCount = 0;
-    this->fires = NULL;
-    this->fireCount = 0;
+    this->freeSpawns();
 }
 
 void Level::freePlaforms() {
@@ -75,6 +73,8 @@ void Level::freePlaforms() {
         delete this->platforms[i];
     }
     free(this->platforms);
+    this->platforms = NULL;
+    this->platformCount = 0;
 }
 
 void Level::freeLadders() {
@@ -82,6 +82,8 @@ void Level::freeLadders() {
         delete this->ladders[i];
     }
     free(this->ladders);
+    this->ladders = NULL;
+    this->ladderCount = 0;
 }
 
 void Level::freeFires() {
@@ -89,6 +91,25 @@ void Level::freeFires() {
         delete this->fires[i];
     }
     free(this->fires);
+    this->fires = NULL;
+    this->fireCount = 0;
+}
+
+void Level::freeSpawns() {
+    for (int i = 0; i < this->spawnCount; i++) {
+        delete this->spawns[i];
+    }
+    free(this->spawns);
+    this->spawns = NULL;
+    this->spawnCount = 0;
+}
+
+Position **Level::getSpawns() {
+    return this->spawns;
+}
+
+int Level::getSpawnCount() {
+    return this->spawnCount;
 }
 
 
