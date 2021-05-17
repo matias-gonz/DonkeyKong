@@ -45,6 +45,7 @@ Player *Game::getPlayer() {
 }
 
 void Game::loadLevel(int levelnum) {
+    this->currentLevel = levelnum;
     this->level->loadLevel(levelnum);
     this->resetEnemies();
     this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount());
@@ -78,4 +79,12 @@ void Game::resetEnemies() {
     free(this->enemyFires);
     this->enemyFires = NULL;
     this->enemyFireCount = 0;
+}
+
+void Game::switchLevel() {
+    if(this->currentLevel == 1){
+        this->loadLevel(2);
+    }else{
+        this->loadLevel(1);
+    }
 }

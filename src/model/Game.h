@@ -28,6 +28,8 @@ public:
 
     int getEnemyFireCount();
 
+    void switchLevel();
+
 private:
     Player *player = NULL;
     EnemyFire** enemyFires = NULL;
@@ -38,6 +40,8 @@ private:
     void spawnEnemies(Position **spawns, int spawnCount);
 
     void resetEnemies();
+
+    int currentLevel;
 };
 
 
