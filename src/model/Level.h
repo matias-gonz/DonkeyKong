@@ -33,7 +33,6 @@ public:
 
 private:
 
-
     Platform **platforms;
     int platformCount;
 
@@ -43,7 +42,12 @@ private:
     Fire **fires;
     int fireCount;
 
+    Position **spawns;
+    int spawnCount;
+
     LevelLoader *loader;
+
+
 
     void reset();
 

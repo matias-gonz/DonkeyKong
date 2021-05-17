@@ -7,7 +7,8 @@ LevelLoader::LevelLoader() {}
 LevelLoader::~LevelLoader() {}
 
 void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, int *platformCount,
-                            int *ladderCount, int *fireCount) {
+                            int *ladderCount,
+                            int *fireCount, Position ***spawns, int *spawnCount) {
 
     //this->writeJSON();
     json jsonLevel;
@@ -22,6 +23,7 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
     *platforms = this->loadPlatforms(jsonLevel,platformCount);
     *ladders = this->loadLadders(jsonLevel,ladderCount);
     *fires = this->loadFire(jsonLevel,fireCount);
+    *spawns = this->loadSpawns(jsonLevel,spawnCount);
 }
 
 
@@ -94,6 +96,29 @@ Fire** LevelLoader::loadFire(json jsonLevel, int *fireCount) {
     }
 
     return tmpFires;
+}
+
+Position **LevelLoader::loadSpawns(json jsonLevel, int *spawnCount) {
+    Position** tmpSpawns = NULL;
+
+    int x, dx, y, dy, count;
+    for (const auto& item : jsonLevel["spawnpoints"].items()){
+        x = item.value()["x"];
+        dx = item.value()["dx"];
+        y = item.value()["y"];
+        dy = item.value()["dy"];
+        count = item.value()["count"];
+
+        for(int i = 0; i < count; i++){
+            tmpSpawns = (Position **) (realloc(tmpSpawns, (*spawnCount + 1) * sizeof(Position *)));
+            Position* pos = new Position((x * 32) + dx + i*(WIDTH/32),HEIGHT - (1 + y) * 32 - dy);
+            tmpSpawns[*spawnCount] = pos;
+            (*spawnCount)++;
+        }
+
+    }
+
+    return tmpSpawns;
 }
 
 /*

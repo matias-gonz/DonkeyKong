@@ -21,7 +21,7 @@ Level::~Level() {
 void Level::loadLevel(int levelnum) {
     this->reset();
     this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->platformCount,
-                            &this->ladderCount, &this->fireCount);
+                            &this->ladderCount, &this->fireCount, &this->spawns, &this->spawnCount);
 
 }
 
