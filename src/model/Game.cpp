@@ -27,6 +27,7 @@ void Game::update() {
     this->level->update();
     this->player->update();
     this->enemyFire->update();
+    this->boss->update();
 }
 
 bool Game::isRunning() {

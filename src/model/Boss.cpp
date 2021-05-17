@@ -19,14 +19,15 @@ void Boss::update() {
         return;
     }
     if (this->state == fall){
-        this->pos->add(0,velY);
-        printf("%d\n",this->pos->getY());
+        this->pos->add(0,this->velY);
+
         if(this->pos->getY() > 350) {
             this->pos->setY(350);
+            this->velY = 0;
             this->state = landing;
         }
     }
-    else if(this->state == landing){
+    else if(this->state == landing){//no esta cayendo
         this->counter += 5;
         if (this->counter >= 50){
             this->state = still;
