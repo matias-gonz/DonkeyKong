@@ -14,7 +14,7 @@ void Game::start() {
     this->loadLevel(1);
     this->player = new Player(new Position(200,200));
     this->enemyFire = new EnemyFire(new Position(250,250));
-    this->boss = new Boss(new Position(300,100));
+    this->boss = new Boss(new Position(300,0));
 }
 
 

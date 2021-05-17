@@ -1,10 +1,36 @@
 #include "Boss.h"
-
+#include <stdio.h>
+enum state{fall, landing,still};
 
 Boss::Boss(Position* pos){
     this->pos = pos;
+    this->state = fall;
+    this->direction = 0;
+    this->velY = 5;
 }
 
 void Boss::update() {
-    //this->movementCounter += 5;
+    if (this->state == still){
+        this->distance += 5;
+        if(this->distance > 70){
+            this->distance = 0;
+            return;
+        }
+        return;
+    }
+    if (this->state == fall){
+        this->pos->add(0,velY);
+        printf("%d\n",this->pos->getY());
+        if(this->pos->getY() > 350) {
+            this->pos->setY(350);
+            this->state = landing;
+        }
+    }
+    else if(this->state == landing){
+        this->counter += 5;
+        if (this->counter >= 50){
+            this->state = still;
+        }
+    }
+
 }
