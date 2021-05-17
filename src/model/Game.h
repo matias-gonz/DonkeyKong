@@ -26,12 +26,21 @@ public:
 
     EnemyFire* getEnemyFire();
 
+    EnemyFire **getEnemyFires();
+
+    int getEnemyFireCount();
+
 private:
     Player *player = NULL;
     EnemyFire* enemyFire = NULL;
+    EnemyFire** enemyFires = NULL;
+    int enemyFireCount = 0;
     bool running;
     Level *level;
 
+    void spawnEnemies(Position **spawns, int spawnCount);
+
+    void resetEnemies();
 };
 
 

@@ -26,6 +26,9 @@ void Game::update() {
     this->level->update();
     this->player->update();
     this->enemyFire->update();
+    for(int i = 0; i <enemyFireCount; i++){
+        //this->enemyFires[i]->update();
+    }
 }
 
 bool Game::isRunning() {
@@ -42,8 +45,39 @@ Player *Game::getPlayer() {
 
 void Game::loadLevel(int levelnum) {
     this->level->loadLevel(levelnum);
+    this->resetEnemies();
+    this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount());
 }
 
 EnemyFire *Game::getEnemyFire() {
     return this->enemyFire;
+}
+
+void Game::spawnEnemies(Position **spawns, int spawnCount) {
+    srand(time(NULL));
+    for(int i = 0; i < spawnCount; i++){
+        if((rand()%100) < 100){
+            this->enemyFires = (EnemyFire **) (realloc(this->enemyFires, (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
+            EnemyFire* enemy = new EnemyFire(spawns[i]);
+            this->enemyFires[this->enemyFireCount] = enemy;
+            (this->enemyFireCount)++;
+        }
+    }
+}
+
+EnemyFire **Game::getEnemyFires() {
+    return this->enemyFires;
+}
+
+int Game::getEnemyFireCount() {
+    return this->enemyFireCount;
+}
+
+void Game::resetEnemies() {
+    for(int i = 0; i < this->enemyFireCount; i++){
+        delete this->enemyFires[i];
+    }
+    free(this->enemyFires);
+    this->enemyFires = NULL;
+    this->enemyFireCount = 0;
 }

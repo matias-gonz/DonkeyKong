@@ -31,6 +31,10 @@ public:
 
     Fire *getFire(int i);
 
+    Position **getSpawns();
+
+    int getSpawnCount();
+
 private:
 
     Platform **platforms;

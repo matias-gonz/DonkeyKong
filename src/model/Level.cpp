@@ -104,4 +104,12 @@ void Level::freeSpawns() {
     free(this->spawns);
 }
 
+Position **Level::getSpawns() {
+    return this->spawns;
+}
+
+int Level::getSpawnCount() {
+    return this->spawnCount;
+}
+
 
