@@ -5,6 +5,10 @@ Game::Game() {}
 Game::~Game() {
     delete this->player;
     delete this->level;
+    for(int i = 0; i < this->enemyFireCount; i++){
+        delete this->enemyFires[i];
+    }
+    free(this->enemyFires);
 }
 
 void Game::start() {
