@@ -30,8 +30,7 @@ Platform** LevelLoader::loadPlatforms(json jsonLevel, int* platformCount) {
 
     Platform** tmpPlatforms = NULL;
     int x, dx, y, dy, count, direction;
-    for (const auto& item : jsonLevel["platforms"].items())
-    {
+    for (const auto& item : jsonLevel["platforms"].items()){
         x = item.value()["x"];
         dx = item.value()["dx"];
         y = item.value()["y"];
