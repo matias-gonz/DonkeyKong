@@ -23,12 +23,15 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
     SDL_Rect srcrect = updateAnimation( direction, distance);
     SDL_Rect dstrect = {pos->getX(), pos->getY(), static_cast<int>((1.5*texW)), static_cast<int>((1.5*texH))};
-    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);//ESTO ESTA ROMPIENDO
+    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
 
 }
 
 
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
+    if (direction == 0){
+        return {0,0,texW,texH};
+    }
     int amount = 0;
     if(distance>10 && distance < 30){
         amount = 1;

@@ -21,6 +21,8 @@ public:
 
     SDL_Texture* getEnemyTexture();
 
+    SDL_Texture* getBossTexture();
+
 
 private:
     SDL_Renderer* renderer;
@@ -31,12 +33,15 @@ private:
     void loadLadderTexture();
     void loadFireTexture();
     void loadEnemyTexture();
+    void loadBossTexture();
+
 
     SDL_Texture *playerTexture;
     SDL_Texture *platformTexture;
     SDL_Texture *ladderTexture;
     SDL_Texture *fireTexture;
     SDL_Texture *enemyTexture;
+    SDL_Texture *bossTexture;
 
 };
 

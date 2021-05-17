@@ -6,6 +6,5 @@ Boss::Boss(Position* pos){
 }
 
 void Boss::update() {
-    this->movementCounter += 5;
-
+    //this->movementCounter += 5;
 }

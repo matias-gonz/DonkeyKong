@@ -11,6 +11,7 @@
 #include "../model/Game.h"
 #include "LevelDrawer.h"
 #include "Animator.h"
+#include "../model/Boss.h"
 
 class ViewManager {
 public:
@@ -43,6 +44,7 @@ private:
     LevelDrawer* levelDrawer;
     Animator* playerAnimator;
     Animator* enemyAnimator;
+    Animator* bossAnimator;
 
     int enemiesCount;
 
