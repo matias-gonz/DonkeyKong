@@ -113,18 +113,8 @@ void ViewManager::renderWindow() {
     Position* playerPos = player->getPos();
     int playerDirection = player->getDirection();
     int playerDistance = player->getDistance();
-
-
-
-
-    //render fire
-    EnemyFire* enemyFire = game->getEnemyFire();
-    Position* enemyPos = enemyFire->getPos();
-    int enemyDirection = enemyFire->getDirection();
-    int enemyDistance = enemyFire->getDistance();
-
     this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
-    this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
+
 
     //render enemies
     EnemyFire** enemyFires = game->getEnemyFires();

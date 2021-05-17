@@ -24,15 +24,12 @@ public:
 
     void loadLevel(int i);
 
-    EnemyFire* getEnemyFire();
-
     EnemyFire **getEnemyFires();
 
     int getEnemyFireCount();
 
 private:
     Player *player = NULL;
-    EnemyFire* enemyFire = NULL;
     EnemyFire** enemyFires = NULL;
     int enemyFireCount = 0;
     bool running;
