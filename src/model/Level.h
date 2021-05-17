@@ -56,6 +56,8 @@ private:
     void freeLadders();
 
     void freeFires();
+
+    void freeSpawns();
 };
 
 
