@@ -9,6 +9,7 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadFireTexture();
     this->loadPlayerTexture();
     this->loadEnemyTexture();
+    this->loadErrorTexture();
     Logger::log(Logger::Info,"Se finaliza la carga de de texturas.");
 }
 
@@ -111,6 +112,18 @@ void TextureManager::loadEnemyTexture(){
     }
     this->enemyTexture =  texture;
 }
+
+void TextureManager::loadErrorTexture() {
+    Logger::log(Logger::Info,"Se inicia la carga de textura de error.");
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/errortexture.png");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/errortexture.png\". TextureManager::loadErrorTexture");
+    }
+    this->errorTexture =  texture;
+
+}
+
 SDL_Texture *TextureManager::getPlatformTexture(int levelnum) {
     if(levelnum == 1){
         return this->bluePlatformTexture;
@@ -136,4 +149,10 @@ SDL_Texture *TextureManager::getPlayerTexture() {
 SDL_Texture *TextureManager::getEnemyTexture() {
     return this->enemyTexture;
 }
+
+SDL_Texture *TextureManager::getErrorTexture() {
+    return this->errorTexture;
+}
+
+
 

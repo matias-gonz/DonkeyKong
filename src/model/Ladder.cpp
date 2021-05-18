@@ -26,6 +26,6 @@ int Ladder::getCount() {
     return count;
 }
 
-const SDL_Rect *Ladder::getSrcRect() {
+SDL_Rect *Ladder::getSrcRect() {
     return srcRect;
 }

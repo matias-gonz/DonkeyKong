@@ -26,6 +26,7 @@ void LevelDrawer::draw(Level *level) {
 
 void LevelDrawer::drawLadder(Ladder *ladder) {
 
+    SDL_Rect *srcRect = ladder->getSrcRect();
     SDL_Rect *destRect = ladder->getDestRect();
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
@@ -35,15 +36,19 @@ void LevelDrawer::drawLadder(Ladder *ladder) {
 
 
     SDL_Texture *ladderTexture = this->textureManager->getLadderTexture(this->levelnum);
+    if(!ladderTexture){
+        ladderTexture = this->textureManager->getErrorTexture();
+        srcRect = NULL;
+    }
 
     for (int i = 0; i < ladder->getCount(); i++) {
-        SDL_RenderCopy(this->renderer, ladderTexture, ladder->getSrcRect(), tmpRect);
+        SDL_RenderCopy(this->renderer, ladderTexture, srcRect, tmpRect);
         tmpRect->y -= destRect->h;
     }
 }
 
 void LevelDrawer::drawPlatform(Platform *platform) {
-
+    SDL_Rect *srcRect = platform->getSrcRect();
     SDL_Rect *destRect = platform->getDestRect();
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
@@ -52,14 +57,19 @@ void LevelDrawer::drawPlatform(Platform *platform) {
     tmpRect->w = destRect->w;
 
     SDL_Texture *platformTexture = this->textureManager->getPlatformTexture(this->levelnum);
+    if(!platformTexture){
+        platformTexture = this->textureManager->getErrorTexture();
+        srcRect = NULL;
+    }
 
     for (int i = 0; i < platform->getCount(); i++) {
-        SDL_RenderCopy(this->renderer, platformTexture, platform->getSrcRect(), tmpRect);
+        SDL_RenderCopy(this->renderer, platformTexture, srcRect, tmpRect);
         tmpRect->x += destRect->w;
     }
 }
 
 void LevelDrawer::drawFire(Fire *fire) {
+    SDL_Rect *srcRect = fire->getSrcRect();
     SDL_Rect *destRect = fire->getDestRect();
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
@@ -68,9 +78,13 @@ void LevelDrawer::drawFire(Fire *fire) {
     tmpRect->w = destRect->w;
 
     SDL_Texture *fireTexture = this->textureManager->getFireTexture();
+    if(!fireTexture){
+        fireTexture = this->textureManager->getErrorTexture();
+        srcRect = NULL;
+    }
 
     for (int i = 0; i < fire->getCount(); i++) {
-        SDL_RenderCopy(this->renderer, fireTexture, fire->getSrcRect(), tmpRect);
+        SDL_RenderCopy(this->renderer, fireTexture, srcRect, tmpRect);
         tmpRect->x += destRect->w;
     }
 }

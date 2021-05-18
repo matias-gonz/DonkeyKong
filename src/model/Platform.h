@@ -23,7 +23,7 @@ public:
 
     int getCount();
 
-    const SDL_Rect *getSrcRect();
+    SDL_Rect *getSrcRect();
 
 
     void update();
