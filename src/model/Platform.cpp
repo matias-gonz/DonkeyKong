@@ -36,7 +36,7 @@ void Platform::update() {
 
 }
 
-const SDL_Rect *Platform::getSrcRect() {
+SDL_Rect *Platform::getSrcRect() {
     return srcRect;
 }
 

@@ -22,6 +22,8 @@ public:
     SDL_Texture* getEnemyTexture();
 
 
+    SDL_Texture *getErrorTexture();
+
 private:
     SDL_Renderer* renderer;
 
@@ -39,6 +41,11 @@ private:
     SDL_Texture *cyanLadderTexture;
     SDL_Texture *bluePlatformTexture;
     SDL_Texture *redPlatformTexture;
+
+    void loadErrorTexture();
+
+    SDL_Texture *errorTexture;
+
 };
 
 
