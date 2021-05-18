@@ -6,6 +6,8 @@
 class Boss:public Entity {
 private:
     int movementCounter;
+    int state;
+    int counter;
 public:
     explicit Boss(Position* position);
     void update();

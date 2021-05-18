@@ -21,6 +21,10 @@ public:
 
     SDL_Texture* getEnemyTexture();
 
+    SDL_Texture* getBossTexture();
+
+    SDL_Texture* getPrincessTexture();
+
 
     SDL_Texture *getErrorTexture();
 
@@ -33,6 +37,9 @@ private:
     void loadLadderTexture();
     void loadFireTexture();
     void loadEnemyTexture();
+    void loadBossTexture();
+    void loadPrincessTexture();
+
 
     SDL_Texture *playerTexture;
     SDL_Texture *fireTexture;
@@ -45,6 +52,8 @@ private:
     void loadErrorTexture();
 
     SDL_Texture *errorTexture;
+    SDL_Texture *bossTexture;
+    SDL_Texture *princessTexture;
 
 };
 

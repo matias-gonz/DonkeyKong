@@ -17,6 +17,8 @@ void Game::start() {
     this->loadLevel(1);
     this->player = new Player(new Position(200,200));
     Logger::log(Logger::Info,"Inicio Donkey Kong");
+    this->boss = new Boss(new Position(200,0));
+    this->princess = new Princess(new Position(450,30));
 }
 
 
@@ -31,6 +33,8 @@ void Game::update() {
     for(int i = 0; i <enemyFireCount; i++){
         this->enemyFires[i]->update();
     }
+    this->princess->update();
+    this->boss->update();
 }
 
 bool Game::isRunning() {
@@ -93,4 +97,12 @@ void Game::switchLevel() {
     }else{
         this->loadLevel(1);
     }
+}
+
+Boss *Game::getBoss() {
+    return this->boss;
+}
+
+Princess *Game::getPrincess() {
+    return this->princess;
 }

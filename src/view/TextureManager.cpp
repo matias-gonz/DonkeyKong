@@ -11,6 +11,8 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadEnemyTexture();
     this->loadErrorTexture();
     Logger::log(Logger::Info,"Se finaliza la carga de de texturas.");
+    this->loadBossTexture();
+    this->loadPrincessTexture();
 }
 
 TextureManager::~TextureManager() {
@@ -21,6 +23,8 @@ TextureManager::~TextureManager() {
     delete this->cyanLadderTexture;
     delete this->fireTexture;
     delete this->enemyTexture;
+    delete this->bossTexture;
+    delete this->princessTexture;
 }
 
 SDL_Texture* TextureManager::loadTexture(const char *path) {
@@ -114,14 +118,29 @@ void TextureManager::loadEnemyTexture(){
 }
 
 void TextureManager::loadErrorTexture() {
-    Logger::log(Logger::Info,"Se inicia la carga de textura de error.");
-    SDL_Texture* texture =NULL;
+    Logger::log(Logger::Info, "Se inicia la carga de textura de error.");
+    SDL_Texture *texture = NULL;
     texture = this->loadTexture("resources/sprites/errortexture.png");
-    if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/errortexture.png\". TextureManager::loadErrorTexture");
+    if (!texture) {
+        Logger::log(Logger::Error,
+                    "Error al abrir archivo \"resources/sprites/errortexture.png\". TextureManager::loadErrorTexture");
     }
-    this->errorTexture =  texture;
+    this->errorTexture = texture;
 
+}
+
+void TextureManager::loadBossTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/boss_still.png");
+    if(texture == NULL) printf("No se cargo la textura del Jefe");
+    this->bossTexture =  texture;
+}
+
+void TextureManager::loadPrincessTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/princess_still.png");
+    if(texture == NULL) printf("No se cargo la textura dela princesa");
+    this->princessTexture =  texture;
 }
 
 SDL_Texture *TextureManager::getPlatformTexture(int levelnum) {
@@ -156,3 +175,10 @@ SDL_Texture *TextureManager::getErrorTexture() {
 
 
 
+SDL_Texture *TextureManager::getBossTexture(){
+    return this->bossTexture;
+}
+
+SDL_Texture *TextureManager::getPrincessTexture() {
+    return this->princessTexture;
+}

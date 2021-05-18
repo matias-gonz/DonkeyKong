@@ -7,15 +7,20 @@ enum kindOfAnimation { left = -1, right = 1};
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
+    this->isGrounded = true;
 }
 void Player::update() {
 
-    if (!isGrounded && pos->getY() > 200) {
-        pos->setY(200);
+    if (!isGrounded && pos->getY() > 540) {
+        pos->setY(540);
         velY = 0;
         isGrounded = true;
     }
+
     pos->add(velX, velY);
+    if(pos->getX() < 0 or pos->getX()> 1024-17){
+        pos->add(-velX,0);
+    }//WIDTH - texW
     distance += abs(velX);
     if (distance > 70){ distance = 0;}
 

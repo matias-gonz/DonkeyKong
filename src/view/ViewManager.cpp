@@ -33,6 +33,10 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
     this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
     this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
+
+    //ESTOS NO FUNKAN
+    //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
+    //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -113,7 +117,29 @@ void ViewManager::renderWindow() {
     Position* playerPos = player->getPos();
     int playerDirection = player->getDirection();
     int playerDistance = player->getDistance();
-    this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
+
+
+
+
+    //render boss
+    Boss* boss = game->getBoss();
+    Position* bossPos = boss->getPos();
+    //int bossDirection = boss->getDirection();
+    //int bossDistance = boss->getDistance();
+    SDL_Rect bossDstrect = {bossPos->getX(), bossPos->getY(), 170, 119};;
+
+    //render princess
+    Princess* princess = game->getPrincess();
+    Position* princessPos = princess->getPos();
+    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), texW, texH};;
+    //int princessDirection = princess->getDirection();
+    //int princessDistance = princess->getDistance();
+
+
+    //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
+    //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
+
+
 
 
     //render enemies
@@ -127,6 +153,9 @@ void ViewManager::renderWindow() {
         this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
     }
 
+    SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
+    SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
+    this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
 
     SDL_RenderPresent(renderer);
 }
