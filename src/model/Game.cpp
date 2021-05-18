@@ -12,7 +12,7 @@ void Game::start() {
     this->running = true;
     this->level = new Level();
     this->loadLevel(1);
-    this->player = new Player(new Position(200,505));
+    this->player = new Player(new Position(200,540));
     this->enemyFire = new EnemyFire(new Position(250,250));
     this->boss = new Boss(new Position(200,0));
     this->princess = new Princess(new Position(450,30));
