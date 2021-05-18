@@ -3,10 +3,12 @@
 LevelDrawer::LevelDrawer(SDL_Renderer *aRenderer, TextureManager *aTextureManager) {
     this->textureManager = aTextureManager;
     this->renderer = aRenderer;
+    this->levelnum = 0;
 }
 
 
 void LevelDrawer::draw(Level *level) {
+    this->levelnum = level->getCurrentLevel();
     for (int i = 0; i < level->getLadderCount(); i++) {
         Ladder *aLadder = level->getLadder(i);
         this->drawLadder(aLadder);
@@ -31,7 +33,8 @@ void LevelDrawer::drawLadder(Ladder *ladder) {
     tmpRect->h = destRect->h;
     tmpRect->w = destRect->w;
 
-    SDL_Texture *ladderTexture = this->textureManager->getLadderTexture();
+
+    SDL_Texture *ladderTexture = this->textureManager->getLadderTexture(this->levelnum);
 
     for (int i = 0; i < ladder->getCount(); i++) {
         SDL_RenderCopy(this->renderer, ladderTexture, ladder->getSrcRect(), tmpRect);

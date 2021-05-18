@@ -35,6 +35,8 @@ public:
 
     int getSpawnCount();
 
+    int getCurrentLevel();
+
 private:
 
     Platform **platforms;
@@ -62,6 +64,8 @@ private:
     void freeFires();
 
     void freeSpawns();
+
+    int currentLevel;
 };
 
 

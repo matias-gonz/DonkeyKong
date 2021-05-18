@@ -15,7 +15,8 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
 TextureManager::~TextureManager() {
     delete this->playerTexture;
     delete this->platformTexture;
-    delete this->ladderTexture;
+    delete this->yellowLadderTexture;
+    delete this->cyanLadderTexture;
     delete this->fireTexture;
     delete this->enemyTexture;
 }
@@ -74,7 +75,14 @@ void TextureManager::loadLadderTexture(){
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yelstair.png\". TextureManager::loadLadderTexture");
     }
-    this->ladderTexture = texture;
+    this->yellowLadderTexture = texture;
+
+    texture = this->loadTexture("resources/sprites/cyanstair.png");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyanstair.png\". TextureManager::loadLadderTexture");
+    }
+    this->cyanLadderTexture = texture;
+
 }
 
 void TextureManager::loadFireTexture(){
@@ -100,8 +108,11 @@ SDL_Texture *TextureManager::getPlatformTexture() {
     return this->platformTexture;
 }
 
-SDL_Texture *TextureManager::getLadderTexture() {
-    return this->ladderTexture;
+SDL_Texture *TextureManager::getLadderTexture(int levelnum) {
+    if(levelnum == 1){
+        return this->yellowLadderTexture;
+    }
+    return this->cyanLadderTexture;
 }
 
 SDL_Texture *TextureManager::getFireTexture() {
