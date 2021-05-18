@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "EnemyFire.h"
-
+#include "Logger.h"
 class Game {
 
 public:

@@ -4,16 +4,21 @@
 #include <stdio.h>
 #include <SDL2/SDL_events.h>
 
+
 #include "src/model/Game.h"
 
+#include "src/model/Logger.h"
 #include "src/view/TextureManager.h"
 #include "src/view/ViewManager.h"
 #include "src/controller/GameController.h"
 #include "src/controller/Configuration.h"
 
 int main(int argc, char *args[]) {
+    Logger::startLogger("log.txt");
     Game *game = new Game();
     game->start();
+
+
 
     Configuration *configuration = new Configuration();
     GameController *gameController = new GameController(game);
@@ -26,6 +31,8 @@ int main(int argc, char *args[]) {
         gameController->update();
         viewManager->renderWindow();
     }
+
+    delete game;
 
     return 0;
 }

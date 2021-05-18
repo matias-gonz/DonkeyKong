@@ -50,7 +50,7 @@ set(SOURCE_FILES main.cpp
         src/model/Boss.cpp
         src/model/Boss.h
         src/model/LevelLoader.cpp
-        src/model/LevelLoader.h)
+        src/model/LevelLoader.h src/model/Logger.cpp src/model/Logger.h)
 
 
 # change to personal project name (as above)

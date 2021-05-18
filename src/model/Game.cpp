@@ -16,6 +16,7 @@ void Game::start() {
     this->level = new Level();
     this->loadLevel(1);
     this->player = new Player(new Position(200,200));
+    Logger::log(Logger::Info,"Inicio Donkey Kong");
 }
 
 
