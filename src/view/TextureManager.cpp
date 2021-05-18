@@ -14,7 +14,8 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
 
 TextureManager::~TextureManager() {
     delete this->playerTexture;
-    delete this->platformTexture;
+    delete this->bluePlatformTexture;
+    delete this->redPlatformTexture;
     delete this->yellowLadderTexture;
     delete this->cyanLadderTexture;
     delete this->fireTexture;
@@ -65,7 +66,13 @@ void TextureManager::loadPlatformTexture(){
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/blueplat.png\". TextureManager::loadPlatformTexture");
     }
-    this->platformTexture =  texture;
+    this->bluePlatformTexture =  texture;
+
+    texture = this->loadTexture("resources/sprites/redplat.png");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/redplat.png\". TextureManager::loadPlatformTexture");
+    }
+    this->redPlatformTexture =  texture;
 }
 
 void TextureManager::loadLadderTexture(){
@@ -104,8 +111,11 @@ void TextureManager::loadEnemyTexture(){
     }
     this->enemyTexture =  texture;
 }
-SDL_Texture *TextureManager::getPlatformTexture() {
-    return this->platformTexture;
+SDL_Texture *TextureManager::getPlatformTexture(int levelnum) {
+    if(levelnum == 1){
+        return this->bluePlatformTexture;
+    }
+    return this->redPlatformTexture;
 }
 
 SDL_Texture *TextureManager::getLadderTexture(int levelnum) {

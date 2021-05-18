@@ -51,7 +51,7 @@ void LevelDrawer::drawPlatform(Platform *platform) {
     tmpRect->h = destRect->h;
     tmpRect->w = destRect->w;
 
-    SDL_Texture *platformTexture = this->textureManager->getPlatformTexture();
+    SDL_Texture *platformTexture = this->textureManager->getPlatformTexture(this->levelnum);
 
     for (int i = 0; i < platform->getCount(); i++) {
         SDL_RenderCopy(this->renderer, platformTexture, platform->getSrcRect(), tmpRect);
