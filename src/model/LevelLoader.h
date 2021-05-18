@@ -6,7 +6,7 @@
 #include "../../resources/libraries/json.hpp"
 #include "Platform.h"
 #include "Ladder.h"
-#include "barrel.h"
+#include "Barrel.h"
 #include "Fire.h"
 
 using json = nlohmann::json;

@@ -6,7 +6,7 @@
 #include "Ladder.h"
 #include "../view/TextureManager.h"
 #include "Fire.h"
-#include "barrel.h"
+#include "Barrel.h"
 #include "LevelLoader.h"
 
 class Level {
@@ -58,8 +58,6 @@ private:
     LevelLoader *loader;
     Barrel** barrels;
     int barrelCount;
-
-    LevelLoader* loader;
 
     void reset();
 
