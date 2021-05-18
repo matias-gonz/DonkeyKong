@@ -18,11 +18,9 @@ void GameController::handleEvents() {
         switch (event.key.keysym.sym) {
             case SDLK_LEFT:
                 player->addLeftVel();
-                Logger::log(Logger::Debug,"Personaje 1 se movio para la izquierda");
                 break;
             case SDLK_RIGHT:
                 player->addRightVel();
-                Logger::log(Logger::Debug,"Personaje 1 se movio para la derecha");
                 break;
             case SDLK_UP:
                 player->jumpUp();
@@ -30,7 +28,7 @@ void GameController::handleEvents() {
                 break;
             case SDLK_l:
                 this->game->switchLevel();
-                Logger::log(Logger::Info,"Se paso al siguiente nivel");
+                Logger::log(Logger::Info,"Se switchea nivel");
                 break;
         }
     }

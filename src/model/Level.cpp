@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Logger.h"
 
 Level::Level() {
     this->platforms = NULL;
@@ -62,6 +63,7 @@ Fire *Level::getFire(int i) {
 }
 
 void Level::reset() {
+    Logger::log(Logger::Debug,"Se reseta el nivel");
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();

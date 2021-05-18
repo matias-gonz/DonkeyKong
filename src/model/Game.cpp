@@ -54,10 +54,15 @@ void Game::loadLevel(int levelnum) {
 
 
 void Game::spawnEnemies(Position **spawns, int spawnCount) {
+    Logger::log(Logger::Info,"Se spawnean enemigos type_1");
     srand(time(NULL));
     for(int i = 0; i < spawnCount; i++){
         if((rand()%100) < 10){
             this->enemyFires = (EnemyFire **) (realloc(this->enemyFires, (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
+            if(!this->enemyFires){
+                Logger::log(Logger::Error,"Error al reservar memoria. Game::spawnEnemies");
+                return;
+            }
             EnemyFire* enemy = new EnemyFire(spawns[i]);
             this->enemyFires[this->enemyFireCount] = enemy;
             (this->enemyFireCount)++;
