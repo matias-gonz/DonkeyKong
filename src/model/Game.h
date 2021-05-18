@@ -3,7 +3,11 @@
 #include "SDL2/SDL.h"
 #include "Player.h"
 #include "Level.h"
+#include "EnemyFire.h"
+#include "Boss.h"
+#include "Princess.h"
 
+#include "Logger.h"
 class Game {
 
 public:
@@ -17,17 +21,34 @@ public:
 
     bool isRunning();
 
-    Level* getLevel();
+    Level *getLevel();
 
-    Player* getPlayer();
+    Player *getPlayer();
 
     void loadLevel(int i);
 
-private:
-    Player* player = NULL;
-    bool running;
-    Level* level;
+    Boss* getBoss();
+    Princess* getPrincess();
+    EnemyFire **getEnemyFires();
 
+    int getEnemyFireCount();
+
+    void switchLevel();
+
+private:
+    Player *player = NULL;
+    EnemyFire** enemyFires = NULL;
+    int enemyFireCount = 0;
+    Boss*  boss = NULL;
+    Princess* princess = NULL;
+    bool running;
+    Level *level;
+
+    void spawnEnemies(Position **spawns, int spawnCount);
+
+    void resetEnemies();
+
+    int currentLevel;
 };
 
 

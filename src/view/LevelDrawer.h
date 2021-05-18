@@ -25,6 +25,8 @@ private:
     void drawPlatform(Platform *pPlatform);
     void drawFire(Fire *fire);
     void drawBarrel(Barrel *barrel);
+
+    int levelnum;
 };
 
 

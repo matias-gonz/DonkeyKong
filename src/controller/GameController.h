@@ -3,6 +3,7 @@
 
 #include "SDL2/SDL.h"
 #include "../model/Game.h"
+#include "../model/Logger.h"
 
 class GameController {
 public:

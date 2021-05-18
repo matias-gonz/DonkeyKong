@@ -6,8 +6,8 @@ Ladder::Ladder(Position position, int count) {
 
     this->destRect->x = position.getX();
     this->destRect->y = position.getY();
-    this->destRect->w = WIDTH/32;
-    this->destRect->h = this->destRect->w/4;
+    this->destRect->w = WIDTH / 32;
+    this->destRect->h = this->destRect->w / 4;
 
 
     this->count = count;
@@ -26,6 +26,6 @@ int Ladder::getCount() {
     return count;
 }
 
-const SDL_Rect *Ladder::getSrcRect() {
+SDL_Rect *Ladder::getSrcRect() {
     return srcRect;
 }

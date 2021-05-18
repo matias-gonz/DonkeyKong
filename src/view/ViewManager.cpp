@@ -1,4 +1,4 @@
-#include "viewManager.h"
+#include "ViewManager.h"
 
 const int LEFTSTARTW = 0;
 const int LEFTSTARTH = 0;
@@ -8,8 +8,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
-        : animator(nullptr) {
+ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen){
     this->screen_width = width;
     this->screen_height = height;
 
@@ -32,7 +31,12 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->game = aGame;
     this->textureManager = new TextureManager(this->renderer);
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-    this->animator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
+    this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
+    this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
+
+    //ESTOS NO FUNKAN
+    //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
+    //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -111,10 +115,47 @@ void ViewManager::renderWindow() {
     //render player
     Player *player = game->getPlayer();
     Position* playerPos = player->getPos();
-    int direction = player->getDirection();
-    int distance = player->getDistance();
+    int playerDirection = player->getDirection();
+    int playerDistance = player->getDistance();
 
-    this->animator->draw(this->renderer,direction,playerPos,distance);
+
+
+
+    //render boss
+    Boss* boss = game->getBoss();
+    Position* bossPos = boss->getPos();
+    //int bossDirection = boss->getDirection();
+    //int bossDistance = boss->getDistance();
+    SDL_Rect bossDstrect = {bossPos->getX(), bossPos->getY(), 170, 119};;
+
+    //render princess
+    Princess* princess = game->getPrincess();
+    Position* princessPos = princess->getPos();
+    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), texW, texH};;
+    //int princessDirection = princess->getDirection();
+    //int princessDistance = princess->getDistance();
+
+
+    //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
+    //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
+
+
+
+
+    //render enemies
+    EnemyFire** enemyFires = game->getEnemyFires();
+    int enemyFireCount = game->getEnemyFireCount();
+    for(int i = 0; i < enemyFireCount; i++){
+        Position* enemyPos = enemyFires[i]->getPos();
+        int enemyDirection = enemyFires[i]->getDirection();
+        int enemyDistance = enemyFires[i]->getDistance();
+
+        this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
+    }
+
+    SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
+    SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
+    this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
 
     SDL_RenderPresent(renderer);
 }

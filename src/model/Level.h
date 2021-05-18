@@ -13,35 +13,49 @@ class Level {
 
 public:
     Level();
+
     ~Level();
 
     void loadLevel(int levelnum);
+
     void update();
 
     int getLadderCount();
+
     Ladder *getLadder(int i);
 
     int getPlatformCount();
+
     Platform *getPlatform(int i);
 
     int getFireCount();
+
     Fire *getFire(int i);
 
     int getBarrelCount();
     Barrel *getBarrel(int i);
 
+    Position **getSpawns();
+
+    int getSpawnCount();
+
+    int getCurrentLevel();
+
 private:
 
-
-    Platform** platforms;
+    Platform **platforms;
     int platformCount;
 
-    Ladder** ladders;
+    Ladder **ladders;
     int ladderCount;
 
-    Fire** fires;
+    Fire **fires;
     int fireCount;
 
+    Position **spawns;
+    int spawnCount;
+
+    LevelLoader *loader;
     Barrel** barrels;
     int barrelCount;
 
@@ -49,11 +63,15 @@ private:
 
     void reset();
 
-    void freePlatforms();
+    void freePlaforms();
 
     void freeLadders();
 
     void freeFires();
+
+    void freeSpawns();
+
+    int currentLevel;
 
     void freeBarrels();
 };
