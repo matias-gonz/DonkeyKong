@@ -14,8 +14,10 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
 
 TextureManager::~TextureManager() {
     delete this->playerTexture;
-    delete this->platformTexture;
-    delete this->ladderTexture;
+    delete this->bluePlatformTexture;
+    delete this->redPlatformTexture;
+    delete this->yellowLadderTexture;
+    delete this->cyanLadderTexture;
     delete this->fireTexture;
     delete this->enemyTexture;
 }
@@ -64,17 +66,30 @@ void TextureManager::loadPlatformTexture(){
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/blueplat.png\". TextureManager::loadPlatformTexture");
     }
-    this->platformTexture =  texture;
+    this->bluePlatformTexture =  texture;
+
+    texture = this->loadTexture("resources/sprites/redplat.png");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/redplat.png\". TextureManager::loadPlatformTexture");
+    }
+    this->redPlatformTexture =  texture;
 }
 
 void TextureManager::loadLadderTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de Ladder.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/yelstair.png");
+    texture = this->loadTexture("resources/sprites/yellowladder.png");
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yelstair.png\". TextureManager::loadLadderTexture");
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yellowladder.png\". TextureManager::loadLadderTexture");
     }
-    this->ladderTexture = texture;
+    this->yellowLadderTexture = texture;
+
+    texture = this->loadTexture("resources/sprites/cyanladder.png");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyanladder.png\". TextureManager::loadLadderTexture");
+    }
+    this->cyanLadderTexture = texture;
+
 }
 
 void TextureManager::loadFireTexture(){
@@ -96,12 +111,18 @@ void TextureManager::loadEnemyTexture(){
     }
     this->enemyTexture =  texture;
 }
-SDL_Texture *TextureManager::getPlatformTexture() {
-    return this->platformTexture;
+SDL_Texture *TextureManager::getPlatformTexture(int levelnum) {
+    if(levelnum == 1){
+        return this->bluePlatformTexture;
+    }
+    return this->redPlatformTexture;
 }
 
-SDL_Texture *TextureManager::getLadderTexture() {
-    return this->ladderTexture;
+SDL_Texture *TextureManager::getLadderTexture(int levelnum) {
+    if(levelnum == 1){
+        return this->yellowLadderTexture;
+    }
+    return this->cyanLadderTexture;
 }
 
 SDL_Texture *TextureManager::getFireTexture() {

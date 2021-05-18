@@ -13,9 +13,9 @@ public:
 
     SDL_Texture* getPlayerTexture();
 
-    SDL_Texture* getPlatformTexture();
+    SDL_Texture *getPlatformTexture(int levelnum);
 
-    SDL_Texture* getLadderTexture();
+    SDL_Texture *getLadderTexture(int levelnum);
 
     SDL_Texture* getFireTexture();
 
@@ -33,11 +33,12 @@ private:
     void loadEnemyTexture();
 
     SDL_Texture *playerTexture;
-    SDL_Texture *platformTexture;
-    SDL_Texture *ladderTexture;
     SDL_Texture *fireTexture;
     SDL_Texture *enemyTexture;
-
+    SDL_Texture *yellowLadderTexture;
+    SDL_Texture *cyanLadderTexture;
+    SDL_Texture *bluePlatformTexture;
+    SDL_Texture *redPlatformTexture;
 };
 
 
