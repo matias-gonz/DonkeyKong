@@ -18,7 +18,7 @@ public:
 
     int getCount();
 
-    const SDL_Rect *getSrcRect();
+    SDL_Rect *getSrcRect();
 
 private:
     int count;

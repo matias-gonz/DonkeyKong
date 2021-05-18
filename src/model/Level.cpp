@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Logger.h"
 
 Level::Level() {
     this->platforms = NULL;
@@ -7,6 +8,8 @@ Level::Level() {
     this->ladderCount = 0;
     this->fires = NULL;
     this->fireCount = 0;
+    this->spawns = NULL;
+    this->spawnCount = 0;
     this->loader = new LevelLoader();
 }
 
@@ -14,14 +17,16 @@ Level::~Level() {
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();
+    this->freeSpawns();
     delete this->loader;
 }
 
 
 void Level::loadLevel(int levelnum) {
     this->reset();
+    this->currentLevel = levelnum;
     this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->platformCount,
-                            &this->ladderCount, &this->fireCount);
+                            &this->ladderCount, &this->fireCount, &this->spawns, &this->spawnCount);
 
 }
 
@@ -59,15 +64,11 @@ Fire *Level::getFire(int i) {
 }
 
 void Level::reset() {
+    Logger::log(Logger::Debug,"Se reseta el nivel");
     this->freePlaforms();
     this->freeLadders();
     this->freeFires();
-    this->platforms = NULL;
-    this->platformCount = 0;
-    this->ladders = NULL;
-    this->ladderCount = 0;
-    this->fires = NULL;
-    this->fireCount = 0;
+    this->freeSpawns();
 }
 
 void Level::freePlaforms() {
@@ -75,6 +76,8 @@ void Level::freePlaforms() {
         delete this->platforms[i];
     }
     free(this->platforms);
+    this->platforms = NULL;
+    this->platformCount = 0;
 }
 
 void Level::freeLadders() {
@@ -82,6 +85,8 @@ void Level::freeLadders() {
         delete this->ladders[i];
     }
     free(this->ladders);
+    this->ladders = NULL;
+    this->ladderCount = 0;
 }
 
 void Level::freeFires() {
@@ -89,6 +94,29 @@ void Level::freeFires() {
         delete this->fires[i];
     }
     free(this->fires);
+    this->fires = NULL;
+    this->fireCount = 0;
+}
+
+void Level::freeSpawns() {
+    for (int i = 0; i < this->spawnCount; i++) {
+        delete this->spawns[i];
+    }
+    free(this->spawns);
+    this->spawns = NULL;
+    this->spawnCount = 0;
+}
+
+Position **Level::getSpawns() {
+    return this->spawns;
+}
+
+int Level::getSpawnCount() {
+    return this->spawnCount;
+}
+
+int Level::getCurrentLevel() {
+    return this->currentLevel;
 }
 
 

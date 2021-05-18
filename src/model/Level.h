@@ -31,8 +31,13 @@ public:
 
     Fire *getFire(int i);
 
-private:
+    Position **getSpawns();
 
+    int getSpawnCount();
+
+    int getCurrentLevel();
+
+private:
 
     Platform **platforms;
     int platformCount;
@@ -43,7 +48,12 @@ private:
     Fire **fires;
     int fireCount;
 
+    Position **spawns;
+    int spawnCount;
+
     LevelLoader *loader;
+
+
 
     void reset();
 
@@ -52,6 +62,10 @@ private:
     void freeLadders();
 
     void freeFires();
+
+    void freeSpawns();
+
+    int currentLevel;
 };
 
 

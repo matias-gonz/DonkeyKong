@@ -7,6 +7,7 @@
 #include "Boss.h"
 #include "Princess.h"
 
+#include "Logger.h"
 class Game {
 
 public:
@@ -26,17 +27,28 @@ public:
 
     void loadLevel(int i);
 
-    EnemyFire* getEnemyFire();
     Boss* getBoss();
     Princess* getPrincess();
+    EnemyFire **getEnemyFires();
+
+    int getEnemyFireCount();
+
+    void switchLevel();
+
 private:
     Player *player = NULL;
-    EnemyFire* enemyFire = NULL;
+    EnemyFire** enemyFires = NULL;
+    int enemyFireCount = 0;
     Boss*  boss = NULL;
     Princess* princess = NULL;
     bool running;
     Level *level;
 
+    void spawnEnemies(Position **spawns, int spawnCount);
+
+    void resetEnemies();
+
+    int currentLevel;
 };
 
 

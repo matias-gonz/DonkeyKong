@@ -148,7 +148,19 @@ void ViewManager::renderWindow() {
     SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
     SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
     this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
-    this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
+
+
+    //render enemies
+    EnemyFire** enemyFires = game->getEnemyFires();
+    int enemyFireCount = game->getEnemyFireCount();
+    for(int i = 0; i < enemyFireCount; i++){
+        Position* enemyPos = enemyFires[i]->getPos();
+        int enemyDirection = enemyFires[i]->getDirection();
+        int enemyDistance = enemyFires[i]->getDistance();
+
+        this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
+    }
+
 
     SDL_RenderPresent(renderer);
 }

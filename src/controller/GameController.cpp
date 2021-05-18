@@ -22,9 +22,11 @@ void GameController::handleEvents() {
             player->addRightVel();
         }
         else if(event.key.keysym.sym == SDLK_SPACE){
+            Logger::log(Logger::Debug,"Personaje 1 salto");
             player->jumpUp();
         }
         else if(event.key.keysym.sym == SDLK_l){
+            Logger::log(Logger::Info,"Se switchea nivel");
             this->game->loadLevel(2);
         }
     }

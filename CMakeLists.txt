@@ -52,7 +52,10 @@ set(SOURCE_FILES main.cpp
         src/model/LevelLoader.cpp
         src/model/LevelLoader.h
         src/model/Princess.cpp
-        src/model/Princess.h)
+        src/model/Princess.h
+        src/model/LevelLoader.h
+        src/model/Logger.cpp
+        src/model/Logger.h)
 
 
 # change to personal project name (as above)
