@@ -8,6 +8,7 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadLadderTexture();
     this->loadFireTexture();
     this->loadPlayerTexture();
+    this->loadBarrelTexture();
     this->loadEnemyTexture();
     this->loadErrorTexture();
     Logger::log(Logger::Info,"Se finaliza la carga de de texturas.");
@@ -22,6 +23,7 @@ TextureManager::~TextureManager() {
     delete this->yellowLadderTexture;
     delete this->cyanLadderTexture;
     delete this->fireTexture;
+    delete this->barrelTexture;
     delete this->enemyTexture;
     delete this->bossTexture;
     delete this->princessTexture;
@@ -107,6 +109,17 @@ void TextureManager::loadFireTexture(){
     this->fireTexture =  texture;
 }
 
+void TextureManager::loadBarrelTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/barrel_right.png");
+    if(texture == NULL) printf("No se cargo la textura del barril");
+    this->barrelTexture =  texture;
+}
+/*
+SDL_Texture *TextureManager::getPlatformTexture() {
+    return this->platformTexture;
+}
+*/
 void TextureManager::loadEnemyTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de EnemyFire.");
     SDL_Texture* texture =NULL;
@@ -182,3 +195,7 @@ SDL_Texture *TextureManager::getBossTexture(){
 SDL_Texture *TextureManager::getPrincessTexture() {
     return this->princessTexture;
 }
+SDL_Texture *TextureManager::getBarrelTexture() {
+    return this->barrelTexture;
+}
+

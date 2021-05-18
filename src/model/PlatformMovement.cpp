@@ -1,6 +1,3 @@
-//
-// Created by matiti on 5/7/21.
-//
 
 #include <SDL_rect.h>
 #include "PlatformMovement.h"

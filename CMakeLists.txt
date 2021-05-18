@@ -55,7 +55,9 @@ set(SOURCE_FILES main.cpp
         src/model/Princess.h
         src/model/LevelLoader.h
         src/model/Logger.cpp
-        src/model/Logger.h)
+        src/model/Logger.h
+        src/model/BarrelMovement.cpp
+        src/model/BarrelMovement.h)
 
 
 # change to personal project name (as above)

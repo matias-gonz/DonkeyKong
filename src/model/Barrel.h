@@ -4,39 +4,62 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../view/ltexture.h"
+#include "Position.h"
+#include "BarrelMovement.h"
 
-//The dot that will move around on the screen
-class Barrel {
+
+#define HEIGHT 576
+#define WIDTH 1024
+
+//The Barrel that will move around on the screen
+class Barrel
+{
 public:
-    //The dimensions of the dot
-    static const int DOT_WIDTH = 20;
-    static const int DOT_HEIGHT = 20;
+    //The dimensions of the barrel
+    //static const int BARREL_WIDTH = 20;
+    //static const int BARREL_HEIGHT = 20;
 
-    //Maximum axis velocity of the dot
-    static const int DOT_VEL = 10;
+    //Maximum axis velocity of the barrel
+    //static const int BARREL_VEL = 10;
 
     //Initializes the variables
     Barrel();
 
     //Initializes the variables
-    Barrel(LTexture bTexture);
+    //Barrel(LTexture bTexture);
 
-    //Moves the dot
-    void move();
+    //Moves the barrel
+    //void move();
 
-    //Shows the dot on the screen
-    void render();
+    //Shows the barrel on the screen
+    //void render();
 
-    void setTexture(LTexture *bTexture);
+    //void setTexture(LTexture* bTexture);
+
+
+    //CAMBIOS BARREL
+    Barrel(Position position, int count, int direction);
+    ~Barrel();
+    SDL_Rect *getDestRect();
+    SDL_Rect *getSrcRect();
+    void update();
+    int getCount();
 
 private:
-    //The X and Y offsets of the dot
-    int posX, posY;
+    //The X and Y offsets of the barrel
+    //int posX, posY;
 
-    //The velocity of the dot
-    int velX, velY;
+    //The velocity of the barrel
+    //int velX, velY;
 
-    LTexture barrelTexture;
+    //LTexture barrelTexture;
+
+
+    //CAMBIOS BARREL
+    int count;
+    BarrelMovement* movement;
+    SDL_Rect* srcRect;
+    SDL_Rect * destRect;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H
