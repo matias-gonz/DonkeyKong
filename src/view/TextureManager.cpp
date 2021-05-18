@@ -78,15 +78,15 @@ void TextureManager::loadPlatformTexture(){
 void TextureManager::loadLadderTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de Ladder.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/yelstair.png");
+    texture = this->loadTexture("resources/sprites/yellowladder.png");
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yelstair.png\". TextureManager::loadLadderTexture");
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yellowladder.png\". TextureManager::loadLadderTexture");
     }
     this->yellowLadderTexture = texture;
 
-    texture = this->loadTexture("resources/sprites/cyanstair.png");
+    texture = this->loadTexture("resources/sprites/cyanladder.png");
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyanstair.png\". TextureManager::loadLadderTexture");
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyanladder.png\". TextureManager::loadLadderTexture");
     }
     this->cyanLadderTexture = texture;
 
