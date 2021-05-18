@@ -75,7 +75,7 @@ void TextureManager::loadFireTexture(){
 
 void TextureManager::loadBarrelTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/search.png");
+    texture = this->loadTexture("resources/sprites/barrel_right.png");
     if(texture == NULL) printf("No se cargo la textura del barril");
     this->barrelTexture =  texture;
 }

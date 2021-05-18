@@ -86,10 +86,8 @@ void LevelDrawer::drawBarrel(Barrel *barrel) {
 
     SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
 
-    for (int i = 0; i < barrel->getCount(); i++) {
-        SDL_RenderCopy(this->renderer, barrelTexture, barrel->getSrcRect(), tmpRect);
-        tmpRect->x += destRect->w;
-    }
+    SDL_RenderCopy(this->renderer, barrelTexture, NULL, tmpRect);
+
 }
 
 

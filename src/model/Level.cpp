@@ -15,6 +15,7 @@ Level::~Level(){
     this->freePlatforms();
     this->freeLadders();
     this->freeFires();
+    this->freeBarrels();
     delete this->loader;
 }
 
@@ -35,6 +36,9 @@ void Level::update(){
     }
     for (int i = 0; i < this->fireCount; i++) {
         this->fires[i]->update();
+    }
+    for (int i = 0; i < this->barrelCount; i++) {
+        this->barrels[i]->update();
     }
 }
 
@@ -77,6 +81,8 @@ void Level::reset() {
     this->ladderCount = 0;
     this->fires = NULL;
     this->fireCount = 0;
+    this->barrels = NULL;
+    this->barrelCount = 0;
 }
 
 void Level::freePlatforms() {

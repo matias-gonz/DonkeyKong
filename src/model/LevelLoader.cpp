@@ -112,8 +112,8 @@ Barrel** LevelLoader::loadBarrel(json jsonLevel, int *barrelCount){
 
         tmpBarrel = (Barrel **) (realloc(tmpBarrel, (*barrelCount + 1) * sizeof(Barrel *)));
         Position pos;
-        pos.setX(x * 32 + dx);
-        pos.setY(HEIGHT - (1 + y) * 21 - dy);
+        pos.setX(x);
+        pos.setY(y );
         Barrel *barrel = new Barrel(pos, count,direction);
         tmpBarrel[*barrelCount] = barrel;
         (*barrelCount)++;

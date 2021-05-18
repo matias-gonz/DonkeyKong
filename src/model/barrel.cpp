@@ -17,7 +17,7 @@ Barrel::Barrel(Position position, int count, int direction){
 
     this->destRect->x = position.getX();
     this->destRect->y = position.getY();
-    this->destRect->w = WIDTH/32;
+    this->destRect->w = WIDTH/7;
     this->destRect->h = this->destRect->w/1.5;
     this->count = count;
     this->movement = new BarrelMovement(direction);
@@ -43,7 +43,7 @@ SDL_Rect *Barrel::getSrcRect() {
 }
 
 int Barrel::getCount() {
-    return this->count;
+    return count;
 }
 
 
