@@ -3,25 +3,24 @@
 #include <SDL.h>
 #include "Player.h"
 #include "Position.h"
-enum kindOfAnimation { left, right};
+enum kindOfAnimation { left = -1, right = 1};
 
-Player::Player(){
-    velX = 0;
-    velY = 0;
-    isGrounded = true;
-    kindOfAnimation = right;
-    distance = 0;
+Player::Player(Position* pos) : Entity(pos) {
+    this->pos = pos;
+    this->isGrounded = true;
 }
-
-
 void Player::update() {
 
-    if (!isGrounded && pos.getY() > 200) {
-        pos.setY(200);
+    if (!isGrounded && pos->getY() > 540) {
+        pos->setY(540);
         velY = 0;
         isGrounded = true;
     }
-    pos.add(velX, velY);
+
+    pos->add(velX, velY);
+    if(pos->getX() < 0 or pos->getX()> 1024-17){
+        pos->add(-velX,0);
+    }//WIDTH - texW
     distance += abs(velX);
     if (distance > 70){ distance = 0;}
 
@@ -33,7 +32,7 @@ void Player::addLeftVel() {
     if (velX < 0){return;}
     if (velX > 0){ distance = 0;}
     velX -= VEL;
-    kindOfAnimation = left;
+    direction = left;
 }
 
 void Player::addRightVel() {
@@ -41,7 +40,7 @@ void Player::addRightVel() {
     if (velX > 0){return;}
     if (velX < 0){ distance = 0;}
     velX += VEL;
-    kindOfAnimation = right;
+    direction = right;
 }
 
 void Player::jumpUp() {
@@ -56,23 +55,3 @@ void Player::resetVel() {
     this->velX = 0;
 }
 
-double Player::getXPosition(){
-    return pos.getX();
-}
-
-
-double Player::getYPosition(){
-    return pos.getY();
-}
-
-Position* Player::getPos() {
-    return &pos;
-}
-
-int Player::getDistance() {
-    return distance;
-}
-
-int Player::getDirection() {
-    return kindOfAnimation;
-}

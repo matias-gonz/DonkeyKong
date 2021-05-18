@@ -12,6 +12,7 @@
 #include "LevelDrawer.h"
 #include "Animator.h"
 #include "../controller/Configuration.h"
+#include "../model/Boss.h"
 
 class ViewManager {
 public:
@@ -29,8 +30,6 @@ public:
 
     void renderWindow();
 
-    int getEnemiesCount();
-
 private:
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -40,7 +39,10 @@ private:
     Game* game;
     TextureManager* textureManager;
     LevelDrawer* levelDrawer;
-    Animator* animator;
+    Animator* playerAnimator;
+    Animator* enemyAnimator;
+    Animator* bossAnimator;
+    Animator* princessAnimator;
 
     void setTextureLinear();
 

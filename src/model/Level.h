@@ -6,6 +6,7 @@
 #include "Ladder.h"
 #include "../view/TextureManager.h"
 #include "Fire.h"
+#include "Barrel.h"
 #include "LevelLoader.h"
 
 class Level {
@@ -31,8 +32,16 @@ public:
 
     Fire *getFire(int i);
 
-private:
+    int getBarrelCount();
+    Barrel *getBarrel(int i);
 
+    Position **getSpawns();
+
+    int getSpawnCount();
+
+    int getCurrentLevel();
+
+private:
 
     Platform **platforms;
     int platformCount;
@@ -43,7 +52,12 @@ private:
     Fire **fires;
     int fireCount;
 
+    Position **spawns;
+    int spawnCount;
+
     LevelLoader *loader;
+    Barrel** barrels;
+    int barrelCount;
 
     void reset();
 
@@ -52,6 +66,12 @@ private:
     void freeLadders();
 
     void freeFires();
+
+    void freeSpawns();
+
+    int currentLevel;
+
+    void freeBarrels();
 };
 
 

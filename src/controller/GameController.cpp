@@ -15,34 +15,31 @@ void GameController::handleEvents() {
             break;
     }
     if (event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-            case SDLK_LEFT:
-                player->addLeftVel();
-                break;
-            case SDLK_RIGHT:
-                player->addRightVel();
-                break;
-            case SDLK_UP:
-                player->jumpUp();
-                break;
-            case SDLK_l:
-                this->game->loadLevel(2);
-                break;
+        if(event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a ){
+            player->addLeftVel();
+        }
+        else if(event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d){
+            player->addRightVel();
+        }
+        else if(event.key.keysym.sym == SDLK_SPACE){
+            Logger::log(Logger::Debug,"Personaje 1 salto");
+            player->jumpUp();
+        }
+        else if(event.key.keysym.sym == SDLK_l){
+            Logger::log(Logger::Info,"Se switchea nivel");
+            this->game->loadLevel(2);
         }
     }
     if (event.type == SDL_KEYUP) {
-        switch (event.key.keysym.sym) {
-            case SDLK_LEFT:
-                player->resetVel();
-                break;
-            case SDLK_RIGHT:
-                player->resetVel();
-                break;
+        if(event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a ){
+            player->resetVel();
+        }
+        else if(event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d){
+            player->resetVel();
         }
     }
 }
 
 void GameController::update() {
     this->game->update();
-    this->player->update();
 }

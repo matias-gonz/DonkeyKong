@@ -1,8 +1,8 @@
 
 #include "Animator.h"
-
+#include "stdio.h"
 enum kindOfAnimation {
-    left, right
+    left = -1, right = 1
 };
 
 Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
@@ -22,16 +22,17 @@ Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
 void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
 
     SDL_Rect srcrect = updateAnimation( direction, distance);
-    SDL_Rect dstrect = {static_cast<int>(pos->getX()), static_cast<int>(pos->getY()), 25, 50};
-    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
+    SDL_Rect dstrect = {pos->getX(), pos->getY(), texW, texH};
 
+    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
 
 }
 
 
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
+
     int amount = 0;
-    if(distance>10 && distance < 30){
+    if(distance>=10 && distance <= 30){
         amount = 1;
     }
     else if( distance < 50){
