@@ -86,7 +86,7 @@ void TextureManager::loadEnemyTexture(){
 
 void TextureManager::loadBossTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/boss_still.png");
+    texture = this->loadTexture("resources/sprites/boss.png");
     if(texture == NULL) printf("No se cargo la textura del Jefe");
     this->bossTexture =  texture;
 }

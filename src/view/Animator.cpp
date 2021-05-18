@@ -29,9 +29,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
 
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
-    if (direction == 0){
-        return {0,0,texW,texH};
-    }
+
     int amount = 0;
     if(distance>10 && distance < 30){
         amount = 1;

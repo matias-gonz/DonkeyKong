@@ -33,7 +33,7 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
     this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
     this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
-    this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,0,0,161,121,0);
+    this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,0,61,38,55,0);
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -127,8 +127,11 @@ void ViewManager::renderWindow() {
     //render boss
     Boss* boss = game->getBoss();
     Position* bossPos = boss->getPos();
+    int bossDirection = boss->getDirection();
+    int bossDistance = boss->getDistance();
 
-    this->bossAnimator->draw(this->renderer,0,bossPos,0);
+
+    this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
     this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
     this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
 
