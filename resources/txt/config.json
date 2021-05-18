@@ -5,8 +5,7 @@
     },
     "game": {
       "enemies_quantity_level_1": 5,
-      "enemies_quantity_level_2": 6
-    },
+      "enemies_quantity_level_2": 6,
     "sprites":
       {
         "player": "resources/sprites/sans_walk.png",
