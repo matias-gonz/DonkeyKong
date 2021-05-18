@@ -12,9 +12,10 @@ void Game::start() {
     this->running = true;
     this->level = new Level();
     this->loadLevel(1);
-    this->player = new Player(new Position(200,200));
+    this->player = new Player(new Position(200,505));
     this->enemyFire = new EnemyFire(new Position(250,250));
-    this->boss = new Boss(new Position(300,0));
+    this->boss = new Boss(new Position(200,0));
+    this->princess = new Princess(new Position(450,30));
 }
 
 
@@ -25,8 +26,9 @@ void Game::quit() {
 
 void Game::update() {
     this->level->update();
-    this->player->update();
+    this->princess->update();
     this->enemyFire->update();
+    this->player->update();
     this->boss->update();
 }
 
@@ -52,4 +54,8 @@ EnemyFire *Game::getEnemyFire() {
 
 Boss *Game::getBoss() {
     return this->boss;
+}
+
+Princess *Game::getPrincess() {
+    return this->princess;
 }

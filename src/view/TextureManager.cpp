@@ -10,6 +10,7 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadPlayerTexture();
     this->loadEnemyTexture();
     this->loadBossTexture();
+    this->loadPrincessTexture();
 }
 
 TextureManager::~TextureManager() {
@@ -19,6 +20,7 @@ TextureManager::~TextureManager() {
     delete this->fireTexture;
     delete this->enemyTexture;
     delete this->bossTexture;
+    delete this->princessTexture;
 }
 
 SDL_Texture* TextureManager::loadTexture(const char *path) {
@@ -86,9 +88,16 @@ void TextureManager::loadEnemyTexture(){
 
 void TextureManager::loadBossTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/boss.png");
+    texture = this->loadTexture("resources/sprites/boss_still.png");
     if(texture == NULL) printf("No se cargo la textura del Jefe");
     this->bossTexture =  texture;
+}
+
+void TextureManager::loadPrincessTexture(){
+    SDL_Texture* texture =NULL;
+    texture = this->loadTexture("resources/sprites/princess_still.png");
+    if(texture == NULL) printf("No se cargo la textura dela princesa");
+    this->princessTexture =  texture;
 }
 
 SDL_Texture *TextureManager::getPlatformTexture() {
@@ -113,4 +122,8 @@ SDL_Texture *TextureManager::getEnemyTexture() {
 
 SDL_Texture *TextureManager::getBossTexture(){
     return this->bossTexture;
+}
+
+SDL_Texture *TextureManager::getPrincessTexture() {
+    return this->princessTexture;
 }

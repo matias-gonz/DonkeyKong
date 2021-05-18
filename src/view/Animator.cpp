@@ -22,7 +22,8 @@ Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
 void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
 
     SDL_Rect srcrect = updateAnimation( direction, distance);
-    SDL_Rect dstrect = {pos->getX(), pos->getY(), static_cast<int>((1.5*texW)), static_cast<int>((1.5*texH))};
+    SDL_Rect dstrect = {pos->getX(), pos->getY(), texW, texH};
+
     SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
 
 }
@@ -31,7 +32,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
 
     int amount = 0;
-    if(distance>10 && distance < 30){
+    if(distance>=10 && distance <= 30){
         amount = 1;
     }
     else if( distance < 50){

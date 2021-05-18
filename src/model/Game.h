@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "EnemyFire.h"
 #include "Boss.h"
+#include "Princess.h"
 
 class Game {
 
@@ -27,10 +28,12 @@ public:
 
     EnemyFire* getEnemyFire();
     Boss* getBoss();
+    Princess* getPrincess();
 private:
     Player *player = NULL;
     EnemyFire* enemyFire = NULL;
     Boss*  boss = NULL;
+    Princess* princess = NULL;
     bool running;
     Level *level;
 

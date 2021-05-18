@@ -45,6 +45,7 @@ private:
     Animator* playerAnimator;
     Animator* enemyAnimator;
     Animator* bossAnimator;
+    Animator* princessAnimator;
 
     int enemiesCount;
 

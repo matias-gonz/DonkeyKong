@@ -7,16 +7,29 @@ enum direction{left = -1,right = 1};
 
 Boss::Boss(Position* pos){
     this->pos = pos;
-    this->state = fall;
-    this->direction = left;
-    this->velY = 1;
-}
+    this->direction = right;
+    this->distance = 0;
+    //this->state = still;
+    //this->velY = 1;
+    //this->counter = 0;
+    //this->movementCounter = 0;
 
-void Boss::update() {
+}
+void Boss::update(){
+    this->distance += 1;
+    if(this->distance > 30){
+        this->distance = 0;
+    }
+
+}
+/*void Boss::update() {
     if (this->state == still){
-        this->distance += 1;
-        if(this->distance > 70){
-            this->distance = 0;
+        this->movementCounter += 1;
+
+        if(this->movementCounter > 50){
+            this->direction = -1*this->direction;
+
+            this->movementCounter = 0;
         }
     }
     else if (this->state == fall){
@@ -39,3 +52,4 @@ void Boss::update() {
     }
 
 }
+*/

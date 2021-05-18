@@ -5,9 +5,6 @@ Entity::Entity(Position* pos){
     this->pos = pos;
     velX = 0;
     velY = 0;
-    isGrounded = true;
-    direction = right;
-    distance = 0;
 }
 
 

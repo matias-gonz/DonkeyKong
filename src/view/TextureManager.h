@@ -23,6 +23,8 @@ public:
 
     SDL_Texture* getBossTexture();
 
+    SDL_Texture* getPrincessTexture();
+
 
 private:
     SDL_Renderer* renderer;
@@ -34,6 +36,7 @@ private:
     void loadFireTexture();
     void loadEnemyTexture();
     void loadBossTexture();
+    void loadPrincessTexture();
 
 
     SDL_Texture *playerTexture;
@@ -42,6 +45,7 @@ private:
     SDL_Texture *fireTexture;
     SDL_Texture *enemyTexture;
     SDL_Texture *bossTexture;
+    SDL_Texture *princessTexture;
 
 };
 

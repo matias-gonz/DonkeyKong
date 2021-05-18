@@ -7,11 +7,12 @@ enum kindOfAnimation { left = -1, right = 1};
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
+    this->isGrounded = true;
 }
 void Player::update() {
 
-    if (!isGrounded && pos->getY() > 200) {
-        pos->setY(200);
+    if (!isGrounded && pos->getY() > 505) {
+        pos->setY(505);
         velY = 0;
         isGrounded = true;
     }
