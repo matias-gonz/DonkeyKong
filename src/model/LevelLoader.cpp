@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include "LevelLoader.h"
+#include "Logger.h"
 
 LevelLoader::LevelLoader() {}
 
@@ -13,10 +14,20 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
     //this->writeJSON();
     json jsonLevel;
     if(level == 1){
+        Logger::log(Logger::Info,"Se inicia la carga del nivel 1.");
         std::ifstream i("src/model/levels/level1.json");
+        if(!i){
+            Logger::log(Logger::Error,"Error al abrir archivo \"src/model/levels/level1.json\". LevelLoader::loadLevel");
+            return;
+        }
         i >> jsonLevel;
     }else if(level == 2){
+        Logger::log(Logger::Info,"Se inicia la carga del nivel 2.");
         std::ifstream i("src/model/levels/level2.json");
+        if(!i){
+            Logger::log(Logger::Error,"Error al abrir archivo \"src/model/levels/level2.json\". LevelLoader::loadLevel");
+            return;
+        }
         i >> jsonLevel;
     }
 
@@ -24,12 +35,13 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
     *ladders = this->loadLadders(jsonLevel,ladderCount);
     *fires = this->loadFire(jsonLevel,fireCount);
     *spawns = this->loadSpawns(jsonLevel,spawnCount);
+    Logger::log(Logger::Info,"Se finaliza la carga del nivel.");
 }
 
 
 
 Platform** LevelLoader::loadPlatforms(json jsonLevel, int* platformCount) {
-
+    Logger::log(Logger::Info,"Se inicia la carga de Platform.");
     Platform** tmpPlatforms = NULL;
     int x, dx, y, dy, count, direction;
     for (const auto& item : jsonLevel["platforms"].items()){
@@ -41,6 +53,12 @@ Platform** LevelLoader::loadPlatforms(json jsonLevel, int* platformCount) {
         direction = item.value()["direction"];
 
         tmpPlatforms = (Platform **) (realloc(tmpPlatforms, (*platformCount + 1) * sizeof(Platform *)));
+        if(!tmpPlatforms){
+            Logger::log(Logger::Error,"Error al reservar memoria. LevelLoader::loadPlatforms");
+            *platformCount = 0;
+            return NULL;
+        }
+
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 21 - dy);
@@ -54,7 +72,7 @@ Platform** LevelLoader::loadPlatforms(json jsonLevel, int* platformCount) {
 }
 
 Ladder** LevelLoader::loadLadders(json jsonLevel, int *ladderCount) {
-
+    Logger::log(Logger::Info,"Se inicia la carga de Ladder.");
     Ladder** tmpLadders = NULL;
     int x, dx, y, dy, count;
     for (const auto& item : jsonLevel["ladders"].items()){
@@ -64,6 +82,11 @@ Ladder** LevelLoader::loadLadders(json jsonLevel, int *ladderCount) {
         dy = item.value()["dy"];
         count = item.value()["count"];
         tmpLadders = (Ladder **) (realloc(tmpLadders, (*ladderCount + 1) * sizeof(Ladder *)));
+        if(!tmpLadders){
+            Logger::log(Logger::Error,"Error al reservar memoria. LevelLoader::loadLadders");
+            *ladderCount = 0;
+            return NULL;
+        }
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 21 - dy);
@@ -76,6 +99,7 @@ Ladder** LevelLoader::loadLadders(json jsonLevel, int *ladderCount) {
 }
 
 Fire** LevelLoader::loadFire(json jsonLevel, int *fireCount) {
+    Logger::log(Logger::Info,"Se inicia la carga de Fire.");
     Fire** tmpFires = NULL;
 
     int x, dx, y, dy, count;
@@ -87,6 +111,11 @@ Fire** LevelLoader::loadFire(json jsonLevel, int *fireCount) {
         count = item.value()["count"];
 
         tmpFires = (Fire **) (realloc(tmpFires, (*fireCount + 1) * sizeof(Fire *)));
+        if(!tmpFires){
+            Logger::log(Logger::Error,"Error al reservar memoria. LevelLoader::loadFire");
+            *fireCount = 0;
+            return NULL;
+        }
         Position pos;
         pos.setX(x * 32 + dx);
         pos.setY(HEIGHT - (1 + y) * 32 - dy);
@@ -99,6 +128,7 @@ Fire** LevelLoader::loadFire(json jsonLevel, int *fireCount) {
 }
 
 Position **LevelLoader::loadSpawns(json jsonLevel, int *spawnCount) {
+    Logger::log(Logger::Info,"Se inicia la carga de Spawnpoints.");
     Position** tmpSpawns = NULL;
 
     int x, dx, y, dy, count;
@@ -111,6 +141,11 @@ Position **LevelLoader::loadSpawns(json jsonLevel, int *spawnCount) {
 
         for(int i = 0; i < count; i++){
             tmpSpawns = (Position **) (realloc(tmpSpawns, (*spawnCount + 1) * sizeof(Position *)));
+            if(!tmpSpawns){
+                Logger::log(Logger::Error,"Error al reservar memoria. LevelLoader::loadSpawns");
+                *spawnCount = 0;
+                return NULL;
+            }
             Position* pos = new Position((x * 32) + dx + i*(WIDTH/32),HEIGHT - (1 + y) * 32 - dy);
             tmpSpawns[*spawnCount] = pos;
             (*spawnCount)++;
