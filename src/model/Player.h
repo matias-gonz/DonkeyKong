@@ -9,9 +9,9 @@
 
 class Player: public Entity {
     private:
+    int counter;
 
-
-    static const int VEL = 5;
+    static const int VEL = 3;
     public:
         explicit Player(Position *pos);
 
@@ -24,6 +24,8 @@ class Player: public Entity {
         void resetVel();
 
         void update();
+
+
 };
 
 

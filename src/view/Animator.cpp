@@ -6,7 +6,7 @@ enum kindOfAnimation {
 };
 
 Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
-                    int rightStartW, int rightStartH, int texW, int texH, int separationW) {
+                    int rightStartW, int rightStartH, int texW, int texH, int separationW,bool success) {
 
     this->texture = pTexture;
     this->leftStartW = leftStartW;
@@ -16,15 +16,30 @@ Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
     this->texW = texW;
     this->texH = texH;
     this->separationW = separationW;
+    this->success = success;
 
 }
 
 void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
+    SDL_Rect* srcrect = NULL;
+    if(this->success){
+        srcrect = new SDL_Rect();
+         *srcrect = updateAnimation( direction, distance);
+    }
 
-    SDL_Rect srcrect = updateAnimation( direction, distance);
-    SDL_Rect dstrect = {pos->getX(), pos->getY(), texW, texH};
+    int finalTexW = texW;
+    int finalTexH = texH;
 
-    SDL_RenderCopy(pRenderer, texture, &srcrect, &dstrect);
+    if(texW == 22){
+        finalTexW = static_cast<int>(1.5*texW);
+        finalTexH = static_cast<int>(1.5*texH);
+    }
+    if(texW ==17){
+        finalTexW = texW*2;
+    }
+    SDL_Rect dstrect = {pos->getX(), pos->getY(), finalTexW, finalTexH};
+
+    SDL_RenderCopy(pRenderer, texture, srcrect, &dstrect);
 
 }
 
@@ -32,7 +47,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
 
     int amount = 0;
-    if(distance>=10 && distance <= 30){
+    if(distance>=5 && distance <= 30){
         amount = 1;
     }
     else if( distance < 50){

@@ -8,11 +8,12 @@ enum kindOfAnimation { left = -1, right = 1};
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
     this->isGrounded = true;
+    this->counter = 0;
 }
 void Player::update() {
 
-    if (!isGrounded && pos->getY() > 540) {
-        pos->setY(540);
+    if (!isGrounded && pos->getY() > 525) {
+        pos->setY(525);
         velY = 0;
         isGrounded = true;
     }
@@ -24,7 +25,13 @@ void Player::update() {
     distance += abs(velX);
     if (distance > 70){ distance = 0;}
 
-    if (!isGrounded) { velY += 1; }
+    if (counter == 2){
+        if (!isGrounded) { velY += 1; }
+        counter = 0;
+        return;
+    }
+    counter++;
+
 }
 
 void Player::addLeftVel() {
