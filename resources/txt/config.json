@@ -3,10 +3,10 @@
     "log": {
       "ERROR": true,
       "DEBUG": false,
-      "INFO": false
+      "INFO": true
     },
-    "gamea": {
-      "probability_enemies": 10,
+    "game": {
+      "probability_enemies": 5,
       "sprites": {
         "player": "resources/sprites/sans_walk.png",
         "fire": "resources/sprites/fire.png",

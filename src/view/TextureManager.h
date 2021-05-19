@@ -9,58 +9,67 @@ using json = nlohmann::json;
 class TextureManager {
 
 public:
-    TextureManager(SDL_Renderer* aRenderer, json sprites);
-    ~TextureManager();
+  TextureManager(SDL_Renderer *aRenderer, json sprites);
 
-    SDL_Texture* loadTexture(std::string path);
+  ~TextureManager();
 
-    SDL_Texture* getPlayerTexture();
+  SDL_Texture *loadTexture(std::string path);
 
-    SDL_Texture *getPlatformTexture(int levelnum);
+  SDL_Texture *getPlayerTexture();
 
-    SDL_Texture *getLadderTexture(int levelnum);
+  SDL_Texture *getPlatformTexture(int levelnum);
 
-    SDL_Texture* getFireTexture();
+  SDL_Texture *getLadderTexture(int levelnum);
 
-    SDL_Texture* getBarrelTexture();
+  SDL_Texture *getFireTexture();
 
-    SDL_Texture* getEnemyTexture();
+  SDL_Texture *getBarrelTexture();
 
-    SDL_Texture* getBossTexture();
+  SDL_Texture *getEnemyTexture();
 
-    SDL_Texture* getPrincessTexture();
+  SDL_Texture *getBossTexture();
 
-    SDL_Texture *getErrorTexture();
+  SDL_Texture *getPrincessTexture();
+
+  SDL_Texture *getErrorTexture();
 
 private:
-    SDL_Renderer* renderer;
-    json sprites;
+  SDL_Renderer *renderer;
+  json sprites;
 
-    void loadPlayerTexture();
-    void loadPlatformTexture();
-    void loadLadderTexture();
-    void loadFireTexture();
-    void loadBarrelTexture();
-    void loadEnemyTexture();
-    void loadBossTexture();
-    void loadPrincessTexture();
+  void loadPlayerTexture();
 
+  void loadPlatformTexture();
 
-    SDL_Texture *playerTexture;
-    SDL_Texture *fireTexture;
-    SDL_Texture *enemyTexture;
-    SDL_Texture *yellowLadderTexture;
-    SDL_Texture *cyanLadderTexture;
-    SDL_Texture *bluePlatformTexture;
-    SDL_Texture *redPlatformTexture;
+  void loadLadderTexture();
 
-    void loadErrorTexture();
+  void loadFireTexture();
 
-    SDL_Texture *errorTexture;
-    SDL_Texture *bossTexture;
-    SDL_Texture *princessTexture;
+  void loadBarrelTexture();
 
-    SDL_Texture *barrelTexture;
+  void loadEnemyTexture();
+
+  void loadBossTexture();
+
+  void loadPrincessTexture();
+
+  std::string loadTextureFromJson(char const *spritePath);
+
+  SDL_Texture *playerTexture;
+  SDL_Texture *fireTexture;
+  SDL_Texture *enemyTexture;
+  SDL_Texture *yellowLadderTexture;
+  SDL_Texture *cyanLadderTexture;
+  SDL_Texture *bluePlatformTexture;
+  SDL_Texture *redPlatformTexture;
+
+  void loadErrorTexture();
+
+  SDL_Texture *errorTexture;
+  SDL_Texture *bossTexture;
+  SDL_Texture *princessTexture;
+
+  SDL_Texture *barrelTexture;
 };
 
 
