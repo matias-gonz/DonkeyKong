@@ -19,7 +19,7 @@ void Game::start() {
     this->loadLevel(1);
     this->player = new Player(new Position(200,525));
     Logger::log(Logger::Info,"Inicio Donkey Kong");
-    this->boss = new Boss(new Position(200,0));
+    this->boss = new Boss(new Position(100,35));
     this->princess = new Princess(new Position(450,30));
 }
 

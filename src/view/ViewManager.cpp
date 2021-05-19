@@ -144,7 +144,7 @@ void ViewManager::renderWindow() {
     //render princess
     Princess* princess = game->getPrincess();
     Position* princessPos = princess->getPos();
-    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), texW, texH};;
+    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), (int)(1.5*texW), (int)(1.5*texH)};;
     //int princessDirection = princess->getDirection();
     //int princessDistance = princess->getDistance();
 

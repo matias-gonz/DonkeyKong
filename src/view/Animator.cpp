@@ -29,7 +29,6 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
     int finalTexW = texW;
     int finalTexH = texH;
-
     if(texW == 22){
         finalTexW = static_cast<int>(1.5*texW);
         finalTexH = static_cast<int>(1.5*texH);
@@ -47,7 +46,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 SDL_Rect Animator::updateAnimation(int direction, int distance) {
 
     int amount = 0;
-    if(distance>=5 && distance <= 30){
+    if(distance>=3 && distance <= 30){
         amount = 1;
     }
     else if( distance < 50){
