@@ -1,5 +1,6 @@
 #include "ViewManager.h"
 
+//Player
 const int LEFTSTARTW = 0;
 const int LEFTSTARTH = 0;
 const int RIGHTSTARTW = 0;
