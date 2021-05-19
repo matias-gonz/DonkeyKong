@@ -7,7 +7,7 @@
 
 BarrelMovement::BarrelMovement(int direction) {
     this->direction = direction;
-    this->speed = 2;
+    this->speed = 1;
 }
 
 
