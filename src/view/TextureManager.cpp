@@ -64,7 +64,7 @@ SDL_Texture* TextureManager::loadTexture(std::string path) {
 }
 
 void TextureManager::loadPlayerTexture(){
-    SDL_Texture* textura =NULL;
+    SDL_Texture* textura = NULL;
     textura = this->loadTexture(to_string((sprites.at("player"))));
     Logger::log(Logger::Info,"Se inicia la carga de textura de Player.");
     if(!textura) {

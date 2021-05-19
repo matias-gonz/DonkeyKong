@@ -32,8 +32,23 @@ ViewManager::ViewManager(Game *aGame, Configuration *configuration, const char *
     this->game = aGame;
     this->textureManager = new TextureManager(this->renderer, configuration->getSprites());
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-    this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
-    this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
+
+    SDL_Texture* playerTexture = this->textureManager->getPlayerTexture();
+    bool playerTextureSuccess = true;
+    if(!playerTexture){
+        playerTexture = this->textureManager->getErrorTexture();
+        playerTextureSuccess = false;
+
+    }
+    SDL_Texture* enemyTexture = this->textureManager->getEnemyTexture();
+    bool enemyTextureSuccess = true;
+    if(!enemyTexture){
+        enemyTexture = this->textureManager->getErrorTexture();
+        enemyTextureSuccess = false;
+    }
+
+    this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
+    this->enemyAnimator = new Animator(enemyTexture,0,0,0,25,22,24,2,enemyTextureSuccess);
 
     //ESTOS NO FUNKAN
     //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);

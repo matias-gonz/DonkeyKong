@@ -15,6 +15,7 @@ private:
     int texW;
     int texH;
     int separationW;
+    bool success;
     int maxAnimation; //cuantos sprites son por animacion
     int currentAnimation;
     SDL_Texture* texture;//sprite sheet
@@ -23,7 +24,9 @@ public:
     void draw(SDL_Renderer *pRenderer, int direction,Position* pos,int distance);
     SDL_Rect updateAnimation(int direction,int distance);
 
-    explicit Animator(SDL_Texture *pTexture,int leftStartW,int leftStartH,int rightStartW,int rightStartH,int texW,int texH,int separationW);
+    explicit Animator(SDL_Texture *pTexture,int leftStartW,int leftStartH,int rightStartW,int rightStartH,int texW,int texH,int separationW,bool success);
+
+
 };
 
 
