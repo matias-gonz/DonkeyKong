@@ -19,6 +19,10 @@ public:
 
   int getEnemiesCount();
 
+  json getLogLevel();
+
+  bool isDefault();
+
 private:
   json configuration_json;
   json sprites;
@@ -26,10 +30,15 @@ private:
   json game;
   json levels;
   int enemiesCount;
+  bool loadsDefault = false;
 
   void setGameConfig();
 
   void setLogConfig();
+
+  bool hasKey(json json, std::string key);
+
+  void loadDefaultConfig();
 
 };
 

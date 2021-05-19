@@ -9,12 +9,11 @@
 
 int main(int argc, char *args[]) {
     Configuration *configuration = new Configuration();
-    Logger::startLogger("log.txt");
+    Logger::startLogger("log.txt", configuration);
     Game *game = new Game(configuration);
     game->start();
 
     GameController *gameController = new GameController(game);
-    // pasar json de sprites
     ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                                1024, 576, false);
 
