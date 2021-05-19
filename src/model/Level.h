@@ -1,13 +1,16 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_LEVEL_H
 #define TALLER_PROG_I_2021_1C_KIWI_LEVEL_H
 
-#include "SDL2/SDL_image.h"
+#include <SDL2/SDL_image.h>
+
 #include "Platform.h"
 #include "Ladder.h"
-#include "../view/TextureManager.h"
 #include "Fire.h"
 #include "Barrel.h"
 #include "LevelLoader.h"
+
+#include "../view/TextureManager.h"
+#include "../controller/Configuration.h"
 
 class Level {
 
@@ -16,7 +19,7 @@ public:
 
     ~Level();
 
-    void loadLevel(int levelnum);
+    void loadLevel(int levelnum, Configuration* configuration);
 
     void update();
 

@@ -118,9 +118,6 @@ void ViewManager::renderWindow() {
     int playerDirection = player->getDirection();
     int playerDistance = player->getDistance();
 
-
-
-
     //render boss
     Boss* boss = game->getBoss();
     Position* bossPos = boss->getPos();

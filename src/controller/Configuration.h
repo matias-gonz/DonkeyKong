@@ -15,11 +15,17 @@ public:
 
   json getSprites();
 
+  json getLevels();
+
+  int getEnemiesCount();
+
 private:
   json configuration_json;
   json sprites;
   json log;
   json game;
+  json levels;
+  int enemiesCount;
 
   void setGameConfig();
 

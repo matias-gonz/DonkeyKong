@@ -14,13 +14,8 @@ Configuration::Configuration() {
 void Configuration::setGameConfig() {
   this->game = configuration_json.at("game");
   this->sprites = game.at("sprites");
-
-  std::vector<std::string> ec_a;
-  for (auto& elem : game["enemies"])
-    ec_a.push_back(elem["type"]);
-
-  for (const auto& x : ec_a)
-    std::cout << x << "\n";
+  this->enemiesCount = game.at("max_enemies");
+  this->levels = game.at("levels");
 }
 
 void Configuration::setLogConfig() {
@@ -29,4 +24,12 @@ void Configuration::setLogConfig() {
 
 json Configuration::getSprites() {
   return this->sprites;
+}
+
+int Configuration::getEnemiesCount() {
+  return this->enemiesCount;
+}
+
+json Configuration::getLevels() {
+  return this->levels;
 }

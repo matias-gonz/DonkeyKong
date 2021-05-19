@@ -1,20 +1,24 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_GAME_H
 #define TALLER_PROG_I_2021_1C_KIWI_GAME_H
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
+
 #include "Player.h"
 #include "Level.h"
 #include "EnemyFire.h"
 #include "Boss.h"
 #include "Princess.h"
-
+#include "../controller/Configuration.h"
 #include "Logger.h"
+
 class Game {
 
 public:
-    Game();
+    Game(Configuration* configuration);
+
     ~Game();
 
     void start();
+
     void update();
 
     void quit();
@@ -43,8 +47,9 @@ private:
     Princess* princess = NULL;
     bool running;
     Level *level;
+    Configuration* configuration;
 
-    void spawnEnemies(Position **spawns, int spawnCount);
+    void spawnEnemies(Position **spawns, int spawnCount, int probability);
 
     void resetEnemies();
 

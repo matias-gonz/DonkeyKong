@@ -1,6 +1,8 @@
 #include "Game.h"
 
-Game::Game() {}
+Game::Game(Configuration* configuration) {
+  this->configuration = configuration;
+}
 
 Game::~Game() {
     delete this->player;
@@ -21,11 +23,9 @@ void Game::start() {
     this->princess = new Princess(new Position(450,30));
 }
 
-
 void Game::quit() {
     running = false;
 }
-
 
 void Game::update() {
     this->level->update();
@@ -51,17 +51,17 @@ Player *Game::getPlayer() {
 
 void Game::loadLevel(int levelnum) {
     this->currentLevel = levelnum;
-    this->level->loadLevel(levelnum);
+    this->level->loadLevel(levelnum, this->configuration);
     this->resetEnemies();
-    this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount());
+    //level should spawn enemies, not game
+    this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getEnemiesCount());
 }
 
-
-void Game::spawnEnemies(Position **spawns, int spawnCount) {
+void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
     Logger::log(Logger::Info,"Se spawnean enemigos type_1");
     srand(time(NULL));
     for(int i = 0; i < spawnCount; i++){
-        if((rand()%100) < 10){
+        if((rand()%100) < probability){
             this->enemyFires = (EnemyFire **) (realloc(this->enemyFires, (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
             if(!this->enemyFires){
                 Logger::log(Logger::Error,"Error al reservar memoria. Game::spawnEnemies");
