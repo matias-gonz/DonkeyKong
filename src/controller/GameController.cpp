@@ -27,7 +27,7 @@ void GameController::handleEvents() {
         }
         else if(event.key.keysym.sym == SDLK_l){
             Logger::log(Logger::Info,"Se switchea nivel");
-            this->game->loadLevel(2);
+            this->game->switchLevel();
         }
     }
     if (event.type == SDL_KEYUP) {

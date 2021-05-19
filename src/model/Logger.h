@@ -4,6 +4,7 @@
 #include <memory>
 #include <fstream>
 #include <string>
+#include "../controller/Configuration.h"
 
 #define ERROR Logger::Type::Error
 #define INFO Logger::Type::Info
@@ -11,32 +12,38 @@
 
 namespace Logger {
 
-    // Severity level enum.
-    enum Type {
-        Error,
-        Info,
-        Debug
-    };
+  // Severity level enum.
+  enum Type {
+    Error,
+    Info,
+    Debug
+  };
 
-    void startLogger(const std::string &path);
+  void startLogger(const std::string &path, Configuration* configuration);
 
-    void log(Type logType, const std::string &messsage);
+  void log(Type logType, const std::string &messsage);
 
-    class Log {
-    public:
+  class Log {
+  public:
 
-        Log(const std::string &path);
+    Log(const std::string &path);
 
-        void addLog(Type logType, const std::string &messsage);
+    void addLog(Type logType, const std::string &message);
 
-        ~Log();
+    void setConfiguration(json log);
 
-    private:
-        std::ofstream logFile;
-        std::string levels[5] = {"ERROR", "INFO", "DEBUG"};
+    ~Log();
 
-        std::string getCurrentDateTime();
-    };
+  private:
+    std::ofstream logFile;
+    std::string levels[3] = {"ERROR", "INFO", "DEBUG"};
+    bool logTypeEnabled[3] = {false, false, false};
+
+    std::string getCurrentDateTime();
+
+    bool logTypeIsEnabled(Type logType);
+
+  };
 }
 
 

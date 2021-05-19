@@ -2,10 +2,10 @@
   "configuration": {
     "log": {
       "ERROR": true,
-      "DEBUG": false,
-      "INFO": false
+      "DEBUG": true,
+      "INFO": true
     },
-    "gamea": {
+    "game": {
       "probability_enemies": 10,
       "sprites": {
         "player": "resources/sprites/sans_walk.png",
