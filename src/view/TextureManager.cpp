@@ -118,7 +118,9 @@ void TextureManager::loadFireTexture(){
 void TextureManager::loadBarrelTexture(){
     SDL_Texture* texture =NULL;
     texture = this->loadTexture(to_string((sprites.at("barrel_right"))));
-    if(texture == NULL) printf("No se cargo la textura del barril");
+    if(!texture) {
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/barrel_right.png\". TextureManager::loadBarrelTexture");
+    }
     this->barrelTexture =  texture;
 }
 /*
@@ -191,8 +193,6 @@ SDL_Texture *TextureManager::getEnemyTexture() {
 SDL_Texture *TextureManager::getErrorTexture() {
     return this->errorTexture;
 }
-
-
 
 SDL_Texture *TextureManager::getBossTexture(){
     return this->bossTexture;
