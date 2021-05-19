@@ -11,11 +11,12 @@
 #include "../model/Game.h"
 #include "LevelDrawer.h"
 #include "Animator.h"
+#include "../controller/Configuration.h"
 #include "../model/Boss.h"
 
 class ViewManager {
 public:
-    ViewManager(Game*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
     SDL_Renderer *getRenderer();
 
@@ -28,10 +29,6 @@ public:
     void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
 
     void renderWindow();
-
-    void setEnemiesCount(int numberEnemies);
-
-    int getEnemiesCount();
 
 private:
     SDL_Renderer *renderer;
@@ -46,8 +43,6 @@ private:
     Animator* enemyAnimator;
     Animator* bossAnimator;
     Animator* princessAnimator;
-
-    int enemiesCount;
 
     void setTextureLinear();
 

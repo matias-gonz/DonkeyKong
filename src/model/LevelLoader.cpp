@@ -1,26 +1,33 @@
 #include <iomanip>
 #include <iostream>
+
 #include "LevelLoader.h"
 #include "Logger.h"
+
 
 LevelLoader::LevelLoader() {}
 
 LevelLoader::~LevelLoader() {}
 
 void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, Barrel ***barrels, int *platformCount,
-                            int *ladderCount, int *fireCount, int *barrelCount, Position ***spawns, int *spawnCount) {
+                            int *ladderCount, int *fireCount, int *barrelCount, Position ***spawns, int *spawnCount,
+                            Configuration* configuration) {
 
+    json levels = configuration->getLevels();
     //this->writeJSON();
     json jsonLevel;
     if(level == 1){
+        std::string level1 = to_string(levels.at("level1"));
+        level1.replace(0, 1, "");
+        level1.erase(level1.size() - 1);
         Logger::log(Logger::Info,"Se inicia la carga del nivel 1.");
-        std::ifstream i("src/model/levels/level1.json");
+        std::ifstream i(level1);
         if(!i){
             Logger::log(Logger::Error,"Error al abrir archivo \"src/model/levels/level1.json\". LevelLoader::loadLevel");
             return;
         }
         i >> jsonLevel;
-    }else if(level == 2){
+    } else if(level == 2){
         Logger::log(Logger::Info,"Se inicia la carga del nivel 2.");
         std::ifstream i("src/model/levels/level2.json");
         if(!i){

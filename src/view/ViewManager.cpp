@@ -8,7 +8,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int width, int height, bool fullscreen){
+ViewManager::ViewManager(Game *aGame, Configuration *configuration, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
     this->screen_width = width;
     this->screen_height = height;
 
@@ -29,7 +29,7 @@ ViewManager::ViewManager(Game *aGame, const char *title, int xPos, int yPos, int
     }
 
     this->game = aGame;
-    this->textureManager = new TextureManager(this->renderer);
+    this->textureManager = new TextureManager(this->renderer, configuration->getSprites());
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
     this->playerAnimator = new Animator(this->textureManager->getPlayerTexture(),LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW);
     this->enemyAnimator = new Animator(this->textureManager->getEnemyTexture(),0,0,0,25,22,24,2);
@@ -118,9 +118,6 @@ void ViewManager::renderWindow() {
     int playerDirection = player->getDirection();
     int playerDistance = player->getDistance();
 
-
-
-
     //render boss
     Boss* boss = game->getBoss();
     Position* bossPos = boss->getPos();
@@ -158,12 +155,4 @@ void ViewManager::renderWindow() {
     this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
 
     SDL_RenderPresent(renderer);
-}
-
-void ViewManager::setEnemiesCount(int numberEnemies) {
-  this->enemiesCount = numberEnemies;
-}
-
-int ViewManager::getEnemiesCount() {
-  return this->getEnemiesCount();
 }

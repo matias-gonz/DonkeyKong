@@ -4,22 +4,25 @@
       "level": "ERROR"
     },
     "game": {
-      "enemies": [
-        {
-          "type": "class-1",
-          "quantity": "5"
-        }
-      ],
-    "stages": [
-      {
-        "fondo1": "/home/file21.bmp",
-        "fondo2": "/home/file22.bmp"
+      "max_enemies": 10,
+      "sprites": {
+        "player": "resources/sprites/sans_walk.png",
+        "fire": "resources/sprites/fire.png",
+        "barrel": "resources/sprites/fire.png",
+        "yellow_stair": "resources/sprites/yellowladder.png",
+        "cyan_ladder": "resources/sprites/cyanladder.png",
+        "red_platform": "resources/sprites/redplat.png",
+        "blue_platform": "resources/sprites/blueplat.png",
+        "barrel_right": "resources/sprites/barrel_right.png",
+        "enemy": "resources/sprites/fire_walk.png",
+        "boss": "resources/sprites/boss_still.png",
+        "princess": "resources/sprites/princess_still.png"
       },
-      {
-        "fondo1": "/home/file31.bmp",
-        "fondo2": "/home/file32.bmp"
+      "levels": {
+        "level1": "src/model/levels/level1.json",
+        "level2": "src/model/levels/level2.json"
       }
-     ]
     }
   }
 }
+

@@ -2,14 +2,17 @@
 #define TALLER_PROG_I_2021_1C_KIWI_TEXTUREMANAGER_H
 
 #include "SDL2/SDL_image.h"
+#include "../../resources/libraries/json.hpp"
+
+using json = nlohmann::json;
 
 class TextureManager {
 
 public:
-    TextureManager(SDL_Renderer* aRenderer);
+    TextureManager(SDL_Renderer* aRenderer, json sprites);
     ~TextureManager();
 
-    SDL_Texture* loadTexture(const char* file);
+    SDL_Texture* loadTexture(std::string path);
 
     SDL_Texture* getPlayerTexture();
 
@@ -27,12 +30,11 @@ public:
 
     SDL_Texture* getPrincessTexture();
 
-
     SDL_Texture *getErrorTexture();
 
 private:
     SDL_Renderer* renderer;
-
+    json sprites;
 
     void loadPlayerTexture();
     void loadPlatformTexture();

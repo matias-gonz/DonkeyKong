@@ -1,9 +1,11 @@
+#include <iostream>
 #include "TextureManager.h"
 #include "../model/Game.h"
 #include "stdio.h"
-TextureManager::TextureManager(SDL_Renderer* aRenderer){
-    Logger::log(Logger::Info,"Se inicial la carga de texturas.");
+
+TextureManager::TextureManager(SDL_Renderer* aRenderer, json sprites){
     this->renderer = aRenderer;
+    this->sprites = sprites;
     this->loadPlatformTexture();
     this->loadLadderTexture();
     this->loadFireTexture();
@@ -11,9 +13,9 @@ TextureManager::TextureManager(SDL_Renderer* aRenderer){
     this->loadBarrelTexture();
     this->loadEnemyTexture();
     this->loadErrorTexture();
-    Logger::log(Logger::Info,"Se finaliza la carga de de texturas.");
     this->loadBossTexture();
     this->loadPrincessTexture();
+    Logger::log(Logger::Info,"Se finaliza la carga de de texturas.");
 }
 
 TextureManager::~TextureManager() {
@@ -29,19 +31,24 @@ TextureManager::~TextureManager() {
     delete this->princessTexture;
 }
 
-SDL_Texture* TextureManager::loadTexture(const char *path) {
+SDL_Texture* TextureManager::loadTexture(std::string path) {
+    //Remove first and last "\"
+    path.replace(0, 1, "");
+    path.erase(path.size() - 1);
     //The final texture
     SDL_Texture* newTexture = NULL;
+    char char_path[path.size() + 1];
+    strcpy(char_path, path.c_str());
 
     //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load(path);
+    SDL_Surface* loadedSurface = IMG_Load(char_path);
     if( loadedSurface != NULL )
     {
         //Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface );
         if( newTexture == NULL )
         {
-            printf( "Unable to create texture from %s! SDL SDL_Renderer*Error: %s\n", path, SDL_GetError() );
+            printf( "Unable to create texture from %s! SDL SDL_Renderer*Error: %s\n", char_path, SDL_GetError() );
         }
 
         //Get rid of old loaded surface
@@ -50,16 +57,16 @@ SDL_Texture* TextureManager::loadTexture(const char *path) {
     }
     else
     {
-        printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+        printf("Unable to load image %s! SDL_image Error: %s\n", char_path, IMG_GetError());
     }
 
     return newTexture;
 }
 
 void TextureManager::loadPlayerTexture(){
+    SDL_Texture* textura =NULL;
+    textura = this->loadTexture(to_string((sprites.at("player"))));
     Logger::log(Logger::Info,"Se inicia la carga de textura de Player.");
-    SDL_Texture* textura = NULL;
-    textura = this->loadTexture("resources/sprites/sans_walk.png");
     if(!textura) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/sans_walk.png\". TextureManager::loadPlayerTexture");
     }
@@ -69,15 +76,15 @@ void TextureManager::loadPlayerTexture(){
 void TextureManager::loadPlatformTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de Platform.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/blueplat.png");
+    texture = this->loadTexture(to_string((sprites.at("blue_platform"))));
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/blueplat.png\". TextureManager::loadPlatformTexture");
     }
     this->bluePlatformTexture =  texture;
 
-    texture = this->loadTexture("resources/sprites/redplat.png");
+    texture = this->loadTexture(to_string((sprites.at("red_platform"))));
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/redplat.png\". TextureManager::loadPlatformTexture");
+      Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/redplat.png\". TextureManager::loadPlatformTexture");
     }
     this->redPlatformTexture =  texture;
 }
@@ -85,24 +92,23 @@ void TextureManager::loadPlatformTexture(){
 void TextureManager::loadLadderTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de Ladder.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/yellowladder.png");
+    texture = this->loadTexture(to_string((sprites.at("yellow_stair"))));
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yellowladder.png\". TextureManager::loadLadderTexture");
+        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/yellow_stair.png\". TextureManager::loadLadderTexture");
     }
     this->yellowLadderTexture = texture;
 
-    texture = this->loadTexture("resources/sprites/cyanladder.png");
+  texture = this->loadTexture(to_string((sprites.at("cyan_ladder"))));
     if(!texture) {
-        Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyanladder.png\". TextureManager::loadLadderTexture");
+      Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/cyan_ladder.png\". TextureManager::loadLadderTexture");
     }
     this->cyanLadderTexture = texture;
-
 }
 
 void TextureManager::loadFireTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de Fire.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/fire.png");
+    texture = this->loadTexture(to_string((sprites.at("fire"))));
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/fire.png\". TextureManager::loadFireTexture");
     }
@@ -111,7 +117,7 @@ void TextureManager::loadFireTexture(){
 
 void TextureManager::loadBarrelTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/barrel_right.png");
+    texture = this->loadTexture(to_string((sprites.at("barrel_right"))));
     if(texture == NULL) printf("No se cargo la textura del barril");
     this->barrelTexture =  texture;
 }
@@ -123,7 +129,7 @@ SDL_Texture *TextureManager::getPlatformTexture() {
 void TextureManager::loadEnemyTexture(){
     Logger::log(Logger::Info,"Se inicia la carga de textura de EnemyFire.");
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/fire_walk.png");
+    texture = this->loadTexture(to_string((sprites.at("enemy"))));
     if(!texture) {
         Logger::log(Logger::Error,"Error al abrir archivo \"resources/sprites/fire_walk.png\". TextureManager::loadEnemyTexture");
     }
@@ -133,10 +139,10 @@ void TextureManager::loadEnemyTexture(){
 void TextureManager::loadErrorTexture() {
     Logger::log(Logger::Info, "Se inicia la carga de textura de error.");
     SDL_Texture *texture = NULL;
-    texture = this->loadTexture("resources/sprites/errortexture.png");
+    texture = this->loadTexture(".resources/sprites/errortexture.png.");
     if (!texture) {
         Logger::log(Logger::Error,
-                    "Error al abrir archivo \"resources/sprites/errortexture.png\". TextureManager::loadErrorTexture");
+                    "Error al abrir archivo \".resources/sprites/errortexture.png.\". TextureManager::loadErrorTexture");
     }
     this->errorTexture = texture;
 
@@ -144,14 +150,14 @@ void TextureManager::loadErrorTexture() {
 
 void TextureManager::loadBossTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/boss_still.png");
+    texture = this->loadTexture(to_string((sprites.at("boss"))));
     if(texture == NULL) printf("No se cargo la textura del Jefe");
     this->bossTexture =  texture;
 }
 
 void TextureManager::loadPrincessTexture(){
     SDL_Texture* texture =NULL;
-    texture = this->loadTexture("resources/sprites/princess_still.png");
+    texture = this->loadTexture(to_string((sprites.at("princess"))));
     if(texture == NULL) printf("No se cargo la textura dela princesa");
     this->princessTexture =  texture;
 }
@@ -198,4 +204,3 @@ SDL_Texture *TextureManager::getPrincessTexture() {
 SDL_Texture *TextureManager::getBarrelTexture() {
     return this->barrelTexture;
 }
-
