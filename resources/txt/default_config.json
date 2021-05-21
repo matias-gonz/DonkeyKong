@@ -8,17 +8,17 @@
     "game": {
       "probability_enemies": 10,
       "sprites": {
-        "player": "resources/sprites/sans_walk.png",
-        "fire": "resources/sprites/fire.png",
+        "player": "resources/sprites/sans_walk_default.png",
+        "fire": "resources/sprites/fire_default.png",
         "barrel": "resources/sprites/fire.png",
-        "yellow_stair": "resources/sprites/yellowladder.png",
-        "cyan_ladder": "resources/sprites/cyanladder.png",
-        "red_platform": "resources/sprites/redplat.png",
-        "blue_platform": "resources/sprites/blueplat.png",
+        "yellow_stair": "resources/sprites/ladder_default.png",
+        "cyan_ladder": "resources/sprites/ladder_default.png",
+        "red_platform": "resources/sprites/plat_default.png",
+        "blue_platform": "resources/sprites/plat_default.png",
         "barrel_right": "resources/sprites/barrel_right.png",
-        "enemy": "resources/sprites/fire_walk.png",
-        "boss": "resources/sprites/boss_still.png",
-        "princess": "resources/sprites/princess_still.png"
+        "enemy": "resources/sprites/fire_walk_default.png",
+        "boss": "resources/sprites/boss_default.png",
+        "princess": "resources/sprites/princess_default.png"
       },
       "levels": {
         "level1": "src/model/levels/level1.json",

@@ -15,7 +15,7 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
   this->loadErrorTexture();
   this->loadBossTexture();
   this->loadPrincessTexture();
-  Logger::log(Logger::Info, "Se finaliza la carga de de texturas.");
+  Logger::log(Logger::Info, "Se finaliza la carga de texturas.");
 }
 
 TextureManager::~TextureManager() {
