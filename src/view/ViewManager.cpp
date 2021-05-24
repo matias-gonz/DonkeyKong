@@ -9,9 +9,10 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, Configuration *configuration, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
+ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
     this->screen_width = width;
     this->screen_height = height;
+    this->configuration = configurations;
 
     int flags = 0;
     if (fullscreen) {
@@ -30,7 +31,7 @@ ViewManager::ViewManager(Game *aGame, Configuration *configuration, const char *
     }
 
     this->game = aGame;
-    this->textureManager = new TextureManager(this->renderer, configuration->getSprites());
+    this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
 
     SDL_Texture* playerTexture = this->textureManager->getPlayerTexture();
@@ -90,8 +91,11 @@ void ViewManager::createRenderer() {
 
 void ViewManager::initializeRendererColor() {
     //Initialize renderer color
-    SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
-
+    if( this->configuration->isDefault()) {
+      SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 100);
+    }else{
+      SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
+    }
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags)) {
