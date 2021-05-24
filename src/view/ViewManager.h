@@ -43,6 +43,7 @@ private:
     Animator* enemyAnimator;
     Animator* bossAnimator;
     Animator* princessAnimator;
+    Configuration* configuration;
 
     void setTextureLinear();
 
