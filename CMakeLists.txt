@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH cmake)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-set(SOURCE_FILES main.cpp
+set(SOURCE_FILES src/Server/mainServer.cpp
         src/controller/handlers/flechaArriba.cpp
         src/model/Player.cpp
         src/model/Player.h
@@ -57,7 +57,8 @@ set(SOURCE_FILES main.cpp
         src/model/Logger.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
-        src/model/BarrelMovement.h)
+        src/model/BarrelMovement.h
+        main.cpp src/Server/mainServer.h mainClient.cpp mainClient.h src/Server/Server.cpp src/Server/Server.h)
 
 
 # change to personal project name (as above)

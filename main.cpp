@@ -1,29 +1,60 @@
-#include <iostream>
-#include <SDL2/SDL_events.h>
+#include <getopt.h>
+#include <cstdio>
+#include "src/Server/mainServer.h"
+#include "mainClient.h"
 
-#include "src/model/Game.h"
-#include "src/model/Logger.h"
-#include "src/view/ViewManager.h"
-#include "src/controller/GameController.h"
-#include "src/controller/Configuration.h"
+#define NULL 0;
+
+bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
+
+  const char *short_opt = "sci:";
+  int c;
+  bool isServer = false;
+
+  struct option long_opt[] = {
+      {"server", no_argument,       0, 's'},
+      {"client", no_argument,       0, 'c'},
+      {"json",  required_argument, 0, 'j'},
+      {"IP",  required_argument, 0, 'i'},
+      {"port",  required_argument, 0, 'p'},
+      {0, 0,                        0, 0}
+  };
+
+  while ((c = getopt_long(argc, args, short_opt, long_opt, 0)) != -1) {
+    switch (c) {
+      case 's':
+        isServer = true;
+        break;
+      case 'c':
+        isServer = false;
+        break;
+      case 'j':
+        input = &optarg;
+        break;
+      case 'i':
+        IP = &optarg;
+        break;
+      case 'p':
+        port = &optarg;
+        break;
+      default:
+        printf("%s: invalid option -- %c\n", args[0]);
+    }
+  }
+
+  return isServer;
+}
 
 int main(int argc, char *args[]) {
-    Configuration *configuration = new Configuration();
-    Logger::startLogger("log.txt", configuration);
-    Game *game = new Game(configuration);
-    game->start();
-
-    GameController *gameController = new GameController(game);
-    ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                               1024, 576, false);
-
-    while (game->isRunning()) {
-        gameController->handleEvents();
-        gameController->update();
-        viewManager->renderWindow();
-    }
-
-    delete game;
-
-    return 0;
+  char *json;
+  char *IP;
+  char *port;
+  bool isServer = checkArgs(argc, args, &json, &IP, &port);
+  if(isServer){
+    mainServer(&json, &IP, &port);
+  }else{
+    mainClient(&IP, &port);
+  }
 }
+
+
