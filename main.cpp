@@ -9,7 +9,7 @@
 
 int main(int argc, char *args[]) {
     Configuration *configuration = new Configuration();
-    Logger::startLogger("log.txt", configuration);
+    Logger::startLogger(configuration);
     Game *game = new Game(configuration);
     game->start();
 

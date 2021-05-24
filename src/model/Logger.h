@@ -1,49 +1,59 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_LOGGER_H
 #define TALLER_PROG_I_2021_1C_KIWI_LOGGER_H
 
+
 #include <memory>
 #include <fstream>
 #include <string>
 #include "../controller/Configuration.h"
 
+#define MAXIMUM_NUMBER_OF_LOGS 5
 #define ERROR Logger::Type::Error
 #define INFO Logger::Type::Info
 #define DEBUG Logger::Type::Debug
 
 namespace Logger {
 
-  // Severity level enum.
-  enum Type {
-    Error,
-    Info,
-    Debug
-  };
+    // Severity level enum.
+    enum Type {
+        Error,
+        Info,
+        Debug
+    };
 
-  void startLogger(const std::string &path, Configuration* configuration);
+    bool fileExist(const std::string fileName);
 
-  void log(Type logType, const std::string &messsage);
+    void startLogger(Configuration *configuration);
 
-  class Log {
-  public:
+    void logShouldHaveLessThanTenGameplays(const std::string &logName);
 
-    Log(const std::string &path);
+    void deleteOldestLog(const std::string &logName);
 
-    void addLog(Type logType, const std::string &message);
+    void log(Type logType, const std::string &messsage);
 
-    void setConfiguration(json log);
+    class Log {
+    public:
 
-    ~Log();
+        Log(const std::string &path);
 
-  private:
-    std::ofstream logFile;
-    std::string levels[3] = {"ERROR", "INFO", "DEBUG"};
-    bool logTypeEnabled[3] = {false, false, false};
+        void addLog(Type logType, const std::string &message);
 
-    std::string getCurrentDateTime();
+        void addFinalLog();
 
-    bool logTypeIsEnabled(Type logType);
+        void setConfiguration(json log);
 
-  };
+        ~Log();
+
+    private:
+        std::ofstream logFile;
+        std::string levels[3] = {"ERROR", "INFO", "DEBUG"};
+        bool logTypeEnabled[3] = {false, false, false};
+
+        std::string getCurrentDateTime();
+
+        bool logTypeIsEnabled(Type logType);
+
+    };
 }
 
 
