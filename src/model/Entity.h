@@ -6,7 +6,6 @@
 class Entity {
 
 protected:
-    bool isGrounded;
     Position* pos;
     int velY;
     int velX;
@@ -28,6 +27,8 @@ public:
     int getDistance();
 
     int getDirection();
+
+    bool isGrounded;
 };
 
 

@@ -28,6 +28,8 @@ public:
 
     void update();
 
+    SDL_Rect getRectangle();
+
 private:
     int count;
     SDL_Rect* srcRect;

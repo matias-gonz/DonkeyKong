@@ -40,3 +40,9 @@ SDL_Rect *Platform::getSrcRect() {
     return srcRect;
 }
 
+SDL_Rect Platform::getRectangle() {
+    SDL_Rect rectangle = *this->destRect;
+    rectangle.w *=this->count;
+    return rectangle;
+}
+
