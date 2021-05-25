@@ -11,6 +11,7 @@
 
 #include "../view/TextureManager.h"
 #include "../controller/Configuration.h"
+#include "Player.h"
 
 class Level {
 
@@ -43,6 +44,8 @@ public:
     int getSpawnCount();
 
     int getCurrentLevel();
+
+    void resolveCollisions(Player *player);
 
 private:
 

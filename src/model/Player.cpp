@@ -62,3 +62,11 @@ void Player::resetVel() {
     this->velX = 0;
 }
 
+SDL_Rect Player::getRectangle() {
+    return SDL_Rect({this->pos->getX(),this->pos->getY(),34, 30});
+}
+
+void Player::moveUp(int dy) {
+    this->pos->add(0,-dy);
+}
+

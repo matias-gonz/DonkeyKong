@@ -54,6 +54,8 @@ private:
     void resetEnemies();
 
     int currentLevel;
+
+    void resolveCollisions();
 };
 
 

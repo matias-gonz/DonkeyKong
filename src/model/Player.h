@@ -8,24 +8,27 @@
 #include "Entity.h"
 
 class Player: public Entity {
-    private:
+private:
     int counter;
 
     static const int VEL = 3;
-    public:
-        explicit Player(Position *pos);
+public:
+    explicit Player(Position *pos);
 
-        void addLeftVel();
+    void addLeftVel();
 
-        void addRightVel();
+    void addRightVel();
 
-        void jumpUp();
+    void jumpUp();
 
-        void resetVel();
+    void resetVel();
 
-        void update();
+    void update();
 
 
+    SDL_Rect getRectangle();
+
+    void moveUp(int dy);
 };
 
 

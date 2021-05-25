@@ -35,6 +35,7 @@ void Game::update() {
     }
     this->princess->update();
     this->boss->update();
+    this->resolveCollisions();
 }
 
 bool Game::isRunning() {
@@ -105,4 +106,9 @@ Boss *Game::getBoss() {
 
 Princess *Game::getPrincess() {
     return this->princess;
+}
+
+void Game::resolveCollisions() {
+    this->level->resolveCollisions(this->player);
+
 }
