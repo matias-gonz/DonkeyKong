@@ -21,7 +21,7 @@ public:
 
     void jumpUp();
 
-    void resetVel();
+    void resetVelX();
 
     void update();
 
@@ -31,6 +31,12 @@ public:
     void moveUp(int dy);
 
     void setGrounded();
+
+    void resetVelY();
+
+    void moveDown(int i);
+
+    int getVelY();
 };
 
 

@@ -8,10 +8,19 @@ bool Collider::RectCollides(SDL_Rect r1, SDL_Rect r2) {
 
 void Collider::ResolveCollision(Player *player, SDL_Rect rect) {
     SDL_Rect playerRect = player->getRectangle();
-    int dy = playerRect.y + playerRect.h - rect.y;
+    int dy;
 
-    player->moveUp(dy);
-    player->setGrounded();
+    if(playerRect.y + playerRect.h - 10 < rect.y ){
+        dy = playerRect.y + playerRect.h - rect.y;
+        player->moveUp(dy);
+        player->resetVelY();
+        player->setGrounded();
+    }else if(playerRect.y + playerRect.h < rect.y){
+        //dy = rect.y + rect.h - playerRect.y;
+        //player->moveDown(dy);
+        //player->resetVelY();
+    }
+
 }
 
 

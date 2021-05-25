@@ -32,11 +32,11 @@ void GameController::handleEvents() {
     }
     if (event.type == SDL_KEYUP) {
         if(event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a ){
-            player->resetVel();
+            player->resetVelX();
             Logger::log(Logger::Info,"Se mueve a la izquierda");
         }
         else if(event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d){
-            player->resetVel();
+            player->resetVelX();
             Logger::log(Logger::Info,"Se mueve a la derecha");
         }
     }
