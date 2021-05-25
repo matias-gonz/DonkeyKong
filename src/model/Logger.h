@@ -53,6 +53,8 @@ namespace Logger {
 
         bool logTypeIsEnabled(Type logType);
 
+        bool loadLoggerFromJson(char const *logType, json log);
+
     };
 }
 
