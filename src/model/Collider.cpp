@@ -11,6 +11,7 @@ void Collider::ResolveCollision(Player *player, SDL_Rect rect) {
     int dy = playerRect.y + playerRect.h - rect.y;
 
     player->moveUp(dy);
+    player->setGrounded();
 }
 
 

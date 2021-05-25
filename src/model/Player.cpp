@@ -70,3 +70,8 @@ void Player::moveUp(int dy) {
     this->pos->add(0,-dy);
 }
 
+void Player::setGrounded() {
+    this->isGrounded = true;
+
+}
+

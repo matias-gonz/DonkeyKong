@@ -29,6 +29,8 @@ public:
     SDL_Rect getRectangle();
 
     void moveUp(int dy);
+
+    void setGrounded();
 };
 
 
