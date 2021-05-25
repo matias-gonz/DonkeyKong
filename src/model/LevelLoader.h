@@ -15,24 +15,29 @@ using json = nlohmann::json;
 
 class LevelLoader {
 public:
-    LevelLoader();
+  LevelLoader();
 
-    ~LevelLoader();
+  ~LevelLoader();
 
-    void loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, Barrel ***barrels,
-                   int *platformCount, int *ladderCount, int *fireCount, int *barrelCount, Position ***spawns,
-                   int *spawnCount, Configuration* configuration);
+  void loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, Barrel ***barrels,
+                 int *platformCount, int *ladderCount, int *fireCount, int *barrelCount, Position ***spawns,
+                 int *spawnCount, Configuration *configuration);
 
-    Platform **loadPlatforms(json jsonLevel, int *platformCount);
+  Platform **loadPlatforms(json jsonLevel, int *platformCount);
 
-    Ladder **loadLadders(json jsonLevel, int *ladderCount);
+  Ladder **loadLadders(json jsonLevel, int *ladderCount);
 
-    Fire **loadFire(json jsonLevel, int *fireCount);
+  Fire **loadFire(json jsonLevel, int *fireCount);
 
-    Barrel **loadBarrel(json jsonLevel, int *levelCount);
+  Barrel **loadBarrel(json jsonLevel, int *levelCount);
 
-    //void writeJSON();
-    Position **loadSpawns(json json, int *spawnCount);
+  //void writeJSON();
+  Position **loadSpawns(json json, int *spawnCount);
+
+private:
+
+  std::string loadLevelFromJson(char const *levelPath, json levels);
+
 };
 
 

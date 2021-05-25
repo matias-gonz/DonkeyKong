@@ -103,9 +103,21 @@ namespace Logger {
     }
 
     void Log::setConfiguration(json log) {
-        this->logTypeEnabled[static_cast<int>(Logger::Error)] = log.at("ERROR").get<bool>();
-        this->logTypeEnabled[static_cast<int>(Logger::Info)] = log.at("INFO").get<bool>();
-        this->logTypeEnabled[static_cast<int>(Logger::Debug)] = log.at("DEBUG").get<bool>();
+        this->logTypeEnabled[static_cast<int>(Logger::Error)] = this->loadLoggerFromJson("ERROR", log);
+        this->logTypeEnabled[static_cast<int>(Logger::Info)] = this->loadLoggerFromJson("INFO", log);
+        this->logTypeEnabled[static_cast<int>(Logger::Debug)] = this->loadLoggerFromJson("DEBUG", log);
+    }
+
+    bool Log::loadLoggerFromJson(char const *logType, json log) {
+      bool defaultType = true;
+      if (log.contains(logType)) {
+        defaultType = log.at(logType).get<bool>();
+      } else {
+        std::string message =
+                std::string("Error al buscar la clave ") + logType + std::string(". Se pone por defecto como true.");
+        Logger::log(Logger::Error, message);
+      }
+      return defaultType;
     }
 
     std::string Log::getCurrentDateTime() {
