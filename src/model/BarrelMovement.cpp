@@ -1,6 +1,3 @@
-//
-// Created by rochi on 14/5/21.
-//
 
 #include <SDL_rect.h>
 #include "BarrelMovement.h"

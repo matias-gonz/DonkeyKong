@@ -1,7 +1,7 @@
 #include <getopt.h>
 #include <cstdio>
 #include "src/Server/mainServer.h"
-#include "mainClient.h"
+#include "src/Client/mainClient.h"
 
 #define NULL 0;
 

@@ -58,7 +58,7 @@ set(SOURCE_FILES src/Server/mainServer.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
         src/model/BarrelMovement.h
-        main.cpp src/Server/mainServer.h mainClient.cpp mainClient.h src/Server/Server.cpp src/Server/Server.h)
+        main.cpp src/Server/mainServer.h src/Client/mainClient.cpp src/Client/mainClient.h src/Server/Server.cpp src/Server/Server.h src/Client/Client.cpp src/Client/Client.h src/Server/ServerSocket.cpp src/Server/ServerSocket.h src/Socket/Socket.cpp src/Socket/Socket.h src/Client/ClientSocket.cpp src/Client/ClientSocket.h)
 
 
 # change to personal project name (as above)
