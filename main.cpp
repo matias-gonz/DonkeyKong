@@ -1,15 +1,19 @@
 #include <iostream>
 #include <SDL2/SDL_events.h>
-#include <chrono>
 #include "src/model/Game.h"
 #include "src/model/Logger.h"
 #include "src/view/ViewManager.h"
 #include "src/controller/GameController.h"
 #include "src/controller/Configuration.h"
+#include "src/model/TimeManager.h"
+
+
+
 
 int main(int argc, char *args[]) {
     Configuration *configuration = new Configuration();
     Logger::startLogger(configuration);
+    TimeManager *timeManager = new TimeManager();
     Game *game = new Game(configuration);
     game->start();
 
@@ -18,14 +22,13 @@ int main(int argc, char *args[]) {
                                                1024, 576, false);
 
     while (game->isRunning()) {
-        auto startTime = std::chrono::system_clock::now();
+        timeManager->setStartTime();
         gameController->handleEvents();
         gameController->update();
         viewManager->renderWindow();
-        auto endTime = std::chrono::system_clock::now();
-        //printf("%d\n",(endTime - startTime).count());
+        timeManager->setEndTime();
+        timeManager->sleep();
 
-        //sleep((endTime - startTime).count() + 0.06);
 
     }
 
