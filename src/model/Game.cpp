@@ -109,6 +109,7 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-    this->level->resolveCollisions(this->player);
+    this->level->resolveCollisions(this->player, this->enemyFires, this->enemyFireCount);
+
 
 }

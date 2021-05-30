@@ -1,6 +1,7 @@
 #include "Level.h"
 #include "Logger.h"
 #include "Collider.h"
+#include "EnemyFire.h"
 
 Level::Level() {
     this->platforms = NULL;
@@ -151,12 +152,18 @@ void Level::freeBarrels() {
     free(this->barrels);
 }
 
-void Level::resolveCollisions(Player *player) {
+void Level::resolveCollisions(Player *player, EnemyFire **pFire, int enemyCount) {
     SDL_Rect playerRect = player->getRectangle();
     for(int i = 0; i < this->platformCount; i++){
         SDL_Rect platformRect = this->platforms[i]->getRectangle();
         if(Collider::RectCollides(playerRect,platformRect)){
             Collider::ResolvePlayerCollision(player, platformRect);
+        }
+        for(int j = 0; j < enemyCount ; j++){
+            SDL_Rect fireRect = pFire[j]->getRectangle();
+            if(Collider::RectCollides(fireRect,platformRect)){
+                Collider::ResolveEnemyCollision(pFire[j], platformRect);
+            }
         }
     }
 

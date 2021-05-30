@@ -28,6 +28,7 @@ void Player::update() {
 
 
     if (counter == 2){
+        if(velY == 5){velY = 4;return;} //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
         velY += 1;
         counter = 0;
         return;
@@ -81,9 +82,6 @@ void Player::resetVelY() {
     this->velY = 0;
 }
 
-void Player::moveDown(int dy) {
-    this->pos->add(0,dy);
-}
 
 int Player::getVelY() {
     return this->velY;

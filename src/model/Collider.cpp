@@ -13,12 +13,25 @@ void Collider::ResolvePlayerCollision(Player *player, SDL_Rect rect) {
     SDL_Rect playerRect = player->getRectangle();
     int dy;
 
-    if(playerRect.y + playerRect.h - 10 < rect.y ){
+    if(playerRect.y + playerRect.h >= rect.y and playerRect.y + playerRect.h <= rect.y + rect.h/4){
         dy = playerRect.y + playerRect.h - rect.y;
         player->moveUp(dy);
         player->resetVelY();
         player->setGrounded();
     }
+
+}
+
+void Collider::ResolveEnemyCollision(EnemyFire *enemyFire, SDL_Rect rect) {
+    SDL_Rect enemyRect = enemyFire->getRectangle();
+    int dy;
+
+    if(enemyRect.y + enemyRect.h >= rect.y ){
+        dy = enemyRect.y + enemyRect.h - rect.y;
+        enemyFire->moveUp(dy);
+        enemyFire->resetVelY();
+    }
+
 
 }
 

@@ -29,10 +29,10 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
     int finalTexW = texW;
     int finalTexH = texH;
-    if(texW == 22){
-        finalTexW = static_cast<int>(1.5*texW);
-        finalTexH = static_cast<int>(1.5*texH);
-    }
+   // if(texW == 22){
+     //   finalTexW = static_cast<int>(1.5*texW);
+       // finalTexH = static_cast<int>(1.5*texH);
+   // }
     if(texW ==17){
         finalTexW = texW*2;
     }

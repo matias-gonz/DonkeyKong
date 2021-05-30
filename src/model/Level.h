@@ -12,6 +12,7 @@
 #include "../view/TextureManager.h"
 #include "../controller/Configuration.h"
 #include "Player.h"
+#include "EnemyFire.h"
 
 class Level {
 
@@ -45,7 +46,7 @@ public:
 
     int getCurrentLevel();
 
-    void resolveCollisions(Player *player);
+    void resolveCollisions(Player *player, EnemyFire **pFire, int i);
 
 private:
 
