@@ -41,6 +41,8 @@ public:
     void resetPos();
 
     Position *initialPos;
+
+    bool isIn(Position *pPosition);
 };
 
 

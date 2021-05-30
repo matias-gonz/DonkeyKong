@@ -95,3 +95,11 @@ void Player::resetPos() {
 Player::~Player(){
     delete this->initialPos;
 }
+
+bool Player::isIn(Position *pPosition) {
+    if((this->pos->getX() > pPosition->getX() and this->pos->getX() < pPosition->getX() + 170)\
+        and (this->pos->getY() < 154)){
+        return true;
+    }
+    return false;
+}

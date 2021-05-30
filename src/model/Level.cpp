@@ -169,4 +169,8 @@ void Level::resolveCollisions(Player *player, EnemyFire **pFire, int enemyCount)
 
 }
 
+bool Level::playerWon(Player *player) {
+    return player->isIn(this->winningPosition);
+}
+
 

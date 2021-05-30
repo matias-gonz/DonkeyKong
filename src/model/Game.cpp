@@ -28,6 +28,10 @@ void Game::quit() {
 }
 
 void Game::update() {
+    if(this->level->playerWon(this->player)){
+        this->switchLevel();
+        return;
+    }
     this->level->update();
     this->player->update();
     for(int i = 0; i <enemyFireCount; i++){
