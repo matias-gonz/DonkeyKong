@@ -10,6 +10,7 @@
 class Player: public Entity {
 private:
     int counter;
+    bool isClimbing;
 
     static const int VEL = 3;
 public:
@@ -43,6 +44,8 @@ public:
     Position *initialPos;
 
     bool isIn(Position *pPosition);
+
+
 };
 
 

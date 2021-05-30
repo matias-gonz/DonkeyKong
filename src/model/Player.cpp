@@ -9,6 +9,7 @@ Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
     this->initialPos = new Position(pos->getX(),pos->getY());
     this->isGrounded = true;
+    this->isClimbing = false;
     this->counter = 0;
 }
 void Player::update() {
