@@ -2,7 +2,7 @@
 #include "Client.h"
 
 
-int mainClient(char** IP, char** port){
+int mainClient(char* IP, char* port){
 
   Client* client = new Client(port, IP);
 

@@ -12,12 +12,11 @@
 #include "ServerSocket.h"
 
 
-class Server
-{
+class Server {
 
 public:
 
-  Server(char** port, char** IP);
+  Server(char *port, char *IP);
 
 private:
 

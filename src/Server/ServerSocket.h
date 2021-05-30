@@ -4,11 +4,11 @@
 #include "../Socket/Socket.h"
 #include "../model/Logger.h"
 
-class ServerSocket: public Socket {
+class ServerSocket {
 
 public:
 
-  ServerSocket(int port, int IP);
+  ServerSocket(char* port, char* IP);
 
   ServerSocket();
 
@@ -20,6 +20,8 @@ public:
 
   ~ServerSocket();
 
+private:
+  Socket* socket;
 
 };
 

@@ -3,6 +3,7 @@
 #define TALLER_PROG_I_2021_1C_KIWI_SOCKET_H
 
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include "../model/Logger.h"
 
 
@@ -10,24 +11,30 @@ class Socket{
 
 public:
 
-  Socket();
+  Socket(char* port,char* IP);
 
-  bool create();
+  Socket(char* port,char* IP, int max_connections);
 
-  bool bind(const int port);
+  void create();
 
-  bool listen();
+  void bind(const int port);
 
-  bool accept(Socket &new_socket);
+  void convertToHost(const char* IP, const int port);
+
+  void connect();
+
+  void listen();
+
+  void accept();
 
   int recv(int* dato);
 
   int snd(int* dato);
 
 private:
-  int server_fd;
+  int server_fd{};
   int new_socket;
-  struct sockaddr_in address;
+  sockaddr_in address;
   int addrlen = sizeof(address);
   int socketClient;
 

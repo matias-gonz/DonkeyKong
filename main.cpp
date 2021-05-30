@@ -50,10 +50,10 @@ int main(int argc, char *args[]) {
   char *IP;
   char *port;
   bool isServer = checkArgs(argc, args, &json, &IP, &port);
-  if(isServer){
-    mainServer(&json, &IP, &port);
+  if(!isServer){
+    mainServer(&json, IP, port);
   }else{
-    mainClient(&IP, &port);
+    mainClient(IP, port);
   }
 }
 

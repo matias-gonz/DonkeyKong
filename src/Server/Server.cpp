@@ -1,7 +1,6 @@
 #include "Server.h"
 
-
-Server::Server(char **port, char **IP) {
+Server::Server(char *port, char *IP) {
 
   Configuration *configuration = new Configuration();
   Logger::startLogger("log.txt", configuration);
@@ -19,9 +18,7 @@ Server::Server(char **port, char **IP) {
     viewManager->renderWindow();
   }
 
-  ServerSocket* new_socket = new ServerSocket( (int) **port, (int) **IP );
-
+  ServerSocket *new_socket = new ServerSocket(port, IP);
 
   delete game;
-
 }

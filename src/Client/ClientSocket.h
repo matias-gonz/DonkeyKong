@@ -5,15 +5,16 @@
 #include "../Socket/Socket.h"
 #include "../model/Logger.h"
 
-class ClientSocket: public Socket {
+class ClientSocket {
 
 public:
 
-  ClientSocket(int port, int IP);
+  ClientSocket(char* port,char* IP);
 
 private:
   int socketClient;
   struct sockaddr_in serv_addr;
+  Socket* socket;
 
 };
 

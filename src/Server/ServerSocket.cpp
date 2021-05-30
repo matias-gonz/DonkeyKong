@@ -1,34 +1,22 @@
 #include "ServerSocket.h"
 
-ServerSocket::ServerSocket(int port, int IP) {
-
-  if (!Socket::create()) {
-    Logger::log(Logger::Error, "Error al crear el socket");
-  }
-  if (!Socket::bind(port)) {
-    Logger::log(Logger::Error, "Error al bindear el socket al puerto");
-  }
-  if (!Socket::listen()) {
-    Logger::log(Logger::Error, "Error al escuchar el socket");
-  }
-
+ServerSocket::ServerSocket(char* port,char* IP) {
+  this->socket = new Socket(port, IP);
 }
 
 void ServerSocket::accept(ServerSocket &serverSocket) {
-  if (!Socket::accept(serverSocket)) {
-    Logger::log(Logger::Error, "Error al aceptar el socket");
-  }
+  this->socket->accept();
 }
 
 // TO DO CHANGE PARAMETER
 void ServerSocket::recieve(int *dato) {
-  if (!Socket::recv(dato)) {
+  if (!this->socket->recv(dato)) {
     Logger::log(Logger::Error, "Error al leer el dato");
   }
 }
 
 void ServerSocket::send(int *dato) {
-  if (!Socket::snd(dato)) {
+  if (!this->socket->snd(dato)) {
     Logger::log(Logger::Error, "Error al mandar el dato");
   }
 }

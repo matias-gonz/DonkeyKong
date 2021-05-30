@@ -3,13 +3,18 @@
 
 #include "../model/Logger.h"
 #include "ClientSocket.h"
+#include "../model/Game.h"
+#include "../model/Logger.h"
+#include "../view/ViewManager.h"
+#include "../controller/GameController.h"
+#include "../controller/Configuration.h"
 
 
 class Client {
 
 public:
 
-  Client(char **port, char **IP);
+  Client(char *port, char *IP);
 
 private:
 
