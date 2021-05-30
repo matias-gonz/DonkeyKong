@@ -7,6 +7,7 @@ enum kindOfAnimation { left = -1, right = 1};
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
+    this->initialPos = new Position(pos->getX(),pos->getY());
     this->isGrounded = true;
     this->counter = 0;
 }
@@ -87,3 +88,10 @@ int Player::getVelY() {
     return this->velY;
 }
 
+void Player::resetPos() {
+   *this->pos = *this->initialPos;
+}
+
+Player::~Player(){
+    delete this->initialPos;
+}

@@ -93,6 +93,7 @@ void Game::resetEnemies() {
 }
 
 void Game::switchLevel() {
+    this->player->resetPos();
     if(this->currentLevel == 1){
         this->loadLevel(2);
     }else{
