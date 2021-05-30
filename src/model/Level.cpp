@@ -156,7 +156,7 @@ void Level::resolveCollisions(Player *player) {
     for(int i = 0; i < this->platformCount; i++){
         SDL_Rect platformRect = this->platforms[i]->getRectangle();
         if(Collider::RectCollides(playerRect,platformRect)){
-            Collider::ResolveCollision(player,platformRect);
+            Collider::ResolvePlayerCollision(player, platformRect);
         }
     }
 
