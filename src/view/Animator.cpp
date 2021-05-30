@@ -7,7 +7,7 @@ enum kindOfAnimation {
 
 Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
                     int rightStartW, int rightStartH, int texW, int texH, int separationW,bool success) {
-
+    //EN VEZ DE TANTAS VARIABLES, PASAR UN STRUCT
     this->texture = pTexture;
     this->leftStartW = leftStartW;
     this->leftStartH = leftStartH;

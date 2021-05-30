@@ -176,3 +176,12 @@ void ViewManager::renderWindow() {
 
     SDL_RenderPresent(renderer);
 }
+
+ViewManager::~ViewManager() {
+    delete this->playerAnimator;
+    delete this->renderer;
+    delete this->textureManager;
+    delete this->enemyAnimator;
+    delete this->window;
+    delete this->levelDrawer;
+}

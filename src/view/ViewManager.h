@@ -17,7 +17,7 @@
 class ViewManager {
 public:
     ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-
+    ~ViewManager();
     SDL_Renderer *getRenderer();
 
     bool successfulInitialitization();

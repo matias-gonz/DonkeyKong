@@ -23,7 +23,6 @@ int main(int argc, char *args[]) {
         viewManager->renderWindow();
     }
 
-    delete game;
 
     return 0;
 }

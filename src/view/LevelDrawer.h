@@ -12,7 +12,6 @@ class LevelDrawer {
 
 public:
     LevelDrawer(SDL_Renderer *aRenderer, TextureManager *aTexureManager);
-
     void draw(Level* Level);
 
 
