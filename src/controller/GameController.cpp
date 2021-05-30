@@ -22,6 +22,10 @@ void GameController::handleEvents() {
             } else if (event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d) {
                 player->resetVelX();
                 player->addRightVel();
+            } else if (event.key.keysym.sym == SDLK_UP or event.key.keysym.sym == SDLK_w) {
+                player->startClimbing(-1);
+            } else if (event.key.keysym.sym == SDLK_DOWN or event.key.keysym.sym == SDLK_s) {
+                player->startClimbing(1);
             } else if (event.key.keysym.sym == SDLK_SPACE) {
                 Logger::log(Logger::Debug, "Personaje 1 salto");
                 player->jumpUp();
@@ -37,6 +41,10 @@ void GameController::handleEvents() {
             } else if (event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d) {
                 player->resetVelX();
                 Logger::log(Logger::Info, "Se mueve a la derecha");
+            }else if (event.key.keysym.sym == SDLK_UP or event.key.keysym.sym == SDLK_w) {
+                player->resetVelY();
+            }else if (event.key.keysym.sym == SDLK_DOWN or event.key.keysym.sym == SDLK_s) {
+                player->resetVelY();
             }
         }
     }

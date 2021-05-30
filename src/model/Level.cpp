@@ -152,21 +152,32 @@ void Level::freeBarrels() {
     free(this->barrels);
 }
 
-void Level::resolveCollisions(Player *player, EnemyFire **pFire, int enemyCount) {
+void Level::resolveCollisions(Player *player, EnemyFire **enemyFires, int enemyFireCount) {
     SDL_Rect playerRect = player->getRectangle();
     for(int i = 0; i < this->platformCount; i++){
         SDL_Rect platformRect = this->platforms[i]->getRectangle();
         if(Collider::RectCollides(playerRect,platformRect)){
             Collider::ResolvePlayerCollision(player, platformRect);
         }
-        for(int j = 0; j < enemyCount ; j++){
-            SDL_Rect fireRect = pFire[j]->getRectangle();
+        for(int j = 0; j < enemyFireCount ; j++){
+            SDL_Rect fireRect = enemyFires[j]->getRectangle();
             if(Collider::RectCollides(fireRect,platformRect)){
-                Collider::ResolveEnemyCollision(pFire[j], platformRect);
+                Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
             }
         }
     }
-
+    playerRect.y += playerRect.h/2;
+    playerRect.h = playerRect.h/2;
+    playerRect.x += playerRect.w/2-4;
+    playerRect.w = 8;
+    bool canClimb = false;
+    for(int i = 0; i < this->ladderCount; i++){
+        SDL_Rect ladderRect = this->ladders[i]->getRectangle();
+        if(Collider::RectCollides(playerRect,ladderRect)){
+            canClimb = true;
+        }
+    }
+    player->setCanClimb(canClimb);
 }
 
 bool Level::playerWon(Player *player) {
