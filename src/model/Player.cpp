@@ -1,5 +1,3 @@
-
-
 #include <SDL.h>
 #include "Player.h"
 #include "Position.h"
@@ -10,10 +8,18 @@ Player::Player(Position* pos) : Entity(pos) {
     this->initialPos = new Position(pos->getX(),pos->getY());
     this->isGrounded = true;
     this->isClimbing = false;
+    this->canClimb = false;
     this->counter = 0;
+    this->gravity = 1;
 }
 void Player::update() {
 
+    if(this->isClimbing){
+        this->resetVelX();
+        this->gravity = 0;
+    }else{
+        this->gravity = 1;
+    }
     /*
     if (!isGrounded && pos->getY() > 525) {
         pos->setY(525);
@@ -31,7 +37,7 @@ void Player::update() {
 
     if (counter == 2){
         if(velY == 5){velY = 4;return;} //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
-        velY += 1;
+        velY += this->gravity;
         counter = 0;
         return;
     }
@@ -61,6 +67,7 @@ void Player::jumpUp() {
     }
     velY -= 2*VEL;
     isGrounded = false;
+    isClimbing = false;
 }
 
 void Player::resetVelX() {
@@ -98,9 +105,21 @@ Player::~Player(){
 }
 
 bool Player::isIn(Position *pPosition) {
-    if((this->pos->getX() > pPosition->getX() and this->pos->getX() < pPosition->getX() + 170)\
-        and (this->pos->getY() < 154)){
-        return true;
+    return ((this->pos->getX() > pPosition->getX() and this->pos->getX() < pPosition->getX() + 170)\
+        and (this->pos->getY() < 154));
+}
+
+void Player::startClimbing(int vel) {
+    if(!this->canClimb) return;
+    this->velY = vel;
+    this->isClimbing = true;
+    this->isGrounded = true;
+
+}
+
+void Player::setCanClimb(bool canClimb) {
+    if(!canClimb){
+        this->isClimbing = false;
     }
-    return false;
+    this->canClimb = canClimb;
 }

@@ -11,6 +11,8 @@ class Player: public Entity {
 private:
     int counter;
     bool isClimbing;
+    bool canClimb;
+    int gravity;
 
     static const int VEL = 3;
 public:
@@ -44,6 +46,12 @@ public:
     Position *initialPos;
 
     bool isIn(Position *pPosition);
+
+
+    void startClimbing(int i);
+
+
+    void setCanClimb(bool canClimb);
 
 
 };
