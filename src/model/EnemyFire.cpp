@@ -24,6 +24,7 @@ void EnemyFire::update() {
         distance = 0;
         direction = -direction;
     }
+    this->velY += 1;
 }
 
 int EnemyFire::choseDirection() {
@@ -33,6 +34,18 @@ int EnemyFire::choseDirection() {
         return right;
     }
     return this->direction;
+}
+
+SDL_Rect EnemyFire::getRectangle() {
+    return SDL_Rect({this->pos->getX(),this->pos->getY(),22, 24});
+}
+
+void EnemyFire::moveUp(int dy) {
+    this->pos->add(0,-dy);
+}
+
+void EnemyFire::resetVelY() {
+    this->velY = 0;
 }
 
 

@@ -7,6 +7,7 @@ enum kindOfAnimation { left = -1, right = 1};
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
+    this->initialPos = new Position(pos->getX(),pos->getY());
     this->isGrounded = true;
     this->counter = 0;
 }
@@ -28,6 +29,7 @@ void Player::update() {
 
 
     if (counter == 2){
+        if(velY == 5){velY = 4;return;} //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
         velY += 1;
         counter = 0;
         return;
@@ -81,11 +83,23 @@ void Player::resetVelY() {
     this->velY = 0;
 }
 
-void Player::moveDown(int dy) {
-    this->pos->add(0,dy);
-}
 
 int Player::getVelY() {
     return this->velY;
 }
 
+void Player::resetPos() {
+   *this->pos = *this->initialPos;
+}
+
+Player::~Player(){
+    delete this->initialPos;
+}
+
+bool Player::isIn(Position *pPosition) {
+    if((this->pos->getX() > pPosition->getX() and this->pos->getX() < pPosition->getX() + 170)\
+        and (this->pos->getY() < 154)){
+        return true;
+    }
+    return false;
+}

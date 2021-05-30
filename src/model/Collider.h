@@ -3,13 +3,16 @@
 
 #include <SDL_rect.h>
 #include "Player.h"
+#include "EnemyFire.h"
 
 class Collider {
 
 public:
     static bool RectCollides(SDL_Rect rectangle, SDL_Rect anotherRectangle);
 
-    static void ResolveCollision(Player *Player, SDL_Rect rect);
+    static void ResolvePlayerCollision(Player *Player, SDL_Rect rect);
+
+    static void ResolveEnemyCollision(EnemyFire *pFire, SDL_Rect rect);
 };
 
 

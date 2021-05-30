@@ -14,7 +14,7 @@ private:
     static const int VEL = 3;
 public:
     explicit Player(Position *pos);
-
+    ~Player();
     void addLeftVel();
 
     void addRightVel();
@@ -37,6 +37,12 @@ public:
     void moveDown(int i);
 
     int getVelY();
+
+    void resetPos();
+
+    Position *initialPos;
+
+    bool isIn(Position *pPosition);
 };
 
 

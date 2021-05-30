@@ -7,7 +7,7 @@ enum kindOfAnimation {
 
 Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
                     int rightStartW, int rightStartH, int texW, int texH, int separationW,bool success) {
-
+    //EN VEZ DE TANTAS VARIABLES, PASAR UN STRUCT
     this->texture = pTexture;
     this->leftStartW = leftStartW;
     this->leftStartH = leftStartH;
@@ -29,10 +29,10 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
 
     int finalTexW = texW;
     int finalTexH = texH;
-    if(texW == 22){
-        finalTexW = static_cast<int>(1.5*texW);
-        finalTexH = static_cast<int>(1.5*texH);
-    }
+   // if(texW == 22){
+     //   finalTexW = static_cast<int>(1.5*texW);
+       // finalTexH = static_cast<int>(1.5*texH);
+   // }
     if(texW ==17){
         finalTexW = texW*2;
     }

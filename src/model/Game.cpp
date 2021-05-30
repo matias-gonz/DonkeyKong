@@ -28,6 +28,10 @@ void Game::quit() {
 }
 
 void Game::update() {
+    if(this->level->playerWon(this->player)){
+        this->switchLevel();
+        return;
+    }
     this->level->update();
     this->player->update();
     for(int i = 0; i <enemyFireCount; i++){
@@ -93,6 +97,7 @@ void Game::resetEnemies() {
 }
 
 void Game::switchLevel() {
+    this->player->resetPos();
     if(this->currentLevel == 1){
         this->loadLevel(2);
     }else{
@@ -109,6 +114,7 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-    this->level->resolveCollisions(this->player);
+    this->level->resolveCollisions(this->player, this->enemyFires, this->enemyFireCount);
+
 
 }
