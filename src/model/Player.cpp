@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Position.h"
 #include "../Constants.h"
+PlayerTexture plyrTex;
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
@@ -42,17 +43,15 @@ void Player::update() {
 
 void Player::addLeftVel() {
 
-    if (velX < 0){return;}
     if (velX > 0){ distance = 0;}
-    velX -= VEL;
+    velX = -VEL;
     direction = left;
 }
 
 void Player::addRightVel() {
 
-    if (velX > 0){return;}
     if (velX < 0){ distance = 0;}
-    velX += VEL;
+    velX = VEL;
     direction = right;
 }
 
@@ -70,7 +69,7 @@ void Player::resetVelX() {
 }
 
 SDL_Rect Player::getRectangle() {
-    return SDL_Rect({this->pos->getX(),this->pos->getY(),34, 30});
+    return SDL_Rect({this->pos->getX(),this->pos->getY(),plyrTex.walkWidth, plyrTex.walkHeight});
 }
 
 void Player::moveUp(int dy) {

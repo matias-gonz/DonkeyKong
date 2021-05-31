@@ -3,6 +3,7 @@
 
 #include <SDL_rect.h>
 #include "Entity.h"
+#include "../Constants.h"
 
 class EnemyFire: public Entity{
 public:
@@ -18,6 +19,8 @@ public:
 private:
 
     int choseDirection();
+
+    void changeDirection();
 };
 
 
