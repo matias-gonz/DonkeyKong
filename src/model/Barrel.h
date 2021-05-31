@@ -6,10 +6,8 @@
 #include "../view/ltexture.h"
 #include "Position.h"
 #include "BarrelMovement.h"
+#include "../Constants.h"
 
-
-#define HEIGHT 576
-#define WIDTH 1024
 
 //The Barrel that will move around on the screen
 class Barrel

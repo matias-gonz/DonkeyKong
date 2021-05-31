@@ -168,8 +168,7 @@ void Level::resolveCollisions(Player *player, EnemyFire **enemyFires, int enemyF
     }
     playerRect.y += playerRect.h/2;
     playerRect.h = playerRect.h/2;
-    playerRect.x += playerRect.w/2-4;
-    playerRect.w = 8;
+
     bool canClimb = false;
     for(int i = 0; i < this->ladderCount; i++){
         SDL_Rect ladderRect = this->ladders[i]->getRectangle();

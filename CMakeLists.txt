@@ -57,7 +57,7 @@ set(SOURCE_FILES main.cpp
         src/model/Logger.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
-        src/model/BarrelMovement.h src/model/Collider.cpp src/model/Collider.h)
+        src/model/BarrelMovement.h src/model/Collider.cpp src/model/Collider.h src/view/PlayerAnimator.cpp src/view/PlayerAnimator.h src/Constants.h)
 
 
 # change to personal project name (as above)

@@ -1,7 +1,8 @@
 #include <SDL.h>
 #include "Player.h"
 #include "Position.h"
-enum kindOfAnimation { left = -1, right = 1};
+#include "../Constants.h"
+PlayerTexture plyrTex;
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
@@ -11,27 +12,30 @@ Player::Player(Position* pos) : Entity(pos) {
     this->canClimb = false;
     this->counter = 0;
     this->gravity = 1;
+    this->distance = 0;
+    this->direction = left;
 }
 void Player::update() {
 
     if(this->isClimbing){
         this->resetVelX();
         this->gravity = 0;
+        distance -= 5*velY;
     }else{
+        if(direction == up){
+            distance = 0;
+            direction = left;
+        }
         this->gravity = 1;
     }
-    /*
-    if (!isGrounded && pos->getY() > 525) {
-        pos->setY(525);
-        velY = 0;
-        isGrounded = true;
-    }
-     */
+
     pos->add(velX, velY);
-    if(pos->getX() < 0 or pos->getX()> 1024-17){
+
+    if(pos->getX() < 0 or pos->getX()> WIDTH-plyrTex.walkWidth){
         pos->add(-velX,0);
     }//WIDTH - texW
-    distance += abs(velX);
+
+    if(isGrounded){distance += abs(velX);}
     if (distance > 70){ distance = 0;}
 
 
@@ -47,18 +51,20 @@ void Player::update() {
 
 void Player::addLeftVel() {
 
-    if (velX < 0){return;}
-    if (velX > 0){ distance = 0;}
-    velX -= VEL;
-    direction = left;
+    if (direction == right){
+        distance = 0;
+        direction = left;
+    }
+    velX = -VEL;
 }
 
 void Player::addRightVel() {
 
-    if (velX > 0){return;}
-    if (velX < 0){ distance = 0;}
-    velX += VEL;
-    direction = right;
+    if (direction == left){
+        distance = 0;
+        direction = right;
+    }
+    velX = VEL;
 }
 
 void Player::jumpUp() {
@@ -75,7 +81,7 @@ void Player::resetVelX() {
 }
 
 SDL_Rect Player::getRectangle() {
-    return SDL_Rect({this->pos->getX(),this->pos->getY(),34, 30});
+    return SDL_Rect({this->pos->getX(),this->pos->getY(),plyrTex.walkWidth, plyrTex.walkHeight});
 }
 
 void Player::moveUp(int dy) {
@@ -114,6 +120,7 @@ void Player::startClimbing(int vel) {
     this->velY = vel;
     this->isClimbing = true;
     this->isGrounded = true;
+    this->direction = up;
 
 }
 

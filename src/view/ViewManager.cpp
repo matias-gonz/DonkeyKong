@@ -48,7 +48,8 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
         enemyTextureSuccess = false;
     }
 
-    this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
+    //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
+    this->playerAnimator = new PlayerAnimator(playerTexture,success);
     this->enemyAnimator = new Animator(enemyTexture,0,0,0,25,22,24,2,enemyTextureSuccess);
 
     //ESTOS NO FUNKAN
