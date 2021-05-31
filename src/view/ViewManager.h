@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "../controller/Configuration.h"
 #include "../model/Boss.h"
+#include "PlayerAnimator.h"
 
 class ViewManager {
 public:
@@ -39,10 +40,11 @@ private:
     Game* game;
     TextureManager* textureManager;
     LevelDrawer* levelDrawer;
-    Animator* playerAnimator;
+    //Animator* playerAnimator;
+    PlayerAnimator* playerAnimator;
     Animator* enemyAnimator;
-    Animator* bossAnimator;
-    Animator* princessAnimator;
+    //Animator* bossAnimator;
+    //Animator* princessAnimator;
     Configuration* configuration;
 
     void setTextureLinear();
