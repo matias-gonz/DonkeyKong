@@ -14,7 +14,10 @@ struct PlayerTexture{
     int hSeparation = 1;
 
 };
+PlayerTexture plyrTex;
 
+#define HEIGHT 576
+#define WIDTH 1024
 
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_CONSTANTS_H

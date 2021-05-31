@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include "Player.h"
 #include "Position.h"
-enum kindOfAnimation { left = -1, right = 1};
+#include "../Constants.h"
 
 Player::Player(Position* pos) : Entity(pos) {
     this->pos = pos;
@@ -20,15 +20,10 @@ void Player::update() {
     }else{
         this->gravity = 1;
     }
-    /*
-    if (!isGrounded && pos->getY() > 525) {
-        pos->setY(525);
-        velY = 0;
-        isGrounded = true;
-    }
-     */
+
     pos->add(velX, velY);
-    if(pos->getX() < 0 or pos->getX()> 1024-17){
+
+    if(pos->getX() < 0 or pos->getX()> WIDTH-plyrTex.walkWidth){
         pos->add(-velX,0);
     }//WIDTH - texW
     distance += abs(velX);

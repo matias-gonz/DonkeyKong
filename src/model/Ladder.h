@@ -4,9 +4,7 @@
 #include "SDL2/SDL_image.h"
 #include "Position.h"
 #include "../view/TextureManager.h"
-
-#define HEIGHT 576
-#define WIDTH 1024
+#include "../Constants.h"
 
 class Ladder {
 public:

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL_events.h>
-
+#include "src/Constants.h"
 #include "src/model/Game.h"
 #include "src/model/Logger.h"
 #include "src/view/ViewManager.h"
@@ -15,7 +15,7 @@ int main(int argc, char *args[]) {
 
     GameController *gameController = new GameController(game);
     ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                               1024, 576, false);
+                                               WIDTH, HEIGHT, false);
 
     while (game->isRunning()) {
         gameController->handleEvents();
