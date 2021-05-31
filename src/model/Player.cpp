@@ -12,6 +12,8 @@ Player::Player(Position* pos) : Entity(pos) {
     this->canClimb = false;
     this->counter = 0;
     this->gravity = 1;
+    this->distance = 0;
+    this->direction = left;
 }
 void Player::update() {
 
@@ -43,16 +45,20 @@ void Player::update() {
 
 void Player::addLeftVel() {
 
-    if (velX > 0){ distance = 0;}
+    if (direction == right){
+        distance = 0;
+        direction = left;
+    }
     velX = -VEL;
-    direction = left;
 }
 
 void Player::addRightVel() {
 
-    if (velX < 0){ distance = 0;}
+    if (direction == left){
+        distance = 0;
+        direction = right;
+    }
     velX = VEL;
-    direction = right;
 }
 
 void Player::jumpUp() {

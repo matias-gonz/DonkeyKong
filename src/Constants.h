@@ -14,7 +14,6 @@ struct PlayerTexture{
     int hSeparation = 1;
 
 };
-PlayerTexture plyrTex;
 
 #define HEIGHT 576
 #define WIDTH 1024
