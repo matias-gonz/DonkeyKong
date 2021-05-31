@@ -20,7 +20,12 @@ void Player::update() {
     if(this->isClimbing){
         this->resetVelX();
         this->gravity = 0;
+        distance -= 5*velY;
     }else{
+        if(direction == up){
+            distance = 0;
+            direction = left;
+        }
         this->gravity = 1;
     }
 
@@ -29,7 +34,8 @@ void Player::update() {
     if(pos->getX() < 0 or pos->getX()> WIDTH-plyrTex.walkWidth){
         pos->add(-velX,0);
     }//WIDTH - texW
-    distance += abs(velX);
+
+    if(isGrounded){distance += abs(velX);}
     if (distance > 70){ distance = 0;}
 
 
@@ -114,6 +120,7 @@ void Player::startClimbing(int vel) {
     this->velY = vel;
     this->isClimbing = true;
     this->isGrounded = true;
+    this->direction = up;
 
 }
 

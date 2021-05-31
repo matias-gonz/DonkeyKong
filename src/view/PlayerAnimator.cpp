@@ -50,7 +50,7 @@ PlayerAnimator::drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Re
     dstrect->w = plyrTex.climbWidth;
     dstrect->h = plyrTex.climbHeight;
     if(srcrect != NULL) {
-        srcrect->x = amount*plyrTex.climbWidth + plyrTex.wSeparation;
+        srcrect->x = amount*(plyrTex.climbWidth + plyrTex.wSeparation);
         srcrect->y = 2*(plyrTex.climbHeight + plyrTex.hSeparation);
         srcrect->w = plyrTex.climbWidth;
         srcrect->h = plyrTex.climbHeight;
