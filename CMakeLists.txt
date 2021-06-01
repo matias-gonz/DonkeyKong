@@ -57,7 +57,27 @@ set(SOURCE_FILES main.cpp
         src/model/Logger.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
-        src/model/BarrelMovement.h src/model/Collider.cpp src/model/Collider.h src/view/PlayerAnimator.cpp src/view/PlayerAnimator.h src/Constants.h)
+        src/model/BarrelMovement.h
+        src/Server/mainServer.cpp
+        src/Server/mainServer.h
+        src/Client/mainClient.cpp
+        src/Client/mainClient.h
+        src/Server/Server.cpp
+        src/Server/Server.h
+        src/Client/Client.cpp
+        src/Client/Client.h
+        src/Server/ServerSocket.cpp
+        src/Server/ServerSocket.h
+        src/Socket/Socket.cpp
+        src/Socket/Socket.h
+        src/Client/ClientSocket.cpp
+        src/Client/ClientSocket.h
+        src/model/BarrelMovement.h
+        src/model/Collider.cpp
+        src/model/Collider.h
+        src/view/PlayerAnimator.cpp
+        src/view/PlayerAnimator.h
+        src/Constants.h)
 
 
 # change to personal project name (as above)
