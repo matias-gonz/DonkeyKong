@@ -7,7 +7,7 @@ Client::Client(char *port, char *IP) {
   Configuration *configuration = new Configuration();
   Logger::startLogger("log.txt", configuration);
 
-  Game *game = new Game(configuration);
+  /* Game *game = new Game(configuration);
   game->start();
 
   GameController *gameController = new GameController(game);
@@ -19,9 +19,9 @@ Client::Client(char *port, char *IP) {
     gameController->handleEvents();
     gameController->update();
     viewManager->renderWindow();
-  }
+  } */
 
   ClientSocket *new_socket = new ClientSocket(port, IP);
 
-  delete game;
+  // delete game;
 }

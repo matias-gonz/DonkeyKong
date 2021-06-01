@@ -1,7 +1,7 @@
 #include "ServerSocket.h"
 
 ServerSocket::ServerSocket(char* port,char* IP) {
-  this->socket = new Socket(port, IP);
+  this->socket = new Socket(port, IP, 3);
 }
 
 void ServerSocket::accept(ServerSocket &serverSocket) {

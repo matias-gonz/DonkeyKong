@@ -7,7 +7,7 @@
 
 bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
 
-  const char *short_opt = "sci:";
+  const char *short_opt = "scj:i:p:";
   int c;
   bool isServer = false;
 
@@ -29,13 +29,13 @@ bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
         isServer = false;
         break;
       case 'j':
-        input = &optarg;
+        *input = optarg;
         break;
       case 'i':
-        IP = &optarg;
+        *IP = optarg;
         break;
       case 'p':
-        port = &optarg;
+        *port = optarg;
         break;
       default:
         printf("%s: invalid option -- %c\n", args[0]);
@@ -50,7 +50,7 @@ int main(int argc, char *args[]) {
   char *IP;
   char *port;
   bool isServer = checkArgs(argc, args, &json, &IP, &port);
-  if(!isServer){
+  if(isServer){
     mainServer(&json, IP, port);
   }else{
     mainClient(IP, port);

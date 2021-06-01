@@ -2,5 +2,5 @@
 #include "ClientSocket.h"
 
 ClientSocket::ClientSocket(char* port,char* IP){
-  this->socket = new Socket(port, IP, 3);
+  this->socket = new Socket(port, IP);
 }

@@ -17,9 +17,9 @@ public:
 
   void create();
 
-  void bind(const int port);
+  void bind(int port);
 
-  void convertToHost(const char* IP, const int port);
+  void convertToHost(const int port, const char* IP);
 
   void connect();
 
@@ -32,12 +32,12 @@ public:
   int snd(int* dato);
 
 private:
-  int server_fd{};
+  int server_fd;
+  struct sockaddr_in address;
   int new_socket;
-  sockaddr_in address;
   int addrlen = sizeof(address);
   int socketClient;
-
+  int opt;
 
 
 };
