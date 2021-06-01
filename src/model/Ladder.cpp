@@ -29,3 +29,12 @@ int Ladder::getCount() {
 SDL_Rect *Ladder::getSrcRect() {
     return srcRect;
 }
+
+SDL_Rect Ladder::getRectangle() {
+    SDL_Rect rectangle = *this->destRect;
+    rectangle.y -= rectangle.h*(this->count-1);
+    rectangle.h *=(this->count);
+    rectangle.x += rectangle.w/2-4;
+    rectangle.w = 8;
+    return rectangle;
+}

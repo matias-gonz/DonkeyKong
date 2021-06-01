@@ -3,10 +3,6 @@
 #include <ctime>
 #include "stdio.h"
 
-enum direction {
-    left = -1, right = 1
-};
-
 EnemyFire::EnemyFire(Position* pos){
     //srand(time(NULL));
     this->pos = pos;
@@ -18,21 +14,42 @@ EnemyFire::EnemyFire(Position* pos){
 }
 void EnemyFire::update() {
     this->pos->add(this->velX, this->velY);
-    distance += abs(velX);
-    velX = direction;
-    if (distance > 70) {
-        distance = 0;
-        direction = -direction;
+
+    if(this->pos->getX() >= WIDTH or this->pos->getX() <= 0){
+        changeDirection();
+        this->pos->add(this->velX,0);
     }
+    distance += abs(velX);
+
+    if (distance > 70) {
+        changeDirection();
+    }
+    if(this->velY > 5){return;}//velocidad terminal
+    this->velY += 1;
+
 }
 
+void EnemyFire::changeDirection(){
+    this->direction = -this->direction;
+    this->distance = 0;
+    this->velX = -this->velX;
+}
 int EnemyFire::choseDirection() {
-    //srand(time(NULL));
-    if (this->distance==0 || this->distance > 60){
-        if(rand()%2){return left;}
-        return right;
-    }
-    return this->direction;
+
+    if(rand()%2 / RAND_MAX){return left;}
+    return right;
+}
+
+SDL_Rect EnemyFire::getRectangle() {
+    return SDL_Rect({this->pos->getX(),this->pos->getY(),22, 24});
+}
+
+void EnemyFire::moveUp(int dy) {
+    this->pos->add(0,-dy);
+}
+
+void EnemyFire::resetVelY() {
+    this->velY = 0;
 }
 
 

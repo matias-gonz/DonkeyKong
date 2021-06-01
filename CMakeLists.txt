@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH cmake)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-set(SOURCE_FILES src/Server/mainServer.cpp
+set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
         src/model/Player.cpp
         src/model/Player.h
@@ -58,7 +58,25 @@ set(SOURCE_FILES src/Server/mainServer.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
         src/model/BarrelMovement.h
-        main.cpp src/Server/mainServer.h src/Client/mainClient.cpp src/Client/mainClient.h src/Server/Server.cpp src/Server/Server.h src/Client/Client.cpp src/Client/Client.h src/Server/ServerSocket.cpp src/Server/ServerSocket.h src/Socket/Socket.cpp src/Socket/Socket.h src/Client/ClientSocket.cpp src/Client/ClientSocket.h)
+        src/Server/mainServer.h
+        src/Client/mainClient.cpp
+        src/Client/mainClient.h
+        src/Server/Server.cpp
+        src/Server/Server.h
+        src/Client/Client.cpp
+        src/Client/Client.h
+        src/Server/ServerSocket.cpp
+        src/Server/ServerSocket.h
+        src/Socket/Socket.cpp
+        src/Socket/Socket.h
+        src/Client/ClientSocket.cpp
+        src/Client/ClientSocket.h
+        src/model/BarrelMovement.h
+        src/model/Collider.cpp
+        src/model/Collider.h
+        src/view/PlayerAnimator.cpp
+        src/view/PlayerAnimator.h
+        src/Constants.h)
 
 
 # change to personal project name (as above)

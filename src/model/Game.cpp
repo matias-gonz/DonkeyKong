@@ -28,6 +28,10 @@ void Game::quit() {
 }
 
 void Game::update() {
+    if(this->level->playerWon(this->player)){
+        this->switchLevel();
+        return;
+    }
     this->level->update();
     this->player->update();
     for(int i = 0; i <enemyFireCount; i++){
@@ -35,6 +39,7 @@ void Game::update() {
     }
     this->princess->update();
     this->boss->update();
+    this->resolveCollisions();
 }
 
 bool Game::isRunning() {
@@ -92,6 +97,7 @@ void Game::resetEnemies() {
 }
 
 void Game::switchLevel() {
+    this->player->resetPos();
     if(this->currentLevel == 1){
         this->loadLevel(2);
     }else{
@@ -105,4 +111,10 @@ Boss *Game::getBoss() {
 
 Princess *Game::getPrincess() {
     return this->princess;
+}
+
+void Game::resolveCollisions() {
+    this->level->resolveCollisions(this->player, this->enemyFires, this->enemyFireCount);
+
+
 }

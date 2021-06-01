@@ -3,9 +3,7 @@
 #include "SDL2/SDL_image.h"
 #include "Position.h"
 #include "PlatformMovement.h"
-
-#define HEIGHT 576
-#define WIDTH 1024
+#include "../Constants.h"
 
 /*typedef struct Position{
     int x;
@@ -27,6 +25,8 @@ public:
 
 
     void update();
+
+    SDL_Rect getRectangle();
 
 private:
     int count;

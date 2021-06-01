@@ -56,5 +56,3 @@ int main(int argc, char *args[]) {
     mainClient(IP, port);
   }
 }
-
-

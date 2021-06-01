@@ -3,9 +3,7 @@
 
 #include "Position.h"
 #include "SDL2/SDL_image.h"
-
-#define HEIGHT 576
-#define WIDTH 1024
+#include "../Constants.h"
 
 class Fire {
 public:

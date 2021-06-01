@@ -8,22 +8,50 @@
 #include "Entity.h"
 
 class Player: public Entity {
-    private:
+private:
     int counter;
+    bool isClimbing;
+    bool canClimb;
+    int gravity;
 
     static const int VEL = 3;
-    public:
-        explicit Player(Position *pos);
+public:
+    explicit Player(Position *pos);
+    ~Player();
+    void addLeftVel();
 
-        void addLeftVel();
+    void addRightVel();
 
-        void addRightVel();
+    void jumpUp();
 
-        void jumpUp();
+    void resetVelX();
 
-        void resetVel();
+    void update();
 
-        void update();
+
+    SDL_Rect getRectangle();
+
+    void moveUp(int dy);
+
+    void setGrounded();
+
+    void resetVelY();
+
+    void moveDown(int i);
+
+    int getVelY();
+
+    void resetPos();
+
+    Position *initialPos;
+
+    bool isIn(Position *pPosition);
+
+
+    void startClimbing(int i);
+
+
+    void setCanClimb(bool canClimb);
 
 
 };

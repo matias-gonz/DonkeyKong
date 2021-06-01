@@ -13,11 +13,13 @@
 #include "Animator.h"
 #include "../controller/Configuration.h"
 #include "../model/Boss.h"
+#include "PlayerAnimator.h"
+#include "../Constants.h"
 
 class ViewManager {
 public:
     ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-
+    ~ViewManager();
     SDL_Renderer *getRenderer();
 
     bool successfulInitialitization();
@@ -34,15 +36,17 @@ private:
     SDL_Renderer *renderer;
     SDL_Window *window;
     bool success;
-    int screen_width = 1024;
-    int screen_height = 576;
+    int screen_width = WIDTH;
+    int screen_height = HEIGHT;
     Game* game;
     TextureManager* textureManager;
     LevelDrawer* levelDrawer;
-    Animator* playerAnimator;
+    //Animator* playerAnimator;
+    PlayerAnimator* playerAnimator;
     Animator* enemyAnimator;
-    Animator* bossAnimator;
-    Animator* princessAnimator;
+    //Animator* bossAnimator;
+    //Animator* princessAnimator;
+    Configuration* configuration;
 
     void setTextureLinear();
 
