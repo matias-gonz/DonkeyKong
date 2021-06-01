@@ -6,6 +6,7 @@
 
 #include "../model/Game.h"
 #include "../model/Logger.h"
+#include "../Constants.h"
 #include "../view/ViewManager.h"
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"

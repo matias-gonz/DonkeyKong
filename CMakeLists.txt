@@ -58,6 +58,7 @@ set(SOURCE_FILES main.cpp
         src/model/Logger.h
         src/model/BarrelMovement.cpp
         src/model/BarrelMovement.h
+        src/Server/mainServer.cpp
         src/Server/mainServer.h
         src/Client/mainClient.cpp
         src/Client/mainClient.h

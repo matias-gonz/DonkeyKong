@@ -3,6 +3,7 @@
 
 #include "../model/Logger.h"
 #include "ClientSocket.h"
+#include "../Constants.h"
 #include "../model/Game.h"
 #include "../model/Logger.h"
 #include "../view/ViewManager.h"
