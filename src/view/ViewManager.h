@@ -18,46 +18,47 @@
 
 class ViewManager {
 public:
-    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-    ~ViewManager();
-    SDL_Renderer *getRenderer();
+  ViewManager(Game *, Configuration *, const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-    bool successfulInitialitization();
+  ~ViewManager();
 
-    void close();
+  SDL_Renderer *getRenderer();
 
-    LTexture* loadTexture(char* path);
+  bool successfulInitialitization();
 
-    void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+  void close();
 
-    void renderWindow();
+  LTexture *loadTexture(char *path);
+
+  void drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect);
+
+  void renderWindow();
+
+  void createRenderer();
+
+  void createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
 private:
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-    bool success;
-    int screen_width = WIDTH;
-    int screen_height = HEIGHT;
-    Game* game;
-    TextureManager* textureManager;
-    LevelDrawer* levelDrawer;
-    //Animator* playerAnimator;
-    PlayerAnimator* playerAnimator;
-    Animator* enemyAnimator;
-    //Animator* bossAnimator;
-    //Animator* princessAnimator;
-    Configuration* configuration;
+  SDL_Renderer *renderer;
+  SDL_Window *window;
+  bool success;
+  int screen_width = WIDTH;
+  int screen_height = HEIGHT;
+  Game *game;
+  TextureManager *textureManager;
+  LevelDrawer *levelDrawer;
+  //Animator* playerAnimator;
+  PlayerAnimator *playerAnimator;
+  Animator *enemyAnimator;
+  //Animator* bossAnimator;
+  //Animator* princessAnimator;
+  Configuration *configuration;
 
-    void setTextureLinear();
+  void setTextureLinear();
 
-    void showSDLError(char *message);
+  void showSDLError(char *message);
 
-    void createWindow(const char* title, int xPos, int yPos, int width, int height, int flags);
-
-    void createRenderer();
-
-    void initializeRendererColor();
-
+  void initializeRendererColor();
 
 };
 
