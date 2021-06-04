@@ -20,6 +20,8 @@ class ViewManager {
 public:
   ViewManager(Game *, Configuration *, const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
+  ViewManager(const char *title, int xPos, int yPos, int width, int height);
+
   ~ViewManager();
 
   SDL_Renderer *getRenderer();
@@ -34,13 +36,13 @@ public:
 
   void renderWindow();
 
-  void createRenderer();
+  void renderLoginWindow();
 
-  void createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
+  void createRenderer();
 
 private:
   SDL_Renderer *renderer;
-  SDL_Window *window;
+  SDL_Window * currentWindow;
   bool success;
   int screen_width = WIDTH;
   int screen_height = HEIGHT;
@@ -53,6 +55,10 @@ private:
   //Animator* bossAnimator;
   //Animator* princessAnimator;
   Configuration *configuration;
+  bool hasDefaultConfig;
+  bool isLoginView;
+
+  SDL_Window * createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
   void setTextureLinear();
 

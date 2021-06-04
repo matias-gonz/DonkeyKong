@@ -5,7 +5,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "../model/Logger.h"
-#include "../view/LoginView.h"
 
 class Socket {
 
@@ -31,6 +30,8 @@ public:
 
   int snd(int *dato);
 
+  bool isConnected();
+
 private:
 
   int server_fd, valread, opt, new_socket;
@@ -39,6 +40,7 @@ private:
   int socketClient;
   char *message;
   char buffer[1024] = {0};
+  bool connected;
 
 };
 

@@ -11,6 +11,7 @@ Socket::Socket(char *port, char *IP) {
 
   this->address.sin_family = AF_INET;
   this->message = "Esto funciona bien, soy un genio. Esto es un mensaje mas largo";
+  this->connected = false;
 
   this->convertToHost(atoi(port), IP);
   this->connect();
@@ -76,6 +77,8 @@ void Socket::connect() {
   if (::connect(this->server_fd, (struct sockaddr *) &this->address, sizeof(this->address)) < 0) {
     Logger::log(Logger::Error, "Error al establecer conexión con el servidor");
     throw std::runtime_error("Error al conectarse con el servidor");
+  }else{
+    this->connected = true;
   }
 
   //Mando mensaje para ver si funciona
@@ -102,4 +105,8 @@ int Socket::recv(int *dato) {
 
 int Socket::snd(int *dato) {
   return 1;
+}
+
+bool Socket::isConnected(){
+  return this->connected;
 }

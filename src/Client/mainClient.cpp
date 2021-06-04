@@ -5,9 +5,6 @@
 int mainClient(char* IP, char* port){
   Client* client = new Client(port, IP);
 
-  Configuration *configuration = new Configuration();
-  Logger::startLogger(configuration);
-
   /* Game *game = new Game(configuration);
   game->start();
 
@@ -20,7 +17,5 @@ int mainClient(char* IP, char* port){
     gameController->update();
     viewManager->renderWindow();
   } */
-
   return 0;
-
 }

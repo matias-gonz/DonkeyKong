@@ -11,10 +11,13 @@ public:
 
   ClientSocket(char* port,char* IP);
 
+  bool isConnected();
+
 private:
   int socketClient;
   struct sockaddr_in serv_addr;
   Socket* socket;
+  bool connected;
 
 };
 
