@@ -96,9 +96,55 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
     SDL_RenderCopy(this->gRenderer, this->texture, clip, &renderQuad);
 }
 
+int LTexture::getWidth(){
+  return this->width;
+}
+int LTexture::getHeight(){
+  return this->height;
+}
+
 void LTexture::setRenderer(SDL_Renderer *aRenderer) {
     this->gRenderer = aRenderer;
 }
+
+//#if defined(SDL_TTF_MAJOR_VERSION)
+bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor,  TTF_Font* font, SDL_Renderer* renderer)
+{
+
+
+	//Get rid of preexisting texture
+	free();
+	//Render text surface
+	this->gRenderer = renderer;
+	SDL_Surface* textSurface = TTF_RenderText_Solid( font, textureText.c_str(), textColor );
+	if( textSurface != NULL )
+	{
+		//Create texture from surface pixels
+        this->texture = SDL_CreateTextureFromSurface( renderer, textSurface );
+		if( this->texture == NULL )
+		{
+			printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+		}
+		else
+		{
+			//Get image dimensions
+			this->width = textSurface->w;
+			this->height = textSurface->h;
+		}
+
+		//Get rid of old surface
+		SDL_FreeSurface( textSurface );
+	}
+	else
+	{
+		printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+	}
+
+
+	//Return success
+	return this->texture != NULL;
+}
+//#endif
 
 
 

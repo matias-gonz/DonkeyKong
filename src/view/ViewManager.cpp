@@ -76,12 +76,12 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
     this->currentWindow = this->createWindow(title, xPos, yPos, width, height, SDL_WINDOW_SHOWN);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) this->initializeRendererColor();
+    this->initializeTTF();
+    this->loadMedia();
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
     this->success = false;
   }
-
-
 }
 
 void ViewManager::showSDLError(char *message) {
@@ -142,13 +142,14 @@ bool ViewManager::successfulInitialitization() {
   return this->success;
 }
 
-void ViewManager::close() {
+void ViewManager::close(bool* quit) {
 
   SDL_Event event;      //Event handler
 
   while(event.type != SDL_QUIT){
     while(SDL_PollEvent(&event)){
       if (event.type == SDL_QUIT){
+        *quit = true;
         SDL_Quit();
         exit(1);
       }
@@ -171,7 +172,6 @@ void ViewManager::close() {
   SDL_Quit();
    */
 }
-
 
 void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect) {
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
@@ -226,9 +226,94 @@ void ViewManager::renderWindow() {
 }
 
 void ViewManager::renderLoginWindow(){
-  SDL_RenderClear(this->renderer);
-  //SDL_UpdateWindowSurface(this->currentWindow);
-  //SDL_Delay(30000);
+
+  if(this->success){
+    //Main loop flag
+    bool quit = false;
+    SDL_Event e;
+    SDL_Color textColor = { 0, 0, 0, 0xFF };
+    std::string inputTextUser = "Ingrese usuario";
+    std::string inputTextPass = "Ingrese password";
+    gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer );
+    gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer );
+    SDL_StartTextInput();
+
+    while( !quit ){
+      bool renderText = false;
+      //this->close(& quit);
+      while(SDL_PollEvent( &e ) != 0){
+        //User requests quit
+        if( e.type == SDL_QUIT )
+        {
+          quit = true;
+        }
+          //Special key input
+        else if( e.type == SDL_KEYDOWN ){
+          if( e.key.keysym.sym == SDLK_BACKSPACE && inputTextUser.length() > 0 )
+          {
+            inputTextUser.pop_back();
+            renderText = true;
+          }else if( e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL ){
+            SDL_SetClipboardText(inputTextUser.c_str() );
+          }else if( e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL ){
+            inputTextUser = SDL_GetClipboardText();
+            renderText = true;
+          }
+        }else if( e.type == SDL_TEXTINPUT ){
+          if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ){
+            inputTextUser += e.text.text;
+            renderText = true;
+          }
+        }
+      }
+      if( renderText ){
+        if(inputTextUser != "" &&  inputTextPass != ""){
+          gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer );
+          gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer );
+        }else{
+          gInputUserTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer );
+          gInputPasswordTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer );
+        }
+      }
+      SDL_RenderClear(this->renderer);
+      gPromptUserTextTexture.render((this->screen_width - gPromptUserTextTexture.getWidth() ) / 2, 0 );
+      gInputUserTextTexture.render((this->screen_width - gInputUserTextTexture.getWidth() ) / 2, gPromptUserTextTexture.getHeight() );
+      gPromptPasswordTextTexture.render((this->screen_width - gPromptPasswordTextTexture.getWidth() ) / 2, 100 );
+      gInputPasswordTextTexture.render((this->screen_width - gInputPasswordTextTexture.getWidth() ) / 2, 100 + gInputPasswordTextTexture.getHeight() );
+
+      //Update screen
+      SDL_RenderPresent( this->renderer);
+    }
+
+    //Disable text input
+    SDL_StopTextInput();
+  }
+}
+
+void ViewManager::initializeTTF(){
+  //Initialize SDL_ttf
+  if( TTF_Init() == -1 ){
+    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+    this->success = false;
+  }
+}
+
+void ViewManager::loadMedia(){
+
+  //Open the font
+  this->font = TTF_OpenFont( "resources/fonts/lazy.ttf", 28 );
+
+  if( this->font == NULL ){
+    printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+    this->success = false;
+  }else{
+    //Render the prompt
+    SDL_Color textColor = { 0, 0, 0, 0xFF };
+    if( !this->gPromptUserTextTexture.loadFromRenderedText("Ingrese usuario:", textColor, this->font, this->renderer) && (!this->gPromptPasswordTextTexture.loadFromRenderedText("Ingrese contrase;a:", textColor, this->font, this->renderer))){
+      printf( "Failed to render prompt text!\n" );
+      this->success = false;
+    }
+  }
 
 }
 

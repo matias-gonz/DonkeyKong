@@ -4,6 +4,7 @@
 #include <SDL_render.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <stdio.h>
 #include "ltexture.h"
@@ -28,7 +29,7 @@ public:
 
   bool successfulInitialitization();
 
-  void close();
+  void close(bool* quit);
 
   LTexture *loadTexture(char *path);
 
@@ -57,6 +58,13 @@ private:
   Configuration *configuration;
   bool hasDefaultConfig;
   bool isLoginView;
+  TTF_Font* font;
+
+  //Scene textures
+  LTexture gPromptUserTextTexture;
+  LTexture gInputUserTextTexture;
+  LTexture gPromptPasswordTextTexture;
+  LTexture gInputPasswordTextTexture;
 
   SDL_Window * createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
@@ -65,6 +73,10 @@ private:
   void showSDLError(char *message);
 
   void initializeRendererColor();
+
+  void initializeTTF();
+
+  void loadMedia();
 
 };
 
