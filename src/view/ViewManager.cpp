@@ -67,9 +67,10 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
   this->hasDefaultConfig = false;
   this->isLoginView = true;
   this->success = true;
+  inputTextUser = "...";
+  inputTextPass = "...";
 
   int flags = 0;
-
 
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
@@ -127,7 +128,7 @@ void ViewManager::initializeRendererColor() {
   } else {
     SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
   }
-  if(this->isLoginView){
+  if (this->isLoginView) {
     SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);
   }
   //Initialize PNG loading
@@ -142,13 +143,13 @@ bool ViewManager::successfulInitialitization() {
   return this->success;
 }
 
-void ViewManager::close(bool* quit) {
+void ViewManager::close(bool *quit) {
 
   SDL_Event event;      //Event handler
 
-  while(event.type != SDL_QUIT){
-    while(SDL_PollEvent(&event)){
-      if (event.type == SDL_QUIT){
+  while (event.type != SDL_QUIT) {
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
         *quit = true;
         SDL_Quit();
         exit(1);
@@ -225,92 +226,127 @@ void ViewManager::renderWindow() {
   SDL_RenderPresent(renderer);
 }
 
-void ViewManager::renderLoginWindow(){
-
-  if(this->success){
-    //Main loop flag
-    bool quit = false;
-    SDL_Event e;
-    SDL_Color textColor = { 0, 0, 0, 0xFF };
-    std::string inputTextUser = "Ingrese usuario";
-    std::string inputTextPass = "Ingrese password";
-    gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer );
-    gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer );
+void ViewManager::renderLoginWindow(bool *quit) {
+  if (this->success) {
+    SDL_Color textColor = {0, 0, 0, 0xFF};
+    gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
+    gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer);
     SDL_StartTextInput();
+    this->initializeTextInputs();
 
-    while( !quit ){
-      bool renderText = false;
-      //this->close(& quit);
-      while(SDL_PollEvent( &e ) != 0){
-        //User requests quit
-        if( e.type == SDL_QUIT )
-        {
-          quit = true;
-        }
-          //Special key input
-        else if( e.type == SDL_KEYDOWN ){
-          if( e.key.keysym.sym == SDLK_BACKSPACE && inputTextUser.length() > 0 )
-          {
-            inputTextUser.pop_back();
-            renderText = true;
-          }else if( e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL ){
-            SDL_SetClipboardText(inputTextUser.c_str() );
-          }else if( e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL ){
-            inputTextUser = SDL_GetClipboardText();
-            renderText = true;
-          }
-        }else if( e.type == SDL_TEXTINPUT ){
-          if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ){
-            inputTextUser += e.text.text;
-            renderText = true;
-          }
-        }
-      }
-      if( renderText ){
-        if(inputTextUser != "" &&  inputTextPass != ""){
-          gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer );
-          gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer );
-        }else{
-          gInputUserTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer );
-          gInputPasswordTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer );
-        }
-      }
-      SDL_RenderClear(this->renderer);
-      gPromptUserTextTexture.render((this->screen_width - gPromptUserTextTexture.getWidth() ) / 2, 0 );
-      gInputUserTextTexture.render((this->screen_width - gInputUserTextTexture.getWidth() ) / 2, gPromptUserTextTexture.getHeight() );
-      gPromptPasswordTextTexture.render((this->screen_width - gPromptPasswordTextTexture.getWidth() ) / 2, 100 );
-      gInputPasswordTextTexture.render((this->screen_width - gInputPasswordTextTexture.getWidth() ) / 2, 100 + gInputPasswordTextTexture.getHeight() );
+    bool renderText = false;
+    this->handleEvents(quit, &renderText);
 
-      //Update screen
-      SDL_RenderPresent( this->renderer);
+    if (renderText) {
+      if (inputTextUser != "") {
+        gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
+      } else {
+        gInputUserTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer);
+      }
+      if (inputTextPass != "") {
+        gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer);
+      } else {
+        gInputPasswordTextTexture.loadFromRenderedText(" ", textColor, this->font, this->renderer);
+      }
     }
+    SDL_RenderClear(this->renderer);
+    gPromptUserTextTexture.render(this->inputUserPosX, this->inputUserPosY);
+    gInputUserTextTexture.render(this->inputUserPosX, this->inputUserPosY + gPromptUserTextTexture.getHeight());
+    gPromptPasswordTextTexture.render(this->inputPasswordPosX, this->inputPasswordPosY);
+    gInputPasswordTextTexture.render(this->inputPasswordPosX,
+                                     this->inputPasswordPosY + gInputPasswordTextTexture.getHeight());
+
+    //Update screen
+    SDL_RenderPresent(this->renderer);
 
     //Disable text input
     SDL_StopTextInput();
   }
 }
 
-void ViewManager::initializeTTF(){
+void ViewManager::initializeTextInputs() {
+  this->inputUserPosX = (this->screen_width - gPromptUserTextTexture.getWidth()) / 2;
+  this->inputUserPosY = 20;
+  int inputPosY = this->inputUserPosY + gPromptUserTextTexture.getHeight();
+  this->inputUserPosX = (this->screen_width - gPromptPasswordTextTexture.getWidth()) / 2;
+  this->inputUserPosY = inputPosY + 20;
+  this->inputPasswordPosX = (this->screen_width - gPromptPasswordTextTexture.getWidth()) / 2;
+  this->inputPasswordPosY = inputPosY + 100;
+}
+
+void ViewManager::handleEvents(bool *quit, bool *renderText) {
+  SDL_Event e;
+  while (SDL_PollEvent(&e) != 0) {
+    if (e.type == SDL_QUIT) {
+      *quit = true;
+    } else if (e.type == SDL_KEYDOWN) {
+      if (e.key.keysym.sym == SDLK_BACKSPACE) {
+        if (isInputUser && inputTextUser.length() > 0) inputTextUser.pop_back();
+        if (isInputPass && inputTextPass.length() > 0) inputTextPass.pop_back();
+        *renderText = true;
+      } else if (e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL) {
+        SDL_SetClipboardText(inputTextUser.c_str());
+      } else if (e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
+        inputTextUser = SDL_GetClipboardText();
+        *renderText = true;
+      }
+    } else if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP) {
+      int mousePosX, mousePosY;
+      SDL_GetMouseState(&mousePosX, &mousePosY);
+      int inputUserPosY = this->inputUserPosY + gPromptUserTextTexture.getHeight();
+      int inputPassPosY = this->inputPasswordPosY + gPromptPasswordTextTexture.getHeight();
+      if ((mousePosX > this->inputUserPosX - 100 && mousePosX < this->inputUserPosX + 200) &&
+          (mousePosY > inputUserPosY && mousePosY < inputUserPosY + gInputUserTextTexture.getHeight())) {
+        isInputUser = true;
+      } else {
+        isInputUser = false;
+      }
+
+      if ((mousePosX > this->inputPasswordPosX - 100 && mousePosX < this->inputPasswordPosX + 200) &&
+          (mousePosY > inputPassPosY && mousePosY < inputPassPosY + gInputPasswordTextTexture.getHeight())) {
+        isInputPass = true;
+      } else {
+        isInputPass = false;
+      }
+    } else if (e.type == SDL_TEXTINPUT) {
+      if (e.type == SDL_TEXTINPUT) {
+        if (!(SDL_GetModState() & KMOD_CTRL &&
+              (e.text.text[0] == 'c' || e.text.text[0] == 'C' || e.text.text[0] == 'v' || e.text.text[0] == 'V'))) {
+          if (isInputUser && inputTextUser.length() < 15) inputTextUser += e.text.text;
+          if (isInputPass && inputTextPass.length() < 15) inputTextPass += e.text.text;
+          *renderText = true;
+        }
+      }
+    }
+  }
+}
+
+void ViewManager::initializeTTF() {
   //Initialize SDL_ttf
-  if( TTF_Init() == -1 ){
-    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+  if (TTF_Init() == -1) {
+    printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
     this->success = false;
   }
 }
 
-void ViewManager::loadMedia(){
+void ViewManager::loadMedia() {
 
   //Open the font
-  this->font = TTF_OpenFont( "resources/fonts/lazy.ttf", 28 );
+  this->font = TTF_OpenFont("resources/fonts/font.ttf", 28);
 
-  if( this->font == NULL ){
-    printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+  if (this->font == NULL) {
+    printf("Failed to load product sans font! SDL_ttf Error: %s\n", TTF_GetError());
     this->success = false;
-  }else{
+  } else {
     //Render the prompt
-    SDL_Color textColor = { 0, 0, 0, 0xFF };
-    if( !this->gPromptUserTextTexture.loadFromRenderedText("Ingrese usuario:", textColor, this->font, this->renderer) && (!this->gPromptPasswordTextTexture.loadFromRenderedText("Ingrese contrase;a:", textColor, this->font, this->renderer))){
-      printf( "Failed to render prompt text!\n" );
+    SDL_Color textColor = {0, 0, 0, 0xFF};
+    if (!this->gPromptUserTextTexture.loadFromRenderedText("Ingrese usuario:", textColor, this->font, this->renderer)) {
+      printf("Failed to render user prompt text!\n");
+      this->success = false;
+    }
+    if (!this->gPromptPasswordTextTexture.loadFromRenderedText("Ingrese contrasenia:", textColor, this->font,
+                                                               this->renderer)) {
+      printf("Failed to render password prompt text!\n");
       this->success = false;
     }
   }

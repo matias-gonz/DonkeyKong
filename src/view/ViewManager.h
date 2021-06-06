@@ -37,7 +37,7 @@ public:
 
   void renderWindow();
 
-  void renderLoginWindow();
+  void renderLoginWindow(bool* quit);
 
   void createRenderer();
 
@@ -45,8 +45,7 @@ private:
   SDL_Renderer *renderer;
   SDL_Window * currentWindow;
   bool success;
-  int screen_width = WIDTH;
-  int screen_height = HEIGHT;
+  int screen_width = WIDTH, screen_height = HEIGHT;
   Game *game;
   TextureManager *textureManager;
   LevelDrawer *levelDrawer;
@@ -56,9 +55,11 @@ private:
   //Animator* bossAnimator;
   //Animator* princessAnimator;
   Configuration *configuration;
-  bool hasDefaultConfig;
-  bool isLoginView;
+  bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
   TTF_Font* font;
+  int inputUserPosX, inputUserPosY;
+  int inputPasswordPosX, inputPasswordPosY;
+  std::string inputTextUser, inputTextPass;
 
   //Scene textures
   LTexture gPromptUserTextTexture;
@@ -77,6 +78,10 @@ private:
   void initializeTTF();
 
   void loadMedia();
+
+  void initializeTextInputs();
+
+  void handleEvents(bool* quit, bool* renderText);
 
 };
 

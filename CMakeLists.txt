@@ -77,7 +77,7 @@ set(SOURCE_FILES main.cpp
         src/model/Collider.h
         src/view/PlayerAnimator.cpp
         src/view/PlayerAnimator.h
-        src/Constants.h src/view/LoginView.cpp src/view/LoginView.h)
+        src/Constants.h src/view/LoginView.cpp src/view/LoginView.h src/controller/LoginController.cpp src/controller/LoginController.h)
 
 
 # change to personal project name (as above)
