@@ -79,17 +79,20 @@ void Socket::connect() {
 }
 
 void Socket::accept() {
-  this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen);
-  if (new_socket <= 0) {
-    Logger::log(Logger::Error, "Error al aceptar el nuevo socket");
-    throw std::runtime_error("Error al aceptar el nuevo socket");
-  }
+    this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen);
+    if (new_socket <= 0) {
+        Logger::log(Logger::Error, "Error al aceptar el nuevo socket");
+        throw std::runtime_error("Error al aceptar el nuevo socket");
+    }
 }
 
 int Socket::recv(int *dato) {
-  return 1;
+
+    return 1;
 }
 
-int Socket::snd(int *dato) {
-  return 1;
+int Socket::snd(char *dato) {
+    
+
+    return 1;
 }

@@ -5,14 +5,13 @@
 
 Client::Client(char *port, char *IP) {
   Configuration *configuration = new Configuration();
-  Logger::startLogger(configuration);
+  //Logger::startLogger(configuration);
 
   /* Game *game = new Game(configuration);
   game->start();
 
   GameController *gameController = new GameController(game);
-  ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+
 
   while (game->isRunning()) {
     gameController->handleEvents();
@@ -20,7 +19,18 @@ Client::Client(char *port, char *IP) {
     viewManager->renderWindow();
   } */
 
-  ClientSocket *new_socket = new ClientSocket(port, IP);
+  this->viewManager = new ViewManager(configuration,"Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                               SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+
+  this->socket = new ClientSocket(port, IP);
 
   // delete game;
+}
+
+void Client::receive() {
+    this->socket->receive(NULL);
+}
+
+void Client::send() {
+    this->socket->send((void*)"hola\n");
 }

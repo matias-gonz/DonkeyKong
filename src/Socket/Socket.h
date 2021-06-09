@@ -1,4 +1,3 @@
-
 #ifndef TALLER_PROG_I_2021_1C_KIWI_SOCKET_H
 #define TALLER_PROG_I_2021_1C_KIWI_SOCKET_H
 
@@ -29,7 +28,7 @@ public:
 
   int recv(int* dato);
 
-  int snd(int* dato);
+  int snd(char* dato);
 
 private:
   int server_fd;

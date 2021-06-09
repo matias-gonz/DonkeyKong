@@ -9,7 +9,7 @@ void ServerSocket::accept(ServerSocket &serverSocket) {
 }
 
 // TO DO CHANGE PARAMETER
-void ServerSocket::recieve(int *dato) {
+void ServerSocket::receive(int *dato) {
   if (!this->socket->recv(dato)) {
     Logger::log(Logger::Error, "Error al leer el dato");
   }

@@ -17,8 +17,14 @@ public:
 
   Client(char *port, char *IP);
 
+    void send();
+
+    void receive();
+
 private:
 
+    ViewManager *viewManager;
+    ClientSocket *socket;
 };
 
 

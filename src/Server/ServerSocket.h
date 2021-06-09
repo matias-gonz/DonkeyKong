@@ -14,7 +14,7 @@ public:
 
   void accept(ServerSocket &serverSocket);
 
-  void recieve(int* dato);
+  void receive(int* dato);
 
   void send(int* dato);
 

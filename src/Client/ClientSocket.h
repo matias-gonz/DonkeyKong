@@ -11,6 +11,10 @@ public:
 
   ClientSocket(char* port,char* IP);
 
+    void send(void *msg);
+
+    void receive(void *msg);
+
 private:
   int socketClient;
   struct sockaddr_in serv_addr;

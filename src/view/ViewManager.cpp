@@ -186,3 +186,50 @@ ViewManager::~ViewManager() {
     delete this->window;
     delete this->levelDrawer;
 }
+
+ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
+    this->screen_width = width;
+    this->screen_height = height;
+    this->configuration = configurations;
+
+    int flags = 0;
+    if (fullscreen) {
+        flags = SDL_WINDOW_FULLSCREEN;
+    }
+
+    this->success = true;
+    if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+        this->setTextureLinear();
+        this->createWindow(title, xPos, yPos, width, height, flags);
+        if (this->window != NULL) this->createRenderer();
+        if (this->renderer != NULL) this->initializeRendererColor();
+    } else {
+        this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+        this->success = false;
+    }
+
+    this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
+    this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
+
+    SDL_Texture* playerTexture = this->textureManager->getPlayerTexture();
+    bool playerTextureSuccess = true;
+    if(!playerTexture){
+        playerTexture = this->textureManager->getErrorTexture();
+        playerTextureSuccess = false;
+
+    }
+    SDL_Texture* enemyTexture = this->textureManager->getEnemyTexture();
+    bool enemyTextureSuccess = true;
+    if(!enemyTexture){
+        enemyTexture = this->textureManager->getErrorTexture();
+        enemyTextureSuccess = false;
+    }
+
+    //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
+    this->playerAnimator = new PlayerAnimator(playerTexture,success);
+    this->enemyAnimator = new Animator(enemyTexture,0,0,0,25,22,24,2,enemyTextureSuccess);
+
+    //ESTOS NO FUNKAN
+    //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
+    //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
+}

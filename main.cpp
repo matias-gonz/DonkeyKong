@@ -51,8 +51,8 @@ int main(int argc, char *args[]) {
   char *port;
   bool isServer = checkArgs(argc, args, &json, &IP, &port);
   if(isServer){
-    mainServer(&json, IP, port);
+    return mainServer(&json, IP, port);
   }else{
-    mainClient(IP, port);
+    return mainClient(IP, port);
   }
 }

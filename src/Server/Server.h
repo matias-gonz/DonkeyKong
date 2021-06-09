@@ -19,8 +19,20 @@ public:
 
   Server(char *port, char *IP);
 
-private:
+    bool isRunning();
 
+    void listen();
+
+    void update();
+
+    void broadcast();
+
+private:
+    ServerSocket *socket;
+
+    Configuration *configuration;
+    Game *game;
+    GameController *gameController;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H
