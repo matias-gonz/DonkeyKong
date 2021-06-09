@@ -1,18 +1,24 @@
 #include "ServerSocket.h"
 #include <arpa/inet.h>
 
-ServerSocket::ServerSocket(char *port, char *IP){
-    // Creating socket file descriptor
+ServerSocket::ServerSocket(char *port, char *IP) {
     this->opt = 1;
-    if ((this->server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    // Creating socket file descriptor
+    if ((this->server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         Logger::log(Logger::Error, "Error al crear el socket");
         exit(EXIT_FAILURE);
     }
 
-    this->address.sin_family = AF_INET;
-
+    this->create();
     this->convertToHost(atoi(port), IP);
-    this->connect();
+    this->bind(atoi(port));
+    this->listen();
+
+    if ((this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address,
+                                     (socklen_t *) &this->addrlen)) < 0) {
+        perror("accept");
+        exit(EXIT_FAILURE);
+    }
 }
 
 

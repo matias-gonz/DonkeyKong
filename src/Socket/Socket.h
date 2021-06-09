@@ -32,17 +32,14 @@ public:
     virtual int snd(void* data) = 0;
 
 private:
-    int addrlen = sizeof(address);
     int socketClient;
-
-
-    int serverSnd(Positions *positions);
 
 protected:
     struct sockaddr_in address;
     int server_fd;
     int opt;
     int new_socket;
+    int addrlen = sizeof(address);
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SOCKET_H
