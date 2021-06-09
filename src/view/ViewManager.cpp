@@ -9,7 +9,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
+/*ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
     this->screen_width = width;
     this->screen_height = height;
     this->configuration = configurations;
@@ -56,7 +56,7 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
     //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
     //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
 }
-
+*/
 void ViewManager::showSDLError(char *message) {
     printf(message, SDL_GetError());
 }

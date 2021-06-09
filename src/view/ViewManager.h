@@ -18,9 +18,11 @@
 
 class ViewManager {
 public:
-    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+    //ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-    ViewManager(Configuration *configurations, const char string[12], unsigned int i, unsigned int i1, int i2, int i3, bool b);
+    //ViewManager(Configuration *configurations, const char string[12], unsigned int i, unsigned int i1, int i2, int i3, bool b);
+
+    ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
     ~ViewManager();
     SDL_Renderer *getRenderer();
