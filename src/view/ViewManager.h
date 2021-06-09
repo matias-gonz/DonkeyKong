@@ -16,6 +16,7 @@
 #include "../model/Boss.h"
 #include "PlayerAnimator.h"
 #include "../Constants.h"
+#include "../controller/LoginController.h"
 
 class ViewManager {
 public:
@@ -42,6 +43,14 @@ public:
   void createRenderer();
 
 private:
+
+  typedef struct {
+    SDL_Rect draw_rect;    // dimensions of button
+    struct {
+      Uint8 r, g, b, a;
+    } colour;
+  };
+
   SDL_Renderer *renderer;
   SDL_Window * currentWindow;
   bool success;
@@ -60,6 +69,8 @@ private:
   int inputUserPosX, inputUserPosY;
   int inputPasswordPosX, inputPasswordPosY;
   std::string inputTextUser, inputTextPass;
+
+  button_t start_button;
 
   //Scene textures
   LTexture gPromptUserTextTexture;
@@ -82,6 +93,7 @@ private:
   void initializeTextInputs();
 
   void handleEvents(bool* quit, bool* renderText);
+
 
 };
 

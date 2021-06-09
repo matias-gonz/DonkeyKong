@@ -226,6 +226,15 @@ void ViewManager::renderWindow() {
   SDL_RenderPresent(renderer);
 }
 
+typedef struct {
+  SDL_Rect draw_rect;    // dimensions of button
+  struct {
+    Uint8 r, g, b, a;
+  } colour;
+
+  bool pressed;
+} button_t;
+
 void ViewManager::renderLoginWindow(bool *quit) {
   if (this->success) {
     SDL_Color textColor = {0, 0, 0, 0xFF};
@@ -236,6 +245,7 @@ void ViewManager::renderLoginWindow(bool *quit) {
 
     bool renderText = false;
     this->handleEvents(quit, &renderText);
+
 
     if (renderText) {
       if (inputTextUser != "") {
@@ -272,9 +282,10 @@ void ViewManager::initializeTextInputs() {
   this->inputUserPosY = inputPosY + 20;
   this->inputPasswordPosX = (this->screen_width - gPromptPasswordTextTexture.getWidth()) / 2;
   this->inputPasswordPosY = inputPosY + 100;
-}
 
+}
 void ViewManager::handleEvents(bool *quit, bool *renderText) {
+
   SDL_Event e;
   while (SDL_PollEvent(&e) != 0) {
     if (e.type == SDL_QUIT) {
@@ -330,7 +341,6 @@ void ViewManager::initializeTTF() {
 }
 
 void ViewManager::loadMedia() {
-
   //Open the font
   this->font = TTF_OpenFont("resources/fonts/font.ttf", 28);
 
@@ -350,7 +360,6 @@ void ViewManager::loadMedia() {
       this->success = false;
     }
   }
-
 }
 
 ViewManager::~ViewManager() {

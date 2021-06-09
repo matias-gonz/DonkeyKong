@@ -9,6 +9,7 @@ Client::Client(char *port, char *IP) {
     ViewManager* viewManager = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                                SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT);
     while(!quit) {
+      loginController->handle(&quit);
       viewManager->renderLoginWindow(&quit);
     }
   }
