@@ -66,12 +66,12 @@ set(SOURCE_FILES main.cpp
         src/Server/Server.h
         src/Client/Client.cpp
         src/Client/Client.h
-        src/Server/ServerSocket.cpp
-        src/Server/ServerSocket.h
+        src/Socket/ServerSocket.cpp
+        src/Socket/ServerSocket.h
         src/Socket/Socket.cpp
         src/Socket/Socket.h
-        src/Client/ClientSocket.cpp
-        src/Client/ClientSocket.h
+        src/Socket/ClientSocket.cpp
+        src/Socket/ClientSocket.h
         src/model/BarrelMovement.h
         src/model/Collider.cpp
         src/model/Collider.h

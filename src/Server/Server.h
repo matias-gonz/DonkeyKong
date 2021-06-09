@@ -10,7 +10,7 @@
 #include "../view/ViewManager.h"
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"
-#include "ServerSocket.h"
+#include "../Socket/ServerSocket.h"
 
 
 class Server {

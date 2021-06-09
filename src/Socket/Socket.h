@@ -4,41 +4,45 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "../model/Logger.h"
+#include "../Constants.h"
 
 
-class Socket{
+class Socket {
 
 public:
 
-  Socket(char* port,char* IP);
+    //Socket(char *port, char *IP);
 
-  Socket(char* port,char* IP, int max_connections);
+    //Socket(char *port, char *IP, int max_connections);
 
-  void create();
+    void create();
 
-  void bind(int port);
+    void bind(int port);
 
-  void convertToHost(const int port, const char* IP);
+    void convertToHost(const int port, const char *IP);
 
-  void connect();
+    void connect();
 
-  void listen();
+    void listen();
 
-  void accept();
+    void accept();
 
-  int recv(int* dato);
+    virtual int receive(void* data) = 0;
 
-  int snd(char* dato);
+    virtual int snd(void* data) = 0;
 
 private:
-  int server_fd;
-  struct sockaddr_in address;
-  int new_socket;
-  int addrlen = sizeof(address);
-  int socketClient;
-  int opt;
+    int addrlen = sizeof(address);
+    int socketClient;
 
 
+    int serverSnd(Positions *positions);
+
+protected:
+    struct sockaddr_in address;
+    int server_fd;
+    int opt;
+    int new_socket;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SOCKET_H

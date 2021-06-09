@@ -28,5 +28,5 @@ void Server::update() {
 }
 
 void Server::broadcast() {
-    this->socket->send(NULL);
+    this->socket->snd(NULL);
 }

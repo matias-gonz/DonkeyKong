@@ -2,7 +2,7 @@
 #define TALLER_PROG_I_2021_1C_KIWI_CLIENT_H
 
 #include "../model/Logger.h"
-#include "ClientSocket.h"
+#include "../Socket/ClientSocket.h"
 #include "../Constants.h"
 #include "../model/Game.h"
 #include "../model/Logger.h"
@@ -15,7 +15,7 @@ class Client {
 
 public:
 
-  Client(char *port, char *IP);
+    Client(char *port, char *IP);
 
     void send();
 
