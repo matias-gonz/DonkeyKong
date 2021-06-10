@@ -17,6 +17,8 @@ struct PlayerTexture{
 
 #define HEIGHT 576
 #define WIDTH 1024
+#define LOGIN_HEIGHT 300
+#define LOGIN_WIDTH 450
 
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_CONSTANTS_H

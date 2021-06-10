@@ -5,5 +5,6 @@ LoginController::LoginController() {
 }
 
 void LoginController::handle(bool* quit) {
+
 }
 

@@ -17,6 +17,7 @@
 #include "PlayerAnimator.h"
 #include "../Constants.h"
 #include "../controller/LoginController.h"
+#include "LoginButton.h"
 
 class ViewManager {
 public:
@@ -44,13 +45,6 @@ public:
 
 private:
 
-  typedef struct {
-    SDL_Rect draw_rect;    // dimensions of button
-    struct {
-      Uint8 r, g, b, a;
-    } colour;
-  };
-
   SDL_Renderer *renderer;
   SDL_Window * currentWindow;
   bool success;
@@ -69,8 +63,7 @@ private:
   int inputUserPosX, inputUserPosY;
   int inputPasswordPosX, inputPasswordPosY;
   std::string inputTextUser, inputTextPass;
-
-  button_t start_button;
+  LoginButton* sendButton;
 
   //Scene textures
   LTexture gPromptUserTextTexture;
@@ -93,8 +86,6 @@ private:
   void initializeTextInputs();
 
   void handleEvents(bool* quit, bool* renderText);
-
-
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

@@ -14,6 +14,7 @@ Game::~Game() {
 }
 
 void Game::start() {
+  //aca verificamos estado
     this->running = true;
     this->level = new Level();
     this->loadLevel(1);

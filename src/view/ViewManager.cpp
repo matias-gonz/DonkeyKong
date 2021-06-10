@@ -79,6 +79,7 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
     if (this->renderer != NULL) this->initializeRendererColor();
     this->initializeTTF();
     this->loadMedia();
+    this->sendButton = new LoginButton("Enviar", this->renderer, this->font, 160, 240, 100, 40);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
     this->success = false;
@@ -226,15 +227,6 @@ void ViewManager::renderWindow() {
   SDL_RenderPresent(renderer);
 }
 
-typedef struct {
-  SDL_Rect draw_rect;    // dimensions of button
-  struct {
-    Uint8 r, g, b, a;
-  } colour;
-
-  bool pressed;
-} button_t;
-
 void ViewManager::renderLoginWindow(bool *quit) {
   if (this->success) {
     SDL_Color textColor = {0, 0, 0, 0xFF};
@@ -265,6 +257,7 @@ void ViewManager::renderLoginWindow(bool *quit) {
     gPromptPasswordTextTexture.render(this->inputPasswordPosX, this->inputPasswordPosY);
     gInputPasswordTextTexture.render(this->inputPasswordPosX,
                                      this->inputPasswordPosY + gInputPasswordTextTexture.getHeight());
+    sendButton->show();
 
     //Update screen
     SDL_RenderPresent(this->renderer);
@@ -276,7 +269,7 @@ void ViewManager::renderLoginWindow(bool *quit) {
 
 void ViewManager::initializeTextInputs() {
   this->inputUserPosX = (this->screen_width - gPromptUserTextTexture.getWidth()) / 2;
-  this->inputUserPosY = 20;
+  this->inputUserPosY = 0;
   int inputPosY = this->inputUserPosY + gPromptUserTextTexture.getHeight();
   this->inputUserPosX = (this->screen_width - gPromptPasswordTextTexture.getWidth()) / 2;
   this->inputUserPosY = inputPosY + 20;
@@ -288,10 +281,13 @@ void ViewManager::handleEvents(bool *quit, bool *renderText) {
 
   SDL_Event e;
   while (SDL_PollEvent(&e) != 0) {
+    //SACAR DE ACA, SOLO PRUEBA
+    sendButton->listenToClick(e);
     if (e.type == SDL_QUIT) {
       *quit = true;
     } else if (e.type == SDL_KEYDOWN) {
       if (e.key.keysym.sym == SDLK_BACKSPACE) {
+
         if (isInputUser && inputTextUser.length() > 0) inputTextUser.pop_back();
         if (isInputPass && inputTextPass.length() > 0) inputTextPass.pop_back();
         *renderText = true;
