@@ -4,8 +4,8 @@
 #include <arpa/inet.h>
 
 Client::Client(char *port, char *IP) {
-    Configuration *configuration = new Configuration();
-    //Logger::startLogger(configuration);
+    this->configuration = new Configuration();
+    Logger::startLogger(this->configuration, "client.txt");
 
     /* Game *game = new Game(configuration);
     game->start();

@@ -25,6 +25,7 @@ private:
 
     ViewManager *viewManager;
     ClientSocket *socket;
+    Configuration *configuration;
 };
 
 

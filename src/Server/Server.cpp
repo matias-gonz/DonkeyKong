@@ -3,7 +3,7 @@
 Server::Server(char *port, char *IP) {
 
   this->configuration = new Configuration();
-  Logger::startLogger(this->configuration);
+    Logger::startLogger(this->configuration, "server.log");
   this->game = new Game(this->configuration);
   this->gameController = new GameController(this->game);
 
