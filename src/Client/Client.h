@@ -4,11 +4,10 @@
 #include "../model/Logger.h"
 #include "../Socket/ClientSocket.h"
 #include "../Constants.h"
-#include "../model/Game.h"
 #include "../model/Logger.h"
 #include "../view/ViewManager.h"
-#include "../controller/GameController.h"
 #include "../controller/Configuration.h"
+#include "../model/cola.h"
 
 
 class Client {
