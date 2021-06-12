@@ -78,8 +78,7 @@ set(SOURCE_FILES main.cpp
         src/view/PlayerAnimator.cpp
         src/view/PlayerAnimator.h
         src/Constants.h
-        src/model/cola.h
-        src/model/cola.c)
+        src/Queue.cpp src/Queue.h)
 
 
 # change to personal project name (as above)

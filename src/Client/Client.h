@@ -6,8 +6,8 @@
 #include "../Constants.h"
 #include "../model/Logger.h"
 #include "../view/ViewManager.h"
+#include "../Queue.h"
 #include "../controller/Configuration.h"
-#include "../model/cola.h"
 
 
 class Client {
