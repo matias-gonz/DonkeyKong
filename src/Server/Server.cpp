@@ -2,31 +2,41 @@
 
 Server::Server(char *port, char *IP) {
 
-  this->configuration = new Configuration();
+    this->configuration = new Configuration();
     Logger::startLogger(this->configuration, "server.log");
-  this->game = new Game(this->configuration);
-  this->gameController = new GameController(this->game);
+    this->game = new Game(this->configuration);
+    this->game->start();
+    this->gameController = new GameController(this->game);
 
-  //ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-  //                                          SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
-
-  this->socket = new ServerSocket(port, IP);
+    this->socket = new ServerSocket(port, IP);
 }
 
 bool Server::isRunning() {
     return this->game->isRunning();
 }
 
-void Server::listen() {
-    this->socket->receive(NULL);
+void Server::receive() {
+    printf("entra al receive\n");
+    this->socket->receive(&this->plyrEvent);
+    printf("sale del receive\n");
+    if (this->plyrEvent.type == SDL_KEYDOWN) {
+        printf("KEYDOWN\n");
+    } else if (this->plyrEvent.type == SDL_KEYUP) {
+        printf("KEYUP\n");
+    }
 
 }
 
 void Server::update() {
-    this->gameController->handleEvents();
+    printf("pasa al update\n");
+    this->gameController->handleEvents(plyrEvent);
+    printf("handelio los eventos\n");
     this->gameController->update();
+    printf("updatea todo");
+    this->plyrPos.playerX = this->game->getPlayer()->getXPosition();
+    this->plyrPos.playerY = this->game->getPlayer()->getYPosition();
 }
 
 void Server::broadcast() {
-    this->socket->snd(NULL);
+    this->socket->snd(&plyrPos);
 }

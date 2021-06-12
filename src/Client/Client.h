@@ -22,6 +22,8 @@ public:
 
     void render();
 
+    void setSended(bool b);
+
 private:
     Positions playerPositions;
     ViewManager *viewManager;
@@ -31,6 +33,7 @@ private:
     bool eventIsValid(SDL_Event event);
 
     bool running;
+    bool sended;
 };
 
 

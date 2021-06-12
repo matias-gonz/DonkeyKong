@@ -14,18 +14,21 @@ Client::Client(char *port, char *IP) {
 
 }
 void Client::receive() {
+    if(!this->sended){return;}
     this->socket->receive(&playerPositions);
 }
 
 void Client::send() {
     SDL_Event event;
+
     while (SDL_PollEvent(&event) != 0) {
         if (event.type == SDL_QUIT){
             this->running = false;
             return;
         }
         if(this->eventIsValid(event)){
-            this->socket->snd(&event.type);
+            this->sended = true;
+            this->socket->snd(&event);
         }
 
     }
@@ -40,4 +43,8 @@ bool Client::isRunning() {
 
 void Client::render() {
     viewManager->renderWindow(this->playerPositions);
+}
+
+void Client::setSended(bool b) {
+    this->sended = b;
 }

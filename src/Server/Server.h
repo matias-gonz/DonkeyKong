@@ -21,7 +21,7 @@ public:
 
     bool isRunning();
 
-    void listen();
+    void receive();
 
     void update();
 
@@ -29,10 +29,11 @@ public:
 
 private:
     ServerSocket *socket;
-
+    SDL_Event plyrEvent;
     Configuration *configuration;
     Game *game;
     GameController *gameController;
+    Positions plyrPos;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

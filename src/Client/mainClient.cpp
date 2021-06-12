@@ -8,6 +8,7 @@ int mainClient(char *IP, char *port) {
 
     while (client->isRunning()) {
         //hacer un thread de sends(tendra que ser un while true)
+        client->setSended(false);
         client->send();
         //hacer un thread de receives
         client->receive();
