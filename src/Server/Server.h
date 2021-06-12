@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL_events.h>
 #include <netinet/in.h>
+#include <pthread.h>
 
 #include "../model/Game.h"
 #include "../model/Logger.h"
@@ -11,29 +12,34 @@
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"
 #include "../Socket/ServerSocket.h"
-
+#include "../Queue.h"
 
 class Server {
 
 public:
 
-  Server(char *port, char *IP);
+    Server(char *port, char *IP);
 
     bool isRunning();
 
-    void receive();
-
-    void update();
-
-    void broadcast();
+    static void update();
 
 private:
     ServerSocket *socket;
-    SDL_Event plyrEvent;
+
+    static ServerSocket *sockets[4];
+
     Configuration *configuration;
-    Game *game;
-    GameController *gameController;
-    Positions plyrPos;
+    static Game *game;
+    static GameController *gameController;
+
+    static Positions plyrPos;
+
+    static void *updateThread(void *socket);
+
+    static cola_t *eventQueue;
+
+    static void broadcast();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

@@ -1,7 +1,6 @@
 #include "Socket.h"
 
 
-
 void Socket::create() {
     //if(!is_valid()) return false;
     if (setsockopt(this->server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &this->opt, sizeof(this->opt))) {
