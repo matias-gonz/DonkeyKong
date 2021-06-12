@@ -6,7 +6,6 @@
 #include "../Constants.h"
 #include "../model/Logger.h"
 #include "../view/ViewManager.h"
-#include "../Queue.h"
 #include "../controller/Configuration.h"
 
 
@@ -19,12 +18,19 @@ public:
     void send();
 
     void receive();
+    bool isRunning();
+
+    void render();
 
 private:
-
+    Positions playerPositions;
     ViewManager *viewManager;
+
     ClientSocket *socket;
     Configuration *configuration;
+    bool eventIsValid(SDL_Event event);
+
+    bool running;
 };
 
 

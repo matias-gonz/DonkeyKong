@@ -2,6 +2,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 Client::Client(char *port, char *IP) {
+    this->running = true;
     this->configuration = new Configuration();
     Logger::startLogger(this->configuration, "client.txt");
 
@@ -10,29 +11,33 @@ Client::Client(char *port, char *IP) {
                                         SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
     this->socket = new ClientSocket(port, IP);
-    //this->viewManager->renderWindow();//NOse nidea
-    SDL_Event event;
-
-    while ( SDL_PollEvent( &event ) != 0 or event.type != SDL_QUIT) {
-        cola_t* q = cola_crear();
-        cola_encolar(q,&event.type);
-        while (SDL_PollEvent( &event ) != 0){
-            printf("%d\n",&event.type);
-            cola_encolar(q,&event.type);
-        }
-        this->socket->snd(q);
-        cola_destruir(q,NULL);
-
-    }
-
-
 
 }
-
 void Client::receive() {
-    this->socket->receive(NULL);
+    this->socket->receive(&playerPositions);
 }
 
 void Client::send() {
-    this->socket->snd((void *) "hola\n");
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0) {
+        if (event.type == SDL_QUIT){
+            this->running = false;
+            return;
+        }
+        if(this->eventIsValid(event)){
+            this->socket->snd(&event.type);
+        }
+
+    }
+}
+bool Client::eventIsValid(SDL_Event event){
+    return (event.type == SDL_KEYDOWN or event.type == SDL_KEYUP);
+}
+
+bool Client::isRunning() {
+    return this->running;
+}
+
+void Client::render() {
+    viewManager->renderWindow(this->playerPositions);
 }

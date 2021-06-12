@@ -35,7 +35,7 @@ public:
 
     void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
 
-    void renderWindow();
+    void renderWindow(Positions playerPosition);
 
 private:
     SDL_Renderer *renderer;

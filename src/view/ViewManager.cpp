@@ -127,9 +127,9 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
     SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
 
-void ViewManager::renderWindow() {
+void ViewManager::renderWindow(Positions playerPosition) {
     SDL_RenderClear(this->renderer);
-
+/*
     //Draw level
     levelDrawer->draw(game->getLevel());
 
@@ -173,7 +173,8 @@ void ViewManager::renderWindow() {
 
     SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
     SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
-    this->playerAnimator->draw(this->renderer,playerDirection,playerPos,playerDistance);
+*/
+    this->playerAnimator->draw(this->renderer,right,playerPosition.playerX,playerPosition.playerY,0);
 
     SDL_RenderPresent(renderer);
 }
