@@ -8,11 +8,13 @@ class ServerSocket: public Socket{
 
 public:
 
-    ServerSocket(char *port, char *IP);
+    ServerSocket(char *port, char *IP,int maxConnections);
 
     int receive(void *event);
 
     int snd(void *positions);
+private:
+    int socketServer;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVERSOCKET_H

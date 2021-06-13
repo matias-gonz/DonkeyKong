@@ -11,10 +11,6 @@ class Socket {
 
 public:
 
-    //Socket(char *port, char *IP);
-
-    //Socket(char *port, char *IP, int max_connections);
-
     void create();
 
     void bind(int port);
@@ -23,9 +19,9 @@ public:
 
     void connect();
 
-    void listen();
+    void listen(int maxConnections);
 
-    void accept();
+    int accept();
 
     virtual int receive(void* data) = 0;
 

@@ -29,9 +29,9 @@ void Socket::bind(int port) {
     }
 }
 
-void Socket::listen() {
+void Socket::listen(int maxConnections) {
     //if(!is_valid()) return false;
-    if (::listen(this->server_fd, 3) < 0) {
+    if (::listen(this->server_fd, maxConnections) < 0) {
         Logger::log(Logger::Error, "Error al escuchar el socket");
         throw std::runtime_error("Error al escuchar el socket");
     }
@@ -46,12 +46,14 @@ void Socket::connect() {
     }
 }
 
-void Socket::accept() {
-    this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen);
+int Socket::accept() {
+    int new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen);
     if (new_socket <= 0) {
         Logger::log(Logger::Error, "Error al aceptar el nuevo socket");
         throw std::runtime_error("Error al aceptar el nuevo socket");
     }
+    this->new_socket = new_socket;
+    return new_socket;
 }
 
 

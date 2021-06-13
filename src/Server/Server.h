@@ -22,24 +22,30 @@ public:
 
     bool isRunning();
 
-    static void update();
+    void update();
+
+    void start();
+
+    bool isFull();
+
+    void addNewConnection();
 
 private:
     ServerSocket *socket;
-
-    static ServerSocket *sockets[4];
-
     Configuration *configuration;
-    static Game *game;
-    static GameController *gameController;
+    Game *game;
+    GameController *gameController;
+    Positions plyrPos;
+    void *updateThread(void *socket);
+    cola_t *eventQueue;
+    void broadcast();
 
-    static Positions plyrPos;
-
-    static void *updateThread(void *socket);
-
-    static cola_t *eventQueue;
-
-    static void broadcast();
+    char *port;
+    char *ip;
+    int clientCount;
+    int clientMax;
+    int *sockets;
+    pthread_mutex_t mutex;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

@@ -1,9 +1,9 @@
 #include "ServerSocket.h"
 #include <arpa/inet.h>
 
-ServerSocket::ServerSocket(char *port, char *IP) {
+ServerSocket::ServerSocket(char *port, char *IP,int maxConnections) {
     this->opt = 1;
-    // Creating socket file descriptor
+
     if ((this->server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         Logger::log(Logger::Error, "Error al crear el socket");
         exit(EXIT_FAILURE);
@@ -12,13 +12,7 @@ ServerSocket::ServerSocket(char *port, char *IP) {
     this->create();
     this->convertToHost(atoi(port), IP);
     this->bind(atoi(port));
-    this->listen();
-
-    if ((this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address,
-                                     (socklen_t *) &this->addrlen)) < 0) {
-        perror("accept");
-        exit(EXIT_FAILURE);
-    }
+    this->listen(maxConnections);
 }
 
 
@@ -83,3 +77,4 @@ int ServerSocket::receive(void *event) {
 
     return 0;
 }
+
