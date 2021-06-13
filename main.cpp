@@ -5,7 +5,7 @@
 
 #define NULL 0;
 
-bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
+bool checkArgs(int argc, char *args[], char **input, char **IP, char **port) {
 
   const char *short_opt = "scj:i:p:";
   int c;
@@ -14,9 +14,9 @@ bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
   struct option long_opt[] = {
       {"server", no_argument,       0, 's'},
       {"client", no_argument,       0, 'c'},
-      {"json",  required_argument, 0, 'j'},
-      {"IP",  required_argument, 0, 'i'},
-      {"port",  required_argument, 0, 'p'},
+      {"json",   required_argument, 0, 'j'},
+      {"IP",     required_argument, 0, 'i'},
+      {"port",   required_argument, 0, 'p'},
       {0, 0,                        0, 0}
   };
 
@@ -46,13 +46,14 @@ bool checkArgs(int argc, char *args[], char** input, char** IP, char** port) {
 }
 
 int main(int argc, char *args[]) {
+
   char *json;
   char *IP;
   char *port;
   bool isServer = checkArgs(argc, args, &json, &IP, &port);
-  if(isServer){
-    mainServer(&json, IP, port);
-  }else{
-    mainClient(IP, port);
+  if (isServer) {
+    return mainServer(&json, IP, port);
+  } else {
+    return mainClient(IP, port);
   }
 }

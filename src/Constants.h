@@ -15,6 +15,10 @@ struct PlayerTexture{
 
 };
 
+struct Positions{
+    int playerX = 0;
+    int playerY = 0;
+};
 #define HEIGHT 576
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300

@@ -4,7 +4,7 @@ namespace Logger {
 
     static std::unique_ptr<Log> glog;
 
-    bool fileExist(const std::string fileName ){
+    bool fileExist(std::string fileName ){
         std::ifstream fileCheck;
         fileCheck.open(fileName, std::ifstream::in);
 
@@ -15,14 +15,13 @@ namespace Logger {
         return  exist;
     }
 
-    void startLogger(Configuration *configuration) {
-        const std::string logName = "log.txt";
+    void startLogger(Configuration *configuration,std::string name) {
 
-        if(Logger::fileExist(logName)){
-            Logger::logShouldHaveLessThanTenGameplays(logName);
+        if(Logger::fileExist(name)){
+            Logger::logShouldHaveLessThanTenGameplays(name);
         }
 
-        glog = std::make_unique<Log>(logName);
+        glog = std::make_unique<Log>(name);
         json log = configuration->getLogLevel();
         glog->setConfiguration(log);
 
@@ -33,7 +32,7 @@ namespace Logger {
         Logger::log(Type::Info, "Inicio del log");
     }
 
-    void logShouldHaveLessThanTenGameplays(const std::string &logName) {
+    void logShouldHaveLessThanTenGameplays(std::string &logName) {
         std::ifstream oldLogFile;
         oldLogFile.open(logName,std::ifstream::in);
         int numberOfGameplays = 0;
@@ -52,7 +51,7 @@ namespace Logger {
             Logger::deleteOldestLog(logName);
     }
 
-    void deleteOldestLog(const std::string &logName){
+    void deleteOldestLog(std::string &logName){
         int numberOfGameplays =0;
 
         std::ofstream newLogFile;

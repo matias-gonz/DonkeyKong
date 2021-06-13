@@ -17,7 +17,7 @@ private:
 public:
 
     PlayerAnimator();
-    void draw(SDL_Renderer *pRenderer, int direction,Position* pos,int distance);
+    void draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX,int plyrY, int distance);
     explicit PlayerAnimator(SDL_Texture *pTexture,bool success);
 };
 

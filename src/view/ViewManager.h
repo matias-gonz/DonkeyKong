@@ -21,23 +21,26 @@
 
 class ViewManager {
 public:
-  ViewManager(Game *, Configuration *, const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
+    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-  ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
+    ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-  ~ViewManager();
+    ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
-  SDL_Renderer *getRenderer();
+    ~ViewManager();
+    SDL_Renderer *getRenderer();
 
-  bool successfulInitialitization();
+    bool successfulInitialitization();
 
-  void close();
+    void close();
 
-  LTexture *loadTexture(char *path);
+    LTexture* loadTexture(char* path);
 
-  void drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect);
+    void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
 
-  void renderWindow();
+    void renderWindow();
+
+    void renderWindow(Positions playerPosition);
 
   void renderLoginWindow(bool &quit);
 

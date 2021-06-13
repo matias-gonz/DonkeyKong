@@ -9,7 +9,7 @@ class GameController {
 public:
     GameController(Game* game);
 
-    void handleEvents();
+    void handleEvents(SDL_Event event);
 
     void update();
 

@@ -21,13 +21,13 @@ namespace Logger {
         Debug
     };
 
-    bool fileExist(const std::string fileName);
+    bool fileExist(std::string fileName);
 
-    void startLogger(Configuration *configuration);
+    void startLogger(Configuration *configuration, std::string name);
 
-    void logShouldHaveLessThanTenGameplays(const std::string &logName);
+    void logShouldHaveLessThanTenGameplays( std::string &logName);
 
-    void deleteOldestLog(const std::string &logName);
+    void deleteOldestLog(std::string &logName);
 
     void log(Type logType, const std::string &messsage);
 

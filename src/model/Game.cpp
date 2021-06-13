@@ -1,13 +1,13 @@
 #include "Game.h"
 
-Game::Game(Configuration* configuration) {
-  this->configuration = configuration;
+Game::Game(Configuration *configuration) {
+    this->configuration = configuration;
 }
 
 Game::~Game() {
     delete this->player;
     delete this->level;
-    for(int i = 0; i < this->enemyFireCount; i++){
+    for (int i = 0; i < this->enemyFireCount; i++) {
         delete this->enemyFires[i];
     }
     free(this->enemyFires);
@@ -17,11 +17,12 @@ void Game::start() {
   //aca verificamos estado
     this->running = true;
     this->level = new Level();
-    this->loadLevel(1);
     this->player = new Player(new Position(200,525));
-    Logger::log(Logger::Info,"Inicio Donkey Kong");
-    this->boss = new Boss(new Position(100,35));
-    this->princess = new Princess(new Position(450,30));
+    this->loadLevel(1);
+
+    Logger::log(Logger::Info, "Inicio Donkey Kong");
+    this->boss = new Boss(new Position(100, 35));
+    this->princess = new Princess(new Position(450, 30));
 }
 
 void Game::quit() {
@@ -29,13 +30,13 @@ void Game::quit() {
 }
 
 void Game::update() {
-    if(this->level->playerWon(this->player)){
+    if (this->level->playerWon(this->player)) {
         this->switchLevel();
         return;
     }
     this->level->update();
     this->player->update();
-    for(int i = 0; i <enemyFireCount; i++){
+    for (int i = 0; i < enemyFireCount; i++) {
         this->enemyFires[i]->update();
     }
     this->princess->update();
@@ -64,16 +65,17 @@ void Game::loadLevel(int levelnum) {
 }
 
 void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
-    Logger::log(Logger::Info,"Se spawnean enemigos type_1");
+    Logger::log(Logger::Info, "Se spawnean enemigos type_1");
     srand(time(NULL));
-    for(int i = 0; i < spawnCount; i++){
-        if((rand()%100) < probability){
-            this->enemyFires = (EnemyFire **) (realloc(this->enemyFires, (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
-            if(!this->enemyFires){
-                Logger::log(Logger::Error,"Error al reservar memoria. Game::spawnEnemies");
+    for (int i = 0; i < spawnCount; i++) {
+        if ((rand() % 100) < probability) {
+            this->enemyFires = (EnemyFire **) (realloc(this->enemyFires,
+                                                       (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
+            if (!this->enemyFires) {
+                Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnEnemies");
                 return;
             }
-            EnemyFire* enemy = new EnemyFire(spawns[i]);
+            EnemyFire *enemy = new EnemyFire(spawns[i]);
             this->enemyFires[this->enemyFireCount] = enemy;
             (this->enemyFireCount)++;
         }
@@ -89,7 +91,7 @@ int Game::getEnemyFireCount() {
 }
 
 void Game::resetEnemies() {
-    for(int i = 0; i < this->enemyFireCount; i++){
+    for (int i = 0; i < this->enemyFireCount; i++) {
         delete this->enemyFires[i];
     }
     free(this->enemyFires);
@@ -99,9 +101,10 @@ void Game::resetEnemies() {
 
 void Game::switchLevel() {
     this->player->resetPos();
-    if(this->currentLevel == 1){
+
+    if (this->currentLevel == 1) {
         this->loadLevel(2);
-    }else{
+    } else {
         this->loadLevel(1);
     }
 }
@@ -115,7 +118,10 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-    this->level->resolveCollisions(this->player, this->enemyFires, this->enemyFireCount);
+    this->level->resolveCollisions(this->player, this->enemyFires,
+                                   this->enemyFireCount);//aca mandar todos los players
+}
 
-
+void Game::addPlayer() {
+    player = new Player(new Position(200,525));
 }

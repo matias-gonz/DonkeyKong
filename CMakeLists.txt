@@ -66,18 +66,19 @@ set(SOURCE_FILES main.cpp
         src/Server/Server.h
         src/Client/Client.cpp
         src/Client/Client.h
-        src/Server/ServerSocket.cpp
-        src/Server/ServerSocket.h
+        src/Socket/ServerSocket.cpp
+        src/Socket/ServerSocket.h
         src/Socket/Socket.cpp
         src/Socket/Socket.h
-        src/Client/ClientSocket.cpp
-        src/Client/ClientSocket.h
+        src/Socket/ClientSocket.cpp
+        src/Socket/ClientSocket.h
         src/model/BarrelMovement.h
         src/model/Collider.cpp
         src/model/Collider.h
         src/view/PlayerAnimator.cpp
         src/view/PlayerAnimator.h
         src/Constants.h
+        src/Queue.cpp src/Queue.h
         src/controller/LoginController.cpp
         src/controller/LoginController.h
         src/view/LoginButton.cpp
@@ -95,3 +96,5 @@ PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
 
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(Taller_Prog_I_2021_1C_KIWI ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")

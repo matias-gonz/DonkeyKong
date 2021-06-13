@@ -9,10 +9,10 @@ PlayerAnimator::PlayerAnimator() {
 
 }
 
-void PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, Position *pos, int distance) {
+void PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX,int plyrY, int distance) {
     SDL_Rect* dstrect = new SDL_Rect();
-    dstrect->x = pos->getX();
-    dstrect->y = pos->getY();
+    dstrect->x = plyrX;
+    dstrect->y = plyrY;
 
     SDL_Rect* srcrect = NULL;
     if(this->success){
