@@ -36,7 +36,7 @@ public:
 
 private:
   Positions playerPositions;
-  ViewManager *viewManager;
+  ViewManager *viewManagerLogin, *viewManagerGame;
 
   bool quit, gameStarted;
   LoginController *loginController;

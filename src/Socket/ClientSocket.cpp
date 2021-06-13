@@ -12,7 +12,7 @@ ClientSocket::ClientSocket(char *port, char *IP){
     this->address.sin_family = AF_INET;
 
     this->convertToHost(atoi(port), IP);
-    this->connect();
+    this->connected = this->connect();
 }
 
 

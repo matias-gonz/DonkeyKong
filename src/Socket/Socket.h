@@ -16,7 +16,7 @@ public:
 
     void convertToHost(const int port, const char *IP);
 
-    void connect();
+    bool connect();
 
     void listen(int maxConnections);
 

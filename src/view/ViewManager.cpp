@@ -66,6 +66,8 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->screen_width = width;
   this->screen_height = height;
   this->configuration = configurations;
+  this->isLoginView = false;
+  this->hasDefaultConfig = false;
 
   int flags = 0;
   if (fullscreen) {

@@ -13,7 +13,6 @@ int mainClient(char *IP, char *port) {
     return -1;
   }
   while (client->isRunning()) {
-
     //hacer un thread de sends(tendra que ser un while true)
     client->setSended(false);
     client->send();
