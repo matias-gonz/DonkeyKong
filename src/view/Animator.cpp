@@ -1,4 +1,3 @@
-
 #include "Animator.h"
 #include "stdio.h"
 enum kindOfAnimation {
@@ -24,7 +23,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, int x, int y,int dis
     SDL_Rect* srcrect = NULL;
     if(this->success){
         srcrect = new SDL_Rect();
-         *srcrect = updateAnimation( direction, distance);
+        *srcrect = updateAnimation( direction, distance);
     }
 
     int finalTexW = texW;
