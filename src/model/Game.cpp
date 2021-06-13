@@ -5,9 +5,7 @@ Game::Game(Configuration *configuration) {
 }
 
 Game::~Game() {
-    for (int i; i < 4; i++) {
-        delete this->players[i];
-    }
+    delete this->player;
     delete this->level;
     for (int i = 0; i < this->enemyFireCount; i++) {
         delete this->enemyFires[i];
@@ -18,6 +16,7 @@ Game::~Game() {
 void Game::start() {
     this->running = true;
     this->level = new Level();
+    this->player = new Player(new Position(200,525));
     this->loadLevel(1);
 
     Logger::log(Logger::Info, "Inicio Donkey Kong");
@@ -30,16 +29,12 @@ void Game::quit() {
 }
 
 void Game::update() {
-    if (this->level->playerWon(this->players[0])) {
+    if (this->level->playerWon(this->player)) {
         this->switchLevel();
         return;
     }
     this->level->update();
-    for (int i = 0; i < 4; i++) {
-        if (this->players[i]) {
-            this->players[i]->update();
-        }
-    }
+    this->player->update();
     for (int i = 0; i < enemyFireCount; i++) {
         this->enemyFires[i]->update();
     }
@@ -56,8 +51,8 @@ Level *Game::getLevel() {
     return this->level;
 }
 
-Player *Game::getPlayer(int i) {
-    return this->players[i];
+Player *Game::getPlayer() {
+    return this->player;
 }
 
 void Game::loadLevel(int levelnum) {
@@ -104,11 +99,8 @@ void Game::resetEnemies() {
 }
 
 void Game::switchLevel() {
-    for (int i = 0; i < 4; i++) {
-        if (this->players[i]) {
-            this->players[i]->resetPos();
-        }
-    }
+    this->player->resetPos();
+
     if (this->currentLevel == 1) {
         this->loadLevel(2);
     } else {
@@ -125,15 +117,10 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-    this->level->resolveCollisions(this->players[0], this->enemyFires,
+    this->level->resolveCollisions(this->player, this->enemyFires,
                                    this->enemyFireCount);//aca mandar todos los players
 }
 
 void Game::addPlayer() {
-    for (int i; i < 4; i++) {
-        if (!players[i]) {
-            players[i] = new Player(new Position(200,525));
-            return;
-        }
-    }
+    player = new Player(new Position(200,525));
 }

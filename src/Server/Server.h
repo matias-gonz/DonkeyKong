@@ -30,6 +30,8 @@ public:
 
     void addNewConnection();
 
+    void handleEvents();
+
 private:
     ServerSocket *socket;
     Configuration *configuration;

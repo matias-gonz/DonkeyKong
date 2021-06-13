@@ -26,7 +26,7 @@ public:
 
     Level *getLevel();
 
-    Player *getPlayer(int i);
+    Player *getPlayer();
 
     void loadLevel(int i);
 
@@ -41,7 +41,7 @@ public:
     void addPlayer();
 
 private:
-    Player *players[4] = {NULL,NULL,NULL,NULL};
+    Player *player;
     EnemyFire** enemyFires = NULL;
     int enemyFireCount = 0;
     Boss*  boss = NULL;

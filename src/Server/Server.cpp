@@ -51,11 +51,10 @@ void Server::update() {
 }
 
 void Server::broadcast() {
-    /*
-    for(int i = 0; i < 4;i++){
-        sockets[i]->snd(&plyrPos);
+    for(int i = 0; i < this->clientCount;i++){
+        this->socket->snd(&this->plyrPos);
     }
-    */
+
 }
 
 void* acceptConnections(void* serv){
@@ -64,6 +63,13 @@ void* acceptConnections(void* serv){
         server->addNewConnection();
     }
 
+}
+
+void* hndlEvents(void* serv){
+    Server* server = (Server*)serv;
+    while(server->isRunning()){
+        server->handleEvents();
+    }
 }
 
 void Server::start() {
@@ -90,11 +96,11 @@ void Server::start() {
     */
     pthread_t accepterThrd;
     pthread_create(&accepterThrd,NULL,&acceptConnections,this);
-
+    pthread_t eventHandlerThrd;
+    pthread_create(&eventHandlerThrd,NULL,&hndlEvents,this);
 
 
     pthread_join(accepterThrd,NULL);
-
 }
 
 bool Server::isFull() {
@@ -117,4 +123,22 @@ void Server::addNewConnection() {
     this->clientCount++;
     pthread_mutex_unlock(&this->mutex);
     //printf("Client count = %i\n",this->clientCount);
+}
+
+void Server::handleEvents() {
+    /*
+    SDL_Event* e = static_cast<SDL_Event *>(cola_desencolar(eventQueue));
+    if(!e){
+        return;
+    }
+     */
+    SDL_Event e;
+    if(this->socket->receive(&e) < 0){
+        return;
+    }
+    gameController->handleEvents(e);
+    gameController->update();
+    plyrPos.playerX = game->getPlayer()->getXPosition();
+    plyrPos.playerY = game->getPlayer()->getYPosition();
+    broadcast();
 }

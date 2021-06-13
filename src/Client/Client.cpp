@@ -28,7 +28,10 @@ void Client::send() {
         }
         if(this->eventIsValid(event)){
             this->sended = true;
+            //printf("snd started\n");
             this->socket->snd(&event);
+            //printf("snd finished\n");
+            return;
         }
 
     }
