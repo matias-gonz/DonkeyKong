@@ -9,6 +9,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
+
 ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width,
                          int height, bool fullscreen) {
   this->screen_width = width;
@@ -34,6 +35,54 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
   }
 
   this->game = aGame;
+  this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
+  this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
+
+  SDL_Texture *playerTexture = this->textureManager->getPlayerTexture();
+  bool playerTextureSuccess = true;
+  if (!playerTexture) {
+    playerTexture = this->textureManager->getErrorTexture();
+    playerTextureSuccess = false;
+
+  }
+  SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
+  bool enemyTextureSuccess = true;
+  if (!enemyTexture) {
+    enemyTexture = this->textureManager->getErrorTexture();
+    enemyTextureSuccess = false;
+  }
+
+  //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
+  this->playerAnimator = new PlayerAnimator(playerTexture, success);
+  this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
+
+  //ESTOS NO FUNKAN
+  //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
+  //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
+}
+
+ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height,
+                         bool fullscreen) {
+  this->screen_width = width;
+  this->screen_height = height;
+  this->configuration = configurations;
+
+  int flags = 0;
+  if (fullscreen) {
+    flags = SDL_WINDOW_FULLSCREEN;
+  }
+
+  this->success = true;
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->currentWindow = this->createWindow(title, xPos, yPos, width, height, flags);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) this->initializeRendererColor();
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+    this->success = false;
+  }
+
   this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
   this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
 
@@ -156,7 +205,7 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 }
 
 void ViewManager::renderWindow(Positions playerPosition) {
-    SDL_RenderClear(this->renderer);
+  SDL_RenderClear(this->renderer);
 /*
     //Draw level
     levelDrawer->draw(game->getLevel());
@@ -202,9 +251,9 @@ void ViewManager::renderWindow(Positions playerPosition) {
     SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
     SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
 */
-    this->playerAnimator->draw(this->renderer,right,playerPosition.playerX,playerPosition.playerY,0);
+  this->playerAnimator->draw(this->renderer, right, playerPosition.playerX, playerPosition.playerY, 0);
 
-    SDL_RenderPresent(renderer);
+  SDL_RenderPresent(renderer);
 }
 
 void ViewManager::renderLoginWindow(bool &quit) {
@@ -267,8 +316,8 @@ void ViewManager::handleEvents(bool &quit, bool *renderText) {
     } else if (e.type == SDL_KEYDOWN) {
       if (e.key.keysym.sym == SDLK_BACKSPACE) {
 
-        if (isInputUser && inputTextUser.length() > 0) inputTextUser.pop_back();
-        if (isInputPass && inputTextPass.length() > 0) inputTextPass.pop_back();
+        if (isInputUser && inputTextUser.length() > 1) inputTextUser.pop_back();
+        if (isInputPass && inputTextPass.length() > 1) inputTextPass.pop_back();
         *renderText = true;
       } else if (e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL) {
         SDL_SetClipboardText(inputTextUser.c_str());
@@ -354,49 +403,4 @@ ViewManager::~ViewManager() {
   delete this->levelDrawer;
 }
 
-ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen) {
-    this->screen_width = width;
-    this->screen_height = height;
-    this->configuration = configurations;
 
-    int flags = 0;
-    if (fullscreen) {
-        flags = SDL_WINDOW_FULLSCREEN;
-    }
-
-    this->success = true;
-    if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
-        this->setTextureLinear();
-        this->createWindow(title, xPos, yPos, width, height, flags);
-        if (this->currentWindow != NULL) this->createRenderer();
-        if (this->renderer != NULL) this->initializeRendererColor();
-    } else {
-        this->showSDLError("SDL could not initialize! SDL Error: %s\n");
-        this->success = false;
-    }
-
-    this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
-    this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-
-    SDL_Texture* playerTexture = this->textureManager->getPlayerTexture();
-    bool playerTextureSuccess = true;
-    if(!playerTexture){
-        playerTexture = this->textureManager->getErrorTexture();
-        playerTextureSuccess = false;
-
-    }
-    SDL_Texture* enemyTexture = this->textureManager->getEnemyTexture();
-    bool enemyTextureSuccess = true;
-    if(!enemyTexture){
-        enemyTexture = this->textureManager->getErrorTexture();
-        enemyTextureSuccess = false;
-    }
-
-    //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-    this->playerAnimator = new PlayerAnimator(playerTexture,success);
-    this->enemyAnimator = new Animator(enemyTexture,0,0,0,25,22,24,2,enemyTextureSuccess);
-
-    //ESTOS NO FUNKAN
-    //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
-    //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
-}

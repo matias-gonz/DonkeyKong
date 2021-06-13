@@ -16,9 +16,8 @@ int mainClient(char *IP, char *port) {
     game->start();
 
     GameController *gameController = new GameController(game);
-    ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                               SDL_WINDOWPOS_CENTERED,
-                                               1024, 576, false);
+    //ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+    //                                           SDL_WINDOWPOS_CENTERED, 1024, 576, false);
 
 
     while (client->isRunning()) {
