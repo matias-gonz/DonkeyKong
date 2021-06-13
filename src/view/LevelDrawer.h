@@ -15,14 +15,19 @@ public:
     void draw(Level* Level);
 
 
+    void drawPlatforms(PlatformContainer *platforms, int count);
+
+    void drawLadders(LadderContainer *ladders, int ladderCount);
+
+    void drawFires(FireContainer *fires, int fireCount);
 
 private:
     TextureManager *textureManager;
     SDL_Renderer *renderer;
 
-    void drawLadder(Ladder *ladder);
-    void drawPlatform(Platform *pPlatform);
-    void drawFire(Fire *fire);
+    void drawLadder(LadderContainer ladder);
+    void drawPlatform(PlatformContainer pPlatform);
+    void drawFire(FireContainer fire);
     void drawBarrel(Barrel *barrel);
 
     int levelnum;

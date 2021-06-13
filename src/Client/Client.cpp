@@ -42,7 +42,7 @@ bool Client::checkCredentials() {
 void Client::receive() {
   if (!this->sended) { return; }
 
-  this->socket->receive(&playerPositions);
+  this->socket->receive(&positions);
 }
 
 bool Client::gameHasStarted() {
@@ -79,7 +79,7 @@ bool Client::isRunning() {
 }
 
 void Client::render() {
-  viewManagerGame->renderWindow(this->playerPositions);
+  viewManagerGame->renderWindow(this->positions);
 }
 
 void Client::setSended(bool b) {

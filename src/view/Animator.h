@@ -21,7 +21,7 @@ private:
     SDL_Texture* texture;//sprite sheet
 public:
     Animator();
-    void draw(SDL_Renderer *pRenderer, int direction,Position* pos,int distance);
+    void draw(SDL_Renderer *pRenderer, int direction,int x, int y,int distance);
     SDL_Rect updateAnimation(int direction,int distance);
 
     explicit Animator(SDL_Texture *pTexture,int leftStartW,int leftStartH,int rightStartW,int rightStartH,int texW,int texH,int separationW,bool success);

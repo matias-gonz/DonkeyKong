@@ -8,7 +8,8 @@ LevelDrawer::LevelDrawer(SDL_Renderer *aRenderer, TextureManager *aTextureManage
 
 
 void LevelDrawer::draw(Level *level) {
-    this->levelnum = level->getCurrentLevel();
+  /*
+  this->levelnum = level->getCurrentLevel();
     for (int i = 0; i < level->getLadderCount(); i++) {
         Ladder *aLadder = level->getLadder(i);
         this->drawLadder(aLadder);
@@ -25,13 +26,12 @@ void LevelDrawer::draw(Level *level) {
         Barrel *aBarrel = level->getBarrel(i);
         this->drawBarrel(aBarrel);
     }
-
+  */
 }
 
-void LevelDrawer::drawLadder(Ladder *ladder) {
-
-    SDL_Rect *srcRect = ladder->getSrcRect();
-    SDL_Rect *destRect = ladder->getDestRect();
+void LevelDrawer::drawLadder(LadderContainer ladder) {
+    SDL_Rect *srcRect = NULL;
+    SDL_Rect *destRect = &ladder.dest;
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
     tmpRect->y = destRect->y;
@@ -45,15 +45,15 @@ void LevelDrawer::drawLadder(Ladder *ladder) {
         srcRect = NULL;
     }
 
-    for (int i = 0; i < ladder->getCount(); i++) {
+    for (int i = 0; i < ladder.count; i++) {
         SDL_RenderCopy(this->renderer, ladderTexture, srcRect, tmpRect);
         tmpRect->y -= destRect->h;
     }
 }
 
-void LevelDrawer::drawPlatform(Platform *platform) {
-    SDL_Rect *srcRect = platform->getSrcRect();
-    SDL_Rect *destRect = platform->getDestRect();
+void LevelDrawer::drawPlatform(PlatformContainer platform) {
+    SDL_Rect *srcRect = NULL;
+    SDL_Rect *destRect = &platform.dest;
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
     tmpRect->y = destRect->y;
@@ -66,15 +66,15 @@ void LevelDrawer::drawPlatform(Platform *platform) {
         srcRect = NULL;
     }
 
-    for (int i = 0; i < platform->getCount(); i++) {
+    for (int i = 0; i < platform.count; i++) {
         SDL_RenderCopy(this->renderer, platformTexture, srcRect, tmpRect);
         tmpRect->x += destRect->w;
     }
 }
 
-void LevelDrawer::drawFire(Fire *fire) {
-    SDL_Rect *srcRect = fire->getSrcRect();
-    SDL_Rect *destRect = fire->getDestRect();
+void LevelDrawer::drawFire(FireContainer fire) {
+    SDL_Rect *srcRect = &fire.src;
+    SDL_Rect *destRect = &fire.dest;
     SDL_Rect *tmpRect = new SDL_Rect();
     tmpRect->x = destRect->x;
     tmpRect->y = destRect->y;
@@ -87,7 +87,7 @@ void LevelDrawer::drawFire(Fire *fire) {
         srcRect = NULL;
     }
 
-    for (int i = 0; i < fire->getCount(); i++) {
+    for (int i = 0; i < fire.count; i++) {
         SDL_RenderCopy(this->renderer, fireTexture, srcRect, tmpRect);
         tmpRect->x += destRect->w;
     }
@@ -106,5 +106,24 @@ void LevelDrawer::drawBarrel(Barrel *barrel) {
     SDL_RenderCopy(this->renderer, barrelTexture, NULL, tmpRect);
 
 }
+
+void LevelDrawer::drawPlatforms(PlatformContainer *platforms, int count) {
+  for(int i = 0; i < count; i++){
+    this->drawPlatform(platforms[i]);
+  }
+}
+
+void LevelDrawer::drawLadders(LadderContainer *ladders, int ladderCount) {
+  for(int i = 0; i < ladderCount; i++){
+    this->drawLadder(ladders[i]);
+  }
+}
+
+void LevelDrawer::drawFires(FireContainer *fires, int fireCount) {
+  for(int i = 0; i < fireCount; i++){
+    this->drawFire(fires[i]);
+  }
+}
+
 
 

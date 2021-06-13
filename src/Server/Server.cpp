@@ -53,7 +53,7 @@ void Server::update() {
 
 void Server::broadcast() {
   for (int i = 0; i < this->clientCount; i++) {
-    this->socket->snd(&this->plyrPos);
+    this->socket->snd(&this->positions);
   }
 
 }
@@ -63,7 +63,6 @@ void *acceptConnections(void *serv) {
   while (!server->isFull()) {
     server->addNewConnection();
   }
-
 }
 
 void *hndlEvents(void *serv) {
@@ -97,10 +96,12 @@ void Server::start() {
   */
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
+
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
   pthread_join(accepterThrd, NULL);
+
 }
 
 bool Server::isFull() {
@@ -112,6 +113,7 @@ void Server::addNewConnection() {
     return;
   }
   int newSocket = this->socket->accept();
+  //Aca instanciar nuevo thread que loopee receives
   int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
   if (!tmpSocket) {
     Logger::log(Logger::Error, "Error al reservar memoria. Server::addNewConnection");
@@ -137,7 +139,11 @@ void Server::handleEvents() {
     this->gameController->handleEvents(e);
   }
   this->gameController->update();
-  this->plyrPos.playerX = this->game->getPlayer()->getXPosition();
-  this->plyrPos.playerY = this->game->getPlayer()->getYPosition();
+  this->positions.playerX = this->game->getPlayer()->getXPosition();
+  this->positions.playerY = this->game->getPlayer()->getYPosition();
+  this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
+  this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
+  this->game->getFires(this->positions.fires,&this->positions.fireCount);
+  this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
   this->broadcast();
 }

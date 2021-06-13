@@ -39,7 +39,7 @@ private:
     Configuration *configuration;
     Game *game;
     GameController *gameController;
-    Positions plyrPos;
+    Positions positions;
     void *updateThread(void *socket);
     cola_t *eventQueue;
 

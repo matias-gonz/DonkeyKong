@@ -1,4 +1,3 @@
-
 #include "Animator.h"
 #include "stdio.h"
 enum kindOfAnimation {
@@ -20,11 +19,11 @@ Animator::Animator(SDL_Texture *pTexture, int leftStartW, int leftStartH, \
 
 }
 
-void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int distance) {
+void Animator::draw(SDL_Renderer *pRenderer, int direction, int x, int y,int distance) {
     SDL_Rect* srcrect = NULL;
     if(this->success){
         srcrect = new SDL_Rect();
-         *srcrect = updateAnimation( direction, distance);
+        *srcrect = updateAnimation( direction, distance);
     }
 
     int finalTexW = texW;
@@ -36,7 +35,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, Position *pos,int di
     if(texW ==17){
         finalTexW = texW*2;
     }
-    SDL_Rect dstrect = {pos->getX(), pos->getY(), finalTexW, finalTexH};
+    SDL_Rect dstrect = {x, y, finalTexW, finalTexH};
 
     SDL_RenderCopy(pRenderer, texture, srcrect, &dstrect);
 
