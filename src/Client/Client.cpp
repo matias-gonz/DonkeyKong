@@ -5,8 +5,6 @@
 Client::Client(char *port, char *IP) {
   quit = false;
   gameStarted = false;
-  std::string inputUser;
-  std::string inputPass;
   this->running = true;
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "client.txt");
@@ -17,10 +15,15 @@ Client::Client(char *port, char *IP) {
 
   this->socket = new_socket;
 
-  //todo: refactorizar a un nuevo objeto solo de login view
+}
+
+bool Client::checkCredentials() {
+  std::string inputUser;
+  std::string inputPass;
+
   LoginButton *sendButton = new LoginButton();
 
-  if (new_socket->isConnected()) {
+  if (this->socket->isConnected()) {
     this->loginController = new LoginController();
     this->viewManager = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                         SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
@@ -39,6 +42,7 @@ Client::Client(char *port, char *IP) {
       }
     }
   }
+  return true;
 }
 
 void Client::receive() {
