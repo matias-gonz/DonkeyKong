@@ -3,9 +3,6 @@
 
 
 int mainClient(char *IP, char *port) {
-  //pantalla login
-  //manda msg al server y lo autentica
-
   Client *client = new Client(port, IP);
 
   //TODO change inside if

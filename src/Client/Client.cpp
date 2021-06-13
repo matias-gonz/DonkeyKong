@@ -41,6 +41,7 @@ bool Client::checkCredentials() {
 
 void Client::receive() {
   if (!this->sended) { return; }
+
   this->socket->receive(&playerPositions);
 }
 
