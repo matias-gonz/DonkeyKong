@@ -67,8 +67,8 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
   this->hasDefaultConfig = false;
   this->isLoginView = true;
   this->success = true;
-  this->inputTextUser = "<";
-  this->inputTextPass = "<";
+  this->inputTextUser = ">";
+  this->inputTextPass = ">";
 
   int flags = 0;
 
@@ -204,7 +204,7 @@ void ViewManager::renderWindow() {
 
 void ViewManager::renderLoginWindow(bool &quit) {
   if (this->success && !quit) {
-    SDL_Color textColor = {0, 200, 58, 0xFF};
+    SDL_Color textColor = {255, 255, 255, 0xFF};
     gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
     gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer);
     SDL_StartTextInput();

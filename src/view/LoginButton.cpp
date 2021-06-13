@@ -45,9 +45,9 @@ bool LoginButton::isClicked() {
 
 void LoginButton::show() {
   if(isClicked()) {
-    SDL_SetRenderDrawColor(renderer, 44, 209, 195, 0);
+    SDL_SetRenderDrawColor(renderer, 86, 144, 214, 0);
   }else {
-    SDL_SetRenderDrawColor(renderer, 200, 100, 0, 0);
+    SDL_SetRenderDrawColor(renderer, 0, 75, 162, 0);
   }
   SDL_RenderFillRect(renderer, &this->rect);
   SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);

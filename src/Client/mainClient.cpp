@@ -5,6 +5,7 @@
 mainClient::mainClient(char *IP, char *port) {
   Client *client = new Client(port, IP);
 
+  //TODO change inside if
   if (client->gameHasStarted()) {
     Configuration *configuration = new Configuration();
     Logger::startLogger(configuration);
