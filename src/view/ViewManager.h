@@ -23,7 +23,7 @@ class ViewManager {
 public:
   ViewManager(Game *, Configuration *, const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-  ViewManager(const char *title, int xPos, int yPos, int width, int height);
+  ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
   ~ViewManager();
 
@@ -31,7 +31,7 @@ public:
 
   bool successfulInitialitization();
 
-  void close(bool* quit);
+  void close();
 
   LTexture *loadTexture(char *path);
 
@@ -39,14 +39,18 @@ public:
 
   void renderWindow();
 
-  void renderLoginWindow(bool* quit);
+  void renderLoginWindow(bool &quit);
 
   void createRenderer();
+
+  std::string returnInputUser();
+
+  std::string returnInputPass();
 
 private:
 
   SDL_Renderer *renderer;
-  SDL_Window * currentWindow;
+  SDL_Window *currentWindow;
   bool success;
   int screen_width = WIDTH, screen_height = HEIGHT;
   Game *game;
@@ -59,11 +63,11 @@ private:
   //Animator* princessAnimator;
   Configuration *configuration;
   bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
-  TTF_Font* font;
+  TTF_Font *font;
   int inputUserPosX, inputUserPosY;
   int inputPasswordPosX, inputPasswordPosY;
   std::string inputTextUser, inputTextPass;
-  LoginButton* sendButton;
+  LoginButton *sendButton;
 
   //Scene textures
   LTexture gPromptUserTextTexture;
@@ -71,7 +75,7 @@ private:
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
 
-  SDL_Window * createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
+  SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
   void setTextureLinear();
 
@@ -85,7 +89,7 @@ private:
 
   void initializeTextInputs();
 
-  void handleEvents(bool* quit, bool* renderText);
+  void handleEvents(bool &quit, bool *renderText);
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

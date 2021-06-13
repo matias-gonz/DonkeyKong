@@ -97,8 +97,6 @@ void LTexture::setRenderer(SDL_Renderer *aRenderer) {
 //#if defined(SDL_TTF_MAJOR_VERSION)
 bool
 LTexture::loadFromRenderedText(std::string textureText, SDL_Color textColor, TTF_Font *font, SDL_Renderer *renderer) {
-
-
   //Get rid of preexisting texture
   free();
   //Render text surface

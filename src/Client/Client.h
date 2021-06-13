@@ -18,9 +18,15 @@ public:
 
   Client(char *port, char *IP);
 
+  bool gameHasStarted();
+
+  void checkValid();
+
 private:
 
-  bool quit;
+  bool quit, gameStarted;
+  LoginController *loginController;
+  ViewManager *viewManager;
 
 };
 

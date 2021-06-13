@@ -60,15 +60,15 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
   //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
 }
 
-ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int height) {
+ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton) {
 
   this->screen_width = width;
   this->screen_height = height;
   this->hasDefaultConfig = false;
   this->isLoginView = true;
   this->success = true;
-  inputTextUser = "...";
-  inputTextPass = "...";
+  this->inputTextUser = "<";
+  this->inputTextPass = "<";
 
   int flags = 0;
 
@@ -79,7 +79,8 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
     if (this->renderer != NULL) this->initializeRendererColor();
     this->initializeTTF();
     this->loadMedia();
-    this->sendButton = new LoginButton("Enviar", this->renderer, this->font, 160, 240, 100, 40);
+    this->sendButton = sendButton;
+    this->sendButton->initialize("Enviar", this->renderer, this->font, 160, 240, 100, 40);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
     this->success = false;
@@ -144,35 +145,9 @@ bool ViewManager::successfulInitialitization() {
   return this->success;
 }
 
-void ViewManager::close(bool *quit) {
-
-  SDL_Event event;      //Event handler
-
-  while (event.type != SDL_QUIT) {
-    while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_QUIT) {
-        *quit = true;
-        SDL_Quit();
-        exit(1);
-      }
-      SDL_RenderPresent(renderer);
-      // to simulate OP's flashingText()
-      SDL_Delay(50);
-    }
-    SDL_Delay(100);
-  }
-
-  /*
-   * //Destroy window
-  SDL_DestroyRenderer(ViewManager::renderer);
+void ViewManager::close() {
   SDL_DestroyWindow(this->currentWindow);
-  this->currentWindow = NULL;
-  ViewManager::renderer = NULL;
-
-  //Quit SDL subsystems
-  IMG_Quit();
-  SDL_Quit();
-   */
+  SDL_DestroyRenderer(this->renderer);
 }
 
 void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect) {
@@ -227,9 +202,9 @@ void ViewManager::renderWindow() {
   SDL_RenderPresent(renderer);
 }
 
-void ViewManager::renderLoginWindow(bool *quit) {
-  if (this->success) {
-    SDL_Color textColor = {0, 0, 0, 0xFF};
+void ViewManager::renderLoginWindow(bool &quit) {
+  if (this->success && !quit) {
+    SDL_Color textColor = {0, 200, 58, 0xFF};
     gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
     gInputPasswordTextTexture.loadFromRenderedText(inputTextPass.c_str(), textColor, this->font, this->renderer);
     SDL_StartTextInput();
@@ -237,7 +212,6 @@ void ViewManager::renderLoginWindow(bool *quit) {
 
     bool renderText = false;
     this->handleEvents(quit, &renderText);
-
 
     if (renderText) {
       if (inputTextUser != "") {
@@ -277,14 +251,14 @@ void ViewManager::initializeTextInputs() {
   this->inputPasswordPosY = inputPosY + 100;
 
 }
-void ViewManager::handleEvents(bool *quit, bool *renderText) {
+
+void ViewManager::handleEvents(bool &quit, bool *renderText) {
 
   SDL_Event e;
   while (SDL_PollEvent(&e) != 0) {
-    //SACAR DE ACA, SOLO PRUEBA
     sendButton->listenToClick(e);
-    if (e.type == SDL_QUIT) {
-      *quit = true;
+    if (e.type == SDL_QUIT || sendButton->isClicked()) {
+      quit = true;
     } else if (e.type == SDL_KEYDOWN) {
       if (e.key.keysym.sym == SDLK_BACKSPACE) {
 
@@ -334,6 +308,14 @@ void ViewManager::initializeTTF() {
     printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
     this->success = false;
   }
+}
+
+std::string ViewManager::returnInputUser() {
+  return this->inputTextUser;
+}
+
+std::string ViewManager::returnInputPass() {
+  return this->inputTextPass;
 }
 
 void ViewManager::loadMedia() {

@@ -1,6 +1,12 @@
 #include "LoginButton.h"
 
+LoginButton::LoginButton() {};
+
 LoginButton::LoginButton(std::string text, SDL_Renderer *renderer, TTF_Font *font, int posX, int posY, int w, int h) {
+  initialize(text, renderer, font, posX, posY, w, h);
+}
+
+void LoginButton::initialize(std::string text, SDL_Renderer *renderer, TTF_Font *font, int posX, int posY, int w, int h) {
   this->rect = {posX, posY, w, h};
   this->text = text;
   this->font = font;
@@ -27,6 +33,10 @@ void LoginButton::listenToClick(SDL_Event e) {
     clicked = (mousePosX > this->rect.x && mousePosX < this->rect.x + this->rect.w) &&
               (mousePosY > this->rect.y && mousePosY < this->rect.y + this->rect.h );
   }
+}
+
+void LoginButton::unclick() {
+  clicked = false;
 }
 
 bool LoginButton::isClicked() {

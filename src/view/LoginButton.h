@@ -11,15 +11,21 @@
 class LoginButton {
 public:
 
+  LoginButton();
+
   LoginButton(std::string text, SDL_Renderer* renderer, TTF_Font* font, int posX, int posY, int w, int h);
 
   void listenToClick(SDL_Event e);
+
+  void unclick();
 
   bool isClicked();
 
   void show();
 
   void render(SDL_Texture* texture, SDL_Renderer* renderer, int x,int y,int w,int h);
+
+  void initialize(std::string text, SDL_Renderer *renderer, TTF_Font *font, int posX, int posY, int w, int h);
 
 private:
   SDL_Rect rect;
