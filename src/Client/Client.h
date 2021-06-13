@@ -35,7 +35,7 @@ public:
   void checkValid();
 
 private:
-  Positions playerPositions;
+  Positions positions;
   ViewManager *viewManagerLogin, *viewManagerGame;
 
   bool quit, gameStarted;

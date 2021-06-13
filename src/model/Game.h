@@ -40,6 +40,14 @@ public:
 
     void addPlayer();
 
+    void getPlatforms(PlatformContainer *platforms, int *count);
+
+    void getLadders(LadderContainer *ladders, int *count);
+
+    void getFires(FireContainer *fires, int *count);
+
+    void getEnemyFiresPos(FireEnemyContainer *enemyFires, int *count);
+
 private:
     Player *player;
     EnemyFire** enemyFires = NULL;

@@ -40,7 +40,7 @@ public:
 
     void renderWindow();
 
-    void renderWindow(Positions playerPosition);
+    void renderWindow(Positions positions);
 
   void renderLoginWindow(bool &quit);
 

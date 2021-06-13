@@ -5,13 +5,8 @@
 #include "PlatformMovement.h"
 #include "../Constants.h"
 
-/*typedef struct Position{
-    int x;
-    int y;
-}Position;*/
 
 class Platform {
-
 public:
 
     Platform(Position position, int count, int direction);
