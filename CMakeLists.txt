@@ -82,7 +82,7 @@ set(SOURCE_FILES main.cpp
         src/controller/LoginController.cpp
         src/controller/LoginController.h
         src/view/LoginButton.cpp
-        src/view/LoginButton.h)
+        src/view/LoginButton.h src/controller/QueueThrd.cpp src/controller/QueueThrd.h)
 
 
 # change to personal project name (as above)
