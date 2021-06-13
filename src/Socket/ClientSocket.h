@@ -10,8 +10,8 @@ public:
     ClientSocket(char *port, char *IP);
 
   bool isConnected();
-  int snd(void *positions);
-  int receive(void *event);
+  int snd(void *event);
+  int receive(void *positions);
 
 private:
   int socketClient;

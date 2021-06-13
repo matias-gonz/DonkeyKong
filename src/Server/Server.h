@@ -32,6 +32,8 @@ public:
 
     void handleEvents();
 
+    void broadcast();
+
 private:
     ServerSocket *socket;
     Configuration *configuration;
@@ -40,7 +42,6 @@ private:
     Positions plyrPos;
     void *updateThread(void *socket);
     cola_t *eventQueue;
-    void broadcast();
 
     char *port;
     char *ip;
