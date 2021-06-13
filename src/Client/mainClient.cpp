@@ -10,16 +10,6 @@ int mainClient(char *IP, char *port) {
 
   //TODO change inside if
   if (client->gameHasStarted()) {
-    Configuration *configuration = new Configuration();
-    Logger::startLogger(configuration, "clientLog1");
-    Game *game = new Game(configuration);
-    game->start();
-
-    GameController *gameController = new GameController(game);
-    //ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-    //                                           SDL_WINDOWPOS_CENTERED, 1024, 576, false);
-
-
     while (client->isRunning()) {
       //hacer un thread de sends(tendra que ser un while true)
       client->setSended(false);
