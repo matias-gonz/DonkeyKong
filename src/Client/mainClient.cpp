@@ -3,15 +3,15 @@
 
 
 int mainClient(char *IP, char *port) {
-    //pantalla login
-    //manda msg al server y lo autentica
+  //pantalla login
+  //manda msg al server y lo autentica
 
-    Client *client = new Client(port, IP);
+  Client *client = new Client(port, IP);
 
-    //TODO change inside if
+  //TODO change inside if
   if (client->gameHasStarted()) {
     Configuration *configuration = new Configuration();
-    Logger::startLogger(configuration);
+    Logger::startLogger(configuration, "clientLog1");
     Game *game = new Game(configuration);
     game->start();
 
@@ -22,14 +22,14 @@ int mainClient(char *IP, char *port) {
 
 
     while (client->isRunning()) {
-        //hacer un thread de sends(tendra que ser un while true)
-        client->setSended(false);
-        client->send();
-        //hacer un thread de receives
-        client->receive();
-        client->render();
+      //hacer un thread de sends(tendra que ser un while true)
+      client->setSended(false);
+      client->send();
+      //hacer un thread de receives
+      client->receive();
+      client->render();
     }
-}
-    return 0;
+  }
+  return 0;
 
 }

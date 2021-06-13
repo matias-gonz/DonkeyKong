@@ -4,7 +4,7 @@
 ClientSocket::ClientSocket(char *port, char *IP){
     // Creating socket file descriptor
     this->opt = 1;
-    if ((this->server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    if ((this->server_fd = ::socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         Logger::log(Logger::Error, "Error al crear el socket");
         exit(EXIT_FAILURE);
     }
@@ -61,4 +61,8 @@ int ClientSocket::snd(void *event) {
     }
 
     return 0;
+}
+
+bool ClientSocket::isConnected(){
+  return this->connected;
 }
