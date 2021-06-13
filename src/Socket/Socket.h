@@ -6,7 +6,6 @@
 #include "../model/Logger.h"
 #include "../Constants.h"
 
-
 class Socket {
 
 public:
@@ -27,8 +26,14 @@ public:
 
     virtual int snd(void* data) = 0;
 
+  bool isConnected();
+
 private:
-    int socketClient;
+    int socketClient, valread;
+
+    char *message;
+  char buffer[1024] = {0};
+  bool connected;
 
 protected:
     struct sockaddr_in address;

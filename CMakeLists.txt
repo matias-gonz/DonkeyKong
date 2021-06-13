@@ -78,7 +78,11 @@ set(SOURCE_FILES main.cpp
         src/view/PlayerAnimator.cpp
         src/view/PlayerAnimator.h
         src/Constants.h
-        src/Queue.cpp src/Queue.h)
+        src/Queue.cpp src/Queue.h
+        src/controller/LoginController.cpp
+        src/controller/LoginController.h
+        src/view/LoginButton.cpp
+        src/view/LoginButton.h)
 
 
 # change to personal project name (as above)
@@ -88,8 +92,9 @@ INCLUDE(FindPkgConfig)
 
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
 PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(Taller_Prog_I_2021_1C_KIWI ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(Taller_Prog_I_2021_1C_KIWI ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")

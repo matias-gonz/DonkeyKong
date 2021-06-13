@@ -4,6 +4,7 @@
 #include <SDL_render.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <stdio.h>
 #include "ltexture.h"
@@ -15,14 +16,16 @@
 #include "../model/Boss.h"
 #include "PlayerAnimator.h"
 #include "../Constants.h"
+#include "../controller/LoginController.h"
+#include "LoginButton.h"
 
 class ViewManager {
 public:
-    //ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-
-    //ViewManager(Configuration *configurations, const char string[12], unsigned int i, unsigned int i1, int i2, int i3, bool b);
+    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
     ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen);
+
+    ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
     ~ViewManager();
     SDL_Renderer *getRenderer();
@@ -35,35 +38,61 @@ public:
 
     void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
 
+    void renderWindow();
+
     void renderWindow(Positions playerPosition);
 
+  void renderLoginWindow(bool &quit);
+
+  void createRenderer();
+
+  std::string returnInputUser();
+
+  std::string returnInputPass();
+
 private:
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-    bool success;
-    int screen_width = WIDTH;
-    int screen_height = HEIGHT;
-    Game* game;
-    TextureManager* textureManager;
-    LevelDrawer* levelDrawer;
-    //Animator* playerAnimator;
-    PlayerAnimator* playerAnimator;
-    Animator* enemyAnimator;
-    //Animator* bossAnimator;
-    //Animator* princessAnimator;
-    Configuration* configuration;
 
-    void setTextureLinear();
+  SDL_Renderer *renderer;
+  SDL_Window *currentWindow;
+  bool success;
+  int screen_width = WIDTH, screen_height = HEIGHT;
+  Game *game;
+  TextureManager *textureManager;
+  LevelDrawer *levelDrawer;
+  //Animator* playerAnimator;
+  PlayerAnimator *playerAnimator;
+  Animator *enemyAnimator;
+  //Animator* bossAnimator;
+  //Animator* princessAnimator;
+  Configuration *configuration;
+  bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
+  TTF_Font *font;
+  int inputUserPosX, inputUserPosY;
+  int inputPasswordPosX, inputPasswordPosY;
+  std::string inputTextUser, inputTextPass;
+  LoginButton *sendButton;
 
-    void showSDLError(char *message);
+  //Scene textures
+  LTexture gPromptUserTextTexture;
+  LTexture gInputUserTextTexture;
+  LTexture gPromptPasswordTextTexture;
+  LTexture gInputPasswordTextTexture;
 
-    void createWindow(const char* title, int xPos, int yPos, int width, int height, int flags);
+  SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
-    void createRenderer();
+  void setTextureLinear();
 
-    void initializeRendererColor();
+  void showSDLError(char *message);
 
+  void initializeRendererColor();
 
+  void initializeTTF();
+
+  void loadMedia();
+
+  void initializeTextInputs();
+
+  void handleEvents(bool &quit, bool *renderText);
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

@@ -4,9 +4,12 @@
 #include "../model/Logger.h"
 #include "../Socket/ClientSocket.h"
 #include "../Constants.h"
+#include "../model/Game.h"
 #include "../model/Logger.h"
 #include "../view/ViewManager.h"
+#include "../controller/GameController.h"
 #include "../controller/Configuration.h"
+#include "../controller/LoginController.h"
 
 
 class Client {
@@ -24,9 +27,16 @@ public:
 
     void setSended(bool b);
 
+  bool gameHasStarted();
+
+  void checkValid();
+
 private:
     Positions playerPositions;
     ViewManager *viewManager;
+
+  bool quit, gameStarted;
+  LoginController *loginController;
 
     ClientSocket *socket;
     Configuration *configuration;

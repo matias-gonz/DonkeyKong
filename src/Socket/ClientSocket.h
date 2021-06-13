@@ -9,9 +9,18 @@ class ClientSocket: public Socket {
 public:
     ClientSocket(char *port, char *IP);
 
-    int snd(void *positions);
+  bool isConnected();
+  int snd(void *positions);
+  int receive(void *event);
 
-    int receive(void *event);
+private:
+  int socketClient;
+  struct sockaddr_in serv_addr;
+  Socket* socket;
+  bool connected;
+
+
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_CLIENTSOCKET_H

@@ -87,6 +87,7 @@ namespace Logger {
         logFile.open(path, std::ofstream::app);
     }
 
+
     void Log::addLog(Type logType, const std::string &message) {
         if (logFile.is_open() && this->logTypeIsEnabled(logType)) {
             logFile << this->getCurrentDateTime() << " [" << levels[static_cast<int>(logType)] << "]" << message

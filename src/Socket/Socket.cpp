@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "Socket.h"
 
 
@@ -56,6 +57,9 @@ int Socket::accept() {
     return new_socket;
 }
 
+bool Socket::isConnected(){
+  return this->connected;
+}
 
 
 
