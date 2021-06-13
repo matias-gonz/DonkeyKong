@@ -1,26 +1,37 @@
 #include "Client.h"
 
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 Client::Client(char *port, char *IP) {
-  Configuration *configuration = new Configuration();
-  Logger::startLogger(configuration);
-
-  /* Game *game = new Game(configuration);
-  game->start();
-
-  GameController *gameController = new GameController(game);
-  ViewManager *viewManager = new ViewManager(game, configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
-
-  while (game->isRunning()) {
-    gameController->handleEvents();
-    gameController->update();
-    viewManager->renderWindow();
-  } */
+  quit = false;
+  gameStarted = false;
+  std::string inputUser;
+  std::string inputPass;
 
   ClientSocket *new_socket = new ClientSocket(port, IP);
+  //todo: refactorizar a un nuevo objeto solo de login view
+  LoginButton* sendButton = new LoginButton();
 
-  // delete game;
+  if(new_socket->isConnected()){
+    this->loginController = new LoginController();
+    this->viewManager = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                               SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
+
+    while(!quit) {
+      viewManager->renderLoginWindow(quit);
+      inputUser = viewManager->returnInputUser();
+      inputPass = viewManager->returnInputPass();
+      loginController->handle(sendButton, &inputUser, &inputPass);
+      if(loginController->isValid()) {
+        viewManager->close();
+        gameStarted = true;
+      }
+    }
+  }
+}
+
+void Client::checkValid() {
+
+}
+
+bool Client::gameHasStarted() {
+  return this->gameStarted;
 }

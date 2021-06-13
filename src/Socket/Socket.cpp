@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "Socket.h"
 
 Socket::Socket(char *port, char *IP) {
@@ -9,6 +10,8 @@ Socket::Socket(char *port, char *IP) {
   }
 
   this->address.sin_family = AF_INET;
+  this->message = "Esto funciona bien, soy un genio. Esto es un mensaje mas largo";
+  this->connected = false;
 
   this->convertToHost(atoi(port), IP);
   this->connect();
@@ -24,8 +27,9 @@ Socket::Socket(char *port, char *IP, int max_connections) {
 
   this->create();
   this->convertToHost(atoi(port), IP);
-  this->bind(atoi(port));
+  this->bind();
   this->listen();
+  this->accept();
 
   if ((this->new_socket = ::accept(this->server_fd, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen)) < 0) {
     perror("accept");
@@ -52,7 +56,7 @@ void Socket::convertToHost(const int port, const char *IP) {
   }
 }
 
-void Socket::bind(int port) {
+void Socket::bind() {
   //if(!is_valid()) return false;
 
   if (::bind(this->server_fd, (struct sockaddr *) &this->address, sizeof(this->address)) < 0) {
@@ -73,9 +77,14 @@ void Socket::connect() {
   if (::connect(this->server_fd, (struct sockaddr *) &this->address, sizeof(this->address)) < 0) {
     Logger::log(Logger::Error, "Error al establecer conexión con el servidor");
     throw std::runtime_error("Error al conectarse con el servidor");
-  } else {
-    std::cout << "Se conecto bien" << std::endl;
+  }else{
+    this->connected = true;
   }
+
+  //Mando mensaje para ver si funciona
+  send(this->server_fd , this->message , strlen(this->message) , 0 );
+  printf("Message sent\n");
+
 }
 
 void Socket::accept() {
@@ -84,6 +93,10 @@ void Socket::accept() {
     Logger::log(Logger::Error, "Error al aceptar el nuevo socket");
     throw std::runtime_error("Error al aceptar el nuevo socket");
   }
+
+  //Recibo mensaje para ver si funciona
+  this->valread = read(this->new_socket , this->buffer, 1024);
+  printf("%s\n",buffer );
 }
 
 int Socket::recv(int *dato) {
@@ -92,4 +105,8 @@ int Socket::recv(int *dato) {
 
 int Socket::snd(int *dato) {
   return 1;
+}
+
+bool Socket::isConnected(){
+  return this->connected;
 }
