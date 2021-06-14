@@ -56,6 +56,7 @@ void Client::send() {
   while (SDL_PollEvent(&event) != 0) {
     if (event.type == SDL_QUIT) {
       this->running = false;
+      this->socket->snd(&event);
       return;
     }
     if (this->eventIsValid(event)) {
