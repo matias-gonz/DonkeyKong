@@ -8,7 +8,7 @@ Server::Server(char *port, char *IP) {
   this->game = new Game(this->configuration);
   this->game->start();
   this->gameController = new GameController(this->game);
-  this->eventQueue = cola_crear();
+  this->eventQueue = new QueueThrd();
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;

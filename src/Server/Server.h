@@ -12,7 +12,8 @@
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"
 #include "../Socket/ServerSocket.h"
-#include "../Queue.h"
+#include "../controller/QueueThrd.h"
+
 
 class Server {
 
@@ -41,7 +42,7 @@ private:
     GameController *gameController;
     Positions positions;
     void *updateThread(void *socket);
-    cola_t *eventQueue;
+    QueueThrd* eventQueue;
 
     char *port;
     char *ip;
