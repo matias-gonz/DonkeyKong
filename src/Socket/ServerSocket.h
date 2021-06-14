@@ -12,7 +12,7 @@ public:
 
     int receive(void *event);
 
-    int snd(void *positions);
+    int snd(void *positions, int sckt);
 private:
     int socketServer;
 };

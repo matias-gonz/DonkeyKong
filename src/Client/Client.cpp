@@ -59,7 +59,7 @@ void Client::send() {
       return;
     }
     if (this->eventIsValid(event)) {
-      this->socket->snd(&event);
+      this->socket->snd(&event, 0);
       //return;
     }
   }
