@@ -10,7 +10,7 @@ public:
     SDL_Event pop();
     bool isEmpty();
 private:
-    std::queue<SDL_Event> queue;
+    std::queue<SDL_Event*> queue;
     pthread_mutex_t mutex;
 };
 

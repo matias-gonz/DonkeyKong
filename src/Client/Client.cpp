@@ -40,7 +40,6 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  if (!this->sended) { return; }
 
   this->socket->receive(&positions);
 }
@@ -61,11 +60,8 @@ void Client::send() {
       return;
     }
     if (this->eventIsValid(event)) {
-      this->sended = true;
-      //printf("snd started\n");
       this->socket->snd(&event);
-      //printf("snd finished\n");
-      return;
+      return;//esto me parece que esa haciendo que no sea continuo el movimiento
     }
   }
 }

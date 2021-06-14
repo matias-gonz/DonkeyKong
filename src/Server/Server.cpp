@@ -19,19 +19,6 @@ Server::Server(char *port, char *IP) {
 
 }
 
-void *Server::updateThread(void *socket) {
-  /*
-  auto* s = (ServerSocket*)socket;
-  game->addPlayer();
-  while(true){
-      SDL_Event e;
-      s->receive(&e);
-      SDL_Event* event = new SDL_Event(e);
-      cola_encolar(eventQueue,event);
-  }
-  */
-}
-
 bool Server::isRunning() {
   return this->game->isRunning();
 }
@@ -69,6 +56,13 @@ void *hndlEvents(void *serv) {
   Server *server = (Server *) serv;
   while (server->isRunning()) {
     server->handleEvents();
+  }
+}
+
+void* receiveEvents(void * srvr) {
+  auto* server = (Server*)srvr;
+  while(server->isRunning()){
+    server->receive();
   }
 }
 
@@ -113,13 +107,17 @@ void Server::addNewConnection() {
     return;
   }
   int newSocket = this->socket->accept();
-  //Aca instanciar nuevo thread que loopee receives
+
   int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
   if (!tmpSocket) {
     Logger::log(Logger::Error, "Error al reservar memoria. Server::addNewConnection");
     return;
   }
   this->sockets = tmpSocket;
+
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, this);
+
   pthread_mutex_lock(&this->mutex);
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
@@ -128,14 +126,10 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
-  /*
-  SDL_Event* e = static_cast<SDL_Event *>(cola_desencolar(eventQueue));
-  if(!e){
-      return;
-  }
-   */
-  SDL_Event e;
-  if (this->socket->receive(&e) >= 0) {
+
+
+  if (!this->eventQueue->isEmpty()) {
+    SDL_Event e = eventQueue->pop();
     this->gameController->handleEvents(e);
   }
   this->gameController->update();
@@ -147,4 +141,13 @@ void Server::handleEvents() {
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
   this->broadcast();
+}
+
+
+
+
+void Server::receive(){
+  SDL_Event e;
+  this->socket->receive(&e);
+  this->eventQueue->push(e);
 }
