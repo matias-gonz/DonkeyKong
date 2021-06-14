@@ -3,7 +3,7 @@
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
-  Logger::startLogger(this->configuration, "server.log");
+  Logger::startLogger(this->configuration, "server.txt");
   this->game = new Game(this->configuration);
   this->game->start();
   this->gameController = new GameController(this->game);
@@ -53,9 +53,6 @@ void *hndlEvents(void *serv) {
   Server *server = (Server *) serv;
   while (server->isRunning()) {
     server->handleEvents();
-  }
-  if(!server->isRunning()){
-      printf("dejo de funcionar");
   }
 }
 
@@ -145,5 +142,12 @@ void Server::receive(){
 }
 
 void Server::quit() {
+    delete configuration;
+    delete game;
+    delete gameController;
+    delete eventQueue;
+    delete socket;
+
+    Logger::log(Logger::Debug, "Servidor cerrado");
     exit(0);
 }
