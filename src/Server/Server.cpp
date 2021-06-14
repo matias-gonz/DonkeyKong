@@ -102,8 +102,14 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
-  if (!this->eventQueue->isEmpty()) {
+  pthread_mutex_lock(&this->mutex);
+  bool empty = this->eventQueue->isEmpty();
+  pthread_mutex_unlock(&this->mutex);
+
+  if (!empty) {
+    pthread_mutex_lock(&this->mutex);
     SDL_Event e = eventQueue->pop();
+    pthread_mutex_unlock(&this->mutex);
     this->gameController->handleEvents(e);
   }
   this->gameController->update();
@@ -114,8 +120,9 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
-
+  pthread_mutex_lock(&this->mutex);
   this->broadcast();
+  pthread_mutex_unlock(&this->mutex);
 }
 
 
@@ -126,5 +133,7 @@ void Server::receive(){
   if(this->socket->receive(&e) < 0){
     return;
   }
+  pthread_mutex_lock(&this->mutex);
   this->eventQueue->push(e);
+  pthread_mutex_unlock(&this->mutex);
 }
