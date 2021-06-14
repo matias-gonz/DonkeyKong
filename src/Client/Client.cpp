@@ -61,7 +61,7 @@ void Client::send() {
     }
     if (this->eventIsValid(event)) {
       this->socket->snd(&event);
-      //return;//esto me parece que esa haciendo que no sea continuo el movimiento
+      //return;
     }
   }
 }
