@@ -48,6 +48,10 @@ private:
     int clientMax;
     int *sockets;
     pthread_mutex_t mutex;
+
+    bool clientsPlaying();
+
+    bool _clientsPlaying;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

@@ -56,6 +56,8 @@ public:
 
     void getPrincessInfo(EntityContainer *princessInfo);
 
+    int getPlayerCount();
+
 private:
     EnemyFire **enemyFires = NULL;
     int enemyFireCount = 0;

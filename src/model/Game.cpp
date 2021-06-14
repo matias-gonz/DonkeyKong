@@ -207,3 +207,7 @@ bool Game::anyPlayerWon() {
   }
   return false;
 }
+
+int Game::getPlayerCount() {
+  return this->playerCount;
+}

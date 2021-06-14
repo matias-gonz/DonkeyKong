@@ -15,6 +15,7 @@ Server::Server(char *port, char *IP) {
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
+  this->_clientsPlaying = false;
 
 }
 
@@ -91,6 +92,9 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
+  if(!this->clientsPlaying()){
+    return;
+  }
   pthread_mutex_lock(&this->mutex);
   bool empty = this->eventQueue->isEmpty();
   pthread_mutex_unlock(&this->mutex);
@@ -124,4 +128,8 @@ void Server::receive(){
   printf("pushed\n");
   this->eventQueue->push(e);
   pthread_mutex_unlock(&this->mutex);
+}
+
+bool Server::clientsPlaying() {
+  return (this->game->getPlayerCount() > 0);
 }
