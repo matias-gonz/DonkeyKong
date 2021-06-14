@@ -54,6 +54,9 @@ void *hndlEvents(void *serv) {
   while (server->isRunning()) {
     server->handleEvents();
   }
+  if(!server->isRunning()){
+      printf("dejo de funcionar");
+  }
 }
 
 void* receiveEvents(void * srvr) {
@@ -111,6 +114,8 @@ void Server::handleEvents() {
     printf("popped\n");
     pthread_mutex_unlock(&this->mutex);
     this->gameController->handleEvents(e);
+
+    if (e.type == SDL_QUIT) this->quit();
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
@@ -137,4 +142,8 @@ void Server::receive(){
   printf("pushed\n");
   this->eventQueue->push(e);
   pthread_mutex_unlock(&this->mutex);
+}
+
+void Server::quit() {
+    exit(0);
 }
