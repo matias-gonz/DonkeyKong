@@ -4,7 +4,6 @@
 #include <SDL2/SDL_events.h>
 #include <netinet/in.h>
 #include <pthread.h>
-
 #include "../model/Game.h"
 #include "../model/Logger.h"
 #include "../Constants.h"

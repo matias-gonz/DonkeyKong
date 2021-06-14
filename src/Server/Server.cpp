@@ -1,6 +1,5 @@
 #include "Server.h"
 
-pthread_mutex_t mutex;
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -42,7 +41,6 @@ void Server::broadcast() {
   for (int i = 0; i < this->clientCount; i++) {
     this->socket->snd(&this->positions);
   }
-
 }
 
 void *acceptConnections(void *serv) {
@@ -73,7 +71,7 @@ void Server::start() {
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
-  pthread_join(accepterThrd, NULL);
+  pthread_exit(NULL);
 }
 
 bool Server::isFull() {
@@ -116,6 +114,7 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
+
   this->broadcast();
 }
 

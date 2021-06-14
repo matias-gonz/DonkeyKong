@@ -211,49 +211,8 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 void ViewManager::renderWindow(Positions positions) {
     SDL_RenderClear(this->renderer);
 /*
-    //Draw level
-    levelDrawer->draw(game->getLevel());
-
-    //render player
-    Player *player = game->getPlayer();
-    Position* playerPos = player->getPos();
-    int playerDirection = player->getDirection();
-    int playerDistance = player->getDistance();
-
-    //render boss
-    Boss* boss = game->getBoss();
-    Position* bossPos = boss->getPos();
-    //int bossDirection = boss->getDirection();
-    //int bossDistance = boss->getDistance();
-    SDL_Rect bossDstrect = {bossPos->getX(), bossPos->getY(), 170, 119};;
-
-    //render princess
-    Princess* princess = game->getPrincess();
-    Position* princessPos = princess->getPos();
-    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), (int)(3*texW), (int)(2*texH)};;
-    //int princessDirection = princess->getDirection();
-    //int princessDistance = princess->getDistance();
-
-
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
     //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
-
-
-
-
-    //render enemies
-    EnemyFire** enemyFires = game->getEnemyFires();
-    int enemyFireCount = game->getEnemyFireCount();
-    for(int i = 0; i < enemyFireCount; i++){
-        Position* enemyPos = enemyFires[i]->getPos();
-        int enemyDirection = enemyFires[i]->getDirection();
-        int enemyDistance = enemyFires[i]->getDistance();
-
-        this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
-    }
-
-    SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
-    SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
 */
 
     this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
