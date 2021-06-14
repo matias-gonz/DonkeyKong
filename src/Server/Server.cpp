@@ -38,9 +38,8 @@ void Server::update() {
 }
 
 void Server::broadcast() {
-  for (int i = 0; i < this->clientCount; i++) {
-    this->socket->snd(&this->positions);
-  }
+  SDL_Delay(30);
+  this->socket->snd(&this->positions);
 }
 
 void *acceptConnections(void *serv) {
@@ -109,6 +108,7 @@ void Server::handleEvents() {
   if (!empty) {
     pthread_mutex_lock(&this->mutex);
     SDL_Event e = eventQueue->pop();
+    printf("popped\n");
     pthread_mutex_unlock(&this->mutex);
     this->gameController->handleEvents(e);
   }
@@ -134,6 +134,7 @@ void Server::receive(){
     return;
   }
   pthread_mutex_lock(&this->mutex);
+  printf("pushed\n");
   this->eventQueue->push(e);
   pthread_mutex_unlock(&this->mutex);
 }

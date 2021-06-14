@@ -218,11 +218,9 @@ void ViewManager::renderWindow(Positions positions) {
     this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
     this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
     this->levelDrawer->drawFires(positions.fires, positions.fireCount);
-    this->playerAnimator->draw(this->renderer, positions.playerInfo.direction, positions.playerInfo.x,
-                               positions.playerInfo.y, positions.playerInfo.distance);
+    this->playerAnimator->draw(this->renderer, positions.playerInfo.direction, positions.playerInfo.x,positions.playerInfo.y, positions.playerInfo.distance);
     for (int i = 0; i < positions.fireEnemyCount; i++) {
-        this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
-                                  positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
+        this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
     }
 
     SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;

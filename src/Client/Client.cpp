@@ -10,8 +10,6 @@ Client::Client(char *port, char *IP) {
   Logger::startLogger(this->configuration, "client.txt");
 
   this->socket = new ClientSocket(port, IP);
-  this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                          SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 }
 
 bool Client::checkCredentials() {
@@ -42,7 +40,6 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-
   this->socket->receive(&positions);
 }
 
@@ -62,7 +59,9 @@ void Client::send() {
       return;
     }
     if (this->eventIsValid(event)) {
+      printf("sending\n");
       this->socket->snd(&event);
+      printf("sended\n");
       //return;
     }
   }

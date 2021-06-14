@@ -22,5 +22,5 @@ SDL_Event QueueThrd::pop(){
 }
 
 bool QueueThrd::isEmpty() {
-  return this->queue.empty();
+  return (this->queue.size() == 0);
 }
