@@ -39,6 +39,10 @@ struct EntityContainer{
     int direction;
 };
 
+struct EventContainer{
+    SDL_Event e;
+    int clientNum;
+};
 
 struct Positions{
     PlatformContainer platforms[71];

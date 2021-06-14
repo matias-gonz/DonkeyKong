@@ -1,5 +1,9 @@
 #include "Server.h"
 
+struct ServerContainer{
+    Server* server;
+    int clientNum;
+};
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -47,9 +51,9 @@ void *hndlEvents(void *serv) {
 }
 
 void* receiveEvents(void * srvr) {
-  auto* server = (Server*)srvr;
-  while(server->isRunning()){
-    server->receive();
+  auto* server = (ServerContainer*)srvr;
+  while(server->server->isRunning()){
+    server->server->receive(server->clientNum);
   }
 }
 
@@ -80,8 +84,11 @@ void Server::addNewConnection() {
   }
   this->sockets = tmpSocket;
 
+  ServerContainer* container = new ServerContainer();
+  container->server = this;
+  container->clientNum = this->clientCount;
   pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, this);
+  pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
   pthread_mutex_lock(&this->mutex);
   this->game->addPlayer();
@@ -101,9 +108,9 @@ void Server::handleEvents() {
 
   if (!empty) {
     pthread_mutex_lock(&this->mutex);
-    SDL_Event e = eventQueue->pop();
+    EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
-    this->gameController->handleEvents(e,0);
+    this->gameController->handleEvents(e.e,e.clientNum);
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
@@ -119,14 +126,16 @@ void Server::handleEvents() {
 }
 
 
-void Server::receive(){
+void Server::receive(int clientNum) {
   SDL_Event e;
   if(this->socket->receive(&e) < 0){
     return;
   }
+  EventContainer event;
+  event.e = e;
+  event.clientNum = clientNum;
   pthread_mutex_lock(&this->mutex);
-  printf("pushed\n");
-  this->eventQueue->push(e);
+  this->eventQueue->push(event);
   pthread_mutex_unlock(&this->mutex);
 }
 
