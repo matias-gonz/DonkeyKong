@@ -37,6 +37,9 @@ void GameController::handleEvents(SDL_Event event, int i) {
             player->resetVelY();
         }
     }
+    if (event.type == SDL_QUIT){
+        game->quit();
+    }
 }
 
 void GameController::update() {

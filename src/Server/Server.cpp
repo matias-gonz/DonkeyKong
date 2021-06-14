@@ -7,7 +7,7 @@ struct ServerContainer{
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
-  Logger::startLogger(this->configuration, "server.log");
+  Logger::startLogger(this->configuration, "server.txt");
   this->game = new Game(this->configuration);
   this->game->start();
   this->gameController = new GameController(this->game);
@@ -110,7 +110,11 @@ void Server::handleEvents() {
     pthread_mutex_lock(&this->mutex);
     EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
+
     this->gameController->handleEvents(e.e,e.clientNum);
+
+    if (e.type == SDL_QUIT) this->quit();
+
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
@@ -141,4 +145,15 @@ void Server::receive(int clientNum) {
 
 bool Server::clientsPlaying() {
   return (this->game->getPlayerCount() > 0);
+}
+
+void Server::quit() {
+    delete configuration;
+    delete game;
+    delete gameController;
+    delete eventQueue;
+    delete socket;
+
+    Logger::log(Logger::Debug, "Servidor cerrado");
+    exit(0);
 }
