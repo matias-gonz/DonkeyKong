@@ -22,8 +22,6 @@ public:
 
     bool isRunning();
 
-    void update();
-
     void start();
 
     bool isFull();
@@ -42,7 +40,6 @@ private:
     Game *game;
     GameController *gameController;
     Positions positions;
-    void *updateThread(void *socket);
     QueueThrd* eventQueue;
 
     char *port;

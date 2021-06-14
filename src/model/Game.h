@@ -12,7 +12,7 @@
 class Game {
 
 public:
-    Game(Configuration* configuration);
+    Game(Configuration *configuration);
 
     ~Game();
 
@@ -26,12 +26,14 @@ public:
 
     Level *getLevel();
 
-    Player *getPlayer();
+    Player *getPlayer(int i);
 
     void loadLevel(int i);
 
-    Boss* getBoss();
-    Princess* getPrincess();
+    Boss *getBoss();
+
+    Princess *getPrincess();
+
     EnemyFire **getEnemyFires();
 
     int getEnemyFireCount();
@@ -48,21 +50,20 @@ public:
 
     void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
 
-    void getPLayerInfo(EntityContainer* playerInfo);
+    void getPLayerInfo(EntityContainer *playerInfo, int *playerCount);
 
     void getBossInfo(EntityContainer *bossInfo);
 
     void getPrincessInfo(EntityContainer *princessInfo);
 
 private:
-    Player *player;
-    EnemyFire** enemyFires = NULL;
+    EnemyFire **enemyFires = NULL;
     int enemyFireCount = 0;
-    Boss*  boss = NULL;
-    Princess* princess = NULL;
+    Boss *boss = NULL;
+    Princess *princess = NULL;
     bool running;
     Level *level;
-    Configuration* configuration;
+    Configuration *configuration;
 
     void spawnEnemies(Position **spawns, int spawnCount, int probability);
 
@@ -73,6 +74,11 @@ private:
     void resolveCollisions();
 
     void getEntityInfo(EntityContainer *entityInfo, Entity *entity);
+
+    Player **players;
+    int playerCount;
+
+    bool anyPlayerWon();
 };
 
 

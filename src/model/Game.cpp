@@ -1,187 +1,209 @@
 #include "Game.h"
 
 Game::Game(Configuration *configuration) {
-    this->configuration = configuration;
+  this->configuration = configuration;
 }
 
 Game::~Game() {
-    delete this->player;
-    delete this->level;
-    for (int i = 0; i < this->enemyFireCount; i++) {
-        delete this->enemyFires[i];
-    }
-    free(this->enemyFires);
+  for (int i = 0; i < this->playerCount; i++) {
+    delete this->players[i];
+  }
+  free(this->players);
+  delete this->level;
+  for (int i = 0; i < this->enemyFireCount; i++) {
+    delete this->enemyFires[i];
+  }
+  free(this->enemyFires);
 }
 
 void Game::start() {
-    //aca verificamos estado
-    this->running = true;
-    this->level = new Level();
-    this->player = new Player(new Position(200, 525));
-    this->loadLevel(1);
+  this->running = true;
+  this->level = new Level();
+  this->players = NULL;
+  this->playerCount = 0;
+  this->loadLevel(1);
 
-    Logger::log(Logger::Info, "Inicio Donkey Kong");
-    this->boss = new Boss(new Position(100, 35));
-    this->princess = new Princess(new Position(450, 30));
+  Logger::log(Logger::Info, "Inicio Donkey Kong");
+  this->boss = new Boss(new Position(100, 35));
+  this->princess = new Princess(new Position(450, 30));
 }
 
 void Game::quit() {
-    running = false;
+  running = false;
 }
 
 void Game::update() {
-    if (this->level->playerWon(this->player)) {
-        this->switchLevel();
-        return;
-    }
-    this->level->update();
-    this->player->update();
-    for (int i = 0; i < enemyFireCount; i++) {
-        this->enemyFires[i]->update();
-    }
-    this->princess->update();
-    this->boss->update();
-    this->resolveCollisions();
+  if (this->anyPlayerWon()) {
+    this->switchLevel();
+    return;
+  }
+  this->level->update();
+  for (int i = 0; i < this->playerCount; i++) {
+    this->players[i]->update();
+  }
+  for (int i = 0; i < this->enemyFireCount; i++) {
+    this->enemyFires[i]->update();
+  }
+  this->princess->update();
+  this->boss->update();
+  this->resolveCollisions();
 }
 
 bool Game::isRunning() {
-    return this->running;
+  return this->running;
 }
 
 Level *Game::getLevel() {
-    return this->level;
+  return this->level;
 }
 
-Player *Game::getPlayer() {
-    return this->player;
+Player *Game::getPlayer(int i) {
+  return this->players[i];
 }
 
 void Game::loadLevel(int levelnum) {
-    this->currentLevel = levelnum;
-    this->level->loadLevel(levelnum, this->configuration);
-    this->resetEnemies();
-    //level should spawn enemies, not game
-    this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getEnemiesCount());
+  this->currentLevel = levelnum;
+  this->level->loadLevel(levelnum, this->configuration);
+  this->resetEnemies();
+  //level should spawn enemies, not game
+  this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getEnemiesCount());
 }
 
 void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
-    Logger::log(Logger::Info, "Se spawnean enemigos type_1");
-    srand(time(NULL));
-    for (int i = 0; i < spawnCount; i++) {
-        if ((rand() % 100) < probability) {
-            this->enemyFires = (EnemyFire **) (realloc(this->enemyFires,
-                                                       (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
-            if (!this->enemyFires) {
-                Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnEnemies");
-                return;
-            }
-            EnemyFire *enemy = new EnemyFire(spawns[i]);
-            this->enemyFires[this->enemyFireCount] = enemy;
-            (this->enemyFireCount)++;
-        }
+  Logger::log(Logger::Info, "Se spawnean enemigos type_1");
+  srand(time(NULL));
+  for (int i = 0; i < spawnCount; i++) {
+    if ((rand() % 100) < probability) {
+      this->enemyFires = (EnemyFire **) (realloc(this->enemyFires,(this->enemyFireCount + 1) * sizeof(EnemyFire *)));
+      if (!this->enemyFires) {
+        Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnEnemies");
+        return;
+      }
+      EnemyFire *enemy = new EnemyFire(spawns[i]);
+      this->enemyFires[this->enemyFireCount] = enemy;
+      (this->enemyFireCount)++;
     }
+  }
 }
 
 EnemyFire **Game::getEnemyFires() {
-    return this->enemyFires;
+  return this->enemyFires;
 }
 
 int Game::getEnemyFireCount() {
-    return this->enemyFireCount;
+  return this->enemyFireCount;
 }
 
 void Game::resetEnemies() {
-    for (int i = 0; i < this->enemyFireCount; i++) {
-        delete this->enemyFires[i];
-    }
-    free(this->enemyFires);
-    this->enemyFires = NULL;
-    this->enemyFireCount = 0;
+  for (int i = 0; i < this->enemyFireCount; i++) {
+    delete this->enemyFires[i];
+  }
+  free(this->enemyFires);
+  this->enemyFires = NULL;
+  this->enemyFireCount = 0;
 }
 
 void Game::switchLevel() {
-    this->player->resetPos();
+  for(int i = 0; i < this->playerCount; i++){
+    this->players[i]->resetPos();
+  }
 
-    if (this->currentLevel == 1) {
-        this->loadLevel(2);
-    } else {
-        this->loadLevel(1);
-    }
+  if (this->currentLevel == 1) {
+    this->loadLevel(2);
+  } else {
+    this->loadLevel(1);
+  }
 }
 
 Boss *Game::getBoss() {
-    return this->boss;
+  return this->boss;
 }
 
 Princess *Game::getPrincess() {
-    return this->princess;
+  return this->princess;
 }
 
 void Game::resolveCollisions() {
-    this->level->resolveCollisions(this->player, this->enemyFires,
-                                   this->enemyFireCount);//aca mandar todos los players
+  this->level->resolveCollisions(this->players,this->playerCount, this->enemyFires,this->enemyFireCount);
 }
 
 void Game::addPlayer() {
-    player = new Player(new Position(200, 525));
+  this->players = (Player **) realloc(this->players, (this->playerCount + 1) * sizeof(Player *));
+  this->players[this->playerCount] = new Player(new Position(200, 525));
+  this->playerCount++;
 }
 
 void Game::getPlatforms(PlatformContainer *platforms, int *count) {
-    *count = this->level->getPlatformCount();
-    Platform *tmpPlatform;
-    SDL_Rect *tmp;
-    for (int i = 0; i < *count; i++) {
-        tmpPlatform = this->level->getPlatform(i);
-        platforms[i].dest = *tmpPlatform->getDestRect();
-        platforms[i].count = tmpPlatform->getCount();
-    }
+  *count = this->level->getPlatformCount();
+  Platform *tmpPlatform;
+  SDL_Rect *tmp;
+  for (int i = 0; i < *count; i++) {
+    tmpPlatform = this->level->getPlatform(i);
+    platforms[i].dest = *tmpPlatform->getDestRect();
+    platforms[i].count = tmpPlatform->getCount();
+  }
 }
 
 void Game::getLadders(LadderContainer *ladders, int *count) {
-    *count = this->level->getLadderCount();
-    Ladder *tmpLadder;
-    SDL_Rect *tmp;
-    for (int i = 0; i < *count; i++) {
-        tmpLadder = this->level->getLadder(i);
-        ladders[i].dest = *tmpLadder->getDestRect();
-        ladders[i].count = tmpLadder->getCount();
-    }
+  *count = this->level->getLadderCount();
+  Ladder *tmpLadder;
+  SDL_Rect *tmp;
+  for (int i = 0; i < *count; i++) {
+    tmpLadder = this->level->getLadder(i);
+    ladders[i].dest = *tmpLadder->getDestRect();
+    ladders[i].count = tmpLadder->getCount();
+  }
 }
 
 void Game::getFires(FireContainer *fires, int *count) {
-    *count = this->level->getFireCount();
-    Fire *tmpFire;
-    SDL_Rect *tmp;
-    for (int i = 0; i < *count; i++) {
-        tmpFire = this->level->getFire(i);
-        fires[i].src = *tmpFire->getSrcRect();
-        fires[i].dest = *tmpFire->getDestRect();
-        fires[i].count = tmpFire->getCount();
-    }
+  *count = this->level->getFireCount();
+  Fire *tmpFire;
+  SDL_Rect *tmp;
+  for (int i = 0; i < *count; i++) {
+    tmpFire = this->level->getFire(i);
+    fires[i].src = *tmpFire->getSrcRect();
+    fires[i].dest = *tmpFire->getDestRect();
+    fires[i].count = tmpFire->getCount();
+  }
 }
 
 void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
-    *count = this->enemyFireCount;
-    for (int i = 0; i < *count; i++) {
-        getEntityInfo(&enemyFires[i],this->enemyFires[i]);
-    }
+  *count = this->enemyFireCount;
+  for (int i = 0; i < *count; i++) {
+    this->getEntityInfo(&enemyFires[i], this->enemyFires[i]);
+  }
 }
 
-void Game::getPLayerInfo(EntityContainer *playerInfo) {
-    getEntityInfo(playerInfo, this->player);
+void Game::getPLayerInfo(EntityContainer *playerInfo, int *playerCount) {
+  for(int i =0; i < this->playerCount; i++){
+    this->getEntityInfo(&playerInfo[i], this->players[i]);
+  }
+  *playerCount = this->playerCount;
 }
 
 void Game::getBossInfo(EntityContainer *bossInfo) {
-    getEntityInfo(bossInfo, this->boss);
+  this->getEntityInfo(bossInfo, this->boss);
 }
 
 void Game::getPrincessInfo(EntityContainer *princessInfo) {
-    getEntityInfo(princessInfo, this->princess);
+  this->getEntityInfo(princessInfo, this->princess);
 }
 
 void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
-    entityInfo->distance = entity->getDistance();
-    entityInfo->x = entity->getXPosition();
-    entityInfo->y = entity->getYPosition();
-    entityInfo->direction = entity->getDirection();
+  if(!entity){
+    return;
+  }
+  entityInfo->distance = entity->getDistance();
+  entityInfo->x = entity->getXPosition();
+  entityInfo->y = entity->getYPosition();
+  entityInfo->direction = entity->getDirection();
+}
+
+bool Game::anyPlayerWon() {
+  for(int i = 0; i < this->playerCount; i++){
+    if(this->level->playerWon(this->players[i])){
+      return true;
+    }
+  }
+  return false;
 }

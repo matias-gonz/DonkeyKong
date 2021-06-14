@@ -23,20 +23,6 @@ bool Server::isRunning() {
 }
 
 
-void Server::update() {
-  /*
-  while(true){
-      SDL_Event* e = static_cast<SDL_Event *>(cola_desencolar(eventQueue));
-      gameController->handleEvents(*e,pthread_self());
-      gameController->update();
-      plyrPos.playerX = game->getPlayer(pthread_self())->getXPosition();
-      plyrPos.playerY = game->getPlayer(pthread_self())->getYPosition();
-      delete e;
-      broadcast();
-  }
-   */
-}
-
 void Server::broadcast() {
   SDL_Delay(25);
   for(int i = 0; i <this->clientCount; i++){
@@ -97,6 +83,7 @@ void Server::addNewConnection() {
   pthread_create(&receiveThread, NULL, &receiveEvents, this);
 
   pthread_mutex_lock(&this->mutex);
+  this->game->addPlayer();
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
   pthread_mutex_unlock(&this->mutex);
@@ -111,14 +98,13 @@ void Server::handleEvents() {
   if (!empty) {
     pthread_mutex_lock(&this->mutex);
     SDL_Event e = eventQueue->pop();
-    printf("popped\n");
     pthread_mutex_unlock(&this->mutex);
-    this->gameController->handleEvents(e);
+    this->gameController->handleEvents(e,0);
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
-  this->game->getPLayerInfo(&this->positions.playerInfo);
+  this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
   this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
   this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
@@ -127,8 +113,6 @@ void Server::handleEvents() {
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
 }
-
-
 
 
 void Server::receive(){

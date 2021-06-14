@@ -49,7 +49,8 @@ struct Positions{
     int fireCount;
     EntityContainer fireEnemies[50];
     int fireEnemyCount;
-    EntityContainer playerInfo;
+    EntityContainer playersInfo[4];
+    int playerCount;
     EntityContainer bossInfo;
     EntityContainer princessInfo;
 };

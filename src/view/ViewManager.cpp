@@ -218,8 +218,10 @@ void ViewManager::renderWindow(Positions positions) {
     this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
     this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
     this->levelDrawer->drawFires(positions.fires, positions.fireCount);
-    this->playerAnimator->draw(this->renderer, positions.playerInfo.direction, positions.playerInfo.x,positions.playerInfo.y, positions.playerInfo.distance);
-    for (int i = 0; i < positions.fireEnemyCount; i++) {
+    for(int i =0; i < positions.playerCount; i++){
+      this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x, positions.playersInfo[i].y, positions.playersInfo[i].distance);
+    }
+        for (int i = 0; i < positions.fireEnemyCount; i++) {
         this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
     }
 
