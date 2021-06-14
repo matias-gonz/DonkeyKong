@@ -67,27 +67,6 @@ void* receiveEvents(void * srvr) {
 }
 
 void Server::start() {
-  /*
-  pthread_t processComandsT;
-  pthread_create(&processComandsT, NULL, reinterpret_cast<void *(*)(void *)>(update), NULL );
-
-  int clientCount = 0;
-  pthread_t client1;
-  pthread_t client2;
-  pthread_t client3;
-  pthread_t client4;
-
-  pthread_t clients[4] = {client1,client2,client3,client4};
-
-  while(clientCount < 4){//en vez de while true hacer que loopee solo por la cantiddad maxima de conexiones permitidas
-      ServerSocket* newServerSocket = new ServerSocket(port, IP);
-      sockets[clientCount] = newServerSocket;
-      pthread_create(&clients[clientCount], NULL, updateThread, (void*)newServerSocket);
-
-      clientCount++;
-
-  }
-  */
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
 
@@ -95,7 +74,6 @@ void Server::start() {
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
   pthread_join(accepterThrd, NULL);
-
 }
 
 bool Server::isFull() {
@@ -126,8 +104,6 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
-
-
   if (!this->eventQueue->isEmpty()) {
     SDL_Event e = eventQueue->pop();
     this->gameController->handleEvents(e);
@@ -148,6 +124,8 @@ void Server::handleEvents() {
 
 void Server::receive(){
   SDL_Event e;
-  this->socket->receive(&e);
+  if(this->socket->receive(&e) < 0){
+    return;
+  }
   this->eventQueue->push(e);
 }

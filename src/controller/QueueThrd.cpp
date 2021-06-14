@@ -9,7 +9,6 @@ QueueThrd::QueueThrd() {
 
 void QueueThrd::push(SDL_Event e) {
   SDL_Event* evnt = new SDL_Event(e);
-
   pthread_mutex_lock(&this->mutex);
   this->queue.push(evnt);
   pthread_mutex_unlock(&this->mutex);

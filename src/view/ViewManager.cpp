@@ -199,6 +199,8 @@ bool ViewManager::successfulInitialitization() {
 void ViewManager::close() {
     SDL_DestroyWindow(this->currentWindow);
     SDL_DestroyRenderer(this->renderer);
+    this->renderer = NULL;
+    this->currentWindow = NULL;
 }
 
 
@@ -417,10 +419,10 @@ void ViewManager::loadMedia() {
 
 ViewManager::~ViewManager() {
     delete this->playerAnimator;
-    delete this->renderer;
+    //delete this->renderer;
     delete this->textureManager;
     delete this->enemyAnimator;
-    delete this->currentWindow;
+    //delete this->currentWindow;
     delete this->levelDrawer;
 }
 

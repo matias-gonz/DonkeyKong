@@ -3,8 +3,8 @@
 #include <arpa/inet.h>
 
 Client::Client(char *port, char *IP) {
-  quit = false;
-  gameStarted = false;
+  this->quit = false;
+  this->gameStarted = false;
   this->running = true;
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "client.txt");
@@ -61,7 +61,7 @@ void Client::send() {
     }
     if (this->eventIsValid(event)) {
       this->socket->snd(&event);
-      return;//esto me parece que esa haciendo que no sea continuo el movimiento
+      //return;//esto me parece que esa haciendo que no sea continuo el movimiento
     }
   }
 }
