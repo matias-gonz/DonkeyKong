@@ -10,7 +10,7 @@ public:
     ClientSocket(char *port, char *IP);
 
   bool isConnected();
-  int snd(void *event);
+  int snd(void *event, int sckt);
   int receive(void *positions);
 
 private:

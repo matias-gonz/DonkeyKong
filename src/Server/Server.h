@@ -22,8 +22,6 @@ public:
 
     bool isRunning();
 
-    void update();
-
     void start();
 
     bool isFull();
@@ -34,7 +32,7 @@ public:
 
     void broadcast();
 
-    void receive();
+    void receive(int clientNum);
 
 private:
     ServerSocket *socket;
@@ -42,7 +40,6 @@ private:
     Game *game;
     GameController *gameController;
     Positions positions;
-    void *updateThread(void *socket);
     QueueThrd* eventQueue;
 
     char *port;
@@ -52,7 +49,13 @@ private:
     int *sockets;
     pthread_mutex_t mutex;
 
+
+    bool clientsPlaying();
+
+    bool _clientsPlaying;
+
     void quit();
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

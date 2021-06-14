@@ -4,183 +4,197 @@
 #include "EnemyFire.h"
 
 Level::Level() {
-    this->platforms = NULL;
-    this->platformCount = 0;
-    this->ladders = NULL;
-    this->ladderCount = 0;
-    this->fires = NULL;
-    this->fireCount = 0;
-    this->barrels = NULL;
-    this->barrelCount = 0;
-    this->spawns = NULL;
-    this->spawnCount = 0;
-    this->loader = new LevelLoader();
+  this->platforms = NULL;
+  this->platformCount = 0;
+  this->ladders = NULL;
+  this->ladderCount = 0;
+  this->fires = NULL;
+  this->fireCount = 0;
+  this->barrels = NULL;
+  this->barrelCount = 0;
+  this->spawns = NULL;
+  this->spawnCount = 0;
+  this->loader = new LevelLoader();
 }
 
 Level::~Level() {
-    this->freePlaforms();
-    this->freeLadders();
-    this->freeFires();
-    this->freeSpawns();
-    this->freeBarrels();
-    delete this->loader;
+  this->freePlaforms();
+  this->freeLadders();
+  this->freeFires();
+  this->freeSpawns();
+  this->freeBarrels();
+  delete this->loader;
 }
 
 
-void Level::loadLevel(int levelnum, Configuration* configuration) {
-    this->reset();
-    this->currentLevel = levelnum;
-    this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires,&this->barrels, &this->platformCount,
-                            &this->ladderCount, &this->fireCount, &this->barrelCount, &this->spawns, &this->spawnCount,
-                            configuration);
+void Level::loadLevel(int levelnum, Configuration *configuration) {
+  this->reset();
+  this->currentLevel = levelnum;
+  this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->barrels,
+                          &this->platformCount,
+                          &this->ladderCount, &this->fireCount, &this->barrelCount, &this->spawns, &this->spawnCount,
+                          configuration);
 
 }
 
 int Level::getLadderCount() {
-    return ladderCount;
+  return ladderCount;
 }
 
-void Level::update(){
-    for (int i = 0; i < this->platformCount; i++) {
-        this->platforms[i]->update();
-    }
-    for (int i = 0; i < this->fireCount; i++) {
-        this->fires[i]->update();
-    }
-    for (int i = 0; i < this->barrelCount; i++) {
-        this->barrels[i]->update();
-    }
+void Level::update() {
+  for (int i = 0; i < this->platformCount; i++) {
+    this->platforms[i]->update();
+  }
+  for (int i = 0; i < this->fireCount; i++) {
+    this->fires[i]->update();
+  }
+  for (int i = 0; i < this->barrelCount; i++) {
+    this->barrels[i]->update();
+  }
 }
 
 Ladder *Level::getLadder(int i) {
-    return ladders[i];
+  return ladders[i];
 }
 
 int Level::getPlatformCount() {
-    return platformCount;
+  return platformCount;
 }
 
 Platform *Level::getPlatform(int i) {
-    return platforms[i];
+  return platforms[i];
 }
 
 int Level::getFireCount() {
-    return fireCount;
+  return fireCount;
 }
 
 Fire *Level::getFire(int i) {
-    return fires[i];
+  return fires[i];
 }
 
 int Level::getBarrelCount() {
-    return barrelCount;
+  return barrelCount;
 }
 
 Barrel *Level::getBarrel(int i) {
-    return barrels[i];
+  return barrels[i];
 }
 
 void Level::reset() {
-    Logger::log(Logger::Debug,"Se reseta el nivel");
-    this->freePlaforms();
-    this->freeLadders();
-    this->freeFires();
-    this->freeSpawns();
-    this->freeBarrels();
-    this->platforms = NULL;
-    this->platformCount = 0;
-    this->ladders = NULL;
-    this->ladderCount = 0;
-    this->fires = NULL;
-    this->fireCount = 0;
-    this->barrels = NULL;
-    this->barrelCount = 0;
+  Logger::log(Logger::Debug, "Se reseta el nivel");
+  this->freePlaforms();
+  this->freeLadders();
+  this->freeFires();
+  this->freeSpawns();
+  this->freeBarrels();
+  this->platforms = NULL;
+  this->platformCount = 0;
+  this->ladders = NULL;
+  this->ladderCount = 0;
+  this->fires = NULL;
+  this->fireCount = 0;
+  this->barrels = NULL;
+  this->barrelCount = 0;
 }
 
 void Level::freePlaforms() {
-    for (int i = 0; i < this->platformCount; i++) {
-        delete this->platforms[i];
-    }
-    free(this->platforms);
-    this->platforms = NULL;
-    this->platformCount = 0;
+  for (int i = 0; i < this->platformCount; i++) {
+    delete this->platforms[i];
+  }
+  free(this->platforms);
+  this->platforms = NULL;
+  this->platformCount = 0;
 }
 
 void Level::freeLadders() {
-    for (int i = 0; i < this->ladderCount; i++) {
-        delete this->ladders[i];
-    }
-    free(this->ladders);
-    this->ladders = NULL;
-    this->ladderCount = 0;
+  for (int i = 0; i < this->ladderCount; i++) {
+    delete this->ladders[i];
+  }
+  free(this->ladders);
+  this->ladders = NULL;
+  this->ladderCount = 0;
 }
 
 void Level::freeFires() {
-    for (int i = 0; i < this->fireCount; i++) {
-        delete this->fires[i];
-    }
-    free(this->fires);
-    this->fires = NULL;
-    this->fireCount = 0;
+  for (int i = 0; i < this->fireCount; i++) {
+    delete this->fires[i];
+  }
+  free(this->fires);
+  this->fires = NULL;
+  this->fireCount = 0;
 }
 
 void Level::freeSpawns() {
-    for (int i = 0; i < this->spawnCount; i++) {
-        delete this->spawns[i];
-    }
-    free(this->spawns);
-    this->spawns = NULL;
-    this->spawnCount = 0;
+  for (int i = 0; i < this->spawnCount; i++) {
+    delete this->spawns[i];
+  }
+  free(this->spawns);
+  this->spawns = NULL;
+  this->spawnCount = 0;
 }
 
 Position **Level::getSpawns() {
-    return this->spawns;
+  return this->spawns;
 }
 
 int Level::getSpawnCount() {
-    return this->spawnCount;
+  return this->spawnCount;
 }
 
 int Level::getCurrentLevel() {
-    return this->currentLevel;
+  return this->currentLevel;
 }
 
 void Level::freeBarrels() {
-    for(int i; i < this->barrelCount; i++){
-        delete this->barrels[i];
-    }
-    free(this->barrels);
+  for (int i; i < this->barrelCount; i++) {
+    delete this->barrels[i];
+  }
+  free(this->barrels);
 }
 
-void Level::resolveCollisions(Player *player, EnemyFire **enemyFires, int enemyFireCount) {
-    SDL_Rect playerRect = player->getRectangle();
-    for(int i = 0; i < this->platformCount; i++){
-        SDL_Rect platformRect = this->platforms[i]->getRectangle();
-        if(Collider::RectCollides(playerRect,platformRect)){
-            Collider::ResolvePlayerCollision(player, platformRect);
-        }
-        for(int j = 0; j < enemyFireCount ; j++){
-            SDL_Rect fireRect = enemyFires[j]->getRectangle();
-            if(Collider::RectCollides(fireRect,platformRect)){
-                Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
-            }
-        }
+void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **enemyFires, int enemyFireCount) {
+  SDL_Rect* playerRects = (SDL_Rect*)malloc(playerCount*sizeof(SDL_Rect));
+  for(int i = 0; i < playerCount; i++){
+    playerRects[i] = players[i]->getRectangle();
+  }
+  for (int i = 0; i < this->platformCount; i++) {
+    SDL_Rect platformRect = this->platforms[i]->getRectangle();
+    for(int j = 0; j < playerCount; j++){
+      if (Collider::RectCollides(playerRects[j], platformRect)) {
+        Collider::ResolvePlayerCollision(players[j], platformRect);
+      }
     }
-    playerRect.y += playerRect.h/2;
-    playerRect.h = playerRect.h/2;
+    for (int j = 0; j < enemyFireCount; j++) {
+      SDL_Rect fireRect = enemyFires[j]->getRectangle();
+      if (Collider::RectCollides(fireRect, platformRect)) {
+        Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
+      }
+    }
+  }
 
-    bool canClimb = false;
-    for(int i = 0; i < this->ladderCount; i++){
-        SDL_Rect ladderRect = this->ladders[i]->getRectangle();
-        if(Collider::RectCollides(playerRect,ladderRect)){
-            canClimb = true;
-        }
+  bool* canClimb = (bool*)malloc(playerCount*sizeof(bool));
+  for(int i = 0; i < playerCount; i++){
+    playerRects[i].y += playerRects[i].h / 2;
+    playerRects[i].h = playerRects[i].h / 2;
+    canClimb[i] = false;
+  }
+
+  for (int i = 0; i < this->ladderCount; i++) {
+    SDL_Rect ladderRect = this->ladders[i]->getRectangle();
+    for(int j = 0; j < playerCount; j++){
+      if (Collider::RectCollides(playerRects[j], ladderRect)) {
+        canClimb[j] = true;
+      }
     }
-    player->setCanClimb(canClimb);
+  }
+  for(int i = 0; i < playerCount; i++){
+    players[i]->setCanClimb(canClimb[i]);
+  }
 }
 
 bool Level::playerWon(Player *player) {
-    return player->isIn(this->winningPosition);
+  return player->isIn(this->winningPosition);
 }
 
 

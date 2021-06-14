@@ -17,7 +17,6 @@ ClientSocket::ClientSocket(char *port, char *IP){
 
 
 int ClientSocket::receive(void *positions) {
-    //printf("receive started\n");
     int total_bytes_receive = 0;
     int bytes_receive = 0;
     int receive_data_size = sizeof(Positions);
@@ -36,11 +35,10 @@ int ClientSocket::receive(void *positions) {
             total_bytes_receive += bytes_receive;
         }
     }
-    //printf("receive finished\n");
     return 0;
 }
 
-int ClientSocket::snd(void *event) {
+int ClientSocket::snd(void *event, int sckt) {
     int total_bytes_written = 0;
     int bytes_written = 0;
     int send_data_size = sizeof(SDL_Event);

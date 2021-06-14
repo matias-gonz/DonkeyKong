@@ -4,18 +4,18 @@
 
 QueueThrd::QueueThrd() {
   pthread_mutex_init(&this->mutex,NULL);
-  this->queue = std::queue<SDL_Event>();
+  this->queue = std::queue<EventContainer>();
 }
 
-void QueueThrd::push(SDL_Event e) {
+void QueueThrd::push(EventContainer e) {
   //pthread_mutex_lock(&this->mutex);
   this->queue.push(e);
   //pthread_mutex_unlock(&this->mutex);
 }
 
-SDL_Event QueueThrd::pop(){
+EventContainer QueueThrd::pop(){
   //pthread_mutex_lock(&this->mutex);
-  SDL_Event e = this->queue.front();
+  EventContainer e = this->queue.front();
   this->queue.pop();
   //pthread_mutex_unlock(&this->mutex);
   return e;

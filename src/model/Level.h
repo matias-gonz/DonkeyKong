@@ -46,7 +46,7 @@ public:
 
     int getCurrentLevel();
 
-    void resolveCollisions(Player *player, EnemyFire **pFire, int i);
+    void resolveCollisions(Player **players,int playerCount, EnemyFire **fires, int fireCount);
 
     bool playerWon(Player *pPlayer);
 
