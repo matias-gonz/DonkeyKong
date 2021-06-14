@@ -32,25 +32,29 @@ struct FireContainer{
     SDL_Rect dest;
 };
 
-struct FireEnemyContainer{
+struct EntityContainer{
     int x;
     int y;
     int distance;
     int direction;
 };
 
+
 struct Positions{
-    int playerX = 0;
-    int playerY = 0;
     PlatformContainer platforms[71];
     int platformCount;
     LadderContainer ladders[19];
     int ladderCount;
     FireContainer fires[4];
     int fireCount;
-    FireEnemyContainer fireEnemies[50];
+    EntityContainer fireEnemies[50];
     int fireEnemyCount;
+    EntityContainer playerInfo;
+    EntityContainer bossInfo;
+    EntityContainer princessInfo;
 };
+
+
 #define HEIGHT 576
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300

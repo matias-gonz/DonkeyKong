@@ -46,7 +46,13 @@ public:
 
     void getFires(FireContainer *fires, int *count);
 
-    void getEnemyFiresPos(FireEnemyContainer *enemyFires, int *count);
+    void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
+
+    void getPLayerInfo(EntityContainer* playerInfo);
+
+    void getBossInfo(EntityContainer *bossInfo);
+
+    void getPrincessInfo(EntityContainer *princessInfo);
 
 private:
     Player *player;
@@ -65,6 +71,8 @@ private:
     int currentLevel;
 
     void resolveCollisions();
+
+    void getEntityInfo(EntityContainer *entityInfo, Entity *entity);
 };
 
 

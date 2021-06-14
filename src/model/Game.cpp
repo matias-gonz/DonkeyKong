@@ -14,10 +14,10 @@ Game::~Game() {
 }
 
 void Game::start() {
-  //aca verificamos estado
+    //aca verificamos estado
     this->running = true;
     this->level = new Level();
-    this->player = new Player(new Position(200,525));
+    this->player = new Player(new Position(200, 525));
     this->loadLevel(1);
 
     Logger::log(Logger::Info, "Inicio Donkey Kong");
@@ -123,49 +123,65 @@ void Game::resolveCollisions() {
 }
 
 void Game::addPlayer() {
-    player = new Player(new Position(200,525));
+    player = new Player(new Position(200, 525));
 }
 
 void Game::getPlatforms(PlatformContainer *platforms, int *count) {
-  *count = this->level->getPlatformCount();
-  Platform* tmpPlatform;
-  SDL_Rect* tmp;
-  for(int i = 0 ; i < *count;i++){
-    tmpPlatform = this->level->getPlatform(i);
-    platforms[i].dest = *tmpPlatform->getDestRect();
-    platforms[i].count = tmpPlatform->getCount();
-  }
+    *count = this->level->getPlatformCount();
+    Platform *tmpPlatform;
+    SDL_Rect *tmp;
+    for (int i = 0; i < *count; i++) {
+        tmpPlatform = this->level->getPlatform(i);
+        platforms[i].dest = *tmpPlatform->getDestRect();
+        platforms[i].count = tmpPlatform->getCount();
+    }
 }
 
 void Game::getLadders(LadderContainer *ladders, int *count) {
-  *count = this->level->getLadderCount();
-  Ladder* tmpLadder;
-  SDL_Rect* tmp;
-  for(int i = 0 ; i < *count;i++){
-    tmpLadder = this->level->getLadder(i);
-    ladders[i].dest = *tmpLadder->getDestRect();
-    ladders[i].count = tmpLadder->getCount();
-  }
+    *count = this->level->getLadderCount();
+    Ladder *tmpLadder;
+    SDL_Rect *tmp;
+    for (int i = 0; i < *count; i++) {
+        tmpLadder = this->level->getLadder(i);
+        ladders[i].dest = *tmpLadder->getDestRect();
+        ladders[i].count = tmpLadder->getCount();
+    }
 }
 
 void Game::getFires(FireContainer *fires, int *count) {
-  *count = this->level->getFireCount();
-  Fire* tmpFire;
-  SDL_Rect* tmp;
-  for(int i = 0 ; i < *count;i++){
-    tmpFire = this->level->getFire(i);
-    fires[i].src = *tmpFire->getSrcRect();
-    fires[i].dest = *tmpFire->getDestRect();
-    fires[i].count = tmpFire->getCount();
-  }
+    *count = this->level->getFireCount();
+    Fire *tmpFire;
+    SDL_Rect *tmp;
+    for (int i = 0; i < *count; i++) {
+        tmpFire = this->level->getFire(i);
+        fires[i].src = *tmpFire->getSrcRect();
+        fires[i].dest = *tmpFire->getDestRect();
+        fires[i].count = tmpFire->getCount();
+    }
 }
 
-void Game::getEnemyFiresPos(FireEnemyContainer *enemyFires, int *count) {
-  *count = this->enemyFireCount;
-  for(int i = 0; i < *count; i++){
-    enemyFires[i].x = this->enemyFires[i]->getXPosition();
-    enemyFires[i].y = this->enemyFires[i]->getYPosition();
-    enemyFires[i].direction = this->enemyFires[i]->getDirection();
-    enemyFires[i].distance = this->enemyFires[i]->getDistance();
-  }
+void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
+    *count = this->enemyFireCount;
+    for (int i = 0; i < *count; i++) {
+        getEntityInfo(&enemyFires[i],this->enemyFires[i]);
+    }
+}
+
+void Game::getPLayerInfo(EntityContainer *playerInfo) {
+    getEntityInfo(playerInfo, this->player);
+}
+
+void Game::getBossInfo(EntityContainer *bossInfo) {
+    getEntityInfo(bossInfo, this->boss);
+}
+
+void Game::getPrincessInfo(EntityContainer *princessInfo) {
+    getEntityInfo(princessInfo, this->princess);
+}
+
+void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
+    entityInfo->distance = entity->getDistance();
+    entityInfo->x = entity->getXPosition();
+    entityInfo->y = entity->getYPosition();
+    entityInfo->direction = entity->getDirection();
 }

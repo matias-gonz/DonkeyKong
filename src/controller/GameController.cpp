@@ -10,7 +10,6 @@ void GameController::handleEvents(SDL_Event event) {
             player->resetVelX();
             player->addLeftVel();
         } else if (event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d) {
-            printf("entra al right\n");
             player->resetVelX();
             player->addRightVel();
         } else if (event.key.keysym.sym == SDLK_UP or event.key.keysym.sym == SDLK_w) {
