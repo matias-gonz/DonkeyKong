@@ -38,7 +38,7 @@ void Server::update() {
 }
 
 void Server::broadcast() {
-  SDL_Delay(30);
+  SDL_Delay(25);
   this->socket->snd(&this->positions);
 }
 
