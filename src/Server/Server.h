@@ -4,7 +4,6 @@
 #include <SDL2/SDL_events.h>
 #include <netinet/in.h>
 #include <pthread.h>
-
 #include "../model/Game.h"
 #include "../model/Logger.h"
 #include "../Constants.h"
@@ -12,7 +11,8 @@
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"
 #include "../Socket/ServerSocket.h"
-#include "../Queue.h"
+#include "../controller/QueueThrd.h"
+
 
 class Server {
 
@@ -34,6 +34,8 @@ public:
 
     void broadcast();
 
+    void receive();
+
 private:
     ServerSocket *socket;
     Configuration *configuration;
@@ -41,7 +43,7 @@ private:
     GameController *gameController;
     Positions positions;
     void *updateThread(void *socket);
-    cola_t *eventQueue;
+    QueueThrd* eventQueue;
 
     char *port;
     char *ip;

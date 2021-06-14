@@ -1,6 +1,5 @@
 #include "Server.h"
 
-pthread_mutex_t mutex;
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -8,7 +7,7 @@ Server::Server(char *port, char *IP) {
   this->game = new Game(this->configuration);
   this->game->start();
   this->gameController = new GameController(this->game);
-  this->eventQueue = cola_crear();
+  this->eventQueue = new QueueThrd();
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
@@ -17,19 +16,6 @@ Server::Server(char *port, char *IP) {
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
 
-}
-
-void *Server::updateThread(void *socket) {
-  /*
-  auto* s = (ServerSocket*)socket;
-  game->addPlayer();
-  while(true){
-      SDL_Event e;
-      s->receive(&e);
-      SDL_Event* event = new SDL_Event(e);
-      cola_encolar(eventQueue,event);
-  }
-  */
 }
 
 bool Server::isRunning() {
@@ -52,10 +38,8 @@ void Server::update() {
 }
 
 void Server::broadcast() {
-  for (int i = 0; i < this->clientCount; i++) {
-    this->socket->snd(&this->positions);
-  }
-
+  SDL_Delay(30);
+  this->socket->snd(&this->positions);
 }
 
 void *acceptConnections(void *serv) {
@@ -72,36 +56,21 @@ void *hndlEvents(void *serv) {
   }
 }
 
-void Server::start() {
-  /*
-  pthread_t processComandsT;
-  pthread_create(&processComandsT, NULL, reinterpret_cast<void *(*)(void *)>(update), NULL );
-
-  int clientCount = 0;
-  pthread_t client1;
-  pthread_t client2;
-  pthread_t client3;
-  pthread_t client4;
-
-  pthread_t clients[4] = {client1,client2,client3,client4};
-
-  while(clientCount < 4){//en vez de while true hacer que loopee solo por la cantiddad maxima de conexiones permitidas
-      ServerSocket* newServerSocket = new ServerSocket(port, IP);
-      sockets[clientCount] = newServerSocket;
-      pthread_create(&clients[clientCount], NULL, updateThread, (void*)newServerSocket);
-
-      clientCount++;
-
+void* receiveEvents(void * srvr) {
+  auto* server = (Server*)srvr;
+  while(server->isRunning()){
+    server->receive();
   }
-  */
+}
+
+void Server::start() {
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
 
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
-  pthread_join(accepterThrd, NULL);
-
+  pthread_exit(NULL);
 }
 
 bool Server::isFull() {
@@ -113,13 +82,17 @@ void Server::addNewConnection() {
     return;
   }
   int newSocket = this->socket->accept();
-  //Aca instanciar nuevo thread que loopee receives
+
   int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
   if (!tmpSocket) {
     Logger::log(Logger::Error, "Error al reservar memoria. Server::addNewConnection");
     return;
   }
   this->sockets = tmpSocket;
+
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, this);
+
   pthread_mutex_lock(&this->mutex);
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
@@ -128,14 +101,15 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
-  /*
-  SDL_Event* e = static_cast<SDL_Event *>(cola_desencolar(eventQueue));
-  if(!e){
-      return;
-  }
-   */
-  SDL_Event e;
-  if (this->socket->receive(&e) >= 0) {
+  pthread_mutex_lock(&this->mutex);
+  bool empty = this->eventQueue->isEmpty();
+  pthread_mutex_unlock(&this->mutex);
+
+  if (!empty) {
+    pthread_mutex_lock(&this->mutex);
+    SDL_Event e = eventQueue->pop();
+    printf("popped\n");
+    pthread_mutex_unlock(&this->mutex);
     this->gameController->handleEvents(e);
   }
   this->gameController->update();
@@ -146,5 +120,21 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
+  pthread_mutex_lock(&this->mutex);
   this->broadcast();
+  pthread_mutex_unlock(&this->mutex);
+}
+
+
+
+
+void Server::receive(){
+  SDL_Event e;
+  if(this->socket->receive(&e) < 0){
+    return;
+  }
+  pthread_mutex_lock(&this->mutex);
+  printf("pushed\n");
+  this->eventQueue->push(e);
+  pthread_mutex_unlock(&this->mutex);
 }

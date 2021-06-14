@@ -3,8 +3,8 @@
 #include <arpa/inet.h>
 
 Client::Client(char *port, char *IP) {
-  quit = false;
-  gameStarted = false;
+  this->quit = false;
+  this->gameStarted = false;
   this->running = true;
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "client.txt");
@@ -40,8 +40,6 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  if (!this->sended) { return; }
-
   this->socket->receive(&positions);
 }
 
@@ -61,11 +59,10 @@ void Client::send() {
       return;
     }
     if (this->eventIsValid(event)) {
-      this->sended = true;
-      //printf("snd started\n");
+      printf("sending\n");
       this->socket->snd(&event);
-      //printf("snd finished\n");
-      return;
+      printf("sended\n");
+      //return;
     }
   }
 }

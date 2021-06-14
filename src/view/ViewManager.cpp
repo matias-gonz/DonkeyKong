@@ -199,6 +199,8 @@ bool ViewManager::successfulInitialitization() {
 void ViewManager::close() {
     SDL_DestroyWindow(this->currentWindow);
     SDL_DestroyRenderer(this->renderer);
+    this->renderer = NULL;
+    this->currentWindow = NULL;
 }
 
 
@@ -209,59 +211,16 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 void ViewManager::renderWindow(Positions positions) {
     SDL_RenderClear(this->renderer);
 /*
-    //Draw level
-    levelDrawer->draw(game->getLevel());
-
-    //render player
-    Player *player = game->getPlayer();
-    Position* playerPos = player->getPos();
-    int playerDirection = player->getDirection();
-    int playerDistance = player->getDistance();
-
-    //render boss
-    Boss* boss = game->getBoss();
-    Position* bossPos = boss->getPos();
-    //int bossDirection = boss->getDirection();
-    //int bossDistance = boss->getDistance();
-    SDL_Rect bossDstrect = {bossPos->getX(), bossPos->getY(), 170, 119};;
-
-    //render princess
-    Princess* princess = game->getPrincess();
-    Position* princessPos = princess->getPos();
-    SDL_Rect princessDstrect = {princessPos->getX(), princessPos->getY(), (int)(3*texW), (int)(2*texH)};;
-    //int princessDirection = princess->getDirection();
-    //int princessDistance = princess->getDistance();
-
-
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
     //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
-
-
-
-
-    //render enemies
-    EnemyFire** enemyFires = game->getEnemyFires();
-    int enemyFireCount = game->getEnemyFireCount();
-    for(int i = 0; i < enemyFireCount; i++){
-        Position* enemyPos = enemyFires[i]->getPos();
-        int enemyDirection = enemyFires[i]->getDirection();
-        int enemyDistance = enemyFires[i]->getDistance();
-
-        this->enemyAnimator->draw(this->renderer,enemyDirection,enemyPos,enemyDistance);
-    }
-
-    SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
-    SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
 */
 
     this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
     this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
     this->levelDrawer->drawFires(positions.fires, positions.fireCount);
-    this->playerAnimator->draw(this->renderer, positions.playerInfo.direction, positions.playerInfo.x,
-                               positions.playerInfo.y, positions.playerInfo.distance);
+    this->playerAnimator->draw(this->renderer, positions.playerInfo.direction, positions.playerInfo.x,positions.playerInfo.y, positions.playerInfo.distance);
     for (int i = 0; i < positions.fireEnemyCount; i++) {
-        this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
-                                  positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
+        this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
     }
 
     SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
@@ -417,10 +376,10 @@ void ViewManager::loadMedia() {
 
 ViewManager::~ViewManager() {
     delete this->playerAnimator;
-    delete this->renderer;
+    //delete this->renderer;
     delete this->textureManager;
     delete this->enemyAnimator;
-    delete this->currentWindow;
+    //delete this->currentWindow;
     delete this->levelDrawer;
 }
 

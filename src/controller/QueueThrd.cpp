@@ -8,18 +8,19 @@ QueueThrd::QueueThrd() {
 }
 
 void QueueThrd::push(SDL_Event e) {
-  pthread_mutex_lock(&this->mutex);
+  //pthread_mutex_lock(&this->mutex);
   this->queue.push(e);
-  pthread_mutex_unlock(&this->mutex);
+  //pthread_mutex_unlock(&this->mutex);
 }
 
 SDL_Event QueueThrd::pop(){
-  pthread_mutex_lock(&this->mutex);
+  //pthread_mutex_lock(&this->mutex);
   SDL_Event e = this->queue.front();
-  pthread_mutex_unlock(&this->mutex);
+  this->queue.pop();
+  //pthread_mutex_unlock(&this->mutex);
   return e;
 }
 
 bool QueueThrd::isEmpty() {
-  return this->queue.empty();
+  return (this->queue.size() == 0);
 }
