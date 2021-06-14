@@ -113,7 +113,7 @@ void Server::handleEvents() {
 
     this->gameController->handleEvents(e.e,e.clientNum);
 
-    if (e.type == SDL_QUIT) this->quit();
+    if (e.e.type == SDL_QUIT) this->quit();
 
   }
   this->gameController->update();
