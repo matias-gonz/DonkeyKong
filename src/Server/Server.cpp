@@ -139,8 +139,9 @@ void Server::handleEvents() {
     this->gameController->handleEvents(e);
   }
   this->gameController->update();
-  this->positions.playerX = this->game->getPlayer()->getXPosition();
-  this->positions.playerY = this->game->getPlayer()->getYPosition();
+  this->game->getBossInfo(&this->positions.bossInfo);
+  this->game->getPrincessInfo(&this->positions.princessInfo);
+  this->game->getPLayerInfo(&this->positions.playerInfo);
   this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
   this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
   this->game->getFires(this->positions.fires,&this->positions.fireCount);
