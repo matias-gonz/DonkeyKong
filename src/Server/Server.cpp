@@ -3,7 +3,7 @@
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
-  Logger::startLogger(this->configuration, "server.log");
+  Logger::startLogger(this->configuration, "server.txt");
   this->game = new Game(this->configuration);
   this->game->start();
   this->gameController = new GameController(this->game);
@@ -111,6 +111,8 @@ void Server::handleEvents() {
     printf("popped\n");
     pthread_mutex_unlock(&this->mutex);
     this->gameController->handleEvents(e);
+
+    if (e.type == SDL_QUIT) this->quit();
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
@@ -137,4 +139,15 @@ void Server::receive(){
   printf("pushed\n");
   this->eventQueue->push(e);
   pthread_mutex_unlock(&this->mutex);
+}
+
+void Server::quit() {
+    delete configuration;
+    delete game;
+    delete gameController;
+    delete eventQueue;
+    delete socket;
+
+    Logger::log(Logger::Debug, "Servidor cerrado");
+    exit(0);
 }
