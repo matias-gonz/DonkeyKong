@@ -93,6 +93,8 @@ private:
   void initializeTextInputs();
 
   void handleEvents(bool &quit, bool *renderText);
+
+  UsernameBox boxes[MAX_CLIENTS];
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

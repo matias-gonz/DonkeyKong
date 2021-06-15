@@ -22,6 +22,7 @@ void GameController::handleEvents(SDL_Event event, int i) {
             Logger::log(Logger::Debug, "presiono abajo",i);
         } else if (event.key.keysym.sym == SDLK_SPACE) {
             player->jumpUp();
+            printf("%s\n",player->getUsername());
             Logger::log(Logger::Debug, "presiono salto",i);
         } else if (event.key.keysym.sym == SDLK_l) {
             this->game->switchLevel();

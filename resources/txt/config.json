@@ -41,9 +41,13 @@
         {
           "user": "user3",
           "password": "pass3"
+        },
+        {
+          "user": "user4",
+          "password": "pass4"
         }
       ],
-      "user_count": 3
+      "user_count": 4
     }
   }
 }
