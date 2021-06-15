@@ -15,7 +15,7 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = 2;
+  this->clientMax =  MAX_CLIENTS;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -30,7 +30,7 @@ bool Server::isRunning() {
 
 void Server::broadcast() {
   SDL_Delay(25);
-  for(int i = 0; i <=this->clientCount; i++){
+  for (int i = 0; i < this->clientCount; i++) {
     this->socket->snd(&this->positions, this->sockets[i]);
   }
 }
@@ -40,6 +40,7 @@ void Server::broadcastString(char* message) {
     this->socket->sndString(message, this->sockets[i]);
   }
 }
+
 
 void *acceptConnections(void *serv) {
   Server *server = (Server *) serv;
@@ -60,9 +61,9 @@ void *hndlEvents(void *serv) {
 }
 
 void* receiveEvents(void * srvr) {
-  auto* server = (ServerContainer*)srvr;
-  while(server->server->isRunning()){
-    server->server->receive(server->clientNum, server->socketNumber);
+  auto* serverContainer = (ServerContainer*)srvr;
+  while(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
+    serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
   }
 }
 
@@ -91,7 +92,7 @@ bool Server::isFull() {
 }
 
 void Server::addNewConnection() {
-  if (this->clientCount > this->clientMax) {
+  if (this->clientCount >= this->clientMax) {
     return;
   }
   int newSocket = this->socket->accept();
@@ -102,6 +103,10 @@ void Server::addNewConnection() {
   password_str.append(credentials.password);
   std::cout << username << std::endl;
   if (this->configuration->checkCredentials(&username, &password_str)) {
+    /*Aca chequear que este lleno el Lobby y que empice la partida
+    if (!this->started) {
+      this->started = true;
+    }*/
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
 
@@ -123,13 +128,9 @@ void Server::addNewConnection() {
   container->server = this;
   container->clientNum = this->clientCount;
   container->socketNumber = newSocket;
-  pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
   pthread_mutex_lock(&this->mutex);
-
-
-  this->game->addPlayer();
+  this->game->addPlayer(credentials.username);
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
 
@@ -145,6 +146,9 @@ void Server::addNewConnection() {
   }
 
   pthread_mutex_unlock(&this->mutex);
+
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, container);
   //printf("Client count = %i\n",this->clientCount);
 }
 
@@ -162,7 +166,7 @@ void Server::handleEvents() {
 
     this->gameController->handleEvents(e.e,e.clientNum);
 
-    if (e.e.type == SDL_QUIT) this->quit();
+    if(!this->isRunning()) this->quit();
 
   }
   this->gameController->update();
@@ -193,9 +197,6 @@ void Server::receive(int clientNum, int socketNumber) {
   pthread_mutex_unlock(&this->mutex);
 }
 
-bool Server::clientsPlaying() {
-  return (this->game->getPlayerCount() > 0);
-}
 
 void Server::quit() {
     delete configuration;
@@ -206,4 +207,8 @@ void Server::quit() {
 
     Logger::log(Logger::Debug, "Servidor cerrado");
     exit(0);
+}
+
+bool Server::isPlayerConnected(int playerNumber) {
+    return game->isPlayerActive(playerNumber);
 }

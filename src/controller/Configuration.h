@@ -28,6 +28,8 @@ public:
 
   void changeToActiveUser(std::string *inputUser, std::string *inputPass);
 
+    char **getUsers();
+
 private:
   json configuration_json;
   json sprites;

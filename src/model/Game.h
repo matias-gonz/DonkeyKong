@@ -40,7 +40,7 @@ public:
 
     void switchLevel();
 
-    void addPlayer();
+    void addPlayer(char string[20]);
 
     void getPlatforms(PlatformContainer *platforms, int *count);
 
@@ -50,13 +50,17 @@ public:
 
     void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
 
-    void getPLayerInfo(EntityContainer *playerInfo, int *playerCount);
+    void getPLayerInfo(PlayersInformation *playerInfo, int *playerCount);
 
     void getBossInfo(EntityContainer *bossInfo);
 
     void getPrincessInfo(EntityContainer *princessInfo);
 
     int getPlayerCount();
+
+    void updateStatus();
+
+    bool isPlayerActive(int playerNumber);
 
 private:
     EnemyFire **enemyFires = NULL;

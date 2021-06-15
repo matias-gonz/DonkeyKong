@@ -38,6 +38,8 @@ public:
 
   bool goToLobby();
 
+    void checkUsernameBoxes();
+
 private:
   Positions positions;
   ViewManager *viewManagerLogin, *viewManagerGame, *viewManagerLobby;
@@ -52,6 +54,7 @@ private:
 
   bool running;
   bool sended;
+  bool userBoxes[20];
 };
 
 

@@ -9,7 +9,8 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
   this->loadPlatformTexture();
   this->loadLadderTexture();
   this->loadFireTexture();
-  this->loadPlayerTexture();
+  this->loadPlayersTextures();
+  this->loadInactivePlayerTexture();
   this->loadBarrelTexture();
   this->loadEnemyTexture();
   this->loadErrorTexture();
@@ -19,7 +20,9 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
 }
 
 TextureManager::~TextureManager() {
-  delete this->playerTexture;
+  for(int i = 0; i < 5;i++) {
+    delete this->playersTextures[i];
+  }
   delete this->bluePlatformTexture;
   delete this->redPlatformTexture;
   delete this->yellowLadderTexture;
@@ -59,16 +62,22 @@ SDL_Texture *TextureManager::loadTexture(std::string path) {
   return newTexture;
 }
 
-void TextureManager::loadPlayerTexture() {
-  SDL_Texture *textura = NULL;
-  textura = this->loadTexture(this->loadTextureFromJson("player"));
-  Logger::log(Logger::Info, "Se inicia la carga de textura de Player.");
-  if (!textura) {
-    Logger::log(Logger::Error,
-                "Error al abrir archivo \"resources/sprites/sans_walk.png\". TextureManager::loadPlayerTexture\n"
-                "Se cargó una imagen por defecto para el jugador.");
+void TextureManager::loadPlayersTextures() {
+  for(int i = 0; i < 5;i++) {
+    SDL_Texture *textura = NULL;
+    char path[10];
+    strcpy(path,"player_");
+    char i_s = i+1 + '0';
+    strcat(path, &i_s);
+    textura = this->loadTexture(this->loadTextureFromJson(path));
+    Logger::log(Logger::Info, "Se inicia la carga de textura de Player.");
+    if (!textura) {
+      Logger::log(Logger::Error,
+                  "Error al abrir archivo \"resources/sprites/sans_walk.png\". TextureManager::loadPlayerTexture\n"
+                  "Se cargó una imagen por defecto para el jugador.");
+    }
+    this->playersTextures[i] = textura;
   }
-  this->playerTexture = textura;
 }
 
 void TextureManager::loadPlatformTexture() {
@@ -161,7 +170,9 @@ void TextureManager::loadErrorTexture() {
     Logger::log(Logger::Error,
                 "Error al abrir archivo \".resources/sprites/errortexture.png.\". TextureManager::loadErrorTexture");
   }
+
   this->errorTexture = texture;
+
 }
 
 std::string TextureManager::loadTextureFromJson(char const *spritePath) {
@@ -194,8 +205,8 @@ SDL_Texture *TextureManager::getFireTexture() {
   return this->fireTexture;
 }
 
-SDL_Texture *TextureManager::getPlayerTexture() {
-  return this->playerTexture;
+SDL_Texture **TextureManager::getPlayersTextures() {
+  return this->playersTextures;
 }
 
 SDL_Texture *TextureManager::getEnemyTexture() {
@@ -216,4 +227,15 @@ SDL_Texture *TextureManager::getPrincessTexture() {
 
 SDL_Texture *TextureManager::getBarrelTexture() {
   return this->barrelTexture;
+}
+
+SDL_Texture *TextureManager::getInactivePlayerTexture() {
+    return this->inectivePlayerTexture;
+}
+
+void TextureManager::loadInactivePlayerTexture() {
+    SDL_Texture *texture = NULL;
+    texture = this->loadTexture(this->loadTextureFromJson("inactive_player"));
+    if (texture == NULL) printf("No se cargo la textura del jugador inactivo");
+    this->inectivePlayerTexture = texture;
 }

@@ -2,6 +2,15 @@
 #define TALLER_PROG_I_2021_1C_KIWI_CONSTANTS_H
 
 #include "model/Platform.h"
+#include "view/ltexture.h"
+
+#define MAX_CLIENTS 4
+#define HEIGHT 576
+#define WIDTH 1024
+#define LOGIN_HEIGHT 300
+#define LOGIN_WIDTH 450
+#define CONNECTION_LOST_HEIGHT 300
+#define CONNECTION_LOST_WIDTH 450
 
 enum kindOfAnimation {
   left = -1, up = 0, right = 1, jump = 2
@@ -40,6 +49,15 @@ struct EntityContainer {
   int direction;
 };
 
+struct PlayersInformation{
+    int x;
+    int y;
+    int distance;
+    int direction;
+    bool isActive;
+    char username[20];
+};
+
 struct EventContainer {
   SDL_Event e;
   int clientNum;
@@ -54,7 +72,7 @@ struct Positions {
   int fireCount;
   EntityContainer fireEnemies[50];
   int fireEnemyCount;
-  EntityContainer playersInfo[4];
+  PlayersInformation playersInfo[MAX_CLIENTS];
   int playerCount;
   EntityContainer bossInfo;
   EntityContainer princessInfo;
@@ -65,9 +83,12 @@ struct Credentials {
   char password[20];
 };
 
-#define HEIGHT 576
-#define WIDTH 1024
-#define LOGIN_HEIGHT 300
-#define LOGIN_WIDTH 450
+class LTexture;//Forward declaration
+
+struct UsernameBox{
+    LTexture box;
+    char username[20];
+};
+
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_CONSTANTS_H

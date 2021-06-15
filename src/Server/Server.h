@@ -36,6 +36,8 @@ public:
 
   void receive(int clientNum, int socketNumber);
 
+  bool isPlayerConnected(int playerNumber);
+
   void sendPositions();
 
 private:

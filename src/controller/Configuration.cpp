@@ -94,6 +94,19 @@ bool Configuration::checkCredentials(std::string *inputUser, std::string *inputP
   return found;
 }
 
+char **Configuration::getUsers() {
+  char** users = (char**)malloc(this->users.size()*sizeof(char*));
+  for (int i = 0; i < this->users.size(); ++i) {
+    users[i] = (char*)malloc(20*sizeof(char));//20 es la cantidad maxima de caracteres opr usuario
+  }
+  for(int i = 0; i < this->users.size(); i++){
+    const char* aux = this->users[i].username.c_str();
+    strcpy(users[i],aux);
+  }
+  return users;
+
+}
+
 void Configuration::changeToActiveUser(std::string *inputUser, std::string *inputPass) {
   int index;
   for (int i = 0; i < this->users.size(); i++) {

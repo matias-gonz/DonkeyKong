@@ -31,6 +31,8 @@ namespace Logger {
 
     void log(Type logType, const std::string &messsage);
 
+    void log(Type logType, const std::string &message, int playerNumber);
+
     class Log {
     public:
 

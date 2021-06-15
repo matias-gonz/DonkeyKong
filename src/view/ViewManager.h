@@ -54,6 +54,8 @@ public:
 
   std::string returnInputPass();
 
+    void renderConnectionLostWindow(bool b);
+
 private:
 
   SDL_Renderer *renderer;
@@ -102,6 +104,8 @@ private:
   void initializeLobbyTextInputs();
 
   void handleEvents(bool &quit, bool *renderText);
+
+  UsernameBox boxes[MAX_CLIENTS];
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

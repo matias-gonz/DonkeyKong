@@ -13,10 +13,11 @@ private:
     bool isClimbing;
     bool canClimb;
     int gravity;
+    bool active;
 
     static const int VEL = 3;
 public:
-    explicit Player(Position *pos);
+    explicit Player(Position *pos, char *string);
     ~Player();
     void addLeftVel();
 
@@ -54,6 +55,13 @@ public:
     void setCanClimb(bool canClimb);
 
 
+    void stoppedPlaying();
+
+    bool isPlaying();
+
+    char username[20];
+
+    char *getUsername();
 };
 
 

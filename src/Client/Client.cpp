@@ -65,6 +65,13 @@ bool Client::goToLobby() {
 
 void Client::receive() {
   this->socket->receive(&positions, 0);
+  this->socket->receive(&positions,0);
+  if(!socket->isConnected()){
+    this->quit = true;
+    this->running = false;
+    Logger::log(Logger::Debug, "Client has been disconnected");
+    viewManagerGame->renderConnectionLostWindow(false);
+  }
 }
 
 bool Client::gameHasStarted() {
@@ -109,3 +116,4 @@ void Client::render() {
 void Client::setSended(bool b) {
   this->sended = b;
 }
+

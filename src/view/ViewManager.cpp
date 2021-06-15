@@ -88,13 +88,21 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
   this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
 
-  SDL_Texture *playerTexture = this->textureManager->getPlayerTexture();
+  SDL_Texture **playerTextures = this->textureManager->getPlayersTextures();
   bool playerTextureSuccess = true;
-  if (!playerTexture) {
-    playerTexture = this->textureManager->getErrorTexture();
-    playerTextureSuccess = false;
-
+  for (int i = 0; i < 5; i++) {
+    if (!playerTextures[i]) {
+      playerTextures[i] = this->textureManager->getErrorTexture();
+      playerTextureSuccess = false;
+    }
   }
+
+  SDL_Texture *inactivePlayerTexture = this->textureManager->getInactivePlayerTexture();
+  if (!inactivePlayerTexture) {
+    inactivePlayerTexture = this->textureManager->getErrorTexture();
+  }
+
+
   SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
   bool enemyTextureSuccess = true;
   if (!enemyTexture) {
@@ -103,9 +111,26 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   }
 
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-  this->playerAnimator = new PlayerAnimator(playerTexture, success);
+  this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
+  char** users = this->configuration->getUsers();
+  //aca creo boxes
+
+  SDL_Color textColor = {255, 255, 0, 0xFF};
+
+  this->font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  for (int i = 0; i < MAX_CLIENTS; ++i) {
+    //std::string u;
+    //u.append(users[i]);
+    this->boxes[i].box.loadFromRenderedText(users[i],textColor,this->font,this->renderer);
+    strcpy(this->boxes[i].username,users[i]);
+  }
+  //aca libero users
+  for (int i = 0; i < MAX_CLIENTS; ++i) {
+    free(users[i]);
+  }
+  free(users);
   //ESTOS NO FUNKAN
   //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
   //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
@@ -242,13 +267,22 @@ void ViewManager::renderWindow(Positions positions) {
   this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
   this->levelDrawer->drawFires(positions.fires, positions.fireCount);
   for (int i = 0; i < positions.playerCount; i++) {
+    int boxIndex;
+    for (int j = 0; j < MAX_CLIENTS; ++j) {
+      if(strcmp(this->boxes[j].username,positions.playersInfo[i].username) == 0){
+        boxIndex = j;
+        break;
+      }
+    }
     this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x,
-                               positions.playersInfo[i].y, positions.playersInfo[i].distance);
+                               positions.playersInfo[i].y, positions.playersInfo[i].distance,
+                               positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
   }
   for (int i = 0; i < positions.fireEnemyCount; i++) {
     this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
                               positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
   }
+
 
   SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
   SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
@@ -449,6 +483,40 @@ ViewManager::~ViewManager() {
   delete this->enemyAnimator;
   //delete this->currentWindow;
   delete this->levelDrawer;
+}
+
+void ViewManager::renderConnectionLostWindow(bool quit) {
+
+  this->close();
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Connection lost", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                               CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
+
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Server Disconnected",textColor,font,this->renderer);
+
+  SDL_Event e;
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }
+
 }
 
 
