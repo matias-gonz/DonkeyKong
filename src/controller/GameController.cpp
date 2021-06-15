@@ -38,7 +38,8 @@ void GameController::handleEvents(SDL_Event event, int i) {
         }
     }
     if (event.type == SDL_QUIT){
-        game->quit();
+        player->stoppedPlaying();
+        game->updateStatus();
     }
 }
 
