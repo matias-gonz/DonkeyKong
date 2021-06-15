@@ -34,6 +34,8 @@ public:
 
   void receive(int clientNum, int socketNumber);
 
+  bool isPlayerConnected(int playerNumber);
+
 private:
   ServerSocket *socket;
   Configuration *configuration;

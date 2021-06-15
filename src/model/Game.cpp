@@ -224,3 +224,7 @@ void Game::updateStatus() {
     }
     if(playerActive == 0) this->quit();
 }
+
+bool Game::isPlayerActive(int playerNumber) {
+    return players[playerNumber]->isPlaying();
+}

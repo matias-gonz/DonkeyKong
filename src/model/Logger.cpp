@@ -83,6 +83,11 @@ namespace Logger {
         glog->addLog(logType, message);
     }
 
+    void log(Type logType, const std::string &message, int playerNumber) {
+        std::string messageWithPlayerNumber = "Jugador numero " + std::to_string(playerNumber) + " : " + message ;
+        glog->addLog(logType, messageWithPlayerNumber);
+    }
+
     Log::Log(const std::string &path) : logFile{} {
         logFile.open(path, std::ofstream::app);
     }
