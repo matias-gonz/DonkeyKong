@@ -48,6 +48,7 @@ private:
   int clientMax;
   int *sockets;
   pthread_mutex_t mutex;
+  bool gameStarted;
   bool started;
 
   bool clientsPlaying();
