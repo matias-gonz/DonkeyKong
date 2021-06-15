@@ -3,7 +3,7 @@
 
 #include "SDL2/SDL_image.h"
 #include "../../resources/libraries/json.hpp"
-
+#include <stdlib.h>
 using json = nlohmann::json;
 
 class TextureManager {
@@ -15,7 +15,7 @@ public:
 
   SDL_Texture *loadTexture(std::string path);
 
-  SDL_Texture *getPlayerTexture();
+  SDL_Texture **getPlayersTextures();
 
   SDL_Texture *getPlatformTexture(int levelnum);
 
@@ -37,7 +37,7 @@ private:
   SDL_Renderer *renderer;
   json sprites;
 
-  void loadPlayerTexture();
+  void loadPlayersTextures();
 
   void loadPlatformTexture();
 
@@ -55,7 +55,7 @@ private:
 
   std::string loadTextureFromJson(char const *spritePath);
 
-  SDL_Texture *playerTexture;
+  SDL_Texture *playersTextures[6];
   SDL_Texture *fireTexture;
   SDL_Texture *enemyTexture;
   SDL_Texture *yellowLadderTexture;

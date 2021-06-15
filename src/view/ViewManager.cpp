@@ -9,7 +9,7 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-
+/*
 ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width,
                          int height, bool fullscreen) {
     this->screen_width = width;
@@ -53,14 +53,14 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
     }
 
     //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-    this->playerAnimator = new PlayerAnimator(playerTexture, success);
+    this->playerAnimator = new PlayerAnimator(playerTextures, success);
     this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
     //ESTOS NO FUNKAN
     //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
     //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
 }
-
+*/
 ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height,
                          bool fullscreen) {
     this->screen_width = width;
@@ -88,12 +88,13 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
     this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
 
-    SDL_Texture *playerTexture = this->textureManager->getPlayerTexture();
+    SDL_Texture **playerTextures = this->textureManager->getPlayersTextures();
     bool playerTextureSuccess = true;
-    if (!playerTexture) {
-        playerTexture = this->textureManager->getErrorTexture();
+    for(int i = 0;i < 5;i++) {
+      if (!playerTextures[i]) {
+        playerTextures[i] = this->textureManager->getErrorTexture();
         playerTextureSuccess = false;
-
+      }
     }
     SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
     bool enemyTextureSuccess = true;
@@ -103,7 +104,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     }
 
     //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-    this->playerAnimator = new PlayerAnimator(playerTexture, success);
+    this->playerAnimator = new PlayerAnimator(playerTextures, success);
     this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
     //ESTOS NO FUNKAN
@@ -219,7 +220,8 @@ void ViewManager::renderWindow(Positions positions) {
     this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
     this->levelDrawer->drawFires(positions.fires, positions.fireCount);
     for(int i =0; i < positions.playerCount; i++){
-      this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x, positions.playersInfo[i].y, positions.playersInfo[i].distance);
+      this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x,
+                                 positions.playersInfo[i].y, positions.playersInfo[i].distance, i);
     }
         for (int i = 0; i < positions.fireEnemyCount; i++) {
         this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,positions.fireEnemies[i].y, positions.fireEnemies[i].distance);

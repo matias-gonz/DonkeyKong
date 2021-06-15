@@ -8,7 +8,11 @@
     "game": {
       "probability_enemies": 5,
       "sprites": {
-        "player": "resources/sprites/sans_walk.png",
+        "player_1": "resources/sprites/sans_walk_1.png",
+        "player_2": "resources/sprites/sans_walk_2.png",
+        "player_3": "resources/sprites/sans_walk_3.png",
+        "player_4": "resources/sprites/sans_walk_4.png",
+        "player_5": "resources/sprites/sans_walk_5.png",
         "fire": "resources/sprites/fire.png",
         "barrel": "resources/sprites/fire.png",
         "yellow_stair": "resources/sprites/yellowladder.png",

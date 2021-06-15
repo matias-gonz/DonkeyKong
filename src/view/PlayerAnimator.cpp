@@ -1,7 +1,7 @@
 #include "PlayerAnimator.h"
 
-PlayerAnimator::PlayerAnimator(SDL_Texture* texture,bool success) {
-    this->texture = texture;
+PlayerAnimator::PlayerAnimator(SDL_Texture** textures,bool success) {
+    this->textures = textures;
     this->success = success;
 }
 
@@ -9,7 +9,7 @@ PlayerAnimator::PlayerAnimator() {
 
 }
 
-void PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX,int plyrY, int distance) {
+void PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX, int plyrY, int distance, int i) {
     SDL_Rect* dstrect = new SDL_Rect();
     dstrect->x = plyrX;
     dstrect->y = plyrY;
@@ -31,10 +31,10 @@ void PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyr
 
 
     if(kindOfAnimation == right or kindOfAnimation == left){
-        this->drawWalking(distance, amount, srcrect, dstrect, pRenderer,kindOfAnimation);
+      this->drawWalking(distance, amount, srcrect, dstrect, pRenderer, kindOfAnimation, i);
     }
     else if(kindOfAnimation == up){
-        this->drawClimbing(distance, amount, srcrect, dstrect, pRenderer);
+      this->drawClimbing(distance, amount, srcrect, dstrect, pRenderer, i);
     }
     else if(kindOfAnimation == jump){
         this->drawJumping();
@@ -46,7 +46,8 @@ void PlayerAnimator::drawJumping() {
 }
 
 void
-PlayerAnimator::drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer) {
+PlayerAnimator::drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer,
+                             int i) {
     dstrect->w = plyrTex.climbWidth;
     dstrect->h = plyrTex.climbHeight;
     if(srcrect != NULL) {
@@ -55,11 +56,12 @@ PlayerAnimator::drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Re
         srcrect->w = plyrTex.climbWidth;
         srcrect->h = plyrTex.climbHeight;
     }
-    SDL_RenderCopy(pRenderer, texture, srcrect, dstrect);
+    SDL_RenderCopy(pRenderer, textures[i], srcrect, dstrect);
 }
 
-void PlayerAnimator::drawWalking(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect,
-                                      SDL_Renderer *pRenderer,int kindOfAnimation) {
+void
+PlayerAnimator::drawWalking(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer,
+                            int kindOfAnimation, int i) {
     dstrect->w = plyrTex.walkWidth;
     dstrect->h = plyrTex.walkHeight;
     if(srcrect != NULL) {
@@ -72,6 +74,6 @@ void PlayerAnimator::drawWalking(int distance, int amount, SDL_Rect *srcrect, SD
         srcrect->w = plyrTex.walkWidth;
         srcrect->h = plyrTex.walkHeight;
     }
-    SDL_RenderCopy(pRenderer, texture, srcrect, dstrect);
+    SDL_RenderCopy(pRenderer, textures[i], srcrect, dstrect);
 
 }
