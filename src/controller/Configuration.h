@@ -26,6 +26,8 @@ public:
 
   bool checkCredentials(std::string *inputUser, std::string *inputPass);
 
+    char **getUsers();
+
 private:
   json configuration_json;
   json sprites;

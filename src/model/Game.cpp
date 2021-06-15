@@ -127,9 +127,9 @@ void Game::resolveCollisions() {
   this->level->resolveCollisions(this->players,this->playerCount, this->enemyFires,this->enemyFireCount);
 }
 
-void Game::addPlayer() {
+void Game::addPlayer(char username[20]) {
   this->players = (Player **) realloc(this->players, (this->playerCount + 1) * sizeof(Player *));
-  this->players[this->playerCount] = new Player(new Position(200, 525));
+  this->players[this->playerCount] = new Player(new Position(200, 525), username);
   this->playerCount++;
 }
 
@@ -181,6 +181,7 @@ void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
       playerInfo[i].y = players[i]->getYPosition();
       playerInfo[i].direction = players[i]->getDirection();
       playerInfo[i].isActive = players[i]->isPlaying();
+      strcpy(playerInfo[i].username,players[i]->getUsername());
   }
   *playerCount = this->playerCount;
 }

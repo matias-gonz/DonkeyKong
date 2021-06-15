@@ -87,3 +87,4 @@ void Client::render() {
 void Client::setSended(bool b) {
   this->sended = b;
 }
+
