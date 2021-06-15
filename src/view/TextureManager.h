@@ -33,6 +33,8 @@ public:
 
   SDL_Texture *getErrorTexture();
 
+    SDL_Texture *getInactivePlayerTexture();
+
 private:
   SDL_Renderer *renderer;
   json sprites;
@@ -70,6 +72,9 @@ private:
   SDL_Texture *princessTexture;
 
   SDL_Texture *barrelTexture;
+  SDL_Texture *inectivePlayerTexture;
+
+    void loadInactivePlayerTexture();
 };
 
 

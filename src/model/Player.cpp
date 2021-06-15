@@ -14,6 +14,7 @@ Player::Player(Position* pos) : Entity(pos) {
     this->gravity = 1;
     this->distance = 0;
     this->direction = left;
+    this->active =true;
 }
 void Player::update() {
 
@@ -129,4 +130,12 @@ void Player::setCanClimb(bool canClimb) {
         this->isClimbing = false;
     }
     this->canClimb = canClimb;
+}
+
+void Player::stoppedPlaying() {
+    this->active = false;
+}
+
+bool Player::isPlaying() {
+    return this->active;
 }

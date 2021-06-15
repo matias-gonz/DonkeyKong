@@ -96,6 +96,13 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
         playerTextureSuccess = false;
       }
     }
+
+    SDL_Texture *inactivePlayerTexture =  this->textureManager->getInactivePlayerTexture();
+    if (!inactivePlayerTexture) {
+        inactivePlayerTexture = this->textureManager->getErrorTexture();
+    }
+
+
     SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
     bool enemyTextureSuccess = true;
     if (!enemyTexture) {
@@ -104,7 +111,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     }
 
     //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-    this->playerAnimator = new PlayerAnimator(playerTextures, success);
+    this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture ,success);
     this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
     //ESTOS NO FUNKAN
@@ -221,7 +228,7 @@ void ViewManager::renderWindow(Positions positions) {
     this->levelDrawer->drawFires(positions.fires, positions.fireCount);
     for(int i =0; i < positions.playerCount; i++){
       this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x,
-                                 positions.playersInfo[i].y, positions.playersInfo[i].distance, i);
+                                 positions.playersInfo[i].y, positions.playersInfo[i].distance, positions.playersInfo[i].isActive, i);
     }
         for (int i = 0; i < positions.fireEnemyCount; i++) {
         this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,positions.fireEnemies[i].y, positions.fireEnemies[i].distance);

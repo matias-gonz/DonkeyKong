@@ -174,9 +174,13 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
   }
 }
 
-void Game::getPLayerInfo(EntityContainer *playerInfo, int *playerCount) {
+void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
   for(int i =0; i < this->playerCount; i++){
-    this->getEntityInfo(&playerInfo[i], this->players[i]);
+      playerInfo[i].distance = players[i]->getDistance();
+      playerInfo[i].x = players[i]->getXPosition();
+      playerInfo[i].y = players[i]->getYPosition();
+      playerInfo[i].direction = players[i]->getDirection();
+      playerInfo[i].isActive = players[i]->isPlaying();
   }
   *playerCount = this->playerCount;
 }
@@ -199,6 +203,7 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->direction = entity->getDirection();
 }
 
+
 bool Game::anyPlayerWon() {
   for(int i = 0; i < this->playerCount; i++){
     if(this->level->playerWon(this->players[i])){
@@ -210,4 +215,12 @@ bool Game::anyPlayerWon() {
 
 int Game::getPlayerCount() {
   return this->playerCount;
+}
+
+void Game::updateStatus() {
+    int playerActive = 0;
+    for(int i = 0; i < this->playerCount;i++){
+        if(players[i]->isPlaying()) playerActive++;
+    }
+    if(playerActive == 0) this->quit();
 }

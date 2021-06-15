@@ -10,6 +10,7 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
   this->loadLadderTexture();
   this->loadFireTexture();
   this->loadPlayersTextures();
+  this->loadInactivePlayerTexture();
   this->loadBarrelTexture();
   this->loadEnemyTexture();
   this->loadErrorTexture();
@@ -226,4 +227,15 @@ SDL_Texture *TextureManager::getPrincessTexture() {
 
 SDL_Texture *TextureManager::getBarrelTexture() {
   return this->barrelTexture;
+}
+
+SDL_Texture *TextureManager::getInactivePlayerTexture() {
+    return this->inectivePlayerTexture;
+}
+
+void TextureManager::loadInactivePlayerTexture() {
+    SDL_Texture *texture = NULL;
+    texture = this->loadTexture(this->loadTextureFromJson("inactive_player"));
+    if (texture == NULL) printf("No se cargo la textura del jugador inactivo");
+    this->inectivePlayerTexture = texture;
 }

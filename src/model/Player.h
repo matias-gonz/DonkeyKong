@@ -13,6 +13,7 @@ private:
     bool isClimbing;
     bool canClimb;
     int gravity;
+    bool active;
 
     static const int VEL = 3;
 public:
@@ -54,6 +55,9 @@ public:
     void setCanClimb(bool canClimb);
 
 
+    void stoppedPlaying();
+
+    bool isPlaying();
 };
 
 

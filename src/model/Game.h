@@ -50,13 +50,15 @@ public:
 
     void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
 
-    void getPLayerInfo(EntityContainer *playerInfo, int *playerCount);
+    void getPLayerInfo(PlayersInformation *playerInfo, int *playerCount);
 
     void getBossInfo(EntityContainer *bossInfo);
 
     void getPrincessInfo(EntityContainer *princessInfo);
 
     int getPlayerCount();
+
+    void updateStatus();
 
 private:
     EnemyFire **enemyFires = NULL;
