@@ -8,17 +8,18 @@
 class PlayerAnimator {
 private:
     int direction;
-    SDL_Texture* texture;
+    SDL_Texture** textures;
     bool success;
     PlayerTexture plyrTex;
-    void drawWalking(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer,int kindOfAnimation);
-    void drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer);
+    void drawWalking(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer,
+                     int kindOfAnimation, int i);
+    void drawClimbing(int distance, int amount, SDL_Rect *srcrect, SDL_Rect *dstrect, SDL_Renderer *pRenderer, int i);
     void drawJumping();
 public:
 
     PlayerAnimator();
-    void draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX,int plyrY, int distance);
-    explicit PlayerAnimator(SDL_Texture *pTexture,bool success);
+    void draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX, int plyrY, int distance, int i);
+    explicit PlayerAnimator(SDL_Texture **pTextures,bool success);
 };
 
 
