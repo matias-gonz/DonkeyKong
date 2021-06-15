@@ -60,6 +60,8 @@ public:
 
     void updateStatus();
 
+    bool isPlayerActive(int playerNumber);
+
 private:
     EnemyFire **enemyFires = NULL;
     int enemyFireCount = 0;

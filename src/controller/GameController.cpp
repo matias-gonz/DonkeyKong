@@ -9,37 +9,44 @@ void GameController::handleEvents(SDL_Event event, int i) {
         if (event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a) {
             player->resetVelX();
             player->addLeftVel();
+            Logger::log(Logger::Debug, "presiono izquierda",i);
         } else if (event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d) {
             player->resetVelX();
             player->addRightVel();
+            Logger::log(Logger::Debug, "presiono derecha",i);
         } else if (event.key.keysym.sym == SDLK_UP or event.key.keysym.sym == SDLK_w) {
             player->startClimbing(-1);
+            Logger::log(Logger::Debug, "presiono arriba",i);
         } else if (event.key.keysym.sym == SDLK_DOWN or event.key.keysym.sym == SDLK_s) {
             player->startClimbing(1);
+            Logger::log(Logger::Debug, "presiono abajo",i);
         } else if (event.key.keysym.sym == SDLK_SPACE) {
-            Logger::log(Logger::Debug, "Personaje 1 salto");
             player->jumpUp();
+            Logger::log(Logger::Debug, "presiono salto",i);
         } else if (event.key.keysym.sym == SDLK_l) {
-            Logger::log(Logger::Info, "Se switchea nivel");
             this->game->switchLevel();
+            Logger::log(Logger::Debug, "presiono paso de nivel",i);
         }
     }
     if (event.type == SDL_KEYUP) {
         if (event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a) {
             player->resetVelX();
-            Logger::log(Logger::Info, "Se mueve a la izquierda");
+            Logger::log(Logger::Debug, "se mueve a la izquierda",i);
         }else if (event.key.keysym.sym == SDLK_RIGHT or event.key.keysym.sym == SDLK_d) {
             player->resetVelX();
-            Logger::log(Logger::Info, "Se mueve a la derecha");
+            Logger::log(Logger::Debug, "se mueve a la derecha",i);
         }else if (event.key.keysym.sym == SDLK_UP or event.key.keysym.sym == SDLK_w) {
             player->resetVelY();
+            Logger::log(Logger::Debug, "intenta escalar hacia arriba",i);
         }else if (event.key.keysym.sym == SDLK_DOWN or event.key.keysym.sym == SDLK_s) {
             player->resetVelY();
+            Logger::log(Logger::Debug, "intenta escalar hacia abajo",i);
         }
     }
     if (event.type == SDL_QUIT){
         player->stoppedPlaying();
         game->updateStatus();
+        Logger::log(Logger::Info, "se desconecto",i);
     }
 }
 

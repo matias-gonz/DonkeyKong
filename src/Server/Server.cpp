@@ -53,7 +53,7 @@ void *hndlEvents(void *serv) {
 
 void* receiveEvents(void * srvr) {
   auto* server = (ServerContainer*)srvr;
-  while(server->server->isRunning()){
+  while(server->server->isPlayerConnected(server->clientNum)){
     server->server->receive(server->clientNum, server->socketNumber);
   }
 }
@@ -104,14 +104,15 @@ void Server::addNewConnection() {
   container->server = this;
   container->clientNum = this->clientCount;
   container->socketNumber = newSocket;
-  pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
   pthread_mutex_lock(&this->mutex);
   this->game->addPlayer();
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
   pthread_mutex_unlock(&this->mutex);
+
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, container);
   //printf("Client count = %i\n",this->clientCount);
 }
 
@@ -173,4 +174,8 @@ void Server::quit() {
 
     Logger::log(Logger::Debug, "Servidor cerrado");
     exit(0);
+}
+
+bool Server::isPlayerConnected(int playerNumber) {
+    return game->isPlayerActive(playerNumber);
 }
