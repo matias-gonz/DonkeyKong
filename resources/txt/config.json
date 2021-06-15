@@ -13,6 +13,7 @@
         "player_3": "resources/sprites/sans_walk_3.png",
         "player_4": "resources/sprites/sans_walk_4.png",
         "player_5": "resources/sprites/sans_walk_5.png",
+        "inactive_player": "resources/sprites/sans_disconnect.png",
         "fire": "resources/sprites/fire.png",
         "barrel": "resources/sprites/fire.png",
         "yellow_stair": "resources/sprites/yellowladder.png",
