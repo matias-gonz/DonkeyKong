@@ -39,14 +39,14 @@ int ServerSocket::snd(void *positions, int sckt) {
     return 0;
 }
 
-int ServerSocket::receive(void *event) {
+int ServerSocket::receive(void *event, int sckt) {
     int total_bytes_receive = 0;
     int bytes_receive = 0;
     int receive_data_size = sizeof(SDL_Event);
     bool client_socket_still_open = true;
 
    while ((receive_data_size > bytes_receive) && client_socket_still_open) {
-        bytes_receive = recv(this->new_socket, ((SDL_Event *) event + total_bytes_receive),
+        bytes_receive = recv(sckt, ((SDL_Event *) event + total_bytes_receive),
                              (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
         if (bytes_receive < 0) { // Error
             return bytes_receive;

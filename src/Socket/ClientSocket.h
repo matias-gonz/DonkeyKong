@@ -11,7 +11,7 @@ public:
 
   bool isConnected();
   int snd(void *event, int sckt);
-  int receive(void *positions);
+  int receive(void *positions, int sckt);
 
 private:
   int socketClient;

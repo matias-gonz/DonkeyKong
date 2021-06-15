@@ -10,7 +10,7 @@ public:
 
     ServerSocket(char *port, char *IP,int maxConnections);
 
-    int receive(void *event);
+    int receive(void *event, int sckt);
 
     int snd(void *positions, int sckt);
 private:

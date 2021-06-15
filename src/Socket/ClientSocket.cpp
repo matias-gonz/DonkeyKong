@@ -16,7 +16,7 @@ ClientSocket::ClientSocket(char *port, char *IP){
 }
 
 
-int ClientSocket::receive(void *positions) {
+int ClientSocket::receive(void *positions, int sckt) {
     int total_bytes_receive = 0;
     int bytes_receive = 0;
     int receive_data_size = sizeof(Positions);

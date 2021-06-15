@@ -32,7 +32,7 @@ public:
 
     void broadcast();
 
-    void receive(int clientNum);
+    void receive(int clientNum, int socketNumber);
 
 private:
     ServerSocket *socket;

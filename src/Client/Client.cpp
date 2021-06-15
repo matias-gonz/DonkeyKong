@@ -40,7 +40,7 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  this->socket->receive(&positions);
+  this->socket->receive(&positions,0);
 }
 
 bool Client::gameHasStarted() {

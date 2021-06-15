@@ -3,6 +3,7 @@
 struct ServerContainer{
     Server* server;
     int clientNum;
+    int socketNumber;
 };
 
 Server::Server(char *port, char *IP) {
@@ -53,7 +54,7 @@ void *hndlEvents(void *serv) {
 void* receiveEvents(void * srvr) {
   auto* server = (ServerContainer*)srvr;
   while(server->server->isRunning()){
-    server->server->receive(server->clientNum);
+    server->server->receive(server->clientNum, server->socketNumber);
   }
 }
 
@@ -87,6 +88,7 @@ void Server::addNewConnection() {
   ServerContainer* container = new ServerContainer();
   container->server = this;
   container->clientNum = this->clientCount;
+  container->socketNumber = newSocket;
   pthread_t receiveThread;
   pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
@@ -130,9 +132,9 @@ void Server::handleEvents() {
 }
 
 
-void Server::receive(int clientNum) {
+void Server::receive(int clientNum, int socketNumber) {
   SDL_Event e;
-  if(this->socket->receive(&e) < 0){
+  if(this->socket->receive(&e,socketNumber) < 0){
     return;
   }
   EventContainer event;
