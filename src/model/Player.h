@@ -17,7 +17,7 @@ private:
 
     static const int VEL = 3;
 public:
-    explicit Player(Position *pos);
+    explicit Player(Position *pos, char *string);
     ~Player();
     void addLeftVel();
 
@@ -58,6 +58,10 @@ public:
     void stoppedPlaying();
 
     bool isPlaying();
+
+    char username[20];
+
+    char *getUsername();
 };
 
 

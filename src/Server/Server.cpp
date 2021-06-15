@@ -52,9 +52,9 @@ void *hndlEvents(void *serv) {
 }
 
 void* receiveEvents(void * srvr) {
-  auto* server = (ServerContainer*)srvr;
-  while(server->server->isPlayerConnected(server->clientNum)){
-    server->server->receive(server->clientNum, server->socketNumber);
+  auto* serverContainer = (ServerContainer*)srvr;
+  while(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
+    serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
   }
 }
 
@@ -106,7 +106,7 @@ void Server::addNewConnection() {
   container->socketNumber = newSocket;
 
   pthread_mutex_lock(&this->mutex);
-  this->game->addPlayer();
+  this->game->addPlayer(credentials.username);
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
   pthread_mutex_unlock(&this->mutex);

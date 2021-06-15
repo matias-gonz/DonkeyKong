@@ -36,6 +36,8 @@ public:
 
   void checkValid();
 
+    void checkUsernameBoxes();
+
 private:
   Positions positions;
   ViewManager *viewManagerLogin, *viewManagerGame;
@@ -50,6 +52,7 @@ private:
 
   bool running;
   bool sended;
+  bool userBoxes[20];
 };
 
 

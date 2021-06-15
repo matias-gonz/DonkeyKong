@@ -40,7 +40,7 @@ public:
 
     void switchLevel();
 
-    void addPlayer();
+    void addPlayer(char string[20]);
 
     void getPlatforms(PlatformContainer *platforms, int *count);
 
