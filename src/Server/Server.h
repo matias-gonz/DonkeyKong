@@ -18,43 +18,43 @@ class Server {
 
 public:
 
-    Server(char *port, char *IP);
+  Server(char *port, char *IP);
 
-    bool isRunning();
+  bool isRunning();
 
-    void start();
+  void start();
 
-    bool isFull();
+  bool isFull();
 
-    void addNewConnection();
+  void addNewConnection();
 
-    void handleEvents();
+  void handleEvents();
 
-    void broadcast();
+  void broadcast();
 
-    void receive(int clientNum, int socketNumber);
+  void receive(int clientNum, int socketNumber);
 
 private:
-    ServerSocket *socket;
-    Configuration *configuration;
-    Game *game;
-    GameController *gameController;
-    Positions positions;
-    QueueThrd* eventQueue;
+  ServerSocket *socket;
+  Configuration *configuration;
+  Game *game;
+  GameController *gameController;
+  Positions positions;
+  QueueThrd *eventQueue;
 
-    char *port;
-    char *ip;
-    int clientCount;
-    int clientMax;
-    int *sockets;
-    pthread_mutex_t mutex;
+  char *port;
+  char *ip;
+  int clientCount;
+  int clientMax;
+  int *sockets;
+  pthread_mutex_t mutex;
+  bool started;
 
+  bool clientsPlaying();
 
-    bool clientsPlaying();
+  bool _clientsPlaying;
 
-    bool _clientsPlaying;
-
-    void quit();
+  void quit();
 
 };
 

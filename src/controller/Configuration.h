@@ -6,6 +6,7 @@
 
 #include "../../resources/libraries/json.hpp"
 #include "../view/TextureManager.h"
+#include "../Constants.h"
 
 using json = nlohmann::json;
 
@@ -23,6 +24,8 @@ public:
 
   bool isDefault();
 
+  bool checkCredentials(std::string *inputUser, std::string *inputPass);
+
 private:
   json configuration_json;
   json sprites;
@@ -31,6 +34,13 @@ private:
   json levels;
   int enemiesCount;
   bool loadsDefault = false;
+  int userCount;
+  struct User {
+    std::string username;
+    std::string password;
+  };
+  User user;
+  std::vector<User> users;
 
   void setGameConfig();
 

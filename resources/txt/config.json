@@ -2,7 +2,7 @@
   "configuration": {
     "log": {
       "ERROR": true,
-      "DEBUG": false,
+      "DEBUG": true,
       "INFO": true
     },
     "game": {
@@ -23,7 +23,22 @@
       "levels": {
         "level1": "src/model/levels/level1.json",
         "level2": "src/model/levels/level2.json"
-      }
+      },
+      "users": [
+        {
+          "user": "user1",
+          "password": "pass1"
+        },
+        {
+          "user": "user2",
+          "password": "pass2"
+        },
+        {
+          "user": "user3",
+          "password": "pass3"
+        }
+      ],
+      "user_count": 3
     }
   }
 }

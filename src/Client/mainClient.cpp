@@ -1,7 +1,6 @@
 #include "mainClient.h"
 #include "Client.h"
 
-
 int mainClient(char *IP, char *port) {
   Client *client = new Client(port, IP);
 
@@ -14,6 +13,5 @@ int mainClient(char *IP, char *port) {
     client->receive();
     client->render();
   }
-
   return 0;
 }
