@@ -32,7 +32,11 @@ public:
 
   void broadcast();
 
+  void broadcastString(char* message);
+
   void receive(int clientNum, int socketNumber);
+
+  void sendPositions();
 
 private:
   ServerSocket *socket;
@@ -51,11 +55,11 @@ private:
   bool gameStarted;
   bool started;
 
-  bool clientsPlaying();
-
-  bool _clientsPlaying;
-
   void quit();
+
+  void gameStart();
+
+
 
 };
 

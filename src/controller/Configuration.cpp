@@ -103,5 +103,4 @@ void Configuration::changeToActiveUser(std::string *inputUser, std::string *inpu
     }
   }
   for (int i = index; i < this->users.size() - 1; i++) this->users[i] = this->users[i + 1];
-
 }

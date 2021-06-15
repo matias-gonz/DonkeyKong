@@ -97,6 +97,8 @@ int ClientSocket::sndCredentials(void *credentials) {
 }
 
 char *ClientSocket::rcvString(int socketNumber) {
+  char* empty = "";
+  strcpy(this->buffer, empty);
   valread = ::recv(this->server_fd, buffer, 1024, 0);
   return buffer;
 }

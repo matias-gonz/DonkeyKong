@@ -18,6 +18,7 @@ void LoginController::handle(LoginButton *sendButton, std::string *inputUser, st
     char* message = credentials.getSocket()->rcvString(0);
     //Check if the server authenticated wrong the user and pass
     bool check = !strcmp(message, "Failed connection");
+
     valid = !check;
   }
 }

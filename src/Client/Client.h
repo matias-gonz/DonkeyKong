@@ -36,11 +36,13 @@ public:
 
   void checkValid();
 
+  bool goToLobby();
+
 private:
   Positions positions;
-  ViewManager *viewManagerLogin, *viewManagerGame;
+  ViewManager *viewManagerLogin, *viewManagerGame, *viewManagerLobby;
 
-  bool quit, gameStarted;
+  bool quit, gameStarted, isInLobby;
   LoginController *loginController;
 
   ClientSocket *socket;

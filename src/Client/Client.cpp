@@ -7,6 +7,7 @@ Client::Client(char *port, char *IP) {
   this->gameStarted = false;
   this->running = true;
   this->configuration = new Configuration();
+  this->isInLobby = false;
   Logger::startLogger(this->configuration, "client.txt");
 
   this->socket = new ClientSocket(port, IP);
@@ -15,13 +16,13 @@ Client::Client(char *port, char *IP) {
 bool Client::checkCredentials() {
   std::string inputUser;
   std::string inputPass;
-  credentials* credentials_ins = new credentials();
+  credentials *credentials_ins = new credentials();
   LoginButton *sendButton = new LoginButton();
 
   if (this->socket->isConnected()) {
     this->loginController = new LoginController();
     this->viewManagerLogin = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                        SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
+                                             SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
 
     while (!quit) {
       viewManagerLogin->renderLoginWindow(quit);
@@ -29,20 +30,41 @@ bool Client::checkCredentials() {
       inputPass = viewManagerLogin->returnInputPass();
       credentials_ins->initialize(inputUser, inputPass, this->socket);
       loginController->handle(sendButton, &inputUser, &inputPass, *credentials_ins);
+
       if (loginController->isValid()) {
         viewManagerLogin->close();
-        // delete viewManagerLogin;
-        gameStarted = true;
-        this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+        this->isInLobby = true;
+        quit = true;
       }
     }
   }
-  return gameStarted;
+  return this->isInLobby;
+}
+
+bool Client::goToLobby() {
+  //view manager lobby
+  this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
+                                           SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
+  viewManagerLobby->renderLobbyWindow();
+
+  while (!gameStarted) {
+    char *message = this->socket->rcvString(0);
+    //Check if the server authenticated wrong the user and pass
+    bool check = !strcmp(message, "game completely");
+    if (check) gameStarted = true;
+  }
+  if (gameStarted) {
+    viewManagerLobby->close();
+    // delete viewManagerLogin;
+    this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+    return false;
+  }
+  return true;
 }
 
 void Client::receive() {
-  this->socket->receive(&positions,0);
+  this->socket->receive(&positions, 0);
 }
 
 bool Client::gameHasStarted() {
@@ -52,7 +74,7 @@ bool Client::gameHasStarted() {
 void Client::checkValid() {
 }
 
-void Client::sendString(char* string) {
+void Client::sendString(char *string) {
   this->socket->sndString(string, 0);
 }
 
@@ -62,7 +84,7 @@ void Client::send() {
   while (SDL_PollEvent(&event) != 0) {
     if (event.type == SDL_QUIT) {
       this->running = false;
-      this->socket->snd(&event,0);
+      this->socket->snd(&event, 0);
       return;
     }
     if (this->eventIsValid(event)) {

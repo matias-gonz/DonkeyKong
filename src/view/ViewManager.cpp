@@ -138,6 +138,29 @@ ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int h
   }
 }
 
+ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int height) {
+
+  this->screen_width = width;
+  this->screen_height = height;
+  this->hasDefaultConfig = false;
+  this->isLobbyView = true;
+  this->success = true;
+
+  int flags = 0;
+
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->currentWindow = this->createWindow(title, xPos, yPos, width, height, SDL_WINDOW_SHOWN);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) this->initializeRendererColor();
+    this->initializeTTF();
+    this->loadLobbyMedia();
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+    this->success = false;
+  }
+}
+
 void ViewManager::showSDLError(char *message) {
   printf(message, SDL_GetError());
 }
@@ -181,7 +204,7 @@ void ViewManager::initializeRendererColor() {
   } else {
     SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
   }
-  if (this->isLoginView) {
+  if (this->isLoginView || this->isLobbyView) {
     SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);
   }
   //Initialize PNG loading
@@ -271,10 +294,27 @@ void ViewManager::renderLoginWindow(bool &quit) {
 
     //Update screen
     SDL_RenderPresent(this->renderer);
-
     //Disable text input
     SDL_StopTextInput();
   }
+}
+
+void ViewManager::renderLobbyWindow() {
+
+  SDL_Color textColor = {255, 255, 255, 0xFF};
+  gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
+  SDL_StartTextInput();
+  this->initializeLobbyTextInputs();
+
+
+  SDL_RenderClear(this->renderer);
+  gPromptInfoTextTexture.render(gPromptInfoTextTexture.getWidth() / 10, gPromptInfoTextTexture.getHeight() + 80);
+
+  //Update screen
+  SDL_RenderPresent(this->renderer);
+  //Disable text input
+  SDL_StopTextInput();
+
 }
 
 void ViewManager::initializeTextInputs() {
@@ -286,6 +326,11 @@ void ViewManager::initializeTextInputs() {
   this->inputPasswordPosX = (this->screen_width - gPromptPasswordTextTexture.getWidth()) / 2;
   this->inputPasswordPosY = inputPosY + 100;
 
+}
+
+void ViewManager::initializeLobbyTextInputs() {
+  this->inputUserPosX = (this->screen_width - gPromptUserTextTexture.getWidth()) / 2;
+  this->inputUserPosY = 0;
 }
 
 void ViewManager::handleEvents(bool &quit, bool *renderText) {
@@ -373,6 +418,25 @@ void ViewManager::loadMedia() {
     if (!this->gPromptPasswordTextTexture.loadFromRenderedText("Ingrese contrasenia:", textColor, this->font,
                                                                this->renderer)) {
       printf("Failed to render password prompt text!\n");
+      this->success = false;
+    }
+  }
+}
+
+void ViewManager::loadLobbyMedia() {
+  //Open the font
+  this->font = TTF_OpenFont("resources/fonts/font.ttf", 28);
+
+  if (this->font == NULL) {
+    printf("Failed to load product sans font! SDL_ttf Error: %s\n", TTF_GetError());
+    this->success = false;
+  } else {
+    //Render the prompt
+    SDL_Color textColor = {0, 0, 0, 0xFF};
+    if (!this->gPromptInfoTextTexture.loadFromRenderedText("Esperando a que ingresen mas usuarios...", textColor,
+                                                           this->font,
+                                                           this->renderer)) {
+      printf("Failed to render user prompt text!\n");
       this->success = false;
     }
   }

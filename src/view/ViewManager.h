@@ -27,6 +27,8 @@ public:
 
     ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
+  ViewManager(const char *title, int xPos, int yPos, int width, int height);
+
     ~ViewManager();
     SDL_Renderer *getRenderer();
 
@@ -43,6 +45,8 @@ public:
     void renderWindow(Positions positions);
 
   void renderLoginWindow(bool &quit);
+
+  void renderLobbyWindow();
 
   void createRenderer();
 
@@ -65,7 +69,7 @@ private:
   //Animator* bossAnimator;
   //Animator* princessAnimator;
   Configuration *configuration;
-  bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
+  bool hasDefaultConfig, isLoginView, isInputUser, isInputPass, isLobbyView;
   TTF_Font *font;
   int inputUserPosX, inputUserPosY;
   int inputPasswordPosX, inputPasswordPosY;
@@ -77,6 +81,7 @@ private:
   LTexture gInputUserTextTexture;
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
+  LTexture gPromptInfoTextTexture;
 
   SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
@@ -90,7 +95,11 @@ private:
 
   void loadMedia();
 
+  void loadLobbyMedia();
+
   void initializeTextInputs();
+
+  void initializeLobbyTextInputs();
 
   void handleEvents(bool &quit, bool *renderText);
 };
