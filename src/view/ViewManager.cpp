@@ -385,11 +385,19 @@ void ViewManager::renderConnectionLostWindow(bool quit) {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
 
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
+
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Server Disconnected",textColor,font,this->renderer);
+
   SDL_Event e;
   while (!quit) {
     while(SDL_PollEvent(&e) != 0 && !quit){
       quit = e.type == SDL_QUIT;
     }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 
