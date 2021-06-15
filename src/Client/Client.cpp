@@ -43,6 +43,12 @@ bool Client::checkCredentials() {
 
 void Client::receive() {
   this->socket->receive(&positions,0);
+  if(!socket->isConnected()){
+    this->quit = true;
+    this->running = false;
+    Logger::log(Logger::Debug, "Client has been disconnected");
+    viewManagerGame->renderConnectionLostWindow(false);
+  }
 }
 
 bool Client::gameHasStarted() {

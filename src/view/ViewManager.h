@@ -50,6 +50,8 @@ public:
 
   std::string returnInputPass();
 
+    void renderConnectionLostWindow(bool b);
+
 private:
 
   SDL_Renderer *renderer;

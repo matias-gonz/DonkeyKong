@@ -9,58 +9,6 @@ const int SEPARATIONW = 5;
 const int texW = 17;
 const int texH = 30;
 
-/*
-ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char *title, int xPos, int yPos, int width,
-                         int height, bool fullscreen) {
-    this->screen_width = width;
-    this->screen_height = height;
-    this->configuration = configurations;
-    this->hasDefaultConfig = this->configuration->isDefault();
-    this->isLoginView = false;
-
-    int flags = 0;
-    if (fullscreen) {
-        flags = SDL_WINDOW_FULLSCREEN;
-    }
-
-    this->success = true;
-    if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
-        this->setTextureLinear();
-        this->currentWindow = this->createWindow(title, xPos, yPos, width, height, flags);
-        if (this->currentWindow != NULL) this->createRenderer();
-        if (this->renderer != NULL) this->initializeRendererColor();
-    } else {
-        this->showSDLError("SDL could not initialize! SDL Error: %s\n");
-        this->success = false;
-    }
-
-    this->game = aGame;
-    this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
-    this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
-
-    SDL_Texture *playerTexture = this->textureManager->getPlayerTexture();
-    bool playerTextureSuccess = true;
-    if (!playerTexture) {
-        playerTexture = this->textureManager->getErrorTexture();
-        playerTextureSuccess = false;
-
-    }
-    SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
-    bool enemyTextureSuccess = true;
-    if (!enemyTexture) {
-        enemyTexture = this->textureManager->getErrorTexture();
-        enemyTextureSuccess = false;
-    }
-
-    //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-    this->playerAnimator = new PlayerAnimator(playerTextures, success);
-    this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-
-    //ESTOS NO FUNKAN
-    //this->bossAnimator = new Animator(this->textureManager->getBossTexture(),0,0,170,0,170,119,0);
-    //this->princessAnimator = new Animator(this->textureManager->getPrincessTexture(),4,4,27,4,15,22,0);
-}
-*/
 ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height,
                          bool fullscreen) {
     this->screen_width = width;
@@ -392,6 +340,32 @@ ViewManager::~ViewManager() {
     delete this->enemyAnimator;
     //delete this->currentWindow;
     delete this->levelDrawer;
+}
+
+void ViewManager::renderConnectionLostWindow(bool quit) {
+
+  this->close();
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Connection lost", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                               CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  SDL_Event e;
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    SDL_RenderPresent(renderer);
+  }
+
 }
 
 
