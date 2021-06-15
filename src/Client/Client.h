@@ -10,7 +10,7 @@
 #include "../controller/GameController.h"
 #include "../controller/Configuration.h"
 #include "../controller/LoginController.h"
-
+#include "credentials.h"
 
 class Client {
 
@@ -19,6 +19,8 @@ public:
   Client(char *port, char *IP);
 
   void send();
+
+  void sendString(char* string);
 
   void receive();
 

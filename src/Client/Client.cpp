@@ -15,7 +15,7 @@ Client::Client(char *port, char *IP) {
 bool Client::checkCredentials() {
   std::string inputUser;
   std::string inputPass;
-
+  credentials* cred = new credentials();
   LoginButton *sendButton = new LoginButton();
 
   if (this->socket->isConnected()) {
@@ -27,16 +27,18 @@ bool Client::checkCredentials() {
       viewManagerLogin->renderLoginWindow(quit);
       inputUser = viewManagerLogin->returnInputUser();
       inputPass = viewManagerLogin->returnInputPass();
-      loginController->handle(sendButton, &inputUser, &inputPass);
+      cred->initialize(inputUser, inputPass, this->socket);
+      loginController->handle(sendButton, &inputUser, &inputPass, *cred);
       if (loginController->isValid()) {
         viewManagerLogin->close();
+        // delete viewManagerLogin;
+        gameStarted = true;
         this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
-        gameStarted = true;
       }
     }
   }
-  return true;
+  return gameStarted;
 }
 
 void Client::receive() {
@@ -48,6 +50,10 @@ bool Client::gameHasStarted() {
 }
 
 void Client::checkValid() {
+}
+
+void Client::sendString(char* string) {
+  this->socket->sndString(string, 0);
 }
 
 void Client::send() {

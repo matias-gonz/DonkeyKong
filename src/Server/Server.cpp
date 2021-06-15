@@ -1,11 +1,9 @@
 #include "Server.h"
 
-
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "server.log");
   this->game = new Game(this->configuration);
-  this->game->start();
   this->gameController = new GameController(this->game);
   this->eventQueue = new QueueThrd();
   this->port = port;
@@ -15,7 +13,8 @@ Server::Server(char *port, char *IP) {
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
-
+  this->started = false;
+  this->game->start();
 }
 
 bool Server::isRunning() {
@@ -56,9 +55,9 @@ void *hndlEvents(void *serv) {
   }
 }
 
-void* receiveEvents(void * srvr) {
-  auto* server = (Server*)srvr;
-  while(server->isRunning()){
+void *receiveEvents(void *srvr) {
+  auto *server = (Server *) srvr;
+  while (server->isRunning()) {
     server->receive();
   }
 }
@@ -82,6 +81,21 @@ void Server::addNewConnection() {
     return;
   }
   int newSocket = this->socket->accept();
+  Credentials credentials;
+  this->socket->receiveCredentials(&credentials, newSocket);
+  std::string username, password_str;
+  username.append(credentials.username);
+  password_str.append(credentials.password);
+  if (this->configuration->checkCredentials(&username, &password_str)) {
+    if (!this->started) {
+      this->started = true;
+    }
+    char *error_msg = "Connection okay";
+    this->socket->sndString(error_msg, newSocket);
+  } else {
+    char *error_msg = "Failed connection";
+    this->socket->sndString(error_msg, newSocket);
+  }
 
   int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
   if (!tmpSocket) {
@@ -101,6 +115,8 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
+  if (!this->started) return;
+
   pthread_mutex_lock(&this->mutex);
   bool empty = this->eventQueue->isEmpty();
   pthread_mutex_unlock(&this->mutex);
@@ -116,21 +132,20 @@ void Server::handleEvents() {
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
   this->game->getPLayerInfo(&this->positions.playerInfo);
-  this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
-  this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
-  this->game->getFires(this->positions.fires,&this->positions.fireCount);
-  this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
+  this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
+  this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
+  this->game->getFires(this->positions.fires, &this->positions.fireCount);
+  this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
   pthread_mutex_lock(&this->mutex);
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
 }
 
+void Server::receive() {
+  if (!this->started) return;
 
-
-
-void Server::receive(){
   SDL_Event e;
-  if(this->socket->receive(&e) < 0){
+  if (this->socket->receive(&e) < 0) {
     return;
   }
   pthread_mutex_lock(&this->mutex);

@@ -61,6 +61,3 @@ int Socket::accept() {
 bool Socket::isConnected() {
   return this->connected;
 }
-
-
-
