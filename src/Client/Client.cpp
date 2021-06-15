@@ -15,7 +15,7 @@ Client::Client(char *port, char *IP) {
 bool Client::checkCredentials() {
   std::string inputUser;
   std::string inputPass;
-  credentials* cred = new credentials();
+  credentials* credentials_ins = new credentials();
   LoginButton *sendButton = new LoginButton();
 
   if (this->socket->isConnected()) {
@@ -27,8 +27,8 @@ bool Client::checkCredentials() {
       viewManagerLogin->renderLoginWindow(quit);
       inputUser = viewManagerLogin->returnInputUser();
       inputPass = viewManagerLogin->returnInputPass();
-      cred->initialize(inputUser, inputPass, this->socket);
-      loginController->handle(sendButton, &inputUser, &inputPass, *cred);
+      credentials_ins->initialize(inputUser, inputPass, this->socket);
+      loginController->handle(sendButton, &inputUser, &inputPass, *credentials_ins);
       if (loginController->isValid()) {
         viewManagerLogin->close();
         // delete viewManagerLogin;

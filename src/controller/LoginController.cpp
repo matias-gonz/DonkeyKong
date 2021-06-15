@@ -5,7 +5,6 @@ LoginController::LoginController() {
 }
 
 void LoginController::handle(LoginButton *sendButton, std::string *inputUser, std::string *inputPass, credentials &credentials) {
-  //todo: send to the server to compare
   if (sendButton->isClicked()) {
     inputUser->replace(0, 1, "");
     inputPass->replace(0, 1, "");
@@ -16,8 +15,8 @@ void LoginController::handle(LoginButton *sendButton, std::string *inputUser, st
     strcpy(newCredentials.password, pass);
 
     credentials.getSocket()->sndCredentials(&newCredentials);
-    sendButton->unclick();
     char* message = credentials.getSocket()->rcvString(0);
+    //Check if the server authenticated wrong the user and pass
     bool check = !strcmp(message, "Failed connection");
     valid = !check;
   }

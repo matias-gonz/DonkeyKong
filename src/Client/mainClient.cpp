@@ -6,7 +6,7 @@ int mainClient(char *IP, char *port) {
 
   //TODO change inside if
   if (!client->checkCredentials()) {
-    return -1;
+
   }
   while (client->isRunning()) {
     client->send();

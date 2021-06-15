@@ -82,16 +82,15 @@ void Server::addNewConnection() {
   std::string username, password_str;
   username.append(credentials.username);
   password_str.append(credentials.password);
+  std::cout << username << std::endl;
   if (this->configuration->checkCredentials(&username, &password_str)) {
-    if (!this->started) {
-      this->started = true;
-    }
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
   } else {
     char *error_msg = "Failed connection";
     this->socket->sndString(error_msg, newSocket);
   }
+
 
   int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
   if (!tmpSocket) {
