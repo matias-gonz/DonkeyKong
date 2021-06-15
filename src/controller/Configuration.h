@@ -26,6 +26,8 @@ public:
 
   bool checkCredentials(std::string *inputUser, std::string *inputPass);
 
+  void changeToActiveUser(std::string *inputUser, std::string *inputPass);
+
 private:
   json configuration_json;
   json sprites;
@@ -41,6 +43,7 @@ private:
   };
   User user;
   std::vector<User> users;
+  std::vector<User> activeUsers;
 
   void setGameConfig();
 

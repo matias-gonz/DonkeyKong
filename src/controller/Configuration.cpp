@@ -7,7 +7,7 @@ Configuration::Configuration() {
     jsonConfigFileStream >> configuration_json;
   }
 
-  if(hasKey(configuration_json, "configuration")) {
+  if (hasKey(configuration_json, "configuration")) {
     configuration_json = configuration_json.at("configuration");
     this->setLogConfig();
     this->setGameConfig();
@@ -17,15 +17,15 @@ Configuration::Configuration() {
 }
 
 void Configuration::setGameConfig() {
-  if(hasKey(configuration_json, "game")) {
+  if (hasKey(configuration_json, "game")) {
     this->game = configuration_json.at("game");
-    if(hasKey(game, "sprites") && hasKey(game, "probability_enemies") &&
-    hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "user_count")) {
+    if (hasKey(game, "sprites") && hasKey(game, "probability_enemies") &&
+        hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "user_count")) {
       this->sprites = game.at("sprites");
       this->enemiesCount = game.at("probability_enemies");
       this->levels = game.at("levels");
       // this->userCount = game.at("user_count");
-      for(auto& td: game.at("users")) {
+      for (auto &td: game.at("users")) {
         this->user.username = td["user"];
         this->user.password = td["password"];
         this->users.push_back(user);
@@ -49,7 +49,7 @@ void Configuration::loadDefaultConfig() {
 }
 
 void Configuration::setLogConfig() {
-  if(hasKey(configuration_json, "log")) {
+  if (hasKey(configuration_json, "log")) {
     this->log = configuration_json.at("log");
   } else {
     this->loadDefaultConfig();
@@ -85,10 +85,23 @@ bool Configuration::checkCredentials(std::string *inputUser, std::string *inputP
   bool found = false;
   this->user.username = *inputUser;
   this->user.password = *inputPass;
-  for(int i = 0; i < this->users.size(); i++){
-    if(users[i].username == *inputUser && users[i].password == *inputPass){
+  for (int i = 0; i < this->users.size(); i++) {
+    if (users[i].username == *inputUser && users[i].password == *inputPass) {
       found = true;
+      this->changeToActiveUser(inputUser, inputPass);
     }
   }
   return found;
+}
+
+void Configuration::changeToActiveUser(std::string *inputUser, std::string *inputPass) {
+  int index;
+  for (int i = 0; i < this->users.size(); i++) {
+    if (users[i].username == *inputUser && users[i].password == *inputPass) {
+      index = i;
+      this->activeUsers.push_back(this->users[i]);
+    }
+  }
+  for (int i = index; i < this->users.size() - 1; i++) this->users[i] = this->users[i + 1];
+
 }
