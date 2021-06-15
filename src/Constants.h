@@ -9,6 +9,8 @@
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300
 #define LOGIN_WIDTH 450
+#define CONNECTION_LOST_HEIGHT 300
+#define CONNECTION_LOST_WIDTH 450
 
 enum kindOfAnimation {
   left = -1, up = 0, right = 1, jump = 2
