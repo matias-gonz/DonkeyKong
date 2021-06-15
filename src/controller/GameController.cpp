@@ -3,8 +3,8 @@
 GameController::GameController(Game* aGame){
     this->game = aGame;
 }
-void GameController::handleEvents(SDL_Event event) {
-    this->player = this->game->getPlayer();
+void GameController::handleEvents(SDL_Event event, int i) {
+    this->player = this->game->getPlayer(i);
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a) {
             player->resetVelX();
@@ -36,6 +36,9 @@ void GameController::handleEvents(SDL_Event event) {
         }else if (event.key.keysym.sym == SDLK_DOWN or event.key.keysym.sym == SDLK_s) {
             player->resetVelY();
         }
+    }
+    if (event.type == SDL_QUIT){
+        game->quit();
     }
 }
 

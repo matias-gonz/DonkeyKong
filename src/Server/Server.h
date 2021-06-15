@@ -18,40 +18,44 @@ class Server {
 
 public:
 
-    Server(char *port, char *IP);
+  Server(char *port, char *IP);
 
-    bool isRunning();
+  bool isRunning();
 
-    void update();
+  void start();
 
-    void start();
+  bool isFull();
 
-    bool isFull();
+  void addNewConnection();
 
-    void addNewConnection();
+  void handleEvents();
 
-    void handleEvents();
+  void broadcast();
 
-    void broadcast();
-
-    void receive();
+  void receive(int clientNum, int socketNumber);
 
 private:
-    ServerSocket *socket;
-    Configuration *configuration;
-    Game *game;
-    GameController *gameController;
-    Positions positions;
-    void *updateThread(void *socket);
-    QueueThrd* eventQueue;
+  ServerSocket *socket;
+  Configuration *configuration;
+  Game *game;
+  GameController *gameController;
+  Positions positions;
+  QueueThrd *eventQueue;
 
-    char *port;
-    char *ip;
-    int clientCount;
-    int clientMax;
-    int *sockets;
-    pthread_mutex_t mutex;
-    bool started;
+  char *port;
+  char *ip;
+  int clientCount;
+  int clientMax;
+  int *sockets;
+  pthread_mutex_t mutex;
+  bool started;
+
+  bool clientsPlaying();
+
+  bool _clientsPlaying;
+
+  void quit();
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

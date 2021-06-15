@@ -5,15 +5,15 @@
 #include "Socket.h"
 #include "../model/Logger.h"
 
-class ClientSocket : public Socket {
+class ClientSocket: public Socket {
 public:
   ClientSocket(char *port, char *IP);
 
   bool isConnected();
 
-  int snd(void *event);
+  int snd(void *event, int sckt);
 
-  int receive(void *positions);
+  int receive(void *positions, int sckt);
 
   int sndString(char *string, int socketNumber);
 

@@ -40,6 +40,11 @@ struct EntityContainer {
   int direction;
 };
 
+struct EventContainer {
+  SDL_Event e;
+  int clientNum;
+};
+
 struct Positions {
   PlatformContainer platforms[71];
   int platformCount;
@@ -49,7 +54,8 @@ struct Positions {
   int fireCount;
   EntityContainer fireEnemies[50];
   int fireEnemyCount;
-  EntityContainer playerInfo;
+  EntityContainer playersInfo[4];
+  int playerCount;
   EntityContainer bossInfo;
   EntityContainer princessInfo;
 };

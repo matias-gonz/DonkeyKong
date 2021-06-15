@@ -35,8 +35,6 @@ set(SOURCE_FILES main.cpp
         src/model/Fire.h
         src/controller/GameController.cpp
         src/controller/GameController.h
-        src/controller/PlayerController.cpp
-        src/controller/PlayerController.h
         src/view/LevelDrawer.cpp
         src/view/LevelDrawer.h
         src/controller/Configuration.cpp

@@ -42,7 +42,7 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  this->socket->receive(&positions);
+  this->socket->receive(&positions,0);
 }
 
 bool Client::gameHasStarted() {
@@ -62,10 +62,11 @@ void Client::send() {
   while (SDL_PollEvent(&event) != 0) {
     if (event.type == SDL_QUIT) {
       this->running = false;
+      this->socket->snd(&event,0);
       return;
     }
     if (this->eventIsValid(event)) {
-      this->socket->snd(&event);
+      this->socket->snd(&event, 0);
       //return;
     }
   }

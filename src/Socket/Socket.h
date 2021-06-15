@@ -22,9 +22,9 @@ public:
 
   int accept();
 
-  virtual int receive(void *data) = 0;
+    virtual int receive(void* data, int sckt) = 0;
 
-  virtual int snd(void *data) = 0;
+    virtual int snd(void *data, int sckt) = 0;
 
   virtual int sndString(char* string, int sockerNumber) = 0;
 

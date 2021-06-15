@@ -1,8 +1,14 @@
 #include "Server.h"
 
+struct ServerContainer{
+    Server* server;
+    int clientNum;
+    int socketNumber;
+};
+
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
-  Logger::startLogger(this->configuration, "server.log");
+  Logger::startLogger(this->configuration, "server.txt");
   this->game = new Game(this->configuration);
   this->gameController = new GameController(this->game);
   this->eventQueue = new QueueThrd();
@@ -13,6 +19,7 @@ Server::Server(char *port, char *IP) {
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
+  this->_clientsPlaying = false;
   this->started = false;
   this->game->start();
 }
@@ -22,23 +29,12 @@ bool Server::isRunning() {
 }
 
 
-void Server::update() {
-  /*
-  while(true){
-      SDL_Event* e = static_cast<SDL_Event *>(cola_desencolar(eventQueue));
-      gameController->handleEvents(*e,pthread_self());
-      gameController->update();
-      plyrPos.playerX = game->getPlayer(pthread_self())->getXPosition();
-      plyrPos.playerY = game->getPlayer(pthread_self())->getYPosition();
-      delete e;
-      broadcast();
-  }
-   */
-}
-
 void Server::broadcast() {
   SDL_Delay(25);
-  this->socket->snd(&this->positions);
+  for(int i = 0; i <this->clientCount; i++){
+    this->socket->snd(&this->positions, this->sockets[i]);
+  }
+
 }
 
 void *acceptConnections(void *serv) {
@@ -55,10 +51,10 @@ void *hndlEvents(void *serv) {
   }
 }
 
-void *receiveEvents(void *srvr) {
-  auto *server = (Server *) srvr;
-  while (server->isRunning()) {
-    server->receive();
+void* receiveEvents(void * srvr) {
+  auto* server = (ServerContainer*)srvr;
+  while(server->server->isRunning()){
+    server->server->receive(server->clientNum, server->socketNumber);
   }
 }
 
@@ -104,10 +100,15 @@ void Server::addNewConnection() {
   }
   this->sockets = tmpSocket;
 
+  ServerContainer* container = new ServerContainer();
+  container->server = this;
+  container->clientNum = this->clientCount;
+  container->socketNumber = newSocket;
   pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, this);
+  pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
   pthread_mutex_lock(&this->mutex);
+  this->game->addPlayer();
   this->sockets[this->clientCount] = newSocket;
   this->clientCount++;
   pthread_mutex_unlock(&this->mutex);
@@ -123,33 +124,53 @@ void Server::handleEvents() {
 
   if (!empty) {
     pthread_mutex_lock(&this->mutex);
-    SDL_Event e = eventQueue->pop();
-    printf("popped\n");
+    EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
-    this->gameController->handleEvents(e);
+
+    this->gameController->handleEvents(e.e,e.clientNum);
+
+    if (e.e.type == SDL_QUIT) this->quit();
+
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
-  this->game->getPLayerInfo(&this->positions.playerInfo);
-  this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
-  this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
-  this->game->getFires(this->positions.fires, &this->positions.fireCount);
-  this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
+  this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
+  this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
+  this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
+  this->game->getFires(this->positions.fires,&this->positions.fireCount);
+  this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
   pthread_mutex_lock(&this->mutex);
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
 }
 
-void Server::receive() {
-  if (!this->started) return;
 
+void Server::receive(int clientNum, int socketNumber) {
+  if (!this->started) return;
   SDL_Event e;
-  if (this->socket->receive(&e) < 0) {
+  if(this->socket->receive(&e,socketNumber) < 0){
     return;
   }
+  EventContainer event;
+  event.e = e;
+  event.clientNum = clientNum;
   pthread_mutex_lock(&this->mutex);
-  printf("pushed\n");
-  this->eventQueue->push(e);
+  this->eventQueue->push(event);
   pthread_mutex_unlock(&this->mutex);
+}
+
+bool Server::clientsPlaying() {
+  return (this->game->getPlayerCount() > 0);
+}
+
+void Server::quit() {
+    delete configuration;
+    delete game;
+    delete gameController;
+    delete eventQueue;
+    delete socket;
+
+    Logger::log(Logger::Debug, "Servidor cerrado");
+    exit(0);
 }
