@@ -27,7 +27,7 @@ bool Server::isRunning() {
 
 void Server::broadcast() {
   SDL_Delay(25);
-  for(int i = 0; i <this->totalClientsCount; i++){
+  for (int i = 0; i < this->totalClientsCount; i++) {
     this->socket->snd(&this->positions, this->sockets[i]);
   }
 
@@ -35,7 +35,7 @@ void Server::broadcast() {
 
 void *acceptConnections(void *serv) {
   Server *server = (Server *) serv;
-  while (!server->isFull()) {
+  while (!server->hasAllClientsOnline()) {
     server->addNewConnection();
   }
   server->broadcastGameStart();
@@ -43,7 +43,7 @@ void *acceptConnections(void *serv) {
 
 void *reacceptConnections(void *serv) {
   Server *server = (Server *) serv;
-  while (!server->isFull()) {
+  while (!server->hasAllClientsOnline()) {
     server->addNewConnection();
   }
 }
@@ -55,12 +55,12 @@ void *hndlEvents(void *serv) {
   }
 }
 
-void* receiveEvents(void * srvr) {
-  auto* serverContainer = (ServerContainer*)srvr;
-  while(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
+void *receiveEvents(void *srvr) {
+  auto *serverContainer = (ServerContainer *) srvr;
+  while (serverContainer->server->isPlayerConnected(serverContainer->clientNum)) {
     serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
   }
-  pthread_join(pthread_self(),NULL);
+  pthread_join(pthread_self(), NULL);
 }
 
 void Server::start() {
@@ -70,14 +70,15 @@ void Server::start() {
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
-  pthread_join(eventHandlerThrd,NULL);
+  pthread_join(eventHandlerThrd, NULL);
 }
 
-bool Server::isFull() {
+bool Server::hasAllClientsOnline() {
   return (this->onlineClientsCount >= this->clientMax);
 }
 
 void Server::addNewConnection() {
+
   //Create socket
   int newSocket = this->socket->accept();
 
@@ -88,30 +89,48 @@ void Server::addNewConnection() {
   username.append(credentials.username);
   password_str.append(credentials.password);
 
+  //Case client already online
+  if (this->clientIsOnline(credentials)) {
+
+    char o = 'a';
+    this->socket->sndChar(&o, newSocket);
+    return;
+
+  }
+
   //Case there are offline players, try to reconnect
   bool hasReconnected = false;
-  if(this->offlineClientsCount > 0)
-     hasReconnected = this->tryToReconnectUsing(credentials, newSocket);
+  if (this->offlineClientsCount > 0)
+    hasReconnected = this->tryToReconnectUsing(credentials, newSocket);
 
-  //Case new client
-  //configuration->checkCredentials(&username, &password_str)
-  if (!hasReconnected && !this->clientIsOnline(credentials) && this->configuration->checkCredentials(&username, &password_str)){
-    this->addNewClient(credentials, newSocket);
-    //char *error_msg = "Connection okay";
-    //this->socket->sndString(error_msg, newSocket);
-    char o = 'o';
-    this->socket->sndChar(&o,newSocket);
-  } else if (hasReconnected){
-    //char *error_msg = "Connection okay";
-    //this->socket->sndString(error_msg, newSocket);
-    char o = 'o';
-    this->socket->sndChar(&o,newSocket);
-  }else {
-    //char *error_msg = "Failed connection";
-    //this->socket->sndString(error_msg, newSocket);
-    char f = 'f';
-    this->socket->sndChar(&f,newSocket);
+  //Case lobby is full and credentials did not reconnect
+  if(!hasReconnected && this->lobbyIsFull()){
+    char l = 'l';
+    this->socket->sndChar(&l, newSocket);
+    return;
   }
+
+  if (hasReconnected) {
+
+    //Case has reconected send c to skip lobby
+    char c = 'c';
+    this->socket->sndChar(&c, newSocket);
+
+  } else {
+      if (this->configuration->checkCredentials(&username, &password_str) ) {
+
+        //Case new client
+        this->addNewClient(credentials, newSocket);
+        char o = 'o';
+        this->socket->sndChar(&o, newSocket);
+
+      } else {
+
+        //Case wrong credentials
+        char f = 'f';
+        this->socket->sndChar(&f, newSocket);
+      }
+    }
 }
 
 void Server::handleEvents() {
@@ -131,17 +150,17 @@ void Server::handleEvents() {
     if (eventContainer.e.type == SDL_QUIT)
       this->clientSetToOffline(eventContainer.clientNum);
     //Check if the game is still running after handling the events
-    if(!this->isRunning()) this->quit();
+    if (!this->isRunning()) this->quit();
   }
 
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
   this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
-  this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
-  this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
-  this->game->getFires(this->positions.fires,&this->positions.fireCount);
-  this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
+  this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
+  this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
+  this->game->getFires(this->positions.fires, &this->positions.fireCount);
+  this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
   pthread_mutex_lock(&this->mutex);
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
@@ -151,7 +170,7 @@ void Server::handleEvents() {
 void Server::receive(int clientNum, int socketNumber) {
   if (!this->started) return;
   SDL_Event e;
-  if(this->socket->receive(&e,socketNumber) < 0){
+  if (this->socket->receive(&e, socketNumber) < 0) {
     return;
   }
   EventContainer event;
@@ -167,28 +186,29 @@ bool Server::clientsPlaying() {
 }
 
 void Server::quit() {
-    delete configuration;
-    delete game;
-    delete gameController;
-    delete eventQueue;
-    delete socket;
+  delete configuration;
+  delete game;
+  delete gameController;
+  delete eventQueue;
+  delete socket;
 
-    Logger::log(Logger::Debug, "Servidor cerrado");
-    exit(0);
+  Logger::log(Logger::Debug, "Servidor cerrado");
+  exit(0);
 }
 
 bool Server::isPlayerConnected(int playerNumber) {
-    return game->isPlayerActive(playerNumber);
+  return game->isPlayerActive(playerNumber);
 }
+
 void Server::broadcastGameStart() {
   pthread_mutex_lock(&this->mutex);
-  for(int i = 0; i <this->totalClientsCount; i++){
+  for (int i = 0; i < this->totalClientsCount; i++) {
     //char string[30];
     //strcpy(string,"confirmed");
     //this->socket->sndString(string, this->sockets[i]);
     //this->socket->snd(new Positions(),this->sockets[i]);
     char confirmation = 'c';
-    this->socket->sndChar(&confirmation,this->sockets[i]);
+    this->socket->sndChar(&confirmation, this->sockets[i]);
   }
   this->started = true;
   SDL_Delay(1200);
@@ -205,7 +225,7 @@ void Server::addNewClient(Credentials credentials, int newSocket) {
   this->sockets = tmpSocket;
 
   //Create new ServerContainer(playerConnection)
-  ServerContainer* container = new ServerContainer();
+  ServerContainer *container = new ServerContainer();
   container->server = this;
   container->clientNum = this->totalClientsCount;
   container->socketNumber = newSocket;
@@ -233,13 +253,13 @@ bool Server::tryToReconnectUsing(Credentials credentials, int newSocket) {
   int clientNumberToReconnect = 0;
 
   //Search for the old connection
-  while(!hasReconnected && !foundClient){
+  while (!hasReconnected && !foundClient && (clientNumberToReconnect < this->totalClientsCount)) {
     foundClient = (this->clientConnections[clientNumberToReconnect]->username == credentials.username) &&
-            (this->clientConnections[clientNumberToReconnect]->password == credentials.password);
+                  (this->clientConnections[clientNumberToReconnect]->password == credentials.password);
     //If found and is offline recconect it
-    if(foundClient && !clientConnections[clientNumberToReconnect]->isOnline){
+    if (foundClient && !clientConnections[clientNumberToReconnect]->isOnline) {
       hasReconnected = true;
-      this->reconnectClient(clientNumberToReconnect,newSocket);
+      this->reconnectClient(clientNumberToReconnect, newSocket);
     }
 
     clientNumberToReconnect++;
@@ -249,7 +269,17 @@ bool Server::tryToReconnectUsing(Credentials credentials, int newSocket) {
 }
 
 bool Server::clientIsOnline(Credentials credentials) {
-  return false;
+  bool found = false;
+  int clientNumber = 0;
+
+  while (!found && (clientNumber < this->totalClientsCount)) {
+    ServerContainer *clientConnection = this->clientConnections[clientNumber];
+    found = (clientConnection->isOnline) && (clientConnection->username == credentials.username)
+            && (clientConnection->password == credentials.password);
+    clientNumber++;
+  }
+
+  return found;
 }
 
 void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
@@ -264,8 +294,8 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   this->onlineClientsCount++;
   this->offlineClientsCount--;
 
-  //Send 'c' to skip the lobby
-  char c = 'c';
+  //Send 'o' to confirm credentials
+  char c = 'o';
   this->socket->sndChar(&c, newSocket);
   SDL_Delay(2000);
 
@@ -277,12 +307,12 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   pthread_t receiveThread;
   pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
 
-  Logger::log(Logger::Debug, "se reconecto",clientNumberToReconnect);
+  Logger::log(Logger::Debug, "se reconecto", clientNumberToReconnect);
 }
 
 void Server::clientSetToOffline(int clientNumber) {
   //Esto hay que sacarlo es un hotfix
-  if(!clientConnections[clientNumber]->isOnline) return;
+  if (!clientConnections[clientNumber]->isOnline) return;
 
   pthread_mutex_lock(&this->mutex);
   clientConnections[clientNumber]->isOnline = false;
@@ -291,8 +321,12 @@ void Server::clientSetToOffline(int clientNumber) {
   this->offlineClientsCount++;
   pthread_mutex_unlock(&this->mutex);
 
-  Logger::log(Logger::Info, "se desconecto",clientNumber);
+  Logger::log(Logger::Info, "se desconecto", clientNumber);
 
-  pthread_t  accepter;
+  pthread_t accepter;
   pthread_create(&accepter, NULL, &reacceptConnections, this);
+}
+
+bool Server::lobbyIsFull() {
+  return (this->totalClientsCount >= this->clientMax);
 }

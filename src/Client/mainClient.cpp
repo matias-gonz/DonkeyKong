@@ -6,7 +6,7 @@ int mainClient(char *IP, char *port) {
 
   if(!client->checkCredentials()){
     Logger::log(Logger::Error, "Credenciales invalidas");
-    return -1;
+    return 0;
   }
   client->goToLobby();
 

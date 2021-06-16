@@ -33,7 +33,7 @@ public:
 
     void start();
 
-    bool isFull();
+    bool hasAllClientsOnline();
 
     void addNewConnection();
 
@@ -81,6 +81,8 @@ private:
     void reconnectClient(int i, int i1);
 
     void clientSetToOffline(int i);
+
+    bool lobbyIsFull();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

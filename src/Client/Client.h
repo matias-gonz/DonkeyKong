@@ -59,6 +59,8 @@ private:
     ViewManager *viewManagerLobby;
 
     void setPositionsDefault();
+
+    void informConnectionOutcome(char connectionResponse);
 };
 
 

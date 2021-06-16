@@ -469,4 +469,151 @@ void ViewManager::initializeLobbyTextInputs() {
   this->inputUserPosY = 0;
 }
 
+void ViewManager::renderWrongCredentialsWindow() {
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Wrong credentials", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Credenciales incorrectas",textColor,font,this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }
+}
+
+void ViewManager::renderClientAlreadyConnectedWindow() {
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - User already playing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 250, 0, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Ya se ingreso con este usuario",textColor,font,this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }
+}
+
+void ViewManager::renderUnknownResponseWindow(char connectionResponse) {
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Unknown server connection response", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Respuesta inesperada del servidor" + std::to_string(connectionResponse),textColor,font,this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }
+}
+
+void ViewManager::renderLobbyIsFullWindow() {
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = CONNECTION_LOST_WIDTH;
+    this->screen_height =CONNECTION_LOST_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Lobby is full", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("El lobby esta completo",textColor,font,this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }
+}
 

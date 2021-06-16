@@ -37,6 +37,11 @@ bool Client::checkCredentials() {
         viewManagerLogin->close();
         this->_isInLobby = true;
         quit = true;
+      }else if(this->loginController->hasAResponse()){
+        char connectionResponseChar = this->loginController->getConnectionResponse();
+        viewManagerLogin->close();
+        quit = true;
+        this->informConnectionOutcome(connectionResponseChar);
       }
     }
   }
@@ -124,4 +129,16 @@ void Client::setPositionsDefault() {
   this->positions.fireCount = 0;
   this->positions.fireEnemyCount = 0;
   this->positions.playerCount = 0;
+}
+
+void Client::informConnectionOutcome(char connectionResponse) {
+  if(connectionResponse == 'f'){
+    viewManagerLogin->renderWrongCredentialsWindow();
+  }else if(connectionResponse == 'a'){
+    viewManagerLogin->renderClientAlreadyConnectedWindow();
+  } else if(connectionResponse == 'l'){
+    viewManagerLogin->renderLobbyIsFullWindow();
+  }else{
+    viewManagerLogin->renderUnknownResponseWindow(connectionResponse);
+  }
 }
