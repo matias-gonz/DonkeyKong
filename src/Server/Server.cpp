@@ -9,16 +9,17 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = 2;
+  this->clientMax = 1;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
   this->started = false;
   this->gameStarted = false;
+  this->running = true;
 }
 
 bool Server::isRunning() {
-  return this->game->isRunning();
+  return this->running;
 }
 
 
@@ -55,8 +56,10 @@ void *hndlEvents(void *serv) {
 
 void *receiveEvents(void *srvr) {
   auto *serverContainer = (ServerContainer *) srvr;
-  while (serverContainer->server->isPlayerConnected(serverContainer->clientNum)) {
-    serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
+  while (serverContainer->server->isRunning()) {
+    if(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
+      serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
+    }
   }
 }
 
@@ -64,27 +67,32 @@ void Server::start() {
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
 
+  pthread_t eventHandlerThrd;
+  pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
+
   pthread_exit(NULL);
 }
 
 void Server::gameStart() {
 
+  pthread_mutex_lock(&this->mutex);
   this->gameStarted = true;
   this->game->start();
   for (int i = 0; i < this->users.size(); i++) {
     game->addPlayer(users[i]);
   }
 
-  pthread_t eventHandlerThrd;
-  pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
-  // No se si poner un exit ( mati )
 
+  // No se si poner un exit ( mati )
+/*
   for (int i = 0; i < this->containers.size(); i++) {
     pthread_t receiveThread;
     pthread_create(&receiveThread, NULL, &receiveEvents, containers[i]);
   }
+*/
   char *message = "game completely";
   this->broadcastString(message);
+  pthread_mutex_unlock(&this->mutex);
 }
 
 bool Server::isFull() {
@@ -126,6 +134,9 @@ void Server::addNewConnection() {
     this->clientCount++;
     this->containers.push_back(container);
     this->users.push_back(credentials.username);
+
+    pthread_t receiveThread;
+    pthread_create(&receiveThread, NULL, &receiveEvents, container);
 
     pthread_mutex_unlock(&this->mutex);
 

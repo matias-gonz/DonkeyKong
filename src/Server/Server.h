@@ -69,6 +69,7 @@ private:
   void quit();
 
 
+    bool running;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

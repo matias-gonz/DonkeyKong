@@ -227,5 +227,8 @@ void Game::updateStatus() {
 }
 
 bool Game::isPlayerActive(int playerNumber) {
+  if(this->playerCount >= playerNumber){
     return players[playerNumber]->isPlaying();
+  }
+  return false;
 }
