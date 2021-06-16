@@ -41,7 +41,7 @@ bool Client::checkCredentials() {
   return this->isInLobby;
 }
 
-bool Client::goToLobby() {
+void Client::goToLobby() {
   //view manager lobby
   this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
@@ -51,22 +51,23 @@ bool Client::goToLobby() {
     char *message = this->socket->rcvString(0);
     //Check if the server authenticated wrong the user and pass
     bool check = !strcmp(message, "game completely");
-    if (check) gameStarted = true;
+    if (check){
+      this->startPlaying();
+    }
   }
-  if (gameStarted) {
-    viewManagerLobby->close();
-    // delete viewManagerLogin;
-    this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
-    return false;
-  }
-  return true;
+
+  viewManagerLobby->close();
+  // delete viewManagerLogin;
+  this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                          SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 }
+
+
 
 void Client::receive() {
   this->socket->receive(&positions, 0);
-  this->socket->receive(&positions,0);
-  if(!socket->isConnected()){
+  this->socket->receive(&positions, 0);
+  if (!socket->isConnected()) {
     this->quit = true;
     this->running = false;
     Logger::log(Logger::Debug, "Client has been disconnected");
@@ -115,5 +116,16 @@ void Client::render() {
 
 void Client::setSended(bool b) {
   this->sended = b;
+}
+
+char *Client::rcvString() {
+  return this->socket->rcvString(0);
+}
+
+void Client::startPlaying() {
+  this->running = true;
+  this->isInLobby = false;
+  this->gameStarted = true;
+
 }
 

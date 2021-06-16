@@ -20,7 +20,7 @@ public:
 
   void send();
 
-  void sendString(char* string);
+  void sendString(char *string);
 
   void receive();
 
@@ -36,9 +36,13 @@ public:
 
   void checkValid();
 
-  bool goToLobby();
+  void goToLobby();
 
-    void checkUsernameBoxes();
+  void checkUsernameBoxes();
+
+  void startPlaying();
+
+  char *rcvString();
 
 private:
   Positions positions;

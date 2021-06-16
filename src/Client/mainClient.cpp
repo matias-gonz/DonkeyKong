@@ -6,8 +6,20 @@ int mainClient(char *IP, char *port) {
 
   //TODO change inside if
   bool checked = client->checkCredentials();
-  while (checked) {
-    checked = client->goToLobby();
+
+  while(true){
+    char *message = client->rcvString();
+    //Check if the server authenticated wrong the user and pass
+    bool check = !strcmp(message, " go  to  lobby ");
+    if(check){
+      client->goToLobby();
+      break;
+    }
+    bool check2 = !strcmp(message, "game completely");
+    if (check2) {
+      client->startPlaying();
+      break;
+    }
   }
 
   while (client->isRunning() && client->gameHasStarted()) {

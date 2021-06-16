@@ -1,10 +1,5 @@
 #include "Server.h"
 
-struct ServerContainer{
-    Server* server;
-    int clientNum;
-    int socketNumber;
-};
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -15,12 +10,13 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax =  MAX_CLIENTS;
+  this->clientMax = MAX_CLIENTS;
+  this->clientsMin = 3;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
   this->started = false;
-  this->gameStarted= false;
+  this->gameStarted = false;
 }
 
 bool Server::isRunning() {
@@ -35,8 +31,8 @@ void Server::broadcast() {
   }
 }
 
-void Server::broadcastString(char* message) {
-  for(int i = 0; i <=this->clientCount; i++){
+void Server::broadcastString(char *message) {
+  for (int i = 0; i < this->clientCount; i++) {
     this->socket->sndString(message, this->sockets[i]);
   }
 }
@@ -47,10 +43,6 @@ void *acceptConnections(void *serv) {
   while (!server->isFull()) {
     server->addNewConnection();
   }
-  if(server->isFull()){
-    char* message = "game completely";
-    server->broadcastString(message);
-  }
 }
 
 void *hndlEvents(void *serv) {
@@ -60,9 +52,9 @@ void *hndlEvents(void *serv) {
   }
 }
 
-void* receiveEvents(void * srvr) {
-  auto* serverContainer = (ServerContainer*)srvr;
-  while(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
+void *receiveEvents(void *srvr) {
+  auto *serverContainer = (ServerContainer *) srvr;
+  while (serverContainer->server->isPlayerConnected(serverContainer->clientNum)) {
     serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
   }
 }
@@ -73,18 +65,22 @@ void Server::start() {
 
   pthread_exit(NULL);
 }
-void Server::gameStart(){
+
+void Server::gameStart() {
+  this->gameStarted = true;
   this->game->start();
+  for (int i = 0; i < this->users.size(); i++) {
+    game->addPlayer(users[i]);
+  }
 
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
   // No se si poner un exit ( mati )
-}
 
-void Server::sendPositions(){
-  pthread_t eventHandlerThrd;
-  pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
-  pthread_exit(NULL);
+  for(int i = 0; i < this->containers.size(); i++){
+    pthread_t receiveThread;
+    pthread_create(&receiveThread, NULL, &receiveEvents, containers[i]);
+  }
 }
 
 bool Server::isFull() {
@@ -94,6 +90,7 @@ bool Server::isFull() {
 void Server::addNewConnection() {
   if (this->clientCount >= this->clientMax) {
     return;
+    // Agregar algun mensaje de que no puede acceder porque ya hay cantidad maxima de jugadores
   }
   int newSocket = this->socket->accept();
   Credentials credentials;
@@ -102,54 +99,58 @@ void Server::addNewConnection() {
   username.append(credentials.username);
   password_str.append(credentials.password);
   std::cout << username << std::endl;
+
   if (this->configuration->checkCredentials(&username, &password_str)) {
-    /*Aca chequear que este lleno el Lobby y que empice la partida
-    if (!this->started) {
-      this->started = true;
-    }*/
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
 
+    int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
+    if (!tmpSocket) {
+      Logger::log(Logger::Error, "Error al reservar memoria. Server::addNewConnection");
+      return;
+    }
+    this->sockets = tmpSocket;
 
+    ServerContainer *container = new ServerContainer();
+    container->server = this;
+    container->clientNum = this->clientCount;
+    container->socketNumber = newSocket;
+
+    pthread_mutex_lock(&this->mutex);
+
+    this->sockets[this->clientCount] = newSocket;
+    this->clientCount++;
+
+    if(this->clientCount < this->clientsMin && !gameStarted ){
+      this->containers.push_back(container);
+      this->users.push_back(credentials.username);
+
+
+    }else if ((this->clientCount >= this->clientsMin) && !this->gameStarted) {
+      this->gameStart();
+      char *message = "game completely";
+      this->broadcastString(message);
+
+    } else if (this->gameStarted) {
+      this->game->addPlayer(credentials.username);
+      pthread_t receiveThread;
+      pthread_create(&receiveThread, NULL, &receiveEvents, container);
+
+    } else {
+      char *message = "game  not  full";
+      this->broadcastString(message);
+    }
+
+    pthread_mutex_unlock(&this->mutex);
+
+    //printf("Client count = %i\n",this->clientCount);
   } else {
     char *error_msg = "Failed connection";
-    this->socket->sndString(error_msg, newSocket);
+    this->socket->
+        sndString(error_msg, newSocket
+    );
   }
 
-
-  int *tmpSocket = (int *) realloc(this->sockets, (this->clientCount + 1) * sizeof(int));
-  if (!tmpSocket) {
-    Logger::log(Logger::Error, "Error al reservar memoria. Server::addNewConnection");
-    return;
-  }
-  this->sockets = tmpSocket;
-
-  ServerContainer* container = new ServerContainer();
-  container->server = this;
-  container->clientNum = this->clientCount;
-  container->socketNumber = newSocket;
-
-  pthread_mutex_lock(&this->mutex);
-  this->game->addPlayer(credentials.username);
-  this->sockets[this->clientCount] = newSocket;
-  this->clientCount++;
-
-  if(this->clientCount == this->clientMax){
-    this->gameStarted= true;
-    char* message = "game completely";
-    //this->socket->sndString(message, newSocket);
-    //this->broadcastString(message);
-  }else {
-    char* message = "game  not  full";
-    //this->socket->sndString(message, newSocket);
-    //this->broadcastString(message);
-  }
-
-  pthread_mutex_unlock(&this->mutex);
-
-  pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, container);
-  //printf("Client count = %i\n",this->clientCount);
 }
 
 void Server::handleEvents() {
@@ -164,19 +165,19 @@ void Server::handleEvents() {
     EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
 
-    this->gameController->handleEvents(e.e,e.clientNum);
+    this->gameController->handleEvents(e.e, e.clientNum);
 
-    if(!this->isRunning()) this->quit();
+    if (!this->isRunning()) this->quit();
 
   }
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
   this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
-  this->game->getPlatforms(this->positions.platforms,&this->positions.platformCount);
-  this->game->getLadders(this->positions.ladders,&this->positions.ladderCount);
-  this->game->getFires(this->positions.fires,&this->positions.fireCount);
-  this->game->getEnemyFiresPos(this->positions.fireEnemies,&this->positions.fireEnemyCount);
+  this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
+  this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
+  this->game->getFires(this->positions.fires, &this->positions.fireCount);
+  this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
   pthread_mutex_lock(&this->mutex);
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
@@ -186,7 +187,7 @@ void Server::handleEvents() {
 void Server::receive(int clientNum, int socketNumber) {
   if (!this->started) return;
   SDL_Event e;
-  if(this->socket->receive(&e,socketNumber) < 0){
+  if (this->socket->receive(&e, socketNumber) < 0) {
     return;
   }
   EventContainer event;
@@ -199,16 +200,16 @@ void Server::receive(int clientNum, int socketNumber) {
 
 
 void Server::quit() {
-    delete configuration;
-    delete game;
-    delete gameController;
-    delete eventQueue;
-    delete socket;
+  delete configuration;
+  delete game;
+  delete gameController;
+  delete eventQueue;
+  delete socket;
 
-    Logger::log(Logger::Debug, "Servidor cerrado");
-    exit(0);
+  Logger::log(Logger::Debug, "Servidor cerrado");
+  exit(0);
 }
 
 bool Server::isPlayerConnected(int playerNumber) {
-    return game->isPlayerActive(playerNumber);
+  return game->isPlayerActive(playerNumber);
 }

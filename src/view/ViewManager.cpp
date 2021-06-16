@@ -38,13 +38,20 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
   this->textureManager = new TextureManager(this->renderer, this->configuration->getSprites());
   this->levelDrawer = new LevelDrawer(this->renderer, this->textureManager);
 
-  SDL_Texture *playerTexture = this->textureManager->getPlayerTexture();
+  SDL_Texture **playerTextures = this->textureManager->getPlayersTextures();
   bool playerTextureSuccess = true;
-  if (!playerTexture) {
-    playerTexture = this->textureManager->getErrorTexture();
-    playerTextureSuccess = false;
-
+  for (int i = 0; i < 5; i++) {
+    if (!playerTextures[i]) {
+      playerTextures[i] = this->textureManager->getErrorTexture();
+      playerTextureSuccess = false;
+    }
   }
+
+  SDL_Texture *inactivePlayerTexture = this->textureManager->getInactivePlayerTexture();
+  if (!inactivePlayerTexture) {
+    inactivePlayerTexture = this->textureManager->getErrorTexture();
+  }
+
   SDL_Texture *enemyTexture = this->textureManager->getEnemyTexture();
   bool enemyTextureSuccess = true;
   if (!enemyTexture) {
@@ -53,7 +60,7 @@ ViewManager::ViewManager(Game *aGame, Configuration *configurations, const char 
   }
 
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
-  this->playerAnimator = new PlayerAnimator(playerTexture, success);
+  this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
   //ESTOS NO FUNKAN

@@ -13,6 +13,11 @@
 #include "../Socket/ServerSocket.h"
 #include "../controller/QueueThrd.h"
 
+struct ServerContainer {
+  Server *server;
+  int clientNum;
+  int socketNumber;
+};
 
 class Server {
 
@@ -38,7 +43,6 @@ public:
 
   bool isPlayerConnected(int playerNumber);
 
-  void sendPositions();
 
 private:
   ServerSocket *socket;
@@ -51,11 +55,13 @@ private:
   char *port;
   char *ip;
   int clientCount;
-  int clientMax;
+  int clientMax, clientsMin;
   int *sockets;
   pthread_mutex_t mutex;
   bool gameStarted;
   bool started;
+  std::vector<char*> users;
+  std::vector<ServerContainer*> containers;
 
   void quit();
 
