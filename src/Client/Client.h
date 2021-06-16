@@ -16,49 +16,41 @@ class Client {
 
 public:
 
-  Client(char *port, char *IP);
+    Client(char *port, char *IP);
 
-  void send();
+    void send();
 
-  void sendString(char* string);
+    void sendString(char *string);
 
-  void receive();
+    void receive();
 
-  bool isRunning();
+    bool isRunning();
 
-  void render();
+    void render();
 
-  void setSended(bool b);
+    void setSended(bool b);
 
-  bool checkCredentials();
-
-  bool gameHasStarted();
-
-  void checkValid();
-
-    void checkUsernameBoxes();
+    bool checkCredentials();
 
     void goToLobby();
 
 private:
-  Positions positions;
-  ViewManager *viewManagerLogin, *viewManagerGame;
+    Positions positions;
+    ViewManager *viewManagerLogin, *viewManagerGame;
 
-  bool quit, gameStarted;
-  LoginController *loginController;
+    bool quit, gameStarted;
+    LoginController *loginController;
 
-  ClientSocket *socket;
-  Configuration *configuration;
+    ClientSocket *socket;
+    Configuration *configuration;
 
-  bool eventIsValid(SDL_Event event);
+    bool eventIsValid(SDL_Event event);
 
-  bool running;
-  bool sended;
-  bool userBoxes[20];
+    bool running;
+    bool sended;
     bool _isInLobby;
     ViewManager *viewManagerLobby;
 
-    void setPositionsDefault();
 };
 
 
