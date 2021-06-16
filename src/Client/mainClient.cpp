@@ -4,10 +4,12 @@
 int mainClient(char *IP, char *port) {
   Client *client = new Client(port, IP);
 
-  //TODO change inside if
-  if (!client->checkCredentials()) {
+  if(!client->checkCredentials()){
+    Logger::log(Logger::Error, "Credenciales invalidas");
     return -1;
   }
+  client->goToLobby();
+
   while (client->isRunning()) {
     client->send();
     client->receive();

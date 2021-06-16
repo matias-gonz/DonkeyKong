@@ -11,7 +11,7 @@ Server::Server(char *port, char *IP) {
   this->totalClientsCount = 0;
   this->onlineClientsCount = 0;
   this->offlineClientsCount = 0;
-  this->clientMax = 4;
+  this->clientMax = 2;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -34,6 +34,14 @@ void Server::broadcast() {
 }
 
 void *acceptConnections(void *serv) {
+  Server *server = (Server *) serv;
+  while (!server->isFull()) {
+    server->addNewConnection();
+  }
+  server->broadcastGameStart();
+}
+
+void *reacceptConnections(void *serv) {
   Server *server = (Server *) serv;
   while (!server->isFull()) {
     server->addNewConnection();
@@ -62,7 +70,7 @@ void Server::start() {
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
-  pthread_exit(NULL);
+  pthread_join(eventHandlerThrd,NULL);
 }
 
 bool Server::isFull() {
@@ -70,9 +78,6 @@ bool Server::isFull() {
 }
 
 void Server::addNewConnection() {
-  if (this->totalClientsCount >= this->clientMax) {
-    return;
-  }
   //Create socket
   int newSocket = this->socket->accept();
 
@@ -90,7 +95,7 @@ void Server::addNewConnection() {
 
   //Case new client
   //configuration->checkCredentials(&username, &password_str)
-  if (!hasReconnected && !this->clientIsOnline(credentials)){
+  if (!hasReconnected && !this->clientIsOnline(credentials) && this->configuration->checkCredentials(&username, &password_str)){
     this->addNewClient(credentials, newSocket);
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
@@ -99,8 +104,7 @@ void Server::addNewConnection() {
 
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
-  }
-  else {
+  }else {
     char *error_msg = "Failed connection";
     this->socket->sndString(error_msg, newSocket);
   }
@@ -124,8 +128,8 @@ void Server::handleEvents() {
       this->clientSetToOffline(eventContainer.clientNum);
     //Check if the game is still running after handling the events
     if(!this->isRunning()) this->quit();
-
   }
+
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
@@ -172,14 +176,22 @@ void Server::quit() {
 bool Server::isPlayerConnected(int playerNumber) {
     return game->isPlayerActive(playerNumber);
 }
+void Server::broadcastGameStart() {
+  pthread_mutex_lock(&this->mutex);
+  for(int i = 0; i <this->totalClientsCount; i++){
+    //char string[30];
+    //strcpy(string,"confirmed");
+    //this->socket->sndString(string, this->sockets[i]);
+    //this->socket->snd(new Positions(),this->sockets[i]);
+    char confirmation = 'c';
+    this->socket->sndChar(&confirmation,this->sockets[i]);
+  }
+  this->started = true;
+  SDL_Delay(1200);
+  pthread_mutex_unlock(&this->mutex);
+}
 
 void Server::addNewClient(Credentials credentials, int newSocket) {
-
-  //If it is the first client start the game
-  if (!this->started) {
-    this->started = true;
-  }
-
   //Allocate memory for a new socket
   int *tmpSocket = (int *) realloc(this->sockets, (this->totalClientsCount + 1) * sizeof(int));
   if (!tmpSocket) {
@@ -248,13 +260,17 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   this->onlineClientsCount++;
   this->offlineClientsCount--;
 
+  //Create the thread to receive
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
+
+  char c = 'c';
+  this->socket->sndChar(&c, newSocket);
+  SDL_Delay(2000);
   //Player is active again (cambiar despues rompe encapsulamiento)
   this->game->getPlayer(clientNumberToReconnect)->startedPlaying();
   pthread_mutex_unlock(&this->mutex);
 
-  //Create the thread to receive
-  pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
   Logger::log(Logger::Debug, "se reconecto",clientNumberToReconnect);
 }
 
@@ -271,4 +287,6 @@ void Server::clientSetToOffline(int clientNumber) {
 
   Logger::log(Logger::Info, "se desconecto",clientNumber);
 
+  pthread_t  accepter;
+  pthread_create(&accepter, NULL, &reacceptConnections, this);
 }

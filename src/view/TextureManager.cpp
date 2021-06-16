@@ -68,7 +68,10 @@ void TextureManager::loadPlayersTextures() {
     char path[10];
     strcpy(path,"player_");
     char i_s = i+1 + '0';
-    strcat(path, &i_s);
+    char i_string[2];
+    i_string[0] = i_s;
+    i_string[1] = '\0';
+    strcat(path, i_string);
     textura = this->loadTexture(this->loadTextureFromJson(path));
     Logger::log(Logger::Info, "Se inicia la carga de textura de Player.");
     if (!textura) {
