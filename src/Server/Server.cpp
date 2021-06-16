@@ -11,7 +11,7 @@ Server::Server(char *port, char *IP) {
   this->totalClientsCount = 0;
   this->onlineClientsCount = 0;
   this->offlineClientsCount = 0;
-  this->clientMax = 2;
+  this->clientMax = this->configuration->getClientMax();
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;

@@ -28,6 +28,8 @@ public:
 
     char **getUsers();
 
+    int getClientMax();
+
 private:
   json configuration_json;
   json sprites;
@@ -36,7 +38,7 @@ private:
   json levels;
   int enemiesCount;
   bool loadsDefault = false;
-  int userCount;
+  int clientMax;
   struct User {
     std::string username;
     std::string password;
@@ -51,6 +53,7 @@ private:
   bool hasKey(json json, std::string key);
 
   void loadDefaultConfig();
+
 
 };
 

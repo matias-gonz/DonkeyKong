@@ -20,11 +20,11 @@ void Configuration::setGameConfig() {
   if(hasKey(configuration_json, "game")) {
     this->game = configuration_json.at("game");
     if(hasKey(game, "sprites") && hasKey(game, "probability_enemies") &&
-    hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "user_count")) {
+    hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "client_max")) {
       this->sprites = game.at("sprites");
       this->enemiesCount = game.at("probability_enemies");
       this->levels = game.at("levels");
-      // this->userCount = game.at("user_count");
+      this->clientMax = game.at("client_max");
       for(auto& td: game.at("users")) {
         this->user.username = td["user"];
         this->user.password = td["password"];
@@ -103,5 +103,8 @@ char **Configuration::getUsers() {
     strcpy(users[i],aux);
   }
   return users;
+}
 
+int Configuration::getClientMax() {
+  return this->clientMax;
 }
