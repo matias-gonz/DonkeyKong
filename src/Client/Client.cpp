@@ -98,12 +98,13 @@ void Client::setSended(bool b) {
 }
 
 void Client::goToLobby() {
+  Logger::log(Logger::Info, "Entrando al Lobby");
   this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
   this->viewManagerLobby->renderLobbyWindow();
 
   char message = this->socket->rcvChar();
-
+  Logger::log(Logger::Info, "Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego");
   viewManagerLobby->close();
   //Check if the server authenticated wrong the user and pass
   if (message != 'c') {
@@ -114,7 +115,6 @@ void Client::goToLobby() {
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
-  //this->socket->snd(new SDL_Event(),0);
 }
 
 void Client::setPositionsDefault() {
