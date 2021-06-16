@@ -44,7 +44,7 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  this->socket->receive(&this->positions,0);//TODO Fix receive
+  this->socket->receive(&this->positions,0);
 
   /*
   if(!socket->isConnected()){
@@ -105,12 +105,13 @@ void Client::goToLobby() {
   this->viewManagerLobby->renderLobbyWindow();
 
   char message = this->socket->rcvChar();
-  //Check if the server authenticated wrong the user and pass
-  if (message != 'c') {
-    return;
-  }
 
   viewManagerLobby->close();
+  //Check if the server authenticated wrong the user and pass
+  if (message != 'c') {
+    //return;
+  }
+
 
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);

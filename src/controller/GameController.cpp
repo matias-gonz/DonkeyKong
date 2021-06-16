@@ -47,7 +47,7 @@ void GameController::handleEvents(SDL_Event event, int i) {
     if (event.type == SDL_QUIT){
         player->stoppedPlaying();
         game->updateStatus();
-        Logger::log(Logger::Info, "se desconecto",i);
+        Logger::log(Logger::Info, "dejo de jugar",i);
     }
 }
 

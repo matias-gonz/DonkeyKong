@@ -17,8 +17,10 @@ void LoginController::handle(LoginButton *sendButton, std::string *inputUser, st
 
     credentials.getSocket()->sndCredentials(&newCredentials);
     sendButton->unclick();
-    char* message = credentials.getSocket()->rcvString(0);
-    bool check = !strcmp(message, "Failed connection");
+    //char* message = credentials.getSocket()->rcvString(0);
+    //bool check = !strcmp(message, "Failed connection");
+    char connectionResponseChar = credentials.getSocket()->rcvChar();
+    bool check = (connectionResponseChar == 'f');
     valid = !check;
   }
 }

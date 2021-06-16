@@ -25,13 +25,12 @@ int ClientSocket::receive(void *positions, int sckt) {
   while ((receive_data_size > bytes_receive) && client_socket_still_open) {
     bytes_receive = recv(this->server_fd, ((Positions *) positions + total_bytes_receive),
                          (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
-    //Logger::log(Logger::Debug,std::to_string(bytes_receive));
     if (bytes_receive < 0) { // Error
       return bytes_receive;
     } else if (bytes_receive == 0) { // Socket closed
-      //this->connected = false;
+      this->connected = false;
       client_socket_still_open = false;
-      //Logger::log(Logger::Debug,"Client Socket disconected");
+      Logger::log(Logger::Debug,"Client Socket disconected");
     } else {
       total_bytes_receive += bytes_receive;
     }
