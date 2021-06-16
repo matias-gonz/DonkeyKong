@@ -403,4 +403,66 @@ void ViewManager::renderConnectionLostWindow(bool quit) {
 
 }
 
+ViewManager::ViewManager(const char *title, int xPos, int yPos, int width, int height) {
+
+  this->screen_width = width;
+  this->screen_height = height;
+  this->hasDefaultConfig = false;
+  this->isLobbyView = true;
+  this->success = true;
+
+  int flags = 0;
+
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->currentWindow = this->createWindow(title, xPos, yPos, width, height, SDL_WINDOW_SHOWN);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) this->initializeRendererColor();
+    this->initializeTTF();
+    this->loadLobbyMedia();
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+    this->success = false;
+  }
+}
+
+void ViewManager::loadLobbyMedia() {
+  this->font = TTF_OpenFont("resources/fonts/font.ttf", 28);
+
+  if (this->font == NULL) {
+    printf("Failed to load product sans font! SDL_ttf Error: %s\n", TTF_GetError());
+    this->success = false;
+  } else {
+    //Render the prompt
+    SDL_Color textColor = {0, 0, 0, 0xFF};
+    if (!this->gPromptInfoTextTexture.loadFromRenderedText("Esperando a que ingresen mas usuarios...", textColor,
+                                                           this->font,
+                                                           this->renderer)) {
+      printf("Failed to render user prompt text!\n");
+      this->success = false;
+    }
+  }
+}
+
+void ViewManager::renderLobbyWindow() {
+  SDL_Color textColor = {255, 255, 255, 0xFF};
+  gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
+  SDL_StartTextInput();
+  this->initializeLobbyTextInputs();
+
+
+  SDL_RenderClear(this->renderer);
+  gPromptInfoTextTexture.render(gPromptInfoTextTexture.getWidth() / 10, gPromptInfoTextTexture.getHeight() + 80);
+
+  //Update screen
+  SDL_RenderPresent(this->renderer);
+  //Disable text input
+  SDL_StopTextInput();
+}
+
+void ViewManager::initializeLobbyTextInputs() {
+  this->inputUserPosX = (this->screen_width - gPromptUserTextTexture.getWidth()) / 2;
+  this->inputUserPosY = 0;
+}
+
 

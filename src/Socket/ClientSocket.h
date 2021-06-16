@@ -21,6 +21,8 @@ public:
 
   int sndCredentials(void *credentials);
 
+    char rcvChar();
+
 private:
   int socketClient;
   struct sockaddr_in serv_addr;

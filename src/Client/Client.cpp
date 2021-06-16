@@ -8,47 +8,52 @@ Client::Client(char *port, char *IP) {
   this->running = true;
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "client.txt");
+  this->_isInLobby = false;
 
   this->socket = new ClientSocket(port, IP);
+  this->positions = Positions();
+  this->setPositionsDefault();
 }
 
 bool Client::checkCredentials() {
   std::string inputUser;
   std::string inputPass;
-  credentials* cred = new credentials();
+  credentials *credentials_ins = new credentials();
   LoginButton *sendButton = new LoginButton();
 
   if (this->socket->isConnected()) {
     this->loginController = new LoginController();
     this->viewManagerLogin = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                        SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
+                                             SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT, sendButton);
 
     while (!quit) {
       viewManagerLogin->renderLoginWindow(quit);
       inputUser = viewManagerLogin->returnInputUser();
       inputPass = viewManagerLogin->returnInputPass();
-      cred->initialize(inputUser, inputPass, this->socket);
-      loginController->handle(sendButton, &inputUser, &inputPass, *cred);
+      credentials_ins->initialize(inputUser, inputPass, this->socket);
+      loginController->handle(sendButton, &inputUser, &inputPass, *credentials_ins);
+
       if (loginController->isValid()) {
         viewManagerLogin->close();
-        // delete viewManagerLogin;
-        gameStarted = true;
-        this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
-                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+        this->_isInLobby = true;
+        quit = true;
       }
     }
   }
-  return gameStarted;
+  return this->_isInLobby;
 }
 
 void Client::receive() {
-  this->socket->receive(&positions,0);
+  this->socket->receive(&this->positions,0);//TODO Fix receive
+
+  /*
   if(!socket->isConnected()){
     this->quit = true;
     this->running = false;
     Logger::log(Logger::Debug, "Client has been disconnected");
     viewManagerGame->renderConnectionLostWindow(false);
   }
+   */
 }
 
 bool Client::gameHasStarted() {
@@ -94,3 +99,30 @@ void Client::setSended(bool b) {
   this->sended = b;
 }
 
+void Client::goToLobby() {
+  this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
+                                           SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
+  this->viewManagerLobby->renderLobbyWindow();
+
+  char message = this->socket->rcvChar();
+  //Check if the server authenticated wrong the user and pass
+  if (message != 'c') {
+    return;
+  }
+
+  viewManagerLobby->close();
+
+  this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                          SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+
+  //this->socket->snd(new SDL_Event(),0);
+}
+
+void Client::setPositionsDefault() {
+  this->positions.playerCount = 0;
+  this->positions.platformCount = 0;
+  this->positions.ladderCount = 0;
+  this->positions.fireCount = 0;
+  this->positions.fireEnemyCount = 0;
+  this->positions.playerCount = 0;
+}

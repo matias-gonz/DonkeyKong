@@ -15,7 +15,7 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = 4;
+  this->clientMax = 2;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -30,8 +30,8 @@ bool Server::isRunning() {
 
 
 void Server::broadcast() {
-  SDL_Delay(25);
-  for(int i = 0; i <this->clientCount; i++){
+  SDL_Delay(40);
+  for(int i = 0; i < this->clientCount; i++){
     this->socket->snd(&this->positions, this->sockets[i]);
   }
 
@@ -42,6 +42,7 @@ void *acceptConnections(void *serv) {
   while (!server->isFull()) {
     server->addNewConnection();
   }
+  server->broadcastGameStart();
 }
 
 void *hndlEvents(void *serv) {
@@ -83,9 +84,7 @@ void Server::addNewConnection() {
   username.append(credentials.username);
   password_str.append(credentials.password);
   if (this->configuration->checkCredentials(&username, &password_str)) {
-    if (!this->started) {
-      this->started = true;
-    }
+
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
   } else {
@@ -113,7 +112,6 @@ void Server::addNewConnection() {
 
   pthread_t receiveThread;
   pthread_create(&receiveThread, NULL, &receiveEvents, container);
-  //printf("Client count = %i\n",this->clientCount);
 }
 
 void Server::handleEvents() {
@@ -127,12 +125,10 @@ void Server::handleEvents() {
     pthread_mutex_lock(&this->mutex);
     EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
-
     this->gameController->handleEvents(e.e,e.clientNum);
-
     if(!this->isRunning()) this->quit();
-
   }
+
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
@@ -178,4 +174,18 @@ void Server::quit() {
 
 bool Server::isPlayerConnected(int playerNumber) {
     return game->isPlayerActive(playerNumber);
+}
+
+void Server::broadcastGameStart() {
+  pthread_mutex_lock(&this->mutex);
+  this->started = true;
+  for(int i = 0; i <this->clientCount; i++){
+    //char string[30];
+    //strcpy(string,"confirmed");
+    //this->socket->sndString(string, this->sockets[i]);
+    //this->socket->snd(new Positions(),this->sockets[i]);
+    char confirmation = 'c';
+    this->socket->sndChar(&confirmation,this->sockets[i]);
+  }
+  pthread_mutex_unlock(&this->mutex);
 }

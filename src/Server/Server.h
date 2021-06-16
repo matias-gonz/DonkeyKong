@@ -36,6 +36,8 @@ public:
 
   bool isPlayerConnected(int playerNumber);
 
+    void broadcastGameStart();
+
 private:
   ServerSocket *socket;
   Configuration *configuration;
