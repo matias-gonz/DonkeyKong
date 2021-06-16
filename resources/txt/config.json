@@ -32,38 +32,20 @@
       },
       "users": [
         {
-          "user": "user1",
-          "password": "pass1"
+          "user": "Matiti",
+          "password": "matiti"
         },
         {
-          "user": "user2",
-          "password": "pass2"
+          "user": "Rochi",
+          "password": "rochi"
         },
         {
-          "user": "user3",
-          "password": "pass3"
+          "user": "Juampi",
+          "password": "juampi"
         },
         {
-          "user": "user4",
-          "password": "pass4"
-        },{
-          "user": "rochi",
-          "password": "miPassword"
-        },
-        {
-          "user": "agus",
-          "password": "passAgus"
-        },
-        {
-          "user": "juampi",
-          "password": "passJuampi"
-        },{
-          "user": "mati",
-          "password": "passMati"
-        },
-        {
-          "user": "nico",
-          "password": "passNico"
+          "user": "Agus",
+          "password": "agus"
         }
       ]
     }
