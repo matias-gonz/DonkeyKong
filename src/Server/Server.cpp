@@ -273,6 +273,10 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   this->game->getPlayer(clientNumberToReconnect)->startedPlaying();
   pthread_mutex_unlock(&this->mutex);
 
+  //Create the thread to receive
+  pthread_t receiveThread;
+  pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
+
   Logger::log(Logger::Debug, "se reconecto",clientNumberToReconnect);
 }
 
