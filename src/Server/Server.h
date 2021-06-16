@@ -47,6 +47,8 @@ public:
 
     void broadcastGameStart();
 
+    void rejectConnection();
+
 private:
     ServerSocket *socket;
     Configuration *configuration;

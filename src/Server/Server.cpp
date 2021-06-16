@@ -48,6 +48,11 @@ void *acceptConnections(void *serv) {
     server->addNewConnection();
   }
   server->broadcastGameStart();
+
+  while (server->hasAllClientsOnline()) {
+    server->rejectConnection();
+  }
+
 }
 
 void *reacceptConnections(void *serv) {
@@ -346,4 +351,17 @@ void Server::clientSetToOffline(int clientNumber) {
 
 bool Server::lobbyIsFull() {
   return (this->totalClientsCount >= this->clientMax);
+}
+
+void Server::rejectConnection() {
+  pthread_mutex_lock(&this->mutex);
+  Logger::log(Logger::Info,"Esperando accept para rechazar");
+  pthread_mutex_unlock(&this->mutex);
+  //Create socket
+  int newSocket = this->socket->accept();
+  pthread_mutex_lock(&this->mutex);
+  Logger::log(Logger::Info,"Se rechaza nueva conexion");
+  pthread_mutex_unlock(&this->mutex);
+  char l = 'l';
+  this->socket->sndChar(&l,newSocket);
 }
