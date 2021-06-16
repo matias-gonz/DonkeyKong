@@ -2,6 +2,8 @@
 
 LoginController::LoginController() {
   valid = false;
+  this->connectionResponse = 'f';
+  this->hasResponse = false;
 }
 
 void LoginController::handle(LoginButton *sendButton, std::string *inputUser, std::string *inputPass, credentials &credentials) {
@@ -17,14 +19,21 @@ void LoginController::handle(LoginButton *sendButton, std::string *inputUser, st
 
     credentials.getSocket()->sndCredentials(&newCredentials);
     sendButton->unclick();
-    //char* message = credentials.getSocket()->rcvString(0);
-    //bool check = !strcmp(message, "Failed connection");
-    char connectionResponseChar = credentials.getSocket()->rcvChar();
-    bool check = (connectionResponseChar == 'f');
-    valid = !check;
+
+    this->connectionResponse = credentials.getSocket()->rcvChar();
+    this->hasResponse = true;
+    valid = (this->connectionResponse == 'o' );
   }
+}
+
+char LoginController::getConnectionResponse() {
+  return this->connectionResponse;
 }
 
 bool LoginController::isValid() {
   return this->valid;
+}
+
+bool LoginController::hasAResponse() {
+  return this->hasResponse;
 }

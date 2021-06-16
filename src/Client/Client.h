@@ -51,6 +51,9 @@ private:
     bool _isInLobby;
     ViewManager *viewManagerLobby;
 
+    void setPositionsDefault();
+
+    void informConnectionOutcome(char connectionResponse);
 };
 
 

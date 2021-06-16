@@ -56,6 +56,14 @@ public:
 
   void renderLobbyWindow();
 
+    void renderWrongCredentialsWindow();
+
+    void renderClientAlreadyConnectedWindow();
+
+    void renderUnknownResponseWindow(char i);
+
+    void renderLobbyIsFullWindow();
+
 private:
 
   SDL_Renderer *renderer;
