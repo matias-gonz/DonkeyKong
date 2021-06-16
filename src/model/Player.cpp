@@ -149,3 +149,7 @@ bool Player::isPlaying() {
 char *Player::getUsername() {
   return this->username;
 }
+
+void Player::startedPlaying() {
+  this->active = true;
+}

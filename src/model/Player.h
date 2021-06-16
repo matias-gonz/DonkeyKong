@@ -62,6 +62,8 @@ public:
     char username[20];
 
     char *getUsername();
+
+    void startedPlaying();
 };
 
 
