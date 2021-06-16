@@ -20,6 +20,8 @@ public:
 
   int receiveCredentials(void *credentials, int socketNumber);
 
+  int sndChar(char *string, int i);
+
 private:
   int socketServer;
 };

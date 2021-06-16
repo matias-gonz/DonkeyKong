@@ -7,7 +7,6 @@ int mainClient(char *IP, char *port) {
   client->checkCredentials();
   client->goToLobby();
 
-
   while (client->isRunning()) {
     client->send();
     client->receive();

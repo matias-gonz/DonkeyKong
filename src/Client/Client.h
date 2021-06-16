@@ -57,6 +57,8 @@ private:
   bool userBoxes[20];
     bool _isInLobby;
     ViewManager *viewManagerLobby;
+
+    void setPositionsDefault();
 };
 
 

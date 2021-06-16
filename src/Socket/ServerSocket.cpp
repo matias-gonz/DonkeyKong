@@ -97,3 +97,25 @@ int ServerSocket::receiveCredentials(void *credentials, int socketNumber) {
 
   return 0;
 }
+
+int ServerSocket::sndChar(char *character, int sckt) {
+  int total_bytes_written = 0;
+  int bytes_written = 0;
+  int send_data_size = sizeof(char);
+  bool client_socket_still_open = true;
+
+  while ((send_data_size > total_bytes_written) && client_socket_still_open){
+    bytes_written = send(sckt, ((Positions*)character + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
+    if (bytes_written < 0) { // Error
+      return bytes_written;
+    }
+    else if (bytes_written == 0) { // Socket closed
+      client_socket_still_open = false;
+    }
+    else {
+      total_bytes_written += bytes_written;
+    }
+  }
+
+  return 0;
+}

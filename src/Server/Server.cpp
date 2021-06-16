@@ -15,7 +15,7 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = 1;
+  this->clientMax = 2;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -31,7 +31,7 @@ bool Server::isRunning() {
 
 void Server::broadcast() {
   SDL_Delay(25);
-  for(int i = 0; i <this->clientCount; i++){
+  for(int i = 0; i < this->clientCount; i++){
     this->socket->snd(&this->positions, this->sockets[i]);
   }
 
@@ -180,9 +180,12 @@ void Server::broadcastGameStart() {
   pthread_mutex_lock(&this->mutex);
   this->started = true;
   for(int i = 0; i <this->clientCount; i++){
-    char string[30];
-    strcpy(string,"confirmed");
+    //char string[30];
+    //strcpy(string,"confirmed");
     //this->socket->sndString(string, this->sockets[i]);
+    //this->socket->snd(new Positions(),this->sockets[i]);
+    char confirmation = 'c';
+    this->socket->sndChar(&confirmation,this->sockets[i]);
   }
   pthread_mutex_unlock(&this->mutex);
 }
