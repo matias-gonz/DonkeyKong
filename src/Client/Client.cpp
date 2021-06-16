@@ -8,11 +8,17 @@ Client::Client(char *port, char *IP) {
   this->running = true;
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "client.txt");
+  char messageIP[100] = {0};
+  strcat(messageIP, "IP del servidor: ");
+  strcat(messageIP, IP);
+  Logger::log(Logger::Info, messageIP);
+  char messagePort[100] = {0};
+  strcat(messagePort, "Puerto del servidor: ");
+  strcat(messagePort, port);
+  Logger::log(Logger::Info, messagePort);
   this->_isInLobby = false;
-
   this->socket = new ClientSocket(port, IP);
   this->positions = Positions();
-  this->setPositionsDefault();
 }
 
 bool Client::checkCredentials() {
@@ -49,9 +55,9 @@ bool Client::checkCredentials() {
 }
 
 void Client::receive() {
-  this->socket->receive(&this->positions,0);
+  this->socket->receive(&this->positions, 0);
 
-  if(!socket->isConnected()){
+  if (!socket->isConnected()) {
     this->quit = true;
     this->running = false;
     Logger::log(Logger::Debug, "Client has been disconnected");
@@ -59,14 +65,8 @@ void Client::receive() {
   }
 }
 
-bool Client::gameHasStarted() {
-  return this->gameStarted;
-}
 
-void Client::checkValid() {
-}
-
-void Client::sendString(char* string) {
+void Client::sendString(char *string) {
   this->socket->sndString(string, 0);
 }
 
@@ -76,7 +76,7 @@ void Client::send() {
   while (SDL_PollEvent(&event) != 0) {
     if (event.type == SDL_QUIT) {
       this->running = false;
-      this->socket->snd(&event,0);
+      this->socket->snd(&event, 0);
       return;
     }
     if (this->eventIsValid(event)) {
@@ -103,12 +103,13 @@ void Client::setSended(bool b) {
 }
 
 void Client::goToLobby() {
+  Logger::log(Logger::Info, "Entrando al Lobby");
   this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
   this->viewManagerLobby->renderLobbyWindow();
 
   char message = this->socket->rcvChar();
-
+  Logger::log(Logger::Info, "Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego");
   viewManagerLobby->close();
   //Check if the server authenticated wrong the user and pass
   if (message != 'c') {
@@ -119,17 +120,9 @@ void Client::goToLobby() {
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
-  //this->socket->snd(new SDL_Event(),0);
 }
 
-void Client::setPositionsDefault() {
-  this->positions.playerCount = 0;
-  this->positions.platformCount = 0;
-  this->positions.ladderCount = 0;
-  this->positions.fireCount = 0;
-  this->positions.fireEnemyCount = 0;
-  this->positions.playerCount = 0;
-}
+
 
 void Client::informConnectionOutcome(char connectionResponse) {
   if(connectionResponse == 'f'){
