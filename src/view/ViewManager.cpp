@@ -369,9 +369,10 @@ ViewManager::~ViewManager() {
   delete this->levelDrawer;
 }
 
-void ViewManager::renderConnectionLostWindow(bool quit) {
-
+void ViewManager::renderConnectionLostWindow() {
+  //Clear the renderer and window
   this->close();
+  //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
@@ -385,13 +386,16 @@ void ViewManager::renderConnectionLostWindow(bool quit) {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
 
+  //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
-
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("Server Disconnected",textColor,font,this->renderer);
 
+  //Render window with exit button
   SDL_Event e;
+  bool quit = false;
+
   while (!quit) {
     while(SDL_PollEvent(&e) != 0 && !quit){
       quit = e.type == SDL_QUIT;

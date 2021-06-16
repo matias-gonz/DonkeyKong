@@ -52,9 +52,9 @@ public:
 
   std::string returnInputPass();
 
-    void renderConnectionLostWindow(bool b);
+  void renderConnectionLostWindow();
 
-    void renderLobbyWindow();
+  void renderLobbyWindow();
 
 private:
 
