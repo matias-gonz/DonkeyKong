@@ -44,11 +44,13 @@ public:
 
   char *rcvString();
 
+  bool isInLobby();
+
 private:
   Positions positions;
   ViewManager *viewManagerLogin, *viewManagerGame, *viewManagerLobby;
 
-  bool quit, gameStarted, isInLobby;
+  bool quit, gameStarted, _isInLobby;
   LoginController *loginController;
 
   ClientSocket *socket;

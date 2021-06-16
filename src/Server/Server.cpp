@@ -1,6 +1,5 @@
 #include "Server.h"
 
-
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "server.txt");
@@ -10,8 +9,7 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = MAX_CLIENTS;
-  this->clientsMin = 3;
+  this->clientMax = 2;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -43,6 +41,9 @@ void *acceptConnections(void *serv) {
   while (!server->isFull()) {
     server->addNewConnection();
   }
+  printf("pasa\n");
+  server->gameStart();
+
 }
 
 void *hndlEvents(void *serv) {
@@ -67,6 +68,7 @@ void Server::start() {
 }
 
 void Server::gameStart() {
+
   this->gameStarted = true;
   this->game->start();
   for (int i = 0; i < this->users.size(); i++) {
@@ -77,10 +79,12 @@ void Server::gameStart() {
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
   // No se si poner un exit ( mati )
 
-  for(int i = 0; i < this->containers.size(); i++){
+  for (int i = 0; i < this->containers.size(); i++) {
     pthread_t receiveThread;
     pthread_create(&receiveThread, NULL, &receiveEvents, containers[i]);
   }
+  char *message = "game completely";
+  this->broadcastString(message);
 }
 
 bool Server::isFull() {
@@ -120,34 +124,15 @@ void Server::addNewConnection() {
 
     this->sockets[this->clientCount] = newSocket;
     this->clientCount++;
-
-    if(this->clientCount < this->clientsMin && !gameStarted ){
-      this->containers.push_back(container);
-      this->users.push_back(credentials.username);
-
-
-    }else if ((this->clientCount >= this->clientsMin) && !this->gameStarted) {
-      this->gameStart();
-      char *message = "game completely";
-      this->broadcastString(message);
-
-    } else if (this->gameStarted) {
-      this->game->addPlayer(credentials.username);
-      pthread_t receiveThread;
-      pthread_create(&receiveThread, NULL, &receiveEvents, container);
-
-    } else {
-      char *message = "game  not  full";
-      this->broadcastString(message);
-    }
+    this->containers.push_back(container);
+    this->users.push_back(credentials.username);
 
     pthread_mutex_unlock(&this->mutex);
 
-    //printf("Client count = %i\n",this->clientCount);
   } else {
     char *error_msg = "Failed connection";
     this->socket->
-        sndString(error_msg, newSocket
+            sndString(error_msg, newSocket
     );
   }
 

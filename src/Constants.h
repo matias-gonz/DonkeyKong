@@ -90,5 +90,4 @@ struct UsernameBox{
     char username[20];
 };
 
-
 #endif //TALLER_PROG_I_2021_1C_KIWI_CONSTANTS_H
