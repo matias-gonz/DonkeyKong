@@ -60,12 +60,6 @@ void Client::receive() {
   }
 }
 
-bool Client::gameHasStarted() {
-  return this->gameStarted;
-}
-
-void Client::checkValid() {
-}
 
 void Client::sendString(char *string) {
   this->socket->sndString(string, 0);

@@ -95,7 +95,7 @@ void Server::addNewConnection() {
   //Create socket
   int newSocket = this->socket->accept();
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info,"Se acepta nueva coneccion con socket = ", newSocket);
+  Logger::log(Logger::Info,"Se acepta nueva coneccion con socket");
   pthread_mutex_unlock(&this->mutex);
 
   //Read credentials
@@ -295,7 +295,7 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   pthread_t receiveThread;
   pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
 
-  Logger::log(Logger::Debug, "se reconecto cliente numero ",clientNumberToReconnect);
+  Logger::log(Logger::Debug, "se reconecto",clientNumberToReconnect);
 }
 
 void Server::clientSetToOffline(int clientNumber) {
@@ -309,7 +309,7 @@ void Server::clientSetToOffline(int clientNumber) {
   this->offlineClientsCount++;
   pthread_mutex_unlock(&this->mutex);
 
-  Logger::log(Logger::Info, "se desconecto cliente numero ",clientNumber);
+  Logger::log(Logger::Info, "se desconecto",clientNumber);
 
   pthread_t  accepter;
   pthread_create(&accepter, NULL, &reacceptConnections, this);
