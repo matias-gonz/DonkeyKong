@@ -29,9 +29,9 @@ int ClientSocket::receive(void *positions, int sckt) {
     if (bytes_receive < 0) { // Error
       return bytes_receive;
     } else if (bytes_receive == 0) { // Socket closed
-      this->connected = false;
+      //this->connected = false;
       client_socket_still_open = false;
-      Logger::log(Logger::Debug,"Client Socket disconected");
+      //Logger::log(Logger::Debug,"Client Socket disconected");
     } else {
       total_bytes_receive += bytes_receive;
     }

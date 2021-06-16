@@ -27,6 +27,8 @@ public:
 
     ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
+    ViewManager(const char *title, int xPos, int yPos, int width, int height);
+
     ~ViewManager();
     SDL_Renderer *getRenderer();
 
@@ -51,6 +53,8 @@ public:
   std::string returnInputPass();
 
     void renderConnectionLostWindow(bool b);
+
+    void renderLobbyWindow();
 
 private:
 
@@ -79,6 +83,7 @@ private:
   LTexture gInputUserTextTexture;
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
+  LTexture gPromptInfoTextTexture;
 
   SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
@@ -97,6 +102,12 @@ private:
   void handleEvents(bool &quit, bool *renderText);
 
   UsernameBox boxes[MAX_CLIENTS];
+    bool isLobbyView;
+
+    void loadLobbyMedia();
+
+
+    void initializeLobbyTextInputs();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H
