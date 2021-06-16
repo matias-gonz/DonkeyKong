@@ -125,12 +125,10 @@ void Server::handleEvents() {
     pthread_mutex_lock(&this->mutex);
     EventContainer e = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
-
     this->gameController->handleEvents(e.e,e.clientNum);
-
     if(!this->isRunning()) this->quit();
-
   }
+
   this->gameController->update();
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
@@ -184,7 +182,7 @@ void Server::broadcastGameStart() {
   for(int i = 0; i <this->clientCount; i++){
     char string[30];
     strcpy(string,"confirmed");
-    this->socket->sndString(string, this->sockets[i]);
+    //this->socket->sndString(string, this->sockets[i]);
   }
   pthread_mutex_unlock(&this->mutex);
 }

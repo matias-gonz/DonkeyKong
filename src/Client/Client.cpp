@@ -99,7 +99,7 @@ void Client::goToLobby() {
   this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
   this->viewManagerLobby->renderLobbyWindow();
-
+  /*
   char *message = this->socket->rcvString(0);
   //Check if the server authenticated wrong the user and pass
   bool check = !strcmp(message, "confirmed\a");
@@ -107,6 +107,7 @@ void Client::goToLobby() {
   if (!check) {
     return;
   }
+  */
   viewManagerLobby->close();
 
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
