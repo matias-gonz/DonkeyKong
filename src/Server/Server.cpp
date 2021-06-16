@@ -3,12 +3,14 @@
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "server.txt");
-  char message[100] = {0};
-  strcat(message,"IP del servidor: ");
-  strcat(message,IP);
-  strcat(message,"Puerto del servidor: ");
-  strcat(message,port);
-  Logger::log(Logger::Info,message);
+  char messageIP[100] = {0};
+  strcat(messageIP,"IP del servidor: ");
+  strcat(messageIP,IP);
+  Logger::log(Logger::Info,messageIP);
+  char messagePort[100] = {0};
+  strcat(messagePort,"Puerto del servidor: ");
+  strcat(messagePort,port);
+  Logger::log(Logger::Info,messagePort);
 
   this->game = new Game(this->configuration);
   this->gameController = new GameController(this->game);
