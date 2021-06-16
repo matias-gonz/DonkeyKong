@@ -43,6 +43,7 @@ bool Client::checkCredentials() {
 
 void Client::receive() {
   this->socket->receive(&positions,0);
+  printf("%i",this->positions.playerCount);
   if(!socket->isConnected()){
     this->quit = true;
     this->running = false;
@@ -101,7 +102,8 @@ void Client::goToLobby() {
 
   char *message = this->socket->rcvString(0);
   //Check if the server authenticated wrong the user and pass
-  bool check = !strcmp(message, "confirmed");
+  bool check = !strcmp(message, "confirmed\a");
+  free(message);
   if (!check) {
     return;
   }

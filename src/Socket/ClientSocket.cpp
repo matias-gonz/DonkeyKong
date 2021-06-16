@@ -100,6 +100,7 @@ int ClientSocket::sndCredentials(void *credentials) {
 }
 
 char *ClientSocket::rcvString(int socketNumber) {
-  valread = ::recv(this->server_fd, buffer, 1024, 0);
-  return buffer;
+  char* buf = (char*)malloc(50*sizeof(char));
+  valread = ::recv(this->server_fd, buf, 50, 0);
+  return buf;
 }

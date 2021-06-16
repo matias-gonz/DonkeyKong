@@ -15,7 +15,7 @@ Server::Server(char *port, char *IP) {
   this->port = port;
   this->ip = IP;
   this->clientCount = 0;
-  this->clientMax = 4;
+  this->clientMax = 1;
   this->socket = new ServerSocket(port, IP, this->clientMax);
   pthread_mutex_init(&this->mutex, NULL);
   this->sockets = NULL;
@@ -42,6 +42,7 @@ void *acceptConnections(void *serv) {
   while (!server->isFull()) {
     server->addNewConnection();
   }
+  server->broadcastGameStart();
 }
 
 void *hndlEvents(void *serv) {
@@ -83,9 +84,7 @@ void Server::addNewConnection() {
   username.append(credentials.username);
   password_str.append(credentials.password);
   if (this->configuration->checkCredentials(&username, &password_str)) {
-    if (!this->started) {
-      this->started = true;
-    }
+
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
   } else {
@@ -113,7 +112,6 @@ void Server::addNewConnection() {
 
   pthread_t receiveThread;
   pthread_create(&receiveThread, NULL, &receiveEvents, container);
-  //printf("Client count = %i\n",this->clientCount);
 }
 
 void Server::handleEvents() {
@@ -178,4 +176,15 @@ void Server::quit() {
 
 bool Server::isPlayerConnected(int playerNumber) {
     return game->isPlayerActive(playerNumber);
+}
+
+void Server::broadcastGameStart() {
+  pthread_mutex_lock(&this->mutex);
+  this->started = true;
+  for(int i = 0; i <this->clientCount; i++){
+    char string[30];
+    strcpy(string,"confirmed");
+    this->socket->sndString(string, this->sockets[i]);
+  }
+  pthread_mutex_unlock(&this->mutex);
 }
