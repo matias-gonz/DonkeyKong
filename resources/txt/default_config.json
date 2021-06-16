@@ -7,8 +7,14 @@
     },
     "game": {
       "probability_enemies": 10,
+      "client_max": 4,
       "sprites": {
-        "player": "resources/sprites/sans_walk_default.png",
+        "player_1": "resources/sprites/sans_walk_default.png",
+        "player_2": "resources/sprites/sans_walk_default.png",
+        "player_3": "resources/sprites/sans_walk_default.png",
+        "player_4": "resources/sprites/sans_walk_default.png",
+        "player_5": "resources/sprites/sans_walk_default.png",
+        "inactive_player": "resources/sprites/sans_disconnect.png",
         "fire": "resources/sprites/fire_default.png",
         "barrel": "resources/sprites/fire.png",
         "yellow_stair": "resources/sprites/ladder_default.png",
@@ -23,7 +29,25 @@
       "levels": {
         "level1": "src/model/levels/level1.json",
         "level2": "src/model/levels/level2.json"
-      }
+      },
+      "users": [
+        {
+          "user": "u1",
+          "password": "p1"
+        },
+        {
+          "user": "u2",
+          "password": "p2"
+        },
+        {
+          "user": "u3",
+          "password": "p3"
+        },
+        {
+          "user": "u4",
+          "password": "p4"
+        }
+      ]
     }
   }
 }
