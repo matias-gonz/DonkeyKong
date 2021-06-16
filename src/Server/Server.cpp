@@ -52,6 +52,7 @@ void* receiveEvents(void * srvr) {
   while(serverContainer->server->isPlayerConnected(serverContainer->clientNum)){
     serverContainer->server->receive(serverContainer->clientNum, serverContainer->socketNumber);
   }
+  pthread_join(pthread_self(),NULL);
 }
 
 void Server::start() {
@@ -65,7 +66,7 @@ void Server::start() {
 }
 
 bool Server::isFull() {
-  return (this->totalClientsCount >= this->clientMax);
+  return (this->onlineClientsCount >= this->clientMax);
 }
 
 void Server::addNewConnection() {
@@ -94,7 +95,12 @@ void Server::addNewConnection() {
     char *error_msg = "Connection okay";
     this->socket->sndString(error_msg, newSocket);
 
-  } else {
+  } else if (hasReconnected){
+
+    char *error_msg = "Connection okay";
+    this->socket->sndString(error_msg, newSocket);
+  }
+  else {
     char *error_msg = "Failed connection";
     this->socket->sndString(error_msg, newSocket);
   }
@@ -253,6 +259,8 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
 }
 
 void Server::clientSetToOffline(int clientNumber) {
+  //Esto hay que sacarlo es un hotfix
+  if(!clientConnections[clientNumber]->isOnline) return;
 
   pthread_mutex_lock(&this->mutex);
   clientConnections[clientNumber]->isOnline = false;
