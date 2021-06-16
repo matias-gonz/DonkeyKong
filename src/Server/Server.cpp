@@ -3,6 +3,13 @@
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "server.txt");
+  char message[100] = {0};
+  strcat(message,"IP del servidor: ");
+  strcat(message,IP);
+  strcat(message,"Puerto del servidor: ");
+  strcat(message,port);
+  Logger::log(Logger::Info,message);
+
   this->game = new Game(this->configuration);
   this->gameController = new GameController(this->game);
   this->eventQueue = new QueueThrd();
@@ -64,9 +71,11 @@ void* receiveEvents(void * srvr) {
 }
 
 void Server::start() {
+  Logger::log(Logger::Info,"Se lanza accepter thread");
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
 
+  Logger::log(Logger::Info,"Se lanza eventHandler thread");
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
@@ -78,8 +87,14 @@ bool Server::isFull() {
 }
 
 void Server::addNewConnection() {
+  pthread_mutex_lock(&this->mutex);
+  Logger::log(Logger::Info,"Esperando accept");
+  pthread_mutex_unlock(&this->mutex);
   //Create socket
   int newSocket = this->socket->accept();
+  pthread_mutex_lock(&this->mutex);
+  Logger::log(Logger::Info,"Se acepta nueva coneccion con socket = ", newSocket);
+  pthread_mutex_unlock(&this->mutex);
 
   //Read credentials
   Credentials credentials;
@@ -191,6 +206,7 @@ void Server::broadcastGameStart() {
     this->socket->sndChar(&confirmation,this->sockets[i]);
   }
   this->started = true;
+  Logger::log(Logger::Info,"Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego");
   SDL_Delay(1200);
   pthread_mutex_unlock(&this->mutex);
 }
