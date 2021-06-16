@@ -30,7 +30,7 @@ bool Server::isRunning() {
 
 
 void Server::broadcast() {
-  SDL_Delay(40);
+  SDL_Delay(25);
   for(int i = 0; i < this->clientCount; i++){
     this->socket->snd(&this->positions, this->sockets[i]);
   }
@@ -66,7 +66,7 @@ void Server::start() {
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
-  pthread_exit(NULL);
+  pthread_join(eventHandlerThrd,NULL);
 }
 
 bool Server::isFull() {
@@ -178,7 +178,6 @@ bool Server::isPlayerConnected(int playerNumber) {
 
 void Server::broadcastGameStart() {
   pthread_mutex_lock(&this->mutex);
-  this->started = true;
   for(int i = 0; i <this->clientCount; i++){
     //char string[30];
     //strcpy(string,"confirmed");
@@ -187,5 +186,7 @@ void Server::broadcastGameStart() {
     char confirmation = 'c';
     this->socket->sndChar(&confirmation,this->sockets[i]);
   }
+  this->started = true;
+  SDL_Delay(1000);
   pthread_mutex_unlock(&this->mutex);
 }
