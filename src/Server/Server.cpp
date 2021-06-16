@@ -30,7 +30,7 @@ bool Server::isRunning() {
 
 
 void Server::broadcast() {
-  SDL_Delay(25);
+  SDL_Delay(40);
   for(int i = 0; i < this->clientCount; i++){
     this->socket->snd(&this->positions, this->sockets[i]);
   }
