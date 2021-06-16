@@ -97,16 +97,20 @@ void Server::addNewConnection() {
   //configuration->checkCredentials(&username, &password_str)
   if (!hasReconnected && !this->clientIsOnline(credentials) && this->configuration->checkCredentials(&username, &password_str)){
     this->addNewClient(credentials, newSocket);
-    char *error_msg = "Connection okay";
-    this->socket->sndString(error_msg, newSocket);
-
+    //char *error_msg = "Connection okay";
+    //this->socket->sndString(error_msg, newSocket);
+    char o = 'o';
+    this->socket->sndChar(&o,newSocket);
   } else if (hasReconnected){
-
-    char *error_msg = "Connection okay";
-    this->socket->sndString(error_msg, newSocket);
+    //char *error_msg = "Connection okay";
+    //this->socket->sndString(error_msg, newSocket);
+    char o = 'o';
+    this->socket->sndChar(&o,newSocket);
   }else {
-    char *error_msg = "Failed connection";
-    this->socket->sndString(error_msg, newSocket);
+    //char *error_msg = "Failed connection";
+    //this->socket->sndString(error_msg, newSocket);
+    char f = 'f';
+    this->socket->sndChar(&f,newSocket);
   }
 }
 
@@ -260,13 +264,11 @@ void Server::reconnectClient(int clientNumberToReconnect, int newSocket) {
   this->onlineClientsCount++;
   this->offlineClientsCount--;
 
-  //Create the thread to receive
-  pthread_t receiveThread;
-  pthread_create(&receiveThread, NULL, &receiveEvents, clientToReconnect);
-
+  //Send 'c' to skip the lobby
   char c = 'c';
   this->socket->sndChar(&c, newSocket);
   SDL_Delay(2000);
+
   //Player is active again (cambiar despues rompe encapsulamiento)
   this->game->getPlayer(clientNumberToReconnect)->startedPlaying();
   pthread_mutex_unlock(&this->mutex);
