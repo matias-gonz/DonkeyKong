@@ -13,6 +13,7 @@ ClientSocket::ClientSocket(char *port, char *IP) {
 
   this->convertToHost(atoi(port), IP);
   this->connected = this->connect();
+  //recibir player number
 }
 
 

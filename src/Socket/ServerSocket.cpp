@@ -23,39 +23,38 @@ int ServerSocket::snd(void *positions, int sckt) {
   int send_data_size = sizeof(Positions);
   bool client_socket_still_open = true;
 
-    while ((send_data_size > total_bytes_written) && client_socket_still_open){
-        bytes_written = send(sckt, ((Positions*)positions + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
-        if (bytes_written < 0) { // Error
-            return bytes_written;
-        }
-        else if (bytes_written == 0) { // Socket closed
-            client_socket_still_open = false;
-        }
-        else {
-            total_bytes_written += bytes_written;
-        }
+  while ((send_data_size > total_bytes_written) && client_socket_still_open) {
+    bytes_written = send(sckt, ((Positions *) positions + total_bytes_written), (send_data_size - total_bytes_written),
+                         MSG_NOSIGNAL);
+    if (bytes_written < 0) { // Error
+      return bytes_written;
+    } else if (bytes_written == 0) { // Socket closed
+      client_socket_still_open = false;
+    } else {
+      total_bytes_written += bytes_written;
     }
+  }
 
   return 0;
 }
 
 int ServerSocket::receive(void *event, int sckt) {
-    int total_bytes_receive = 0;
-    int bytes_receive = 0;
-    int receive_data_size = sizeof(SDL_Event);
-    bool client_socket_still_open = true;
+  int total_bytes_receive = 0;
+  int bytes_receive = 0;
+  int receive_data_size = sizeof(SDL_Event);
+  bool client_socket_still_open = true;
 
-   while ((receive_data_size > bytes_receive) && client_socket_still_open) {
-        bytes_receive = recv(sckt, ((SDL_Event *) event + total_bytes_receive),
-                             (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
-        if (bytes_receive < 0) { // Error
-            return bytes_receive;
-        } else if (bytes_receive == 0) { // Socket closed
-            client_socket_still_open = false;
-        } else {
-            total_bytes_receive += bytes_receive;
-        }
+  while ((receive_data_size > bytes_receive) && client_socket_still_open) {
+    bytes_receive = recv(sckt, ((SDL_Event *) event + total_bytes_receive),
+                         (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
+    if (bytes_receive < 0) { // Error
+      return bytes_receive;
+    } else if (bytes_receive == 0) { // Socket closed
+      client_socket_still_open = false;
+    } else {
+      total_bytes_receive += bytes_receive;
     }
+  }
 
   return 0;
 }
@@ -104,18 +103,21 @@ int ServerSocket::sndChar(char *character, int sckt) {
   int send_data_size = sizeof(char);
   bool client_socket_still_open = true;
 
-  while ((send_data_size > total_bytes_written) && client_socket_still_open){
-    bytes_written = send(sckt, ((Positions*)character + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
+  while ((send_data_size > total_bytes_written) && client_socket_still_open) {
+    bytes_written = send(sckt, ((Positions *) character + total_bytes_written), (send_data_size - total_bytes_written),
+                         MSG_NOSIGNAL);
     if (bytes_written < 0) { // Error
       return bytes_written;
-    }
-    else if (bytes_written == 0) { // Socket closed
+    } else if (bytes_written == 0) { // Socket closed
       client_socket_still_open = false;
-    }
-    else {
+    } else {
       total_bytes_written += bytes_written;
     }
   }
 
   return 0;
+}
+
+int ServerSocket::sndInt(int message, int socketNumber) {
+
 }

@@ -22,6 +22,8 @@ public:
 
   int sndChar(char *string, int i);
 
+  int sndInt(int message, int socketNumber);
+
 private:
   int socketServer;
 };

@@ -139,7 +139,7 @@ SDL_Renderer *ViewManager::getRenderer() {
 }
 
 void ViewManager::createRenderer() {
-  this->renderer = SDL_CreateRenderer(this->currentWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  this->renderer = SDL_CreateRenderer(this->currentWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 
   if (this->renderer == NULL) {
     this->showSDLError("Renderer could not be created! SDL Error: %s\n");
@@ -193,7 +193,7 @@ void ViewManager::renderWindow(Positions positions) {
   this->levelDrawer->drawFires(positions.fires, positions.fireCount);
   for (int i = 0; i < positions.playerCount; i++) {
     int boxIndex;
-    for (int j = 0; j < MAX_CLIENTS; ++j) {
+    for (int j = 0; j < positions.playerCount; ++j) {
       if(strcmp(this->boxes[j].username,positions.playersInfo[i].username) == 0){
         boxIndex = j;
         break;

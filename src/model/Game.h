@@ -85,6 +85,8 @@ private:
     int playerCount;
 
     bool anyPlayerWon();
+
+    bool everyPlayerWon();
 };
 
 
