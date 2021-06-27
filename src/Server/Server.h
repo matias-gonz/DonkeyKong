@@ -47,6 +47,8 @@ public:
 
     void broadcastGameStart();
 
+    void broadcastTransitionLevel();
+
     void rejectConnection();
 
 private:

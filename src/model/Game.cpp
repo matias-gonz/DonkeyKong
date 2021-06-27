@@ -18,6 +18,7 @@ Game::~Game() {
 
 void Game::start() {
   this->running = true;
+  this->transitioningLevels = false;
   this->level = new Level();
   this->players = NULL;
   this->playerCount = 0;
@@ -107,12 +108,24 @@ void Game::switchLevel() {
   for(int i = 0; i < this->playerCount; i++){
     this->players[i]->resetPos();
   }
-
-  if (this->currentLevel == 1) {
-    this->loadLevel(2);
-  } else {
-    this->loadLevel(1);
+  if(!this-> transitioningLevel){
+    this-> switchTransitionView();
+  }else{
+    this->transitioningLevel = false;
+    if (this->currentLevel == 1) {
+      this->loadLevel(2);
+    } else {
+      this->loadLevel(1);
+    }
   }
+
+}
+
+void Game::switchTransitionView(){
+  this->transitioningLevel = true;
+}
+bool Game::transitioningLevels(){
+  return this->transitioningLevel;
 }
 
 Boss *Game::getBoss() {
@@ -203,7 +216,6 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->y = entity->getYPosition();
   entityInfo->direction = entity->getDirection();
 }
-
 
 bool Game::anyPlayerWon() {
   for(int i = 0; i < this->playerCount; i++){

@@ -4,13 +4,13 @@ Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
   Logger::startLogger(this->configuration, "server.txt");
   char messageIP[100] = {0};
-  strcat(messageIP,"IP del servidor: ");
-  strcat(messageIP,IP);
-  Logger::log(Logger::Info,messageIP);
+  strcat(messageIP, "IP del servidor: ");
+  strcat(messageIP, IP);
+  Logger::log(Logger::Info, messageIP);
   char messagePort[100] = {0};
-  strcat(messagePort,"Puerto del servidor: ");
-  strcat(messagePort,port);
-  Logger::log(Logger::Info,messagePort);
+  strcat(messagePort, "Puerto del servidor: ");
+  strcat(messagePort, port);
+  Logger::log(Logger::Info, messagePort);
 
   this->game = new Game(this->configuration);
   this->gameController = new GameController(this->game);
@@ -78,11 +78,11 @@ void *receiveEvents(void *srvr) {
 }
 
 void Server::start() {
-  Logger::log(Logger::Info,"Se lanza accepter thread");
+  Logger::log(Logger::Info, "Se lanza accepter thread");
   pthread_t accepterThrd;
   pthread_create(&accepterThrd, NULL, &acceptConnections, this);
 
-  Logger::log(Logger::Info,"Se lanza eventHandler thread");
+  Logger::log(Logger::Info, "Se lanza eventHandler thread");
   pthread_t eventHandlerThrd;
   pthread_create(&eventHandlerThrd, NULL, &hndlEvents, this);
 
@@ -95,12 +95,12 @@ bool Server::hasAllClientsOnline() {
 
 void Server::addNewConnection() {
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info,"Esperando accept");
+  Logger::log(Logger::Info, "Esperando accept");
   pthread_mutex_unlock(&this->mutex);
   //Create socket
   int newSocket = this->socket->accept();
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info,"Se acepta nueva coneccion con socket");
+  Logger::log(Logger::Info, "Se acepta nueva conexion con socket");
   pthread_mutex_unlock(&this->mutex);
 
   //Read credentials
@@ -125,7 +125,7 @@ void Server::addNewConnection() {
     hasReconnected = this->tryToReconnectUsing(credentials, newSocket);
 
   //Case lobby is full and credentials did not reconnect
-  if(!hasReconnected && this->lobbyIsFull()){
+  if (!hasReconnected && this->lobbyIsFull()) {
     char l = 'l';
     this->socket->sndChar(&l, newSocket);
     return;
@@ -138,20 +138,20 @@ void Server::addNewConnection() {
     this->socket->sndChar(&c, newSocket);
 
   } else {
-      if (this->configuration->checkCredentials(&username, &password_str) ) {
+    if (this->configuration->checkCredentials(&username, &password_str)) {
 
-        //Case new client
-        this->addNewClient(credentials, newSocket);
-        char o = 'o';
-        this->socket->sndChar(&o, newSocket);
+      //Case new client
+      this->addNewClient(credentials, newSocket);
+      char o = 'o';
+      this->socket->sndChar(&o, newSocket);
 
-      } else {
+    } else {
 
-        //Case wrong credentials
-        char f = 'f';
-        this->socket->sndChar(&f, newSocket);
-      }
+      //Case wrong credentials
+      char f = 'f';
+      this->socket->sndChar(&f, newSocket);
     }
+  }
 }
 
 void Server::handleEvents() {
@@ -175,16 +175,21 @@ void Server::handleEvents() {
   }
 
   this->gameController->update();
-  this->game->getBossInfo(&this->positions.bossInfo);
-  this->game->getPrincessInfo(&this->positions.princessInfo);
-  this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
-  this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
-  this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
-  this->game->getFires(this->positions.fires, &this->positions.fireCount);
-  this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
-  pthread_mutex_lock(&this->mutex);
-  this->broadcast();
-  pthread_mutex_unlock(&this->mutex);
+  if (game->transitioningLevels()) {
+    this-> broadcastTransitionLevel();
+
+  } else {
+    this->game->getBossInfo(&this->positions.bossInfo);
+    this->game->getPrincessInfo(&this->positions.princessInfo);
+    this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
+    this->game->getPlatforms(this->positions.platforms, &this->positions.platformCount);
+    this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
+    this->game->getFires(this->positions.fires, &this->positions.fireCount);
+    this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
+    pthread_mutex_lock(&this->mutex);
+    this->broadcast();
+    pthread_mutex_unlock(&this->mutex);
+  }
 }
 
 
@@ -232,11 +237,20 @@ void Server::broadcastGameStart() {
     this->socket->sndChar(&confirmation, this->sockets[i]);
   }
   this->started = true;
-  Logger::log(Logger::Info,"Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego");
+  Logger::log(Logger::Info, "Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego");
   SDL_Delay(1200);
   pthread_mutex_unlock(&this->mutex);
 }
 
+void Server::broadcastTransitionLevel(){
+  pthread_mutex_lock(&this->mutex);
+  for (int i = 0; i < this->totalClientsCount; i++) {
+    char switchTransitionLevel = 's';
+    this->socket->sndChar(&switchTransitionLevel, this->sockets[i]);
+  }
+  Logger::log(Logger::Info, "Cambia a la pantalla de transicion entre niveles");
+  pthread_mutex_unlock(&this->mutex);
+}
 void Server::addNewClient(Credentials credentials, int newSocket) {
   //Allocate memory for a new socket
   int *tmpSocket = (int *) realloc(this->sockets, (this->totalClientsCount + 1) * sizeof(int));
@@ -355,13 +369,13 @@ bool Server::lobbyIsFull() {
 
 void Server::rejectConnection() {
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info,"Esperando accept para rechazar");
+  Logger::log(Logger::Info, "Esperando accept para rechazar");
   pthread_mutex_unlock(&this->mutex);
   //Create socket
   int newSocket = this->socket->accept();
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info,"Se rechaza nueva conexion");
+  Logger::log(Logger::Info, "Se rechaza nueva conexion");
   pthread_mutex_unlock(&this->mutex);
   char l = 'l';
-  this->socket->sndChar(&l,newSocket);
+  this->socket->sndChar(&l, newSocket);
 }

@@ -7,7 +7,7 @@
     },
     "game": {
       "probability_enemies": 10,
-      "client_max": 4,
+      "client_max": 2,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_default.png",
         "player_2": "resources/sprites/sans_walk_default.png",

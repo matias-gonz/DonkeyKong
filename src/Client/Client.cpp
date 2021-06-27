@@ -115,8 +115,6 @@ void Client::goToLobby() {
   if (message != 'c') {
     //return;
   }
-
-
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
