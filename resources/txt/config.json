@@ -7,7 +7,7 @@
     },
     "game": {
       "probability_enemies": 10,
-      "client_max": 1,
+      "client_max": 4,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_1.png",
         "player_2": "resources/sprites/sans_walk_2.png",
@@ -32,12 +32,8 @@
       },
       "users": [
         {
-          "user": "Matiti",
-          "password": "matiti"
-        },
-        {
-          "user": "Rochi",
-          "password": "rochi"
+          "user": "Nico",
+          "password": "nico"
         },
         {
           "user": "Juampi",
@@ -46,6 +42,10 @@
         {
           "user": "Agus",
           "password": "agus"
+        },
+        {
+          "user": "Rochi",
+          "password": "rochi"
         }
       ]
     }

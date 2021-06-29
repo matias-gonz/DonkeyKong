@@ -88,6 +88,9 @@ private:
 
   bool anyPlayerWon();
 
+    bool anyPlayerWon();
+
+    bool everyPlayerWon();
 };
 
 

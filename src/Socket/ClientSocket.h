@@ -5,7 +5,7 @@
 #include "Socket.h"
 #include "../model/Logger.h"
 
-class ClientSocket: public Socket {
+class ClientSocket : public Socket {
 public:
   ClientSocket(char *port, char *IP);
 
@@ -21,10 +21,12 @@ public:
 
   int sndCredentials(void *credentials);
 
-    char rcvChar();
+  char rcvChar();
+
+  int getClientNumber();
 
 private:
-  int socketClient;
+  int socketClient, clientNumber;
   struct sockaddr_in serv_addr;
   Socket *socket;
   bool connected;

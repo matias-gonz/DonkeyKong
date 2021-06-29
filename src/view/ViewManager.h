@@ -43,7 +43,7 @@ public:
 
   void renderWindow();
 
-  void renderWindow(Positions positions);
+  void renderWindow(Positions positions, int clientNumber);
 
   void renderLoginWindow(bool &quit);
 
@@ -123,6 +123,7 @@ private:
 
 
   void initializeLobbyTextInputs();
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

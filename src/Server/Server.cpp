@@ -99,6 +99,9 @@ void Server::addNewConnection() {
   pthread_mutex_unlock(&this->mutex);
   //Create socket
   int newSocket = this->socket->accept();
+  char playerCount = this->game->getPlayerCount();
+  this->socket->sndChar(&playerCount, newSocket);
+  //enviar al cliente el game->playerCount
   pthread_mutex_lock(&this->mutex);
   Logger::log(Logger::Info, "Se acepta nueva conexion con socket");
   pthread_mutex_unlock(&this->mutex);

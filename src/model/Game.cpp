@@ -33,7 +33,7 @@ void Game::quit() {
 }
 
 void Game::update() {
-  if (this->anyPlayerWon()) {
+  if (this->everyPlayerWon()) {
     this->switchLevel();
     return;
   }
@@ -210,6 +210,16 @@ bool Game::anyPlayerWon() {
     }
   }
   return false;
+}
+
+bool Game::everyPlayerWon() {
+  int playersCountWon = 0;
+  for(int i = 0; i < this->playerCount; i++){
+    if(this->level->playerWon(this->players[i])){
+      playersCountWon++;
+    }
+  }
+  return playersCountWon == this->playerCount;
 }
 
 int Game::getPlayerCount() {
