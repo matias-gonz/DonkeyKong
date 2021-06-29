@@ -182,25 +182,6 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
 
-void ViewManager::renderWindow(Positions positions, int clientNumber) {
-  if(positions.transitioningLevel){
-    this->renderTransitionWindow();
-    //this->reopenGameWindow();
-  }else{
-    this->renderGameWindow(positions, clientNumber);
-  }
-}
-
-void ViewManager::reopenGameWindow(){
-  this->screen_width = 1024;
-  this->screen_height = 576;
-  int flags = SDL_WINDOW_FULLSCREEN;
-
-  this->currentWindow = this->createWindow("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0);
-  if (this->currentWindow != NULL) this->createRenderer();
-  if (this->renderer != NULL) this->initializeRendererColor();
-}
-
 void ViewManager::renderTransitionWindow(){
   //Clear the renderer and window
   this->close();
