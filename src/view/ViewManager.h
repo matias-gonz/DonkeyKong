@@ -21,28 +21,29 @@
 
 class ViewManager {
 public:
-    ViewManager(Game*, Configuration*, const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+  ViewManager(Game *, Configuration *, const char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-    ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen);
+  ViewManager(Configuration *configurations, char *title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-    ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
+  ViewManager(const char *title, int xPos, int yPos, int width, int height, LoginButton *sendButton);
 
-    ViewManager(const char *title, int xPos, int yPos, int width, int height);
+  ViewManager(const char *title, int xPos, int yPos, int width, int height);
 
-    ~ViewManager();
-    SDL_Renderer *getRenderer();
+  ~ViewManager();
 
-    bool successfulInitialitization();
+  SDL_Renderer *getRenderer();
 
-    void close();
+  bool successfulInitialitization();
 
-    LTexture* loadTexture(char* path);
+  void close();
 
-    void drawTexture(SDL_Texture *texture, SDL_Rect* srcRect, SDL_Rect* destRect);
+  LTexture *loadTexture(char *path);
 
-    void renderWindow();
+  void drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect);
 
-    void renderWindow(Positions positions);
+  void renderWindow();
+
+  void renderWindow(Positions positions);
 
   void renderLoginWindow(bool &quit);
 
@@ -56,13 +57,19 @@ public:
 
   void renderLobbyWindow();
 
-    void renderWrongCredentialsWindow();
+  void renderWrongCredentialsWindow();
 
-    void renderClientAlreadyConnectedWindow();
+  void renderClientAlreadyConnectedWindow();
 
-    void renderUnknownResponseWindow(char i);
+  void renderUnknownResponseWindow(char i);
 
-    void renderLobbyIsFullWindow();
+  void renderLobbyIsFullWindow();
+
+  void renderGameWindow(Positions positions);
+
+  void renderTransitionWindow();
+
+  void reopenGameWindow();
 
 private:
 
@@ -110,12 +117,12 @@ private:
   void handleEvents(bool &quit, bool *renderText);
 
   UsernameBox boxes[MAX_CLIENTS];
-    bool isLobbyView;
+  bool isLobbyView;
 
-    void loadLobbyMedia();
+  void loadLobbyMedia();
 
 
-    void initializeLobbyTextInputs();
+  void initializeLobbyTextInputs();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H

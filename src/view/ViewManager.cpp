@@ -182,6 +182,71 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 }
 
 void ViewManager::renderWindow(Positions positions) {
+  if(positions.transitioningLevel){
+    this->renderTransitionWindow();
+    //this->reopenGameWindow();
+  }else{
+    this->renderGameWindow(positions);
+  }
+}
+
+void ViewManager::reopenGameWindow(){
+  this->screen_width = 1024;
+  this->screen_height = 576;
+  int flags = SDL_WINDOW_FULLSCREEN;
+
+  this->currentWindow = this->createWindow("Donkey Kong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0);
+  if (this->currentWindow != NULL) this->createRenderer();
+  if (this->renderer != NULL) this->initializeRendererColor();
+}
+
+void ViewManager::renderTransitionWindow(){
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = TRANSITION_WIDTH;
+    this->screen_height =TRANSITION_HEIGHT;
+    this->currentWindow =this->createWindow("Donkey Kong - Loading next Level", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                            TRANSITION_WIDTH, TRANSITION_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Loading next level",textColor,font,this->renderer);
+
+  errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                      (this->screen_height/2)-errorMessage.getHeight());
+  SDL_RenderPresent(renderer);
+
+  //Render window with exit button
+  //SDL_Event e;
+  //bool quit = false;
+
+  SDL_Delay(5000);
+  this->close();
+
+  /*while (!quit) {
+    while(SDL_PollEvent(&e) != 0 && !quit){
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
+                        (this->screen_height/2)-errorMessage.getHeight());
+    SDL_RenderPresent(renderer);
+  }*/
+}
+
+void ViewManager::renderGameWindow(Positions positions){
+
+
   SDL_RenderClear(this->renderer);
 /*
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);

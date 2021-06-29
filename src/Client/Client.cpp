@@ -95,6 +95,13 @@ bool Client::isRunning() {
 }
 
 void Client::render() {
+  if(this->positions.transitioningLevel){
+    viewManagerGame->renderWindow(this->positions);
+    this->positions.transitioningLevel=false;
+    this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+
+  }
   viewManagerGame->renderWindow(this->positions);
 }
 
@@ -119,8 +126,6 @@ void Client::goToLobby() {
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
 }
-
-
 
 void Client::informConnectionOutcome(char connectionResponse) {
   if(connectionResponse == 'f'){

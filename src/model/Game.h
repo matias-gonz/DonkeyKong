@@ -40,10 +40,6 @@ public:
 
   void switchLevel();
 
-  void switchTransitionView();
-
-  bool transitioningLevels();
-
   void addPlayer(char string[20]);
 
   void getPlatforms(PlatformContainer *platforms, int *count);
@@ -65,6 +61,8 @@ public:
   void updateStatus();
 
   bool isPlayerActive(int playerNumber);
+
+  int getCurrentLevel();
 
 private:
   EnemyFire **enemyFires = NULL;
@@ -90,7 +88,6 @@ private:
 
   bool anyPlayerWon();
 
-  bool transitioningLevel;
 };
 
 
