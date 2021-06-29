@@ -43,7 +43,7 @@ bool Client::checkCredentials() {
         viewManagerLogin->close();
         this->_isInLobby = true;
         quit = true;
-      }else if(this->loginController->hasAResponse()){
+      } else if (this->loginController->hasAResponse()) {
         char connectionResponseChar = this->loginController->getConnectionResponse();
         viewManagerLogin->close();
         quit = true;
@@ -95,7 +95,8 @@ bool Client::isRunning() {
 }
 
 void Client::render() {
-  viewManagerGame->renderWindow(this->positions);
+  int clientNumber = this->socket->getClientNumber();
+  viewManagerGame->renderWindow(this->positions, clientNumber);
 }
 
 void Client::setSended(bool b) {
@@ -123,15 +124,14 @@ void Client::goToLobby() {
 }
 
 
-
 void Client::informConnectionOutcome(char connectionResponse) {
-  if(connectionResponse == 'f'){
+  if (connectionResponse == 'f') {
     viewManagerLogin->renderWrongCredentialsWindow();
-  }else if(connectionResponse == 'a'){
+  } else if (connectionResponse == 'a') {
     viewManagerLogin->renderClientAlreadyConnectedWindow();
-  } else if(connectionResponse == 'l'){
+  } else if (connectionResponse == 'l') {
     viewManagerLogin->renderLobbyIsFullWindow();
-  }else{
+  } else {
     viewManagerLogin->renderUnknownResponseWindow(connectionResponse);
   }
 }

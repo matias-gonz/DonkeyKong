@@ -62,7 +62,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
 
-  char** users = this->configuration->getUsers();
+  char **users = this->configuration->getUsers();
   //aca creo boxes
 
   SDL_Color textColor = {255, 255, 0, 0xFF};
@@ -71,8 +71,8 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   for (int i = 0; i < MAX_CLIENTS; ++i) {
     //std::string u;
     //u.append(users[i]);
-    this->boxes[i].box.loadFromRenderedText(users[i],textColor,this->font,this->renderer);
-    strcpy(this->boxes[i].username,users[i]);
+    this->boxes[i].box.loadFromRenderedText(users[i], textColor, this->font, this->renderer);
+    strcpy(this->boxes[i].username, users[i]);
   }
   //aca libero users
   for (int i = 0; i < MAX_CLIENTS; ++i) {
@@ -139,7 +139,8 @@ SDL_Renderer *ViewManager::getRenderer() {
 }
 
 void ViewManager::createRenderer() {
-  this->renderer = SDL_CreateRenderer(this->currentWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  this->renderer = SDL_CreateRenderer(this->currentWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC |
+                                                               SDL_RENDERER_TARGETTEXTURE);
 
   if (this->renderer == NULL) {
     this->showSDLError("Renderer could not be created! SDL Error: %s\n");
@@ -181,7 +182,7 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
 
-void ViewManager::renderWindow(Positions positions) {
+void ViewManager::renderWindow(Positions positions, int clientNumber) {
   SDL_RenderClear(this->renderer);
 /*
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
@@ -190,30 +191,45 @@ void ViewManager::renderWindow(Positions positions) {
 
   this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
   this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
-  this->levelDrawer->drawFires(positions.fires, positions.fireCount);
-  for (int i = 0; i < positions.playerCount; i++) {
-    int boxIndex;
-    for (int j = 0; j < MAX_CLIENTS; ++j) {
-      if(strcmp(this->boxes[j].username,positions.playersInfo[i].username) == 0){
-        boxIndex = j;
-        break;
-      }
-    }
-    this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction, positions.playersInfo[i].x,
-                               positions.playersInfo[i].y, positions.playersInfo[i].distance,
-                               positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
-  }
-  for (int i = 0; i < positions.fireEnemyCount; i++) {
-    this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
-                              positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
-  }
-
-
   SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
   SDL_RenderCopy(this->renderer, this->textureManager->getBossTexture(), NULL, &bossDstrect);
 
   SDL_Rect princessDstrect = {positions.princessInfo.x, positions.princessInfo.y, (int) (3 * texW), (int) (2 * texH)};;
   SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
+  this->levelDrawer->drawFires(positions.fires, positions.fireCount);
+  // render every player except "me"
+  for (int i = 0; i < positions.playerCount; i++) {
+    int boxIndex;
+    if (i != clientNumber) {
+      for (int j = 0; j < MAX_CLIENTS; j++) {
+        if (strcmp(this->boxes[j].username, positions.playersInfo[i].username) == 0) {
+          boxIndex = j;
+          break;
+        }
+      }
+      this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction,
+                                 positions.playersInfo[i].x,
+                                 positions.playersInfo[i].y, positions.playersInfo[i].distance,
+                                 positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
+    }
+  }
+  for (int i = 0; i < positions.fireEnemyCount; i++) {
+    this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
+                              positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
+  }
+  // render my player
+  int boxPosition;
+  for (int j = 0; j < MAX_CLIENTS; j++) {
+    if (strcmp(this->boxes[j].username, positions.playersInfo[clientNumber].username) == 0) {
+      boxPosition = j;
+      break;
+    }
+  }
+  this->playerAnimator->draw(this->renderer, positions.playersInfo[clientNumber].direction,
+                             positions.playersInfo[clientNumber].x,
+                             positions.playersInfo[clientNumber].y, positions.playersInfo[clientNumber].distance,
+                             positions.playersInfo[clientNumber].isActive, clientNumber,
+                             &this->boxes[boxPosition].box);
 
   SDL_RenderPresent(renderer);
 }
@@ -376,9 +392,10 @@ void ViewManager::renderConnectionLostWindow() {
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height =CONNECTION_LOST_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Connection lost", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                               CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    this->screen_height = CONNECTION_LOST_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Connection lost", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
@@ -390,18 +407,18 @@ void ViewManager::renderConnectionLostWindow() {
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("Server Disconnected",textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("Server Disconnected", textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
 
   while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 
@@ -476,9 +493,10 @@ void ViewManager::renderWrongCredentialsWindow() {
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height =CONNECTION_LOST_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Wrong credentials", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    this->screen_height = CONNECTION_LOST_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Wrong credentials", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
@@ -490,18 +508,18 @@ void ViewManager::renderWrongCredentialsWindow() {
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("Credenciales incorrectas",textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("Credenciales incorrectas", textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
 
   while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 }
@@ -513,9 +531,10 @@ void ViewManager::renderClientAlreadyConnectedWindow() {
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height =CONNECTION_LOST_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - User already playing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    this->screen_height = CONNECTION_LOST_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - User already playing", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 250, 0, 0);
@@ -527,18 +546,18 @@ void ViewManager::renderClientAlreadyConnectedWindow() {
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("Ya se ingreso con este usuario",textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("Ya se ingreso con este usuario", textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
 
   while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 }
@@ -550,9 +569,10 @@ void ViewManager::renderUnknownResponseWindow(char connectionResponse) {
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height =CONNECTION_LOST_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Unknown server connection response", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    this->screen_height = CONNECTION_LOST_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Unknown server connection response", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
@@ -564,18 +584,19 @@ void ViewManager::renderUnknownResponseWindow(char connectionResponse) {
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("Respuesta inesperada del servidor" + std::to_string(connectionResponse),textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("Respuesta inesperada del servidor" + std::to_string(connectionResponse), textColor,
+                                    font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
 
   while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 }
@@ -587,9 +608,10 @@ void ViewManager::renderLobbyIsFullWindow() {
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height =CONNECTION_LOST_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Lobby is full", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    this->screen_height = CONNECTION_LOST_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Lobby is full", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
@@ -601,18 +623,18 @@ void ViewManager::renderLobbyIsFullWindow() {
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("El lobby esta completo",textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("El lobby esta completo", textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
 
   while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
 }
