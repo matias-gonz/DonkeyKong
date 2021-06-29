@@ -7,63 +7,68 @@
 #include "../view/Animator.h"
 #include "Entity.h"
 
-class Player: public Entity {
+class Player : public Entity {
 private:
-    int counter;
-    bool isClimbing;
-    bool canClimb;
-    int gravity;
-    bool active;
+  int counter, gravity, hp, points;
+  bool isClimbing, canClimb, active, hasWon;
 
-    static const int VEL = 3;
+  static const int VEL = 3;
 public:
-    explicit Player(Position *pos, char *string);
-    ~Player();
-    void addLeftVel();
+  explicit Player(Position *pos, char *string);
 
-    void addRightVel();
+  ~Player();
 
-    void jumpUp();
+  void addLeftVel();
 
-    void resetVelX();
+  void addRightVel();
 
-    void update();
+  void jumpUp();
 
+  void resetVelX();
 
-    SDL_Rect getRectangle();
-
-    void moveUp(int dy);
-
-    void setGrounded();
-
-    void resetVelY();
-
-    void moveDown(int i);
-
-    int getVelY();
-
-    void resetPos();
-
-    Position *initialPos;
-
-    bool isIn(Position *pPosition);
+  void update();
 
 
-    void startClimbing(int i);
+  SDL_Rect getRectangle();
+
+  void moveUp(int dy);
+
+  void setGrounded();
+
+  void resetVelY();
+
+  void moveDown(int i);
+
+  int getVelY();
+
+  void resetPos();
+
+  Position *initialPos;
+
+  bool isIn(Position *pPosition);
 
 
-    void setCanClimb(bool canClimb);
+  void startClimbing(int i);
 
 
-    void stoppedPlaying();
+  void setCanClimb(bool canClimb);
 
-    bool isPlaying();
 
-    char username[20];
+  void stoppedPlaying();
 
-    char *getUsername();
+  bool isPlaying();
 
-    void startedPlaying();
+  char username[20];
+
+  char *getUsername();
+
+  void startedPlaying();
+
+  void playerWon();
+
+  void resetPlayerWon();
+
+  void die();
 };
 
 

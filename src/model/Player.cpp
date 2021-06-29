@@ -6,7 +6,7 @@
 PlayerTexture plyrTex;
 
 Player::Player(Position *pos, char *username) : Entity(pos) {
-  strcpy(this->username,username);
+  strcpy(this->username, username);
   this->pos = pos;
   this->initialPos = new Position(pos->getX(), pos->getY());
   this->isGrounded = true;
@@ -17,43 +17,50 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->distance = 0;
   this->direction = left;
   this->active = true;
+  this->hasWon = false;
+  this->hp = 3;
+  this->points = 0;
 }
 
 void Player::update() {
-
-  if (this->isClimbing) {
-    this->resetVelX();
-    this->gravity = 0;
-    distance -= 5 * velY;
-  } else {
-    if (direction == up) {
-      distance = 0;
-      direction = left;
-    }
-    this->gravity = 1;
-  }
-
-  pos->add(velX, velY);
-
-  if (pos->getX() < 0 or pos->getX() > WIDTH - plyrTex.walkWidth) {
-    pos->add(-velX, 0);
-  }//WIDTH - texW
-
-  if (isGrounded) { distance += abs(velX); }
-  if (distance > 70) { distance = 0; }
-
-
-  if (counter == 2) {
-    if (velY == 5) {
-      velY = 4;
+  if (!this->hasWon) {
+    if(this->hp <= 0) {
+      this->die();
       return;
-    } //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
-    velY += this->gravity;
-    counter = 0;
-    return;
-  }
-  counter++;
+    }
 
+    if (this->isClimbing) {
+      this->resetVelX();
+      this->gravity = 0;
+      distance -= 5 * velY;
+    } else {
+      if (direction == up) {
+        distance = 0;
+        direction = left;
+      }
+      this->gravity = 1;
+    }
+
+    pos->add(velX, velY);
+
+    if (pos->getX() < 0 or pos->getX() > WIDTH - plyrTex.walkWidth) {
+      pos->add(-velX, 0);
+    }//WIDTH - texW
+
+    if (isGrounded) { distance += abs(velX); }
+    if (distance > 70) { distance = 0; }
+
+    if (counter == 2) {
+      if (velY == 5) {
+        velY = 4;
+        return;
+      } //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
+      velY += this->gravity;
+      counter = 0;
+      return;
+    }
+    counter++;
+  }
 }
 
 void Player::addLeftVel() {
@@ -152,4 +159,16 @@ char *Player::getUsername() {
 
 void Player::startedPlaying() {
   this->active = true;
+}
+
+void Player::playerWon() {
+  this->hasWon = true;
+}
+
+void Player::resetPlayerWon() {
+  this->hasWon = false;
+}
+
+void Player::die() {
+  this->active = false;
 }

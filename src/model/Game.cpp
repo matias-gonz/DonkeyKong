@@ -34,6 +34,9 @@ void Game::quit() {
 
 void Game::update() {
   if (this->everyPlayerWon()) {
+    for(int i = 0; i < playerCount; i++) {
+      this->players[i]->resetPlayerWon();
+    }
     this->switchLevel();
     return;
   }
