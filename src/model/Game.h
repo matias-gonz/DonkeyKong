@@ -12,81 +12,83 @@
 class Game {
 
 public:
-    Game(Configuration *configuration);
+  Game(Configuration *configuration);
 
-    ~Game();
+  ~Game();
 
-    void start();
+  void start();
 
-    void update();
+  void update();
 
-    void quit();
+  void quit();
 
-    bool isRunning();
+  bool isRunning();
 
-    Level *getLevel();
+  Level *getLevel();
 
-    Player *getPlayer(int i);
+  Player *getPlayer(int i);
 
-    void loadLevel(int i);
+  void loadLevel(int i);
 
-    Boss *getBoss();
+  Boss *getBoss();
 
-    Princess *getPrincess();
+  Princess *getPrincess();
 
-    EnemyFire **getEnemyFires();
+  EnemyFire **getEnemyFires();
 
-    int getEnemyFireCount();
+  int getEnemyFireCount();
 
-    void switchLevel();
+  void switchLevel();
 
-    void addPlayer(char string[20]);
+  void addPlayer(char string[20]);
 
-    void getPlatforms(PlatformContainer *platforms, int *count);
+  void getPlatforms(PlatformContainer *platforms, int *count);
 
-    void getLadders(LadderContainer *ladders, int *count);
+  void getLadders(LadderContainer *ladders, int *count);
 
-    void getFires(FireContainer *fires, int *count);
+  void getFires(FireContainer *fires, int *count);
 
-    void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
+  void getEnemyFiresPos(EntityContainer *enemyFires, int *count);
 
-    void getPLayerInfo(PlayersInformation *playerInfo, int *playerCount);
+  void getPLayerInfo(PlayersInformation *playerInfo, int *playerCount);
 
-    void getBossInfo(EntityContainer *bossInfo);
+  void getBossInfo(EntityContainer *bossInfo);
 
-    void getPrincessInfo(EntityContainer *princessInfo);
+  void getPrincessInfo(EntityContainer *princessInfo);
 
-    int getPlayerCount();
+  int getPlayerCount();
 
-    void updateStatus();
+  void updateStatus();
 
-    bool isPlayerActive(int playerNumber);
+  bool isPlayerActive(int playerNumber);
+
+  int getCurrentLevel();
 
 private:
-    EnemyFire **enemyFires = NULL;
-    int enemyFireCount = 0;
-    Boss *boss = NULL;
-    Princess *princess = NULL;
-    bool running;
-    Level *level;
-    Configuration *configuration;
+  EnemyFire **enemyFires = NULL;
+  int enemyFireCount = 0;
+  Boss *boss = NULL;
+  Princess *princess = NULL;
+  bool running;
+  Level *level;
+  Configuration *configuration;
 
-    void spawnEnemies(Position **spawns, int spawnCount, int probability);
+  void spawnEnemies(Position **spawns, int spawnCount, int probability);
 
-    void resetEnemies();
+  void resetEnemies();
 
-    int currentLevel;
+  int currentLevel;
 
-    void resolveCollisions();
+  void resolveCollisions();
 
-    void getEntityInfo(EntityContainer *entityInfo, Entity *entity);
+  void getEntityInfo(EntityContainer *entityInfo, Entity *entity);
 
-    Player **players;
-    int playerCount;
+  Player **players;
+  int playerCount;
 
-    bool anyPlayerWon();
+  bool anyPlayerWon();
 
-    bool everyPlayerWon();
+  bool everyPlayerWon();
 };
 
 

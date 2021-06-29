@@ -41,10 +41,6 @@ public:
 
   void drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect);
 
-  void renderWindow();
-
-  void renderWindow(Positions positions, int clientNumber);
-
   void renderLoginWindow(bool &quit);
 
   void createRenderer();
@@ -64,6 +60,10 @@ public:
   void renderUnknownResponseWindow(char i);
 
   void renderLobbyIsFullWindow();
+
+  void renderGameWindow(Positions positions, int clientNumber);
+
+  void renderTransitionWindow();
 
 private:
 

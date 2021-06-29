@@ -103,7 +103,7 @@ void Server::addNewConnection() {
   this->socket->sndChar(&playerCount, newSocket);
   //enviar al cliente el game->playerCount
   pthread_mutex_lock(&this->mutex);
-  Logger::log(Logger::Info, "Se acepta nueva coneccion con socket");
+  Logger::log(Logger::Info, "Se acepta nueva conexion con socket");
   pthread_mutex_unlock(&this->mutex);
 
   //Read credentials
@@ -158,6 +158,11 @@ void Server::addNewConnection() {
 }
 
 void Server::handleEvents() {
+  int levelHasTransitioned = false;
+
+  //this is for the transitioning view. Refactor later
+  int levelNumberBeforeHandlingEvent = this->game->getCurrentLevel();
+
   if (!this->started) return;
 
   pthread_mutex_lock(&this->mutex);
@@ -165,10 +170,12 @@ void Server::handleEvents() {
   pthread_mutex_unlock(&this->mutex);
 
   if (!empty) {
+
     pthread_mutex_lock(&this->mutex);
     EventContainer eventContainer = this->eventQueue->pop();
     pthread_mutex_unlock(&this->mutex);
 
+    //game changes by handling the event
     this->gameController->handleEvents(eventContainer.e, eventContainer.clientNum);
     //Check if the client has desconnected
     if (eventContainer.e.type == SDL_QUIT)
@@ -178,6 +185,9 @@ void Server::handleEvents() {
   }
 
   this->gameController->update();
+
+  // gathers the positions to send them to the client
+
   this->game->getBossInfo(&this->positions.bossInfo);
   this->game->getPrincessInfo(&this->positions.princessInfo);
   this->game->getPLayerInfo(this->positions.playersInfo, &this->positions.playerCount);
@@ -185,11 +195,17 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
   this->game->getFires(this->positions.fires, &this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
+  levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
   pthread_mutex_lock(&this->mutex);
-  this->broadcast();
-  pthread_mutex_unlock(&this->mutex);
-}
+  if (! levelHasTransitioned) {
+    this->broadcast();
+  }else{
+    levelHasTransitioned = false;
+  }
 
+  pthread_mutex_unlock(&this->mutex);
+
+}
 
 void Server::receive(int clientNum, int socketNumber) {
   if (!this->started) return;
@@ -237,6 +253,16 @@ void Server::broadcastGameStart() {
   this->started = true;
   Logger::log(Logger::Info, "Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego");
   SDL_Delay(1200);
+  pthread_mutex_unlock(&this->mutex);
+}
+
+void Server::broadcastTransitionLevel() {
+  pthread_mutex_lock(&this->mutex);
+  for (int i = 0; i < this->totalClientsCount; i++) {
+    char switchTransitionLevel = 's';
+    this->socket->sndChar(&switchTransitionLevel, this->sockets[i]);
+  }
+  Logger::log(Logger::Info, "Cambia a la pantalla de transicion entre niveles");
   pthread_mutex_unlock(&this->mutex);
 }
 
@@ -367,4 +393,23 @@ void Server::rejectConnection() {
   pthread_mutex_unlock(&this->mutex);
   char l = 'l';
   this->socket->sndChar(&l, newSocket);
+}
+
+bool Server::checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent) {
+  if(levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()){
+    this->broadcastLevelTransition();
+    return true;
+  }
+  return false;
+}
+
+void Server::broadcastLevelTransition(){
+  this->positions.transitioningLevel= true;
+
+  pthread_mutex_lock(&this->mutex);
+  this->broadcast();
+  pthread_mutex_unlock(&this->mutex);
+  SDL_Delay(5000);
+  this->positions.transitioningLevel= false;
+
 }

@@ -16,75 +16,81 @@
 class Server;
 
 struct ServerContainer {
-    Server *server;
-    int clientNum;
-    int socketNumber;
-    std::string username,password;
-    bool isOnline;
+  Server *server;
+  int clientNum;
+  int socketNumber;
+  std::string username, password;
+  bool isOnline;
 };
 
 class Server {
 
 public:
 
-    Server(char *port, char *IP);
+  Server(char *port, char *IP);
 
-    bool isRunning();
+  bool isRunning();
 
-    void start();
+  void start();
 
-    bool hasAllClientsOnline();
+  bool hasAllClientsOnline();
 
-    void addNewConnection();
+  void addNewConnection();
 
-    void handleEvents();
+  void handleEvents();
 
-    void broadcast();
+  void broadcast();
 
-    void receive(int clientNum, int socketNumber);
+  void receive(int clientNum, int socketNumber);
 
-    bool isPlayerConnected(int playerNumber);
+  bool isPlayerConnected(int playerNumber);
 
-    void broadcastGameStart();
+  void broadcastGameStart();
 
-    void rejectConnection();
+  void broadcastTransitionLevel();
+
+  void rejectConnection();
 
 private:
-    ServerSocket *socket;
-    Configuration *configuration;
-    Game *game;
-    GameController *gameController;
-    Positions positions;
-    QueueThrd *eventQueue;
+  ServerSocket *socket;
+  Configuration *configuration;
+  Game *game;
+  GameController *gameController;
+  Positions positions;
+  QueueThrd *eventQueue;
 
-    char *port;
-    char *ip;
-    int totalClientsCount;
-    int onlineClientsCount;
-    int offlineClientsCount;
-    int clientMax;
-    int *sockets;
-    pthread_mutex_t mutex;
-    bool started;
-    std::vector<ServerContainer*> clientConnections;
+  char *port;
+  char *ip;
+  int totalClientsCount;
+  int onlineClientsCount;
+  int offlineClientsCount;
+  int clientMax;
+  int *sockets;
+  pthread_mutex_t mutex;
+  bool started;
+  std::vector<ServerContainer *> clientConnections;
 
-    bool clientsPlaying();
+  bool clientsPlaying();
 
-    bool _clientsPlaying;
+  bool _clientsPlaying;
 
-    void quit();
+  void quit();
 
-    void addNewClient(Credentials credentials, int newSocket);
+  void addNewClient(Credentials credentials, int newSocket);
 
-    bool tryToReconnectUsing(Credentials credentials, int i);
+  bool tryToReconnectUsing(Credentials credentials, int i);
 
-    bool clientIsOnline(Credentials credentials);
+  bool clientIsOnline(Credentials credentials);
 
-    void reconnectClient(int i, int i1);
+  void reconnectClient(int i, int i1);
 
-    void clientSetToOffline(int i);
+  void clientSetToOffline(int i);
 
-    bool lobbyIsFull();
+  bool lobbyIsFull();
+
+  bool checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent);
+
+  void broadcastLevelTransition();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H

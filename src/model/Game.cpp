@@ -74,7 +74,7 @@ void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
   srand(time(NULL));
   for (int i = 0; i < spawnCount; i++) {
     if ((rand() % 100) < probability) {
-      this->enemyFires = (EnemyFire **) (realloc(this->enemyFires,(this->enemyFireCount + 1) * sizeof(EnemyFire *)));
+      this->enemyFires = (EnemyFire **) (realloc(this->enemyFires, (this->enemyFireCount + 1) * sizeof(EnemyFire *)));
       if (!this->enemyFires) {
         Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnEnemies");
         return;
@@ -104,10 +104,9 @@ void Game::resetEnemies() {
 }
 
 void Game::switchLevel() {
-  for(int i = 0; i < this->playerCount; i++){
+  for (int i = 0; i < this->playerCount; i++) {
     this->players[i]->resetPos();
   }
-
   if (this->currentLevel == 1) {
     this->loadLevel(2);
   } else {
@@ -124,7 +123,7 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-  this->level->resolveCollisions(this->players,this->playerCount, this->enemyFires,this->enemyFireCount);
+  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount);
 }
 
 void Game::addPlayer(char username[20]) {
@@ -175,13 +174,13 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
 }
 
 void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
-  for(int i =0; i < this->playerCount; i++){
-      playerInfo[i].distance = players[i]->getDistance();
-      playerInfo[i].x = players[i]->getXPosition();
-      playerInfo[i].y = players[i]->getYPosition();
-      playerInfo[i].direction = players[i]->getDirection();
-      playerInfo[i].isActive = players[i]->isPlaying();
-      strcpy(playerInfo[i].username,players[i]->getUsername());
+  for (int i = 0; i < this->playerCount; i++) {
+    playerInfo[i].distance = players[i]->getDistance();
+    playerInfo[i].x = players[i]->getXPosition();
+    playerInfo[i].y = players[i]->getYPosition();
+    playerInfo[i].direction = players[i]->getDirection();
+    playerInfo[i].isActive = players[i]->isPlaying();
+    strcpy(playerInfo[i].username, players[i]->getUsername());
   }
   *playerCount = this->playerCount;
 }
@@ -195,7 +194,7 @@ void Game::getPrincessInfo(EntityContainer *princessInfo) {
 }
 
 void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
-  if(!entity){
+  if (!entity) {
     return;
   }
   entityInfo->distance = entity->getDistance();
@@ -204,10 +203,9 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->direction = entity->getDirection();
 }
 
-
 bool Game::anyPlayerWon() {
-  for(int i = 0; i < this->playerCount; i++){
-    if(this->level->playerWon(this->players[i])){
+  for (int i = 0; i < this->playerCount; i++) {
+    if (this->level->playerWon(this->players[i])) {
       return true;
     }
   }
@@ -229,13 +227,17 @@ int Game::getPlayerCount() {
 }
 
 void Game::updateStatus() {
-    int playerActive = 0;
-    for(int i = 0; i < this->playerCount;i++){
-        if(players[i]->isPlaying()) playerActive++;
-    }
-    if(playerActive == 0) this->quit();
+  int playerActive = 0;
+  for (int i = 0; i < this->playerCount; i++) {
+    if (players[i]->isPlaying()) playerActive++;
+  }
+  if (playerActive == 0) this->quit();
 }
 
 bool Game::isPlayerActive(int playerNumber) {
-    return players[playerNumber]->isPlaying();
+  return players[playerNumber]->isPlaying();
+}
+
+int Game::getCurrentLevel(){
+  return currentLevel;
 }

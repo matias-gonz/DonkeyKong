@@ -96,7 +96,13 @@ bool Client::isRunning() {
 
 void Client::render() {
   int clientNumber = this->socket->getClientNumber();
-  viewManagerGame->renderWindow(this->positions, clientNumber);
+  if(this->positions.transitioningLevel){
+    viewManagerGame->renderTransitionWindow();
+    this->positions.transitioningLevel=false;
+    this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
+  }
+  viewManagerGame->renderGameWindow(this->positions,clientNumber);
 }
 
 void Client::setSended(bool b) {
@@ -116,8 +122,6 @@ void Client::goToLobby() {
   if (message != 'c') {
     //return;
   }
-
-
   this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
