@@ -117,7 +117,3 @@ int ServerSocket::sndChar(char *character, int sckt) {
 
   return 0;
 }
-
-int ServerSocket::sndInt(int message, int socketNumber) {
-
-}
