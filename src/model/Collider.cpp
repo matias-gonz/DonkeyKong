@@ -32,7 +32,14 @@ void Collider::ResolveEnemyCollision(EnemyFire *enemyFire, SDL_Rect rect) {
         enemyFire->resetVelY();
     }
 
+}
 
+void Collider::ResolvePlayerEnemyCollision(Player *player, EnemyFire *fire) {
+  player->resetPos();
+}
+
+void Collider::ResolvePlayerFireCollision(Player *player) {
+  player->resetPos();
 }
 
 

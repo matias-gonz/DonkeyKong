@@ -13,6 +13,10 @@ public:
     static void ResolvePlayerCollision(Player *Player, SDL_Rect rect);
 
     static void ResolveEnemyCollision(EnemyFire *pFire, SDL_Rect rect);
+
+    static void ResolvePlayerEnemyCollision(Player *pPlayer, EnemyFire *pFire);
+
+    static void ResolvePlayerFireCollision(Player *pPlayer);
 };
 
 

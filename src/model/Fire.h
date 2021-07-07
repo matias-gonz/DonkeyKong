@@ -19,6 +19,8 @@ public:
 
     int getCount();
 
+    SDL_Rect getRectangle();
+
 private:
     Position pos;
     int count;
