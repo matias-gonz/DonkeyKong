@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include "Player.h"
-#include "Position.h"
-#include "../Constants.h"
+#include "../Position.h"
+#include "../../Constants.h"
 
 PlayerTexture plyrTex;
 
