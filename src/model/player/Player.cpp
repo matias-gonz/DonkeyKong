@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "../Position.h"
 #include "../../Constants.h"
+#include "PlayerState.h"
+#include "NormalState.h"
+#include "DeadState.h"
 
 PlayerTexture plyrTex;
 
@@ -20,12 +23,14 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->hasWon = false;
   this->hp = 3;
   this->points = 0;
+  this->modeState = new NormalState();
+  //this->moveState = new WalkingState();
+
 }
 
 void Player::update() {
   if (!this->hasWon) {
-    if(this->hp <= 0) {
-      this->die();
+    if(this->dead) {
       return;
     }
 
@@ -170,5 +175,18 @@ void Player::resetPlayerWon() {
 }
 
 void Player::die() {
-  this->active = false;
+  delete this->modeState;
+  this->resetPos();
+  this->modeState = new DeadState();
+}
+
+void Player::takeDamage() {
+  this->modeState->takeDamage(this);
+}
+
+void Player::takeNormalDamage() {
+  this->hp -= 1;
+  if (this->hp <= 0){
+    this->die();
+  }
 }
