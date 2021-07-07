@@ -11,7 +11,7 @@
 
 #include "../view/TextureManager.h"
 #include "../controller/Configuration.h"
-#include "Player.h"
+#include "player/Player.h"
 #include "EnemyFire.h"
 
 class Level {
@@ -82,7 +82,7 @@ private:
 
     void freeBarrels();
 
-    Position* winningPosition = new Position(100,35);
+    Position* winningPosition = new Position(100,20);
 };
 
 

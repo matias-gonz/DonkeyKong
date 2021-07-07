@@ -2,7 +2,7 @@
 #define TALLER_PROG_I_2021_1C_KIWI_COLLIDER_H
 
 #include <SDL_rect.h>
-#include "Player.h"
+#include "player/Player.h"
 #include "EnemyFire.h"
 
 class Collider {

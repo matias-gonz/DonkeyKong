@@ -1,7 +1,7 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_GAME_H
 #define TALLER_PROG_I_2021_1C_KIWI_GAME_H
 
-#include "Player.h"
+#include "player/Player.h"
 #include "Level.h"
 #include "EnemyFire.h"
 #include "Boss.h"

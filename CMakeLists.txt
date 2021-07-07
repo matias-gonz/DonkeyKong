@@ -9,8 +9,8 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
         src/controller/handlers/flechaArriba.cpp
-        src/model/Player.cpp
-        src/model/Player.h
+        src/model/player/Player.cpp
+        src/model/player/Player.h
         src/model/Position.cpp
         src/model/Position.h
         src/model/Barrel.cpp
@@ -80,7 +80,7 @@ set(SOURCE_FILES main.cpp
         src/controller/LoginController.cpp
         src/controller/LoginController.h
         src/view/LoginButton.cpp
-        src/view/LoginButton.h src/controller/QueueThrd.cpp src/controller/QueueThrd.h src/Client/credentials.h src/Client/credentials.cpp src/view/PlayerIndicator.cpp src/view/PlayerIndicator.h)
+        src/view/LoginButton.h src/controller/QueueThrd.cpp src/controller/QueueThrd.h src/Client/credentials.h src/Client/credentials.cpp src/view/PlayerIndicator.cpp src/view/PlayerIndicator.h src/model/player/PlayerState.h src/model/player/WalkingState.cpp src/model/player/WalkingState.h src/model/player/JumpingState.cpp src/model/player/JumpingState.h src/model/player/ClimbingState.cpp src/model/player/ClimbingState.h)
 
 
 # change to personal project name (as above)
