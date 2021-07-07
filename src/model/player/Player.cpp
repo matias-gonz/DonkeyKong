@@ -9,7 +9,7 @@
 PlayerTexture plyrTex;
 
 Player::Player(Position *pos, char *username) : Entity(pos) {
-  strcpy(this->username,username);
+  strcpy(this->username, username);
   this->pos = pos;
   this->initialPos = new Position(pos->getX(), pos->getY());
   this->isGrounded = true;
@@ -29,43 +29,10 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
 }
 
 void Player::update() {
-  if (!this->hasWon) {
-    if(this->dead) {
-      return;
-    }
 
-    if (this->isClimbing) {
-      this->resetVelX();
-      this->gravity = 0;
-      distance -= 5 * velY;
-    } else {
-      if (direction == up) {
-        distance = 0;
-        direction = left;
-      }
-      this->gravity = 1;
-    }
+  this->modeState->update(this);
 
-    pos->add(velX, velY);
 
-    if (pos->getX() < 0 or pos->getX() > WIDTH - plyrTex.walkWidth) {
-      pos->add(-velX, 0);
-    }//WIDTH - texW
-
-    if (isGrounded) { distance += abs(velX); }
-    if (distance > 70) { distance = 0; }
-
-    if (counter == 2) {
-      if (velY == 5) {
-        velY = 4;
-        return;
-      } //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
-      velY += this->gravity;
-      counter = 0;
-      return;
-    }
-    counter++;
-  }
 }
 
 void Player::addLeftVel() {
@@ -186,7 +153,48 @@ void Player::takeDamage() {
 
 void Player::takeNormalDamage() {
   this->hp -= 1;
-  if (this->hp <= 0){
+  if (this->hp <= 0) {
     this->die();
   }
+}
+
+void Player::normalUpdate() {
+  if (this->hasWon) {
+    return;
+  }
+  if (this->dead) {
+    return;
+  }
+
+  if (this->isClimbing) {
+    this->resetVelX();
+    this->gravity = 0;
+    distance -= 5 * velY;
+  } else {
+    if (direction == up) {
+      distance = 0;
+      direction = left;
+    }
+    this->gravity = 1;
+  }
+
+  pos->add(velX, velY);
+
+  if (pos->getX() < 0 or pos->getX() > WIDTH - plyrTex.walkWidth) {
+    pos->add(-velX, 0);
+  }//WIDTH - texW
+
+  if (isGrounded) { distance += abs(velX); }
+  if (distance > 70) { distance = 0; }
+
+  if (counter == 2) {
+    if (velY == 5) {
+      velY = 4;
+      return;
+    } //(Velocidad terminal) Este 5 es por la las colisiones (1/4 de la altura de la plataforma)
+    velY += this->gravity;
+    counter = 0;
+    return;
+  }
+  counter++;
 }

@@ -6,7 +6,10 @@
 
 class NormalState: public PlayerState {
 public:
+    explicit NormalState();
+    ~NormalState();
     void takeDamage(Player *pPlayer);
+    void update(Player *player);
 };
 
 
