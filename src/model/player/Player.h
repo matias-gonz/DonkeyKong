@@ -3,9 +3,10 @@
 #define TALLER_PROG_I_2021_1C_KIWI_PLAYER_H
 
 
-#include "Position.h"
-#include "../view/Animator.h"
-#include "Entity.h"
+#include "../Position.h"
+#include "../../view/Animator.h"
+#include "../Entity.h"
+#include "PlayerState.h"
 
 class Player: public Entity {
 private:
@@ -14,6 +15,7 @@ private:
     bool canClimb;
     int gravity;
     bool active;
+    PlayerState* state;
 
     static const int VEL = 3;
 public:

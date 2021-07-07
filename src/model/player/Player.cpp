@@ -1,7 +1,8 @@
 #include <SDL.h>
 #include "Player.h"
-#include "Position.h"
-#include "../Constants.h"
+#include "../Position.h"
+#include "../../Constants.h"
+#include "WalkingState.h"
 
 PlayerTexture plyrTex;
 
@@ -17,6 +18,8 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->distance = 0;
   this->direction = left;
   this->active = true;
+  this->state = new WalkingState();
+
 }
 
 void Player::update() {
