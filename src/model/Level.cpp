@@ -195,7 +195,11 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
 }
 
 bool Level::playerWon(Player *player) {
-  return player->isIn(this->winningPosition);
+  if (player->isIn(this->winningPosition)) {
+    player->playerWon();
+    return true;
+  }
+  return false;
 }
 
 
