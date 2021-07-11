@@ -18,6 +18,7 @@ Barrel::Barrel(Position position, int count, int direction){
     this->count = count;
     this->movement = new BarrelMovement(direction);
     this->pos = &position;
+
 }
 Barrel::~Barrel() {
     delete this->srcRect;
