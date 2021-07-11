@@ -39,3 +39,11 @@ SDL_Rect *Fire::getSrcRect() {
 int Fire::getCount() {
     return this->count;
 }
+
+SDL_Rect Fire::getRectangle() {
+  SDL_Rect rectangle = *destRect;
+  rectangle.w *= 2;
+  rectangle.h -= 15;
+  rectangle.y += 15;
+  return rectangle;
+}
