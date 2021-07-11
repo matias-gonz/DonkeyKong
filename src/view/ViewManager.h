@@ -65,6 +65,8 @@ public:
 
   void renderTransitionWindow();
 
+  void renderEndGameWindow();
+
 private:
 
   SDL_Renderer *renderer;

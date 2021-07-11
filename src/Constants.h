@@ -81,6 +81,7 @@ struct Positions {
   bool transitioningLevel;
   EntityContainer barrels[10];
   int barrelCount;
+  bool endGame;
 };
 
 struct Credentials {

@@ -7,7 +7,7 @@
 #include "../../view/Animator.h"
 #include "../Entity.h"
 #include "PlayerState.h"
-
+#include "PlayerState.h"
 
 class Player : public Entity {
 private:
@@ -72,6 +72,13 @@ public:
     void resetPlayerWon();
 
     void die();
+
+    void takeDamage();
+
+    bool dead;
+    PlayerState *modeState;
+
+    void takeNormalDamage();
 };
 
 

@@ -199,9 +199,9 @@ void Server::handleEvents() {
 
   levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
   pthread_mutex_lock(&this->mutex);
-  if (! levelHasTransitioned) {
+  if (!levelHasTransitioned) {
     this->broadcast();
-  }else{
+  } else {
     levelHasTransitioned = false;
   }
 
@@ -398,20 +398,37 @@ void Server::rejectConnection() {
 }
 
 bool Server::checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent) {
-  if(levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()){
-    this->broadcastLevelTransition();
-    return true;
+  if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
+    if (levelNumberBeforeHandlingEvent < this->game->getCurrentLevel()) {
+      // Pasar al segundo nivel
+      this->broadcastLevelTransition();
+      return true;
+    } else if (levelNumberBeforeHandlingEvent > this->game->getCurrentLevel()) {
+      // Termina el juego
+      this->broadcastEndGame();
+      return true;
+    }
   }
   return false;
 }
 
-void Server::broadcastLevelTransition(){
-  this->positions.transitioningLevel= true;
+void Server::broadcastLevelTransition() {
+  this->positions.transitioningLevel = true;
 
   pthread_mutex_lock(&this->mutex);
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
   SDL_Delay(5000);
-  this->positions.transitioningLevel= false;
+  this->positions.transitioningLevel = false;
 
+}
+
+void Server::broadcastEndGame(){
+
+  this->positions.endGame = true;
+
+  pthread_mutex_lock(&this->mutex);
+  this->broadcast();
+  pthread_mutex_unlock(&this->mutex);
+  SDL_Delay(5000);
 }
