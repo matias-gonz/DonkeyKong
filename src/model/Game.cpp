@@ -47,6 +47,7 @@ void Game::update() {
   for (int i = 0; i < this->enemyFireCount; i++) {
     this->enemyFires[i]->update();
   }
+
   this->princess->update();
   this->boss->update();
   this->resolveCollisions();
@@ -175,7 +176,12 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
     this->getEntityInfo(&enemyFires[i], this->enemyFires[i]);
   }
 }
-
+void Game::getBarrelsInfo(EntityContainer* barrels,int *barrelCount){
+  *barrelCount = this->level->getBarrelCount();
+  for (int i = 0; i < *barrelCount; i++) {
+    this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
+  }
+}
 void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
   for (int i = 0; i < this->playerCount; i++) {
     playerInfo[i].distance = players[i]->getDistance();
@@ -205,6 +211,7 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->y = entity->getYPosition();
   entityInfo->direction = entity->getDirection();
 }
+
 
 bool Game::anyPlayerWon() {
   for (int i = 0; i < this->playerCount; i++) {

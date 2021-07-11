@@ -132,10 +132,10 @@ void TextureManager::loadFireTexture() {
 
 void TextureManager::loadBarrelTexture() {
   SDL_Texture *texture = NULL;
-  texture = this->loadTexture(this->loadTextureFromJson("barrel_right"));
+  texture = this->loadTexture(this->loadTextureFromJson("barrel"));
   if (!texture) {
     Logger::log(Logger::Error,
-                "Error al abrir archivo \"resources/sprites/barrel_right.png\". TextureManager::loadBarrelTexture");
+                "Error al abrir archivo \"resources/sprites/barrel_move.png\". TextureManager::loadBarrelTexture");
   }
   this->barrelTexture = texture;
 }

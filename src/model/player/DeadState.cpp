@@ -1,4 +1,5 @@
 #include "DeadState.h"
-void takeDamage(Player *pPlayer){
+
+void DeadState::takeDamage(Player *pPlayer) {
   return;
 }

@@ -5,7 +5,7 @@
 #include "PlayerState.h"
 
 class DeadState: public PlayerState  {
-    virtual void takeDamage(Player *pPlayer);
+    void takeDamage(Player *pPlayer);
 
 };
 

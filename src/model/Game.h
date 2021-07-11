@@ -64,6 +64,8 @@ public:
 
   int getCurrentLevel();
 
+  void getBarrelsInfo(EntityContainer *barrels, int *barrelCount);
+
 private:
   EnemyFire **enemyFires = NULL;
   int enemyFireCount = 0;
@@ -89,6 +91,7 @@ private:
   bool anyPlayerWon();
 
   bool everyPlayerWon();
+
 };
 
 
