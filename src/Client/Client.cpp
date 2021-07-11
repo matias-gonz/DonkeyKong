@@ -109,7 +109,6 @@ void Client::render() {
 
   }
   viewManagerGame->renderGameWindow(this->positions,clientNumber);
-
 }
 
 void Client::setSended(bool b) {
