@@ -69,7 +69,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 162, 189, 162, 0, barrelTextureSuccess);
+  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 

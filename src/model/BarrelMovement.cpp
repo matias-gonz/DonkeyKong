@@ -17,7 +17,7 @@ void BarrelMovement::update(SDL_Rect *rect) {
   //   rect->y = 0-rect->h;
   //
   //}else
-  if (rect->x <= 0 || rect->x >= WIDTH) {
+  if (rect->x <= 0 || rect->x + rect->w >= WIDTH) {
     rect->x -= this->velX;
     this->velX = -this->velX;
   }
