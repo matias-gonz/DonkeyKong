@@ -153,6 +153,7 @@ void Player::takeDamage() {
 
 void Player::takeNormalDamage() {
   this->hp -= 1;
+
   if (this->hp <= 0) {
     this->die();
   }

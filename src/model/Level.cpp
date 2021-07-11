@@ -173,6 +173,14 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
       }
     }
+    if(this->currentLevel == 2){
+      for(int j = 0; j < barrelCount; j++){
+        SDL_Rect *barrelRect = barrels[j]->getDestRect();
+        if (Collider::RectCollides(*barrelRect, platformRect)) {
+          Collider::ResolveBarrelCollision(barrels[j], platformRect);
+        }
+      }
+    }
   }
 
   for(int i = 0; i < playerCount; i++){
@@ -189,6 +197,19 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     }
   }
 
+  for(int i = 0; i < playerCount; i++){
+    for(int j = 0; j < enemyFireCount; j++){
+      if (Collider::RectCollides(playerRects[i], enemyFires[j]->getRectangle())) {
+        Collider::ResolvePlayerEnemyCollision(players[i], enemyFires[j]);
+      }
+
+    }
+    for(int j = 0; j < this->fireCount; j++){
+      if(Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())){
+        Collider::ResolvePlayerFireCollision(players[i]);
+      }
+    }
+  }
 
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
@@ -212,6 +233,7 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
 
   free(playerRects);
   free(canClimb);
+
 }
 
 bool Level::playerWon(Player *player) {

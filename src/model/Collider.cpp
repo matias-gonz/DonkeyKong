@@ -38,6 +38,17 @@ void Collider::ResolvePlayerEnemyCollision(Player *player, EnemyFire *fire) {
   player->takeDamage();
 }
 
+
+void Collider::ResolveBarrelCollision(Barrel *pBarrel, SDL_Rect rect) {
+  SDL_Rect barrelRect = *pBarrel->getDestRect();
+  int dy;
+
+  if(barrelRect.y + barrelRect.h >= rect.y ){
+    dy = barrelRect.y + barrelRect.h - rect.y;
+    pBarrel->moveUp(dy);
+    pBarrel->resetVelY();
+  }
+
 void Collider::ResolvePlayerFireCollision(Player *player) {
   player->takeDamage();
   player->resetPos();

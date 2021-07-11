@@ -35,6 +35,7 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, int x, int y,int dis
     if(texW ==17){
         finalTexW = texW*2;
     }
+
     SDL_Rect dstrect = {x, y, finalTexW, finalTexH};
 
     SDL_RenderCopy(pRenderer, texture, srcrect, &dstrect);

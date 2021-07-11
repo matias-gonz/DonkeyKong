@@ -58,10 +58,18 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     enemyTextureSuccess = false;
   }
 
+  SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
+  bool barrelTextureSuccess = true;
+
+  if (!barrelTexture) {
+    barrelTexture = this->textureManager->getErrorTexture();
+    barrelTextureSuccess = false;
+  }
+
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-
+  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 
@@ -185,7 +193,7 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
 void ViewManager::renderTransitionWindow(){
   //Clear the renderer and window
   this->close();
-  //Create new renderer and window
+  //Create new  er and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = TRANSITION_WIDTH;
@@ -209,21 +217,46 @@ void ViewManager::renderTransitionWindow(){
                       (this->screen_height/2)-errorMessage.getHeight());
   SDL_RenderPresent(renderer);
 
-  //Render window with exit button
-  //SDL_Event e;
-  //bool quit = false;
-
   SDL_Delay(5000);
   this->close();
+}
 
-  /*while (!quit) {
-    while(SDL_PollEvent(&e) != 0 && !quit){
+void ViewManager::renderEndGameWindow(){
+  //Clear the renderer and window
+  this->close();
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    this->screen_width = WIDTH;
+    this->screen_height = HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - End Game", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
+    SDL_RenderClear(this->renderer);
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+
+  //Set font color, size and text
+  SDL_Color textColor = {255, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("The game is over. Your score is: ...", textColor, font, this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
-    errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                        (this->screen_height/2)-errorMessage.getHeight());
+    errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                        (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
-  }*/
+  }
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber){
@@ -263,6 +296,12 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
     this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
                               positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
   }
+
+  for(int i = 0; i < positions.barrelCount;i++){
+    this->barrelAnimator->draw(this->renderer,positions.barrels[i].direction,positions.barrels[i].x,
+                               positions.barrels[i].y,positions.barrels[i].distance);
+  }
+
   // render my player
   int boxPosition;
   for (int j = 0; j < MAX_CLIENTS; j++) {

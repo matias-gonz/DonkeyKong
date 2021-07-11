@@ -7,7 +7,7 @@
     },
     "game": {
       "probability_enemies": 10,
-      "client_max": 2,
+      "client_max": 1,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_1.png",
         "player_2": "resources/sprites/sans_walk_2.png",
@@ -21,7 +21,7 @@
         "cyan_ladder": "resources/sprites/cyanladder.png",
         "red_platform": "resources/sprites/redplat.png",
         "blue_platform": "resources/sprites/blueplat.png",
-        "barrel_right": "resources/sprites/barrel_right.png",
+        "barrel": "resources/sprites/barrel_move.png",
         "enemy": "resources/sprites/fire_walk.png",
         "boss": "resources/sprites/boss_still.png",
         "princess": "resources/sprites/princess_still.png"

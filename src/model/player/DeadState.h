@@ -5,6 +5,7 @@
 #include "PlayerState.h"
 
 class DeadState: public PlayerState  {
+
 public:
     explicit DeadState();
     ~DeadState();

@@ -82,6 +82,7 @@ public:
     void takeNormalDamage();
 
     void normalUpdate();
+
 };
 
 

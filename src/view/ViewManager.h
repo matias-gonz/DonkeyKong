@@ -65,6 +65,8 @@ public:
 
   void renderTransitionWindow();
 
+  void renderEndGameWindow();
+
 private:
 
   SDL_Renderer *renderer;
@@ -118,6 +120,7 @@ private:
 
   void initializeLobbyTextInputs();
 
+    Animator *barrelAnimator;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_VIEWMANAGER_H
