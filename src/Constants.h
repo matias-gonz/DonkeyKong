@@ -79,6 +79,7 @@ struct Positions {
   EntityContainer bossInfo;
   EntityContainer princessInfo;
   bool transitioningLevel;
+  bool endGame;
 };
 
 struct Credentials {
