@@ -238,11 +238,15 @@ bool Level::playerWon(Player *player) {
 }
 
 void Level::spawnBarrel() {
-  if(this->barrelCount == 0){
-    this->barrels = malloc(sizeof(Barrel*));
-    this->barrels[0] = new Barrel();
+  this->barrels = (Barrel**)realloc(this->barrels,(this->barrelCount+1)*sizeof(Barrel*));
+  if(!this->barrels){
+    Logger::log(Logger::Error,"Error al reservar memoria. Level::spawnBarrel().");
+    this->barrelCount = 0;
+    return;
   }
-  this->barrels = realloc(this->barrels, this->barrelCount + 1);
+
+  this->barrels[this->barrelCount] = new Barrel();
+  this->barrelCount++;
 
 }
 
