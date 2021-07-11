@@ -91,6 +91,8 @@ private:
   bool checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent);
 
   void broadcastLevelTransition();
+
+  void broadcastEndGame();
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_SERVER_H
