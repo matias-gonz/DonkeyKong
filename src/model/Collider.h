@@ -4,6 +4,7 @@
 #include <SDL_rect.h>
 #include "player/Player.h"
 #include "EnemyFire.h"
+#include "Barrel.h"
 
 class Collider {
 
@@ -13,6 +14,8 @@ public:
     static void ResolvePlayerCollision(Player *Player, SDL_Rect rect);
 
     static void ResolveEnemyCollision(EnemyFire *pFire, SDL_Rect rect);
+
+    static void ResolveBarrelCollision(Barrel *pBarrel, SDL_Rect rect);
 };
 
 

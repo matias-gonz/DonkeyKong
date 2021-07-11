@@ -7,10 +7,11 @@
 #include "Position.h"
 #include "BarrelMovement.h"
 #include "../Constants.h"
+#include "Entity.h"
 
 
 //The Barrel that will move around on the screen
-class Barrel
+class Barrel: public Entity
 {
 public:
     //The dimensions of the barrel
@@ -43,6 +44,11 @@ public:
     void update();
     int getCount();
 
+    void moveUp(int i);
+
+    void resetVelY();
+    int getDistance();
+
 private:
     //The X and Y offsets of the barrel
     //int posX, posY;
@@ -58,6 +64,8 @@ private:
     BarrelMovement* movement;
     SDL_Rect* srcRect;
     SDL_Rect * destRect;
+
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H

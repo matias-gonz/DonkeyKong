@@ -58,10 +58,18 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     enemyTextureSuccess = false;
   }
 
+  SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
+  bool barrelTextureSuccess = true;
+
+  if (!barrelTexture) {
+    barrelTexture = this->textureManager->getErrorTexture();
+    barrelTextureSuccess = false;
+  }
+
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-
+  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 162, 189, 162, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 
@@ -263,6 +271,12 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
     this->enemyAnimator->draw(this->renderer, positions.fireEnemies[i].direction, positions.fireEnemies[i].x,
                               positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
   }
+
+  for(int i = 0; i < positions.barrelCount;i++){
+    this->barrelAnimator->draw(this->renderer,positions.barrels[i].direction,positions.barrels[i].x,
+                               positions.barrels[i].y,positions.barrels[i].distance);
+  }
+
   // render my player
   int boxPosition;
   for (int j = 0; j < MAX_CLIENTS; j++) {
