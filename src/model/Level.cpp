@@ -15,6 +15,7 @@ Level::Level() {
   this->spawns = NULL;
   this->spawnCount = 0;
   this->loader = new LevelLoader();
+  this->counter = 0;
 }
 
 Level::~Level() {
@@ -47,6 +48,12 @@ void Level::update() {
   }
   for (int i = 0; i < this->fireCount; i++) {
     this->fires[i]->update();
+  }
+  this->counter += 1;
+
+  if (this->counter > 10){
+    this->spawnBarrel();
+    this->counter = 0;
   }
   for (int i = 0; i < this->barrelCount; i++) {
     this->barrels[i]->update();
@@ -228,6 +235,15 @@ bool Level::playerWon(Player *player) {
     return true;
   }
   return false;
+}
+
+void Level::spawnBarrel() {
+  if(this->barrelCount == 0){
+    this->barrels = malloc(sizeof(Barrel*));
+    this->barrels[0] = new Barrel();
+  }
+  this->barrels = realloc(this->barrels, this->barrelCount + 1);
+
 }
 
 

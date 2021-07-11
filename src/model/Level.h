@@ -65,7 +65,7 @@ private:
     int spawnCount;
 
     LevelLoader *loader;
-    Barrel** barrels;
+    Barrel **barrels;
     int barrelCount;
 
     void reset();
@@ -83,6 +83,9 @@ private:
     void freeBarrels();
 
     Position* winningPosition = new Position(100,20);
+    int counter;
+
+    void spawnBarrel();
 };
 
 
