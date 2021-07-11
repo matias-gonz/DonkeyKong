@@ -3,11 +3,14 @@
 
 #include "Player.h"
 
+class Player;
+
 class PlayerState {
 public:
     //virtual void handleInput(Player* player, char input);
     //virtual void update(Player* player);
 
+    virtual void takeDamage(Player *pPlayer) = 0;
 };
 
 
