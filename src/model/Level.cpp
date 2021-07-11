@@ -30,9 +30,8 @@ Level::~Level() {
 void Level::loadLevel(int levelnum, Configuration *configuration) {
   this->reset();
   this->currentLevel = levelnum;
-  this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->barrels,
-                          &this->platformCount,
-                          &this->ladderCount, &this->fireCount, &this->barrelCount, &this->spawns, &this->spawnCount,
+  this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->platformCount,
+                          &this->ladderCount, &this->fireCount, &this->spawns, &this->spawnCount,
                           configuration);
 
 }

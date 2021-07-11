@@ -19,8 +19,8 @@ public:
 
   ~LevelLoader();
 
-  void loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, Barrel ***barrels,
-                 int *platformCount, int *ladderCount, int *fireCount, int *barrelCount, Position ***spawns,
+  void loadLevel(int level, Platform ***platforms, Ladder ***ladders, Fire ***fires, int *platformCount,
+                 int *ladderCount, int *fireCount, Position ***spawns,
                  int *spawnCount, Configuration *configuration);
 
   Platform **loadPlatforms(json jsonLevel, int *platformCount);
@@ -29,7 +29,6 @@ public:
 
   Fire **loadFire(json jsonLevel, int *fireCount);
 
-  Barrel **loadBarrel(json jsonLevel, int *levelCount);
 
   //void writeJSON();
   Position **loadSpawns(json json, int *spawnCount);
