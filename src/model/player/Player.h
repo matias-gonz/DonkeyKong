@@ -80,6 +80,9 @@ public:
     PlayerState *modeState;
 
     void takeNormalDamage();
+
+    void normalUpdate();
+
 };
 
 

@@ -5,8 +5,12 @@
 #include "PlayerState.h"
 
 class DeadState: public PlayerState  {
-    void takeDamage(Player *pPlayer);
 
+public:
+    explicit DeadState();
+    ~DeadState();
+    void takeDamage(Player *pPlayer);
+    void update(Player *player);
 };
 
 
