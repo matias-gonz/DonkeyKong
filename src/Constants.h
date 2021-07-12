@@ -28,6 +28,13 @@ struct PlayerTexture {
 
 };
 
+struct BarrelTexture {
+    int width = 35;
+    int height = 35;
+    int wSep = 0;
+    int hSep = 1;
+};
+
 struct PlatformContainer {
   int count;
   SDL_Rect dest;
