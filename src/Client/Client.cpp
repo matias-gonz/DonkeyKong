@@ -65,7 +65,6 @@ void Client::receive() {
   }
 }
 
-
 void Client::sendString(char *string) {
   this->socket->sndString(string, 0);
 }

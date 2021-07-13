@@ -58,6 +58,8 @@ struct PlayersInformation{
     int direction;
     bool isActive;
     char username[20];
+    int hp;
+    int points;
 };
 
 struct EventContainer {

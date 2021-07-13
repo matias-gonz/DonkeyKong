@@ -199,3 +199,11 @@ void Player::normalUpdate() {
   }
   counter++;
 }
+
+int Player::getHp(){
+  return this->hp;
+}
+int Player::getPoints()
+{
+  return this->points;
+}

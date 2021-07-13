@@ -81,6 +81,10 @@ public:
 
     void takeNormalDamage();
 
+    int getHp();
+
+    int getPoints();
+
     void normalUpdate();
 
 };
