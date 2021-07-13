@@ -15,6 +15,7 @@ Level::Level() {
   this->spawns = NULL;
   this->spawnCount = 0;
   this->loader = new LevelLoader();
+  this->counter = 0;
 }
 
 Level::~Level() {
@@ -30,9 +31,8 @@ Level::~Level() {
 void Level::loadLevel(int levelnum, Configuration *configuration) {
   this->reset();
   this->currentLevel = levelnum;
-  this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->barrels,
-                          &this->platformCount,
-                          &this->ladderCount, &this->fireCount, &this->barrelCount, &this->spawns, &this->spawnCount,
+  this->loader->loadLevel(levelnum, &this->platforms, &this->ladders, &this->fires, &this->platformCount,
+                          &this->ladderCount, &this->fireCount, &this->spawns, &this->spawnCount,
                           configuration);
 
 }
@@ -49,8 +49,16 @@ void Level::update() {
   for (int i = 0; i < this->fireCount; i++) {
     this->fires[i]->update();
   }
-  for (int i = 0; i < this->barrelCount; i++) {
-    this->barrels[i]->update();
+  if(this->currentLevel == 2){
+    this->counter += 1;
+
+    if (this->counter > 10){
+      this->spawnBarrel();
+      this->counter = 0;
+    }
+    for (int i = 0; i < this->barrelCount; i++) {
+      this->barrels[i]->update();
+    }
   }
 }
 
@@ -227,6 +235,23 @@ bool Level::playerWon(Player *player) {
     return true;
   }
   return false;
+}
+
+void Level::spawnBarrel() {
+  if(this->barrelCount){
+    this->barrels = (Barrel**)realloc(this->barrels,(this->barrelCount+1)*sizeof(Barrel*));
+    if(!this->barrels){
+      Logger::log(Logger::Error,"Error al reservar memoria. Level::spawnBarrel().");
+      this->barrelCount = 0;
+      return;
+    }
+  }
+  else{
+    this->barrels = (Barrel**)malloc(sizeof (Barrel*));
+  }
+  this->barrels[this->barrelCount] = new Barrel(new Position(100, 35));
+  this->barrelCount += 1;
+
 }
 
 

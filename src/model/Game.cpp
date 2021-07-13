@@ -177,9 +177,11 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
   }
 }
 void Game::getBarrelsInfo(EntityContainer* barrels,int *barrelCount){
-  *barrelCount = this->level->getBarrelCount();
-  for (int i = 0; i < *barrelCount; i++) {
-    this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
+  if(this->level->getCurrentLevel() == 2) {
+    *barrelCount = this->level->getBarrelCount();
+    for (int i = 0; i < *barrelCount; i++) {
+      this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
+    }
   }
 }
 void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
