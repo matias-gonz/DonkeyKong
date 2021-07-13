@@ -4,6 +4,7 @@
 #include "SDL2/SDL_image.h"
 #include "../../resources/libraries/json.hpp"
 #include <stdlib.h>
+
 using json = nlohmann::json;
 
 class TextureManager {
@@ -33,7 +34,9 @@ public:
 
   SDL_Texture *getErrorTexture();
 
-    SDL_Texture *getInactivePlayerTexture();
+  SDL_Texture *getInactivePlayerTexture();
+
+  SDL_Texture *getHeartTexture();
 
 private:
   SDL_Renderer *renderer;
@@ -55,6 +58,8 @@ private:
 
   void loadPrincessTexture();
 
+  void loadHeartTexture();
+
   std::string loadTextureFromJson(char const *spritePath);
 
   SDL_Texture *playersTextures[6];
@@ -64,6 +69,7 @@ private:
   SDL_Texture *cyanLadderTexture;
   SDL_Texture *bluePlatformTexture;
   SDL_Texture *redPlatformTexture;
+  SDL_Texture *heartTexture;
 
   void loadErrorTexture();
 
@@ -74,7 +80,7 @@ private:
   SDL_Texture *barrelTexture;
   SDL_Texture *inectivePlayerTexture;
 
-    void loadInactivePlayerTexture();
+  void loadInactivePlayerTexture();
 };
 
 
