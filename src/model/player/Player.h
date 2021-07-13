@@ -79,6 +79,10 @@ public:
     PlayerState *modeState;
 
     void takeNormalDamage();
+
+    int getHp();
+
+    int getPoints();
 };
 
 

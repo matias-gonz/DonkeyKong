@@ -190,3 +190,11 @@ void Player::takeNormalDamage() {
     this->die();
   }
 }
+
+int Player::getHp(){
+  return this->hp;
+}
+int Player::getPoints()
+{
+  return this->points;
+}

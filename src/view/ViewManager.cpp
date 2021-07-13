@@ -235,7 +235,7 @@ void ViewManager::renderEndGameWindow(){
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("The game is over. Your score is: ...", textColor, font, this->renderer);
+  errorMessage.loadFromRenderedText("The game is over. Your score is: ..." , textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;

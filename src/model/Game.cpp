@@ -184,6 +184,8 @@ void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
     playerInfo[i].direction = players[i]->getDirection();
     playerInfo[i].isActive = players[i]->isPlaying();
     strcpy(playerInfo[i].username, players[i]->getUsername());
+    playerInfo[i].hp = players[i]->getHp();
+    playerInfo[i].points = players[i]->getPoints();
   }
   *playerCount = this->playerCount;
 }
