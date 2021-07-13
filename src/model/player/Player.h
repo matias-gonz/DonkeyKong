@@ -7,7 +7,8 @@
 #include "../../view/Animator.h"
 #include "../Entity.h"
 #include "PlayerState.h"
-#include "PlayerState.h"
+
+class PlayerState;
 
 class Player : public Entity {
 private:
@@ -83,6 +84,9 @@ public:
     int getHp();
 
     int getPoints();
+
+    void normalUpdate();
+
 };
 
 

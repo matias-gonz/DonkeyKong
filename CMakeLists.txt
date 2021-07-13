@@ -80,7 +80,26 @@ set(SOURCE_FILES main.cpp
         src/controller/LoginController.cpp
         src/controller/LoginController.h
         src/view/LoginButton.cpp
-        src/view/LoginButton.h src/controller/QueueThrd.cpp src/controller/QueueThrd.h src/Client/credentials.h src/Client/credentials.cpp src/view/PlayerIndicator.cpp src/view/PlayerIndicator.h src/model/player/PlayerState.h src/model/player/WalkingState.cpp src/model/player/WalkingState.h src/model/player/JumpingState.cpp src/model/player/JumpingState.h src/model/player/ClimbingState.cpp src/model/player/ClimbingState.h src/model/player/NormalState.cpp src/model/player/NormalState.h src/model/player/GodState.cpp src/model/player/GodState.h src/model/player/DeadState.cpp src/model/player/DeadState.h)
+        src/view/LoginButton.h
+        src/controller/QueueThrd.cpp
+        src/controller/QueueThrd.h
+        src/Client/credentials.h
+        src/Client/credentials.cpp
+        src/view/PlayerIndicator.cpp
+        src/view/PlayerIndicator.h
+        src/model/player/PlayerState.h
+        src/model/player/WalkingState.cpp
+        src/model/player/WalkingState.h
+        src/model/player/JumpingState.cpp
+        src/model/player/JumpingState.h
+        src/model/player/ClimbingState.cpp
+        src/model/player/ClimbingState.h
+        src/model/player/NormalState.cpp
+        src/model/player/NormalState.h
+        src/model/player/GodState.cpp
+        src/model/player/GodState.h
+        src/model/player/DeadState.cpp
+        src/model/player/DeadState.h)
 
 
 # change to personal project name (as above)

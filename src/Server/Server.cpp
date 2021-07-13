@@ -195,6 +195,8 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
   this->game->getFires(this->positions.fires, &this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
+  this->game->getBarrelsInfo(this->positions.barrels,&this->positions.barrelCount);
+
   levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
   pthread_mutex_lock(&this->mutex);
   if (!levelHasTransitioned) {
