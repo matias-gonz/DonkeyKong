@@ -5,6 +5,7 @@ Entity::Entity(Position* pos){
     this->pos = pos;
     velX = 0;
     velY = 0;
+    this->distance = 0;
 }
 
 
@@ -22,7 +23,7 @@ Position* Entity::getPos() {
 }
 
 int Entity::getDistance() {
-    return distance;
+  return distance;
 }
 
 int Entity::getDirection() {

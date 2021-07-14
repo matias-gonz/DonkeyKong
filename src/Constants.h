@@ -11,8 +11,8 @@
 #define LOGIN_WIDTH 450
 #define CONNECTION_LOST_HEIGHT 300
 #define CONNECTION_LOST_WIDTH 450
-#define TRANSITION_HEIGHT 300
-#define TRANSITION_WIDTH 450
+#define TRANSITION_HEIGHT 400
+#define TRANSITION_WIDTH 550
 
 enum kindOfAnimation {
   left = -1, up = 0, right = 1, jump = 2
@@ -26,6 +26,13 @@ struct PlayerTexture {
   int wSeparation = 5;
   int hSeparation = 1;
 
+};
+
+struct BarrelTexture {
+    int width = 35;
+    int height = 35;
+    int wSep = 0;
+    int hSep = 1;
 };
 
 struct PlatformContainer {

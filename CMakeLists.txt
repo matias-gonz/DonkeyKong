@@ -54,8 +54,6 @@ set(SOURCE_FILES main.cpp
         src/model/LevelLoader.h
         src/model/Logger.cpp
         src/model/Logger.h
-        src/model/BarrelMovement.cpp
-        src/model/BarrelMovement.h
         src/Server/mainServer.cpp
         src/Server/mainServer.h
         src/Client/mainClient.cpp
@@ -70,7 +68,6 @@ set(SOURCE_FILES main.cpp
         src/Socket/Socket.h
         src/Socket/ClientSocket.cpp
         src/Socket/ClientSocket.h
-        src/model/BarrelMovement.h
         src/model/Collider.cpp
         src/model/Collider.h
         src/view/PlayerAnimator.cpp
