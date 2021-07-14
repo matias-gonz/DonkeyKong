@@ -69,7 +69,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
+  this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 
@@ -190,30 +190,38 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
 
-void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int playerCount){
+void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int playerCount) {
   //Clear the renderer and window
   this->close();
   //Create new  er and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = TRANSITION_WIDTH;
-    this->screen_height =TRANSITION_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Loading next Level", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            TRANSITION_WIDTH, TRANSITION_HEIGHT, 0);
+    this->screen_height = TRANSITION_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Loading next Level", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             TRANSITION_WIDTH, TRANSITION_HEIGHT, 0);
 
     if (this->currentWindow != NULL) this->createRenderer();
-    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
-  }  else {
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);
+  } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
 
   //Set font color, size and text
   SDL_Color textColor = {255, 255, 255, 0xFF};
-  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  TTF_Font *fontPlayerInfo = TTF_OpenFont("resources/fonts/font.ttf", 25);
+  TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 35);
 
   SDL_RenderClear(this->renderer);
 
-  int separator = 40;
+  LTexture mensajeInformativo;
+  mensajeInformativo.loadFromRenderedText(" Puntajes parciales", textColor, fontMsjInformativo, this->renderer);
+  mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
+                            mensajeInformativo.getHeight());
+
+  int separator = 0;
+
   for (int i = 0; i < playerCount; i++) {
 
     std::string obtuvo = " obtuvo ";
@@ -223,10 +231,10 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
     //SDL_Rect heartDstrect = {0, 0, (int) (1.5 * texW), (int) (0.7*texH)};
     //SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
 
-    usernameAndPointsTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
+    usernameAndPointsTexture[i].loadFromRenderedText(playerText.c_str(), textColor, fontPlayerInfo, this->renderer);
     usernameAndPointsTexture[i].render((this->screen_width / 2) - (usernameAndPointsTexture[i].getWidth() / 2),
-                                       (this->screen_height / playerCount) - separator);
-    separator += 40;
+                                       this->screen_height / (playerCount + 1) + separator);
+    separator += 50;
   }
 
   SDL_RenderPresent(renderer);
@@ -236,7 +244,7 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
 }
 
 
-void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount){
+void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount) {
   //Clear the renderer and window
   this->close();
   //Create new renderer and window
@@ -249,42 +257,49 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
 
     if (this->currentWindow != NULL) this->createRenderer();
-    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
 
-  //Set font color, size and text
-  SDL_Color textColor = {255, 0, 0, 0xFF};
-  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
-  LTexture errorMessage;
-  errorMessage.loadFromRenderedText("The game is over. Your score is: ..." , textColor, font, this->renderer);
-
   SDL_RenderClear(this->renderer);
 
-    int separator = 40;
-    for (int i = 0; i < playerCount; i++) {
+  //Set font color, size and text
+  SDL_Color textColor = {255, 255, 255, 0xFF};
 
-      std::string obtuvo = " obtuvo ";
-      std::string puntos = " puntos ";
-      std::string playerText = playerInfo[i].username + obtuvo + std::to_string(playerInfo[i].points) + puntos;
+  TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 60);
 
-      //SDL_Rect heartDstrect = {0, 0, (int) (1.5 * texW), (int) (0.7*texH)};
-      //SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
+  LTexture mensajeInformativo;
+  mensajeInformativo.loadFromRenderedText(" FIN DEL JUEGO", textColor, fontMsjInformativo, this->renderer);
+  mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
+                            20);
 
-      usernameAndPointsTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
-      usernameAndPointsTexture[i].render((this->screen_width / 2) - (usernameAndPointsTexture[i].getWidth() / 2),
-                                         (this->screen_height / playerCount) - separator);
-      separator += 40;
-    }
+  TTF_Font *fontPlayerInfo = TTF_OpenFont("resources/fonts/font.ttf", 40);
 
-    SDL_RenderPresent(renderer);
+  int separator = 0;
 
-  SDL_Delay(10000);
-  this->close();
+  for (int i = 0; i < playerCount; i++) {
+
+    std::string obtuvo = " obtuvo ";
+    std::string puntos = " puntos ";
+    std::string playerText = playerInfo[i].username + obtuvo + std::to_string(playerInfo[i].points) + puntos;
+
+    //SDL_Rect heartDstrect = {0, 0, (int) (1.5 * texW), (int) (0.7*texH)};
+    //SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
+
+    usernameAndPointsTexture[i].loadFromRenderedText(playerText.c_str(), textColor, fontPlayerInfo, this->renderer);
+    usernameAndPointsTexture[i].render((this->screen_width / 2) - (usernameAndPointsTexture[i].getWidth() / 2),
+                                       this->screen_height / (playerCount + 1) + separator);
+
+    separator += 70;
+  }
+
+  SDL_RenderPresent(renderer);
+
+  SDL_Delay(2000);
 }
 
-void ViewManager::renderGameWindow(Positions positions, int clientNumber){
+void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
 
 
   SDL_RenderClear(this->renderer);
@@ -322,9 +337,9 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
                               positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
   }
 
-  for(int i = 0; i < positions.barrelCount;i++){
-    this->barrelAnimator->draw(this->renderer,positions.barrels[i].direction,positions.barrels[i].x,
-                               positions.barrels[i].y,positions.barrels[i].distance);
+  for (int i = 0; i < positions.barrelCount; i++) {
+    this->barrelAnimator->draw(this->renderer, positions.barrels[i].direction, positions.barrels[i].x,
+                               positions.barrels[i].y, positions.barrels[i].distance);
   }
 
   // render my player
@@ -342,6 +357,7 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
                              &this->boxes[boxPosition].box);
 
   SDL_RenderPresent(renderer);
+
 }
 
 void ViewManager::renderLoginWindow(bool &quit) {
