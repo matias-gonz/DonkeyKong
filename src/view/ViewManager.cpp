@@ -322,7 +322,6 @@ void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int players
   SDL_Color textColor = {255, 255, 255, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 30);
   std::string space = "    ";
-  int separator = 50;
   for (int i = 0; i < playersCount; i++) {
     // Create playerName with points
     std::string playerName = playersInfo[i].username;
@@ -332,14 +331,13 @@ void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int players
     }
     //Render players info
     playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
-    playersInfoTexture[i].render(separator,  0);
+    playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
     int heartSeparator = 20;
     for (int j = 0; j < playersInfo[i].hp; j++) {
-      SDL_Rect heartDstrect = {separator+heartSeparator, 30, (int) (1.5 * texW), (int) (0.7*texH)};
+      SDL_Rect heartDstrect = {((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2+heartSeparator, 30, (int) (1.5 * texW), (int) (0.7*texH)};
       SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
       heartSeparator += 30;
     }
-    separator += 250;
   }
 }
 
