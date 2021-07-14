@@ -69,7 +69,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-  this->barrelAnimator = new Animator(barrelTexture,0 , 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
+  this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 
@@ -190,16 +190,17 @@ void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect 
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
 
-void ViewManager::renderTransitionWindow(){
+void ViewManager::renderTransitionWindow() {
   //Clear the renderer and window
   this->close();
   //Create new  er and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
     this->screen_width = TRANSITION_WIDTH;
-    this->screen_height =TRANSITION_HEIGHT;
-    this->currentWindow =this->createWindow("Donkey Kong - Loading next Level", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                            TRANSITION_WIDTH, TRANSITION_HEIGHT, 0);
+    this->screen_height = TRANSITION_HEIGHT;
+    this->currentWindow = this->createWindow("Donkey Kong - Loading next Level", SDL_WINDOWPOS_CENTERED,
+                                             SDL_WINDOWPOS_CENTERED,
+                                             TRANSITION_WIDTH, TRANSITION_HEIGHT, 0);
     SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
@@ -211,17 +212,17 @@ void ViewManager::renderTransitionWindow(){
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("Loading next level",textColor,font,this->renderer);
+  errorMessage.loadFromRenderedText("Loading next level", textColor, font, this->renderer);
 
-  errorMessage.render((this->screen_width/2)-(errorMessage.getWidth()/2),
-                      (this->screen_height/2)-errorMessage.getHeight());
+  errorMessage.render((this->screen_width / 2) - (errorMessage.getWidth() / 2),
+                      (this->screen_height / 2) - errorMessage.getHeight());
   SDL_RenderPresent(renderer);
 
   SDL_Delay(5000);
   this->close();
 }
 
-void ViewManager::renderEndGameWindow(){
+void ViewManager::renderEndGameWindow() {
   //Clear the renderer and window
   this->close();
   //Create new renderer and window
@@ -243,7 +244,7 @@ void ViewManager::renderEndGameWindow(){
   SDL_Color textColor = {255, 0, 0, 0xFF};
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
   LTexture errorMessage;
-  errorMessage.loadFromRenderedText("The game is over. Your score is: ..." , textColor, font, this->renderer);
+  errorMessage.loadFromRenderedText("The game is over. Your score is: ...", textColor, font, this->renderer);
 
   //Render window with exit button
   SDL_Event e;
@@ -259,15 +260,13 @@ void ViewManager::renderEndGameWindow(){
   }
 }
 
-void ViewManager::renderGameWindow(Positions positions, int clientNumber){
-
-
+void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
   SDL_RenderClear(this->renderer);
 /*
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
     //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
 */
-
+  this->renderPlayersInfo(positions.playersInfo, positions.playerCount);
   this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
   this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
   SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
@@ -297,9 +296,9 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
                               positions.fireEnemies[i].y, positions.fireEnemies[i].distance);
   }
 
-  for(int i = 0; i < positions.barrelCount;i++){
-    this->barrelAnimator->draw(this->renderer,positions.barrels[i].direction,positions.barrels[i].x,
-                               positions.barrels[i].y,positions.barrels[i].distance);
+  for (int i = 0; i < positions.barrelCount; i++) {
+    this->barrelAnimator->draw(this->renderer, positions.barrels[i].direction, positions.barrels[i].x,
+                               positions.barrels[i].y, positions.barrels[i].distance);
   }
 
   // render my player
@@ -317,6 +316,29 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber){
                              &this->boxes[boxPosition].box);
 
   SDL_RenderPresent(renderer);
+}
+
+void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount) {
+  SDL_Color textColor = {255, 255, 255, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 30);
+  std::string space = "    ";
+  for (int i = 0; i < playersCount; i++) {
+    // Create playerName with points
+    std::string playerName = playersInfo[i].username;
+    std::string playerText = playerName.substr(0, 4) + space + std::to_string(playersInfo[i].points);
+    for(int i = 0; i < playerText.size(); i++) {
+      playerText.at(i) = toupper(playerText.at(i));
+    }
+    //Render players info
+    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
+    playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
+    int heartSeparator = 20;
+    for (int j = 0; j < playersInfo[i].hp; j++) {
+      SDL_Rect heartDstrect = {((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2+heartSeparator, 30, (int) (1.5 * texW), (int) (0.7*texH)};
+      SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
+      heartSeparator += 30;
+    }
+  }
 }
 
 void ViewManager::renderLoginWindow(bool &quit) {

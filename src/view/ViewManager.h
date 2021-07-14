@@ -95,6 +95,7 @@ private:
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
   LTexture gPromptInfoTextTexture;
+  LTexture playersInfoTexture[MAX_CLIENTS];
 
   SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
@@ -117,6 +118,7 @@ private:
 
   void loadLobbyMedia();
 
+  void renderPlayersInfo(PlayersInformation playersInfo[], int playersCount);
 
   void initializeLobbyTextInputs();
 

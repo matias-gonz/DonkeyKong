@@ -24,8 +24,8 @@ void Game::start() {
   this->loadLevel(1);
 
   Logger::log(Logger::Info, "Inicio Donkey Kong");
-  this->boss = new Boss(new Position(100, 35));
-  this->princess = new Princess(new Position(450, 30));
+  this->boss = new Boss(new Position(100, 85));
+  this->princess = new Princess(new Position(450, 80));
 }
 
 void Game::quit() {
@@ -132,7 +132,7 @@ void Game::resolveCollisions() {
 
 void Game::addPlayer(char username[20]) {
   this->players = (Player **) realloc(this->players, (this->playerCount + 1) * sizeof(Player *));
-  this->players[this->playerCount] = new Player(new Position(200, 525), username);
+  this->players[this->playerCount] = new Player(new Position(200, 575), username);
   this->playerCount++;
 }
 

@@ -24,7 +24,8 @@
         "barrel": "resources/sprites/barrel_move.png",
         "enemy": "resources/sprites/fire_walk.png",
         "boss": "resources/sprites/boss_still.png",
-        "princess": "resources/sprites/princess_still.png"
+        "princess": "resources/sprites/princess_still.png",
+        "heart": "resources/sprites/heart.png"
       },
       "levels": {
         "level1": "src/model/levels/level1.json",
