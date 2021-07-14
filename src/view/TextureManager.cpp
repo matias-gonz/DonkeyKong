@@ -16,6 +16,7 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
   this->loadErrorTexture();
   this->loadBossTexture();
   this->loadPrincessTexture();
+  this->loadHeartTexture();
   Logger::log(Logger::Info, "Se finaliza la carga de texturas.");
 }
 
@@ -158,6 +159,13 @@ void TextureManager::loadBossTexture() {
   this->bossTexture = texture;
 }
 
+void TextureManager::loadHeartTexture() {
+  SDL_Texture *texture = NULL;
+  texture = this->loadTexture(this->loadTextureFromJson("heart"));
+  if (texture == NULL) printf("No se cargo la textura del corazon");
+  this->heartTexture = texture;
+}
+
 void TextureManager::loadPrincessTexture() {
   SDL_Texture *texture = NULL;
   texture = this->loadTexture(this->loadTextureFromJson("princess"));
@@ -230,6 +238,10 @@ SDL_Texture *TextureManager::getPrincessTexture() {
 
 SDL_Texture *TextureManager::getBarrelTexture() {
   return this->barrelTexture;
+}
+
+SDL_Texture *TextureManager::getHeartTexture() {
+  return this->heartTexture;
 }
 
 SDL_Texture *TextureManager::getInactivePlayerTexture() {
