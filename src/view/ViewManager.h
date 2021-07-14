@@ -97,6 +97,7 @@ private:
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
   LTexture gPromptInfoTextTexture;
+  LTexture playersInfoTexture[MAX_CLIENTS];
 
   LTexture usernameAndPointsTexture[MAX_CLIENTS];
 
@@ -121,6 +122,7 @@ private:
 
   void loadLobbyMedia();
 
+  void renderPlayersInfo(PlayersInformation playersInfo[], int playersCount);
 
   void initializeLobbyTextInputs();
 

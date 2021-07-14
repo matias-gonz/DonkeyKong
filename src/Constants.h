@@ -5,7 +5,7 @@
 #include "view/ltexture.h"
 
 #define MAX_CLIENTS 4
-#define HEIGHT 576
+#define HEIGHT 626
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300
 #define LOGIN_WIDTH 450

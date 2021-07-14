@@ -307,7 +307,7 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
     //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
 */
-
+  this->renderPlayersInfo(positions.playersInfo, positions.playerCount);
   this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
   this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
   SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
@@ -358,6 +358,29 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
 
   SDL_RenderPresent(renderer);
 
+}
+
+void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount) {
+  SDL_Color textColor = {255, 255, 255, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 30);
+  std::string space = "    ";
+  for (int i = 0; i < playersCount; i++) {
+    // Create playerName with points
+    std::string playerName = playersInfo[i].username;
+    std::string playerText = playerName.substr(0, 4) + space + std::to_string(playersInfo[i].points);
+    for(int i = 0; i < playerText.size(); i++) {
+      playerText.at(i) = toupper(playerText.at(i));
+    }
+    //Render players info
+    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
+    playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
+    int heartSeparator = 20;
+    for (int j = 0; j < playersInfo[i].hp; j++) {
+      SDL_Rect heartDstrect = {((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2+heartSeparator, 30, (int) (1.5 * texW), (int) (0.7*texH)};
+      SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
+      heartSeparator += 30;
+    }
+  }
 }
 
 void ViewManager::renderLoginWindow(bool &quit) {
