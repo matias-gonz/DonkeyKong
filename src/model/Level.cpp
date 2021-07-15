@@ -53,7 +53,7 @@ void Level::update() {
     this->counter += 1;
     printf("barrelCount: %i\n",this->barrelCount);
 
-    if (this->counter > 100) {
+    if (this->counter > 200) {
       this->spawnBarrel();
       this->counter = 0;
     }
@@ -186,7 +186,7 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       for (int j = 0; j < barrelCount; j++) {
         SDL_Rect *barrelRect = barrels[j]->getDestRect();
         if (Collider::RectCollides(*barrelRect, platformRect)) {
-          Collider::ResolveBarrelCollision(barrels[j], platformRect);
+          Collider::ResolveBarrelPLatformCollision(barrels[j], platformRect);
         }
       }
     }
@@ -202,6 +202,11 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     for (int j = 0; j < this->fireCount; j++) {
       if (Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())) {
         Collider::ResolvePlayerFireCollision(players[i]);
+      }
+    }
+    for (int j = 0; j < barrelCount; j++) {
+      if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
+        Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
       }
     }
   }

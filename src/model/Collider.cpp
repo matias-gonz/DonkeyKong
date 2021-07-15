@@ -34,7 +34,7 @@ void Collider::ResolveEnemyCollision(EnemyFire *enemyFire, SDL_Rect rect) {
 
 }
 
-void Collider::ResolvePlayerEnemyCollision(Player *player, EnemyFire *fire) {
+void Collider::ResolvePlayerEnemyCollision(Player *player, Entity *entity) {
   player->takeDamage();
 }
 
@@ -43,16 +43,16 @@ void Collider::ResolvePlayerFireCollision(Player *player) {
   player->resetPos();
 }
 
-void Collider::ResolveBarrelCollision(Barrel *pBarrel, SDL_Rect rect) {
+void Collider::ResolveBarrelPLatformCollision(Barrel *pBarrel, SDL_Rect rect) {
   SDL_Rect barrelRect = *pBarrel->getDestRect();
   int dy;
-
-  if(barrelRect.y + barrelRect.h >= rect.y ){
+  if(barrelRect.y + barrelRect.h >= rect.y and barrelRect.y + barrelRect.h <= rect.y + rect.h/2){
     dy = barrelRect.y + barrelRect.h - rect.y;
     pBarrel->moveUp(dy);
     pBarrel->resetVelY();
   }
 
 }
+
 
 
