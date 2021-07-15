@@ -9,8 +9,13 @@ class PlayerState {
 public:
     //virtual void handleInput(Player* player, char input);
     //virtual void update(Player* player);
+    virtual ~PlayerState(){}
 
     virtual void takeDamage(Player *pPlayer) = 0;
+
+
+    virtual void update(Player *player) = 0;
+
 };
 
 

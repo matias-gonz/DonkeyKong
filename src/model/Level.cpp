@@ -51,7 +51,6 @@ void Level::update() {
   }
   if (this->currentLevel == 2) {
     this->counter += 1;
-    printf("barrelCount: %i\n",this->barrelCount);
 
     if (this->counter > 200) {
       this->spawnBarrel();
@@ -210,6 +209,7 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       }
     }
   }
+
 
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));

@@ -5,14 +5,14 @@
 #include "view/ltexture.h"
 
 #define MAX_CLIENTS 4
-#define HEIGHT 576
+#define HEIGHT 626
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300
 #define LOGIN_WIDTH 450
 #define CONNECTION_LOST_HEIGHT 300
 #define CONNECTION_LOST_WIDTH 450
-#define TRANSITION_HEIGHT 300
-#define TRANSITION_WIDTH 450
+#define TRANSITION_HEIGHT 400
+#define TRANSITION_WIDTH 550
 
 enum kindOfAnimation {
   left = -1, up = 0, right = 1, jump = 2
@@ -65,6 +65,8 @@ struct PlayersInformation{
     int direction;
     bool isActive;
     char username[20];
+    int hp;
+    int points;
 };
 
 struct EventContainer {

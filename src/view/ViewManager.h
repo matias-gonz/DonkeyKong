@@ -63,9 +63,11 @@ public:
 
   void renderGameWindow(Positions positions, int clientNumber);
 
-  void renderTransitionWindow();
+  void renderTransitionWindow(PlayersInformation playerInfo[], int playerCount);
 
-  void renderEndGameWindow();
+  void renderEndGameWindow(PlayersInformation playerInfo[], int playerCount);
+
+  void initializeTextInputsForPlayersInfo(PlayersInformation playerInfo[]);
 
 private:
 
@@ -95,6 +97,9 @@ private:
   LTexture gPromptPasswordTextTexture;
   LTexture gInputPasswordTextTexture;
   LTexture gPromptInfoTextTexture;
+  LTexture playersInfoTexture[MAX_CLIENTS];
+
+  LTexture usernameAndPointsTexture[MAX_CLIENTS];
 
   SDL_Window *createWindow(const char *title, int xPos, int yPos, int width, int height, int flags);
 
@@ -117,6 +122,7 @@ private:
 
   void loadLobbyMedia();
 
+  void renderPlayersInfo(PlayersInformation playersInfo[], int playersCount);
 
   void initializeLobbyTextInputs();
 
