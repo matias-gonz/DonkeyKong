@@ -19,6 +19,7 @@ Barrel::Barrel(Position *position){
     this->velY = 0;
     this->velX = 3;
     this->direction = right;
+    this->alive = true;
 
 }
 Barrel::~Barrel() {
@@ -64,4 +65,12 @@ void Barrel::moveUp(int i) {
 
 void Barrel::resetVelY() {
   this->velY = 0;
+}
+
+void Barrel::burn() {
+  this->alive = false;
+}
+
+bool Barrel::isALive(){
+  return this->alive;
 }

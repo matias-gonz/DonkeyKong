@@ -204,8 +204,19 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       }
     }
     for (int j = 0; j < barrelCount; j++) {
+
+      if (!barrels[j]->isALive()){
+        continue;
+        //ACA HACER QUE EL BARRIL MUERA O ALGO NOSE
+      }
+
       if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
         Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
+      }
+      for (int k = 0; k < fireCount; k++) {
+        if (Collider::RectCollides(fires[k]->getRectangle(), *barrels[j]->getDestRect())) {
+          Collider::ResolveBarrelFireCollision(barrels[j]);
+        }
       }
     }
   }

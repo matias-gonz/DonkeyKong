@@ -47,11 +47,17 @@ public:
 
     void resetVelY();
 
+    void burn();
+    bool isALive();
+
 private:
     int width;
     int height;
     int x;
     int y;
+    bool alive;
+
+
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H

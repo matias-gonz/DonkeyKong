@@ -20,6 +20,8 @@ public:
     static void ResolvePlayerEnemyCollision(Player *pPlayer, Entity *entity);
 
     static void ResolvePlayerFireCollision(Player *pPlayer);
+
+    static void ResolveBarrelFireCollision(Barrel *pBarrel);
 };
 
 
