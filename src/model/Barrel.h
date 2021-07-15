@@ -5,7 +5,6 @@
 #include <SDL2/SDL_image.h>
 #include "../view/ltexture.h"
 #include "Position.h"
-#include "BarrelMovement.h"
 #include "../Constants.h"
 #include "Entity.h"
 
@@ -37,7 +36,7 @@ public:
 
 
     //CAMBIOS BARREL
-    Barrel(Position position, int count, int direction);
+    Barrel(Position *position);
     ~Barrel();
     SDL_Rect *getDestRect();
     SDL_Rect *getSrcRect();
@@ -47,25 +46,12 @@ public:
     void moveUp(int i);
 
     void resetVelY();
-    int getDistance();
 
 private:
-    //The X and Y offsets of the barrel
-    //int posX, posY;
-
-    //The velocity of the barrel
-    //int velX, velY;
-
-    //LTexture barrelTexture;
-
-
-    //CAMBIOS BARREL
-    int count;
-    BarrelMovement* movement;
-    SDL_Rect* srcRect;
-    SDL_Rect * destRect;
-
-
+    int width;
+    int height;
+    int x;
+    int y;
 };
 
 #endif //TALLER_PROG_I_2021_1C_KIWI_BARREL_H
