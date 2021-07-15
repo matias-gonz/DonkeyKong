@@ -49,10 +49,11 @@ void Level::update() {
   for (int i = 0; i < this->fireCount; i++) {
     this->fires[i]->update();
   }
-  if(this->currentLevel == 2){
+  if (this->currentLevel == 2) {
     this->counter += 1;
+    printf("barrelCount: %i\n",this->barrelCount);
 
-    if (this->counter > 10){
+    if (this->counter > 100) {
       this->spawnBarrel();
       this->counter = 0;
     }
@@ -181,8 +182,8 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
       }
     }
-    if(this->currentLevel == 2){
-      for(int j = 0; j < barrelCount; j++){
+    if (this->currentLevel == 2) {
+      for (int j = 0; j < barrelCount; j++) {
         SDL_Rect *barrelRect = barrels[j]->getDestRect();
         if (Collider::RectCollides(*barrelRect, platformRect)) {
           Collider::ResolveBarrelCollision(barrels[j], platformRect);
@@ -191,20 +192,19 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     }
   }
 
-  for(int i = 0; i < playerCount; i++){
-    for(int j = 0; j < enemyFireCount; j++){
+  for (int i = 0; i < playerCount; i++) {
+    for (int j = 0; j < enemyFireCount; j++) {
       if (Collider::RectCollides(playerRects[i], enemyFires[j]->getRectangle())) {
         Collider::ResolvePlayerEnemyCollision(players[i], enemyFires[j]);
       }
 
     }
-    for(int j = 0; j < this->fireCount; j++){
-      if(Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())){
+    for (int j = 0; j < this->fireCount; j++) {
+      if (Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())) {
         Collider::ResolvePlayerFireCollision(players[i]);
       }
     }
   }
-
 
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
@@ -240,17 +240,13 @@ bool Level::playerWon(Player *player) {
 }
 
 void Level::spawnBarrel() {
-  if(this->barrelCount){
-    this->barrels = (Barrel**)realloc(this->barrels,(this->barrelCount+1)*sizeof(Barrel*));
-    if(!this->barrels){
-      Logger::log(Logger::Error,"Error al reservar memoria. Level::spawnBarrel().");
-      this->barrelCount = 0;
-      return;
-    }
+  this->barrels = (Barrel **) realloc(this->barrels, (this->barrelCount + 1) * sizeof(Barrel *));
+  if (!this->barrels) {
+    Logger::log(Logger::Error, "Error al reservar memoria. Level::spawnBarrel().");
+    this->barrelCount = 0;
+    return;
   }
-  else{
-    this->barrels = (Barrel**)malloc(sizeof (Barrel*));
-  }
+
   this->barrels[this->barrelCount] = new Barrel(new Position(100, 35));
   this->barrelCount += 1;
 

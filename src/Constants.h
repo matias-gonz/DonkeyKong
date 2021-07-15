@@ -86,7 +86,7 @@ struct Positions {
   EntityContainer bossInfo;
   EntityContainer princessInfo;
   bool transitioningLevel;
-  EntityContainer barrels[10];
+  EntityContainer barrels[100];
   int barrelCount;
   bool endGame;
 };
