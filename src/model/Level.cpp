@@ -52,7 +52,7 @@ void Level::update() {
   if (this->currentLevel == 1) {
     this->counter += 1;
 
-    if (this->counter > 20) {
+    if (this->counter > 200) {
       this->spawnBarrel();
       this->counter = 0;
     }
