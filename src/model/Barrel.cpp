@@ -17,7 +17,8 @@ Barrel::Barrel(Position *position){
     this->y = position->getY();
     this->distance = 0;
     this->velY = 0;
-    this->velX = 0;
+    this->velX = 3;
+    this->direction = right;
 
 }
 Barrel::~Barrel() {
@@ -28,10 +29,18 @@ void Barrel::update() {
   if (this->pos->getX() <= 0 || this->pos->getX()  + this->width >= WIDTH) {
     this->x -= this->velX;
     this->velX = -this->velX;
+    this->direction = -this->direction;
   }
   this->x += this->velX;
   this->y += this->velY;
   this->velY += 1; //gravity
+
+  if(this->velY > 3){
+    this->velY = 3;
+  }
+
+  this->pos->setX(this->x);
+  this->pos->setY(this->y);
 /*
   this->distance += velX;
 

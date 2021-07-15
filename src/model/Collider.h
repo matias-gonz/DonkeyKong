@@ -15,9 +15,9 @@ public:
 
     static void ResolveEnemyCollision(EnemyFire *pFire, SDL_Rect rect);
 
+    static void ResolveBarrelPLatformCollision(Barrel *pBarrel, SDL_Rect rect);
 
-    static void ResolveBarrelCollision(Barrel *pBarrel, SDL_Rect rect);
-    static void ResolvePlayerEnemyCollision(Player *pPlayer, EnemyFire *pFire);
+    static void ResolvePlayerEnemyCollision(Player *pPlayer, Entity *entity);
 
     static void ResolvePlayerFireCollision(Player *pPlayer);
 };
