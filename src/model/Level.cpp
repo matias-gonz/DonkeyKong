@@ -210,6 +210,15 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     }
   }
 
+  for (int i = 0; i < fireCount; i++) {
+    for(int j = 0; j < this->barrelCount; j++){
+      if (Collider::RectCollides(fires[i]->getRectangle(), *barrels[j]->getDestRect())) {
+        this->burnBarrel(j);
+        j--;
+      }
+    }
+  }
+
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
   for (int i = 0; i < playerCount; i++) {
     playerRects[i].y += playerRects[i].h / 2;
@@ -252,6 +261,18 @@ void Level::spawnBarrel() {
 
   this->barrels[this->barrelCount] = new Barrel(new Position(100, 35));
   this->barrelCount += 1;
+
+}
+
+void Level::burnBarrel(int i) {
+  if(i >= this->barrelCount){
+    return;
+  }
+
+  delete this->barrels[i];
+  this->barrels[i] = this->barrels[this->barrelCount-1];
+  this->barrelCount--;
+  this->barrels = (Barrel**) realloc(this->barrels,this->barrelCount*sizeof(Barrel*));
 
 }
 

@@ -65,3 +65,4 @@ void Barrel::moveUp(int i) {
 void Barrel::resetVelY() {
   this->velY = 0;
 }
+
