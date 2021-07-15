@@ -30,6 +30,7 @@ void Barrel::update() {
     this->x -= this->velX;
     this->velX = -this->velX;
     this->direction = -this->direction;
+    this->distance = 0;
   }
   this->x += this->velX;
   this->y += this->velY;
@@ -41,13 +42,13 @@ void Barrel::update() {
 
   this->pos->setX(this->x);
   this->pos->setY(this->y);
-/*
-  this->distance += velX;
 
-  if (this->distance > 70) {
+  this->distance += abs(velX);
+
+  if (this->distance > 50) {
     this->distance = 0;
   }
-  */
+
 }
 
 SDL_Rect *Barrel::getDestRect() {
