@@ -52,7 +52,7 @@ void Level::update() {
   if (this->currentLevel == 1) {
     this->counter += 1;
 
-    if (this->counter > 200) {
+    if (this->counter > 20) {
       this->spawnBarrel();
       this->counter = 0;
     }
@@ -205,18 +205,17 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     }
     for (int j = 0; j < barrelCount; j++) {
 
-      if (!barrels[j]->isALive()){
-        continue;
-        //ACA HACER QUE EL BARRIL MUERA O ALGO NOSE
-      }
-
       if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
         Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
       }
-      for (int k = 0; k < fireCount; k++) {
-        if (Collider::RectCollides(fires[k]->getRectangle(), *barrels[j]->getDestRect())) {
-          Collider::ResolveBarrelFireCollision(barrels[j]);
-        }
+    }
+  }
+
+  for (int i = 0; i < fireCount; i++) {
+    for(int j = 0; j < this->barrelCount; j++){
+      if (Collider::RectCollides(fires[i]->getRectangle(), *barrels[j]->getDestRect())) {
+        this->burnBarrel(j);
+        j--;
       }
     }
   }
@@ -265,6 +264,18 @@ void Level::spawnBarrel() {
 
   this->barrels[this->barrelCount] = new Barrel(new Position(100, 35));
   this->barrelCount += 1;
+
+}
+
+void Level::burnBarrel(int i) {
+  if(i >= this->barrelCount){
+    return;
+  }
+
+  delete this->barrels[i];
+  this->barrels[i] = this->barrels[this->barrelCount-1];
+  this->barrelCount--;
+  this->barrels = (Barrel**) realloc(this->barrels,this->barrelCount*sizeof(Barrel*));
 
 }
 

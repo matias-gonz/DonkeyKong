@@ -54,8 +54,4 @@ void Collider::ResolveBarrelPLatformCollision(Barrel *pBarrel, SDL_Rect rect) {
 
 }
 
-void Collider::ResolveBarrelFireCollision(Barrel *pBarrel) {
-  pBarrel->burn();
-}
-
 

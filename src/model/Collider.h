@@ -21,7 +21,6 @@ public:
 
     static void ResolvePlayerFireCollision(Player *pPlayer);
 
-    static void ResolveBarrelFireCollision(Barrel *pBarrel);
 };
 
 

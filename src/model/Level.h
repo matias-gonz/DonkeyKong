@@ -86,6 +86,8 @@ private:
     int counter;
 
     void spawnBarrel();
+
+    void burnBarrel(int i);
 };
 
 
