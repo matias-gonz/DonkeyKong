@@ -4,25 +4,28 @@
 #include "stdio.h"
 
 EnemyFire::EnemyFire(Position* pos){
-    //srand(time(NULL));
     this->pos = pos;
-    this->velX = 1;
     this->velY = 0;
     this->distance = 0;
     this->direction = choseDirection();
+    this->velX = this->direction;
 
 }
 void EnemyFire::update() {
     this->pos->add(this->velX, this->velY);
 
-    if(this->pos->getX() >= WIDTH or this->pos->getX() <= 0){
+    if(this->pos->getX() >= (WIDTH - 22) or this->pos->getX() <= 0){
         changeDirection();
         this->pos->add(this->velX,0);
     }
     distance += abs(velX);
 
-    if (distance > 70) {
+
+    if (distance > 50) {
+      if(rand()%100 < 40){
         changeDirection();
+      }
+      distance = 0;
     }
     if(this->velY > 5){return;}//velocidad terminal
     this->velY += 1;
@@ -36,7 +39,7 @@ void EnemyFire::changeDirection(){
 }
 int EnemyFire::choseDirection() {
 
-    if(rand()%2 / RAND_MAX){return left;}
+    if(rand()%2){return left;}
     return right;
 }
 
