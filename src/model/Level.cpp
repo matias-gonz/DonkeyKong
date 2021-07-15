@@ -218,7 +218,6 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
 
   free(playerRects);
   free(canClimb);
-
 }
 
 bool Level::playerWon(Player *player) {
@@ -228,5 +227,3 @@ bool Level::playerWon(Player *player) {
   }
   return false;
 }
-
-

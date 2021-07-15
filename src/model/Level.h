@@ -82,7 +82,7 @@ private:
 
     void freeBarrels();
 
-    Position* winningPosition = new Position(100,20);
+    Position* winningPosition = new Position(100,0);
 };
 
 

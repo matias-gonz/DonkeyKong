@@ -74,6 +74,7 @@ private:
   bool running;
   Level *level;
   Configuration *configuration;
+  int playersCountWon;
 
   void spawnEnemies(Position **spawns, int spawnCount, int probability);
 
@@ -91,6 +92,10 @@ private:
   bool anyPlayerWon();
 
   bool everyPlayerWon();
+
+  void addPointsPodium(int playerNumber, int position);
+
+  void checkWinners();
 
 };
 

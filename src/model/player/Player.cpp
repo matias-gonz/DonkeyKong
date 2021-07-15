@@ -21,6 +21,7 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->direction = left;
   this->active = true;
   this->hasWon = false;
+  this->canAddPoints = true;
   this->hp = 3;
   this->points = 0;
   this->modeState = new NormalState();
@@ -29,10 +30,8 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
 }
 
 void Player::update() {
-
   this->modeState->update(this);
-
-
+  printf("%d %d\n", pos->getX(), pos->getY());
 }
 
 void Player::addLeftVel() {
@@ -141,6 +140,22 @@ void Player::resetPlayerWon() {
   this->hasWon = false;
 }
 
+bool Player::hasplayerWon() {
+  return this->hasWon;
+}
+
+bool Player::getAddPoints(){
+  return this->canAddPoints;
+}
+
+void Player::setAddPoints(){
+  this->canAddPoints = true;
+}
+
+void Player::cantAddPoints(){
+  this->canAddPoints = false;
+}
+
 void Player::die() {
   delete this->modeState;
   this->resetPos();
@@ -200,10 +215,15 @@ void Player::normalUpdate() {
   counter++;
 }
 
-int Player::getHp(){
+int Player::getHp() {
   return this->hp;
 }
-int Player::getPoints()
-{
+
+int Player::getPoints() {
   return this->points;
+}
+
+void Player::addPoints(int points)
+{
+  this->points += points;
 }

@@ -21,6 +21,7 @@ void Game::start() {
   this->level = new Level();
   this->players = NULL;
   this->playerCount = 0;
+  this->playersCountWon = 0;
   this->loadLevel(1);
 
   Logger::log(Logger::Info, "Inicio Donkey Kong");
@@ -33,12 +34,9 @@ void Game::quit() {
 }
 
 void Game::update() {
-  if (this->everyPlayerWon()) {
-    for(int i = 0; i < playerCount; i++) {
-      this->players[i]->resetPlayerWon();
-    }
-    this->switchLevel();
-    return;
+  this->checkWinners();
+  for (int i = 0; i < playerCount; i++) {
+    this->addPointsPodium(i, playersCountWon);
   }
   this->level->update();
   for (int i = 0; i < this->playerCount; i++) {
@@ -46,6 +44,14 @@ void Game::update() {
   }
   for (int i = 0; i < this->enemyFireCount; i++) {
     this->enemyFires[i]->update();
+  }
+  if (this->everyPlayerWon()) {
+    for (int i = 0; i < playerCount; i++) {
+      this->players[i]->resetPlayerWon();
+      this->players[i]->setAddPoints();
+    }
+    this->switchLevel();
+    return;
   }
 
   this->princess->update();
@@ -116,6 +122,7 @@ void Game::switchLevel() {
   } else {
     this->loadLevel(1);
   }
+  playersCountWon = 0;
 }
 
 Boss *Game::getBoss() {
@@ -176,12 +183,14 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
     this->getEntityInfo(&enemyFires[i], this->enemyFires[i]);
   }
 }
-void Game::getBarrelsInfo(EntityContainer* barrels,int *barrelCount){
+
+void Game::getBarrelsInfo(EntityContainer *barrels, int *barrelCount) {
   *barrelCount = this->level->getBarrelCount();
   for (int i = 0; i < *barrelCount; i++) {
     this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
   }
 }
+
 void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
   for (int i = 0; i < this->playerCount; i++) {
     playerInfo[i].distance = players[i]->getDistance();
@@ -225,13 +234,15 @@ bool Game::anyPlayerWon() {
 }
 
 bool Game::everyPlayerWon() {
-  int playersCountWon = 0;
-  for(int i = 0; i < this->playerCount; i++){
-    if(this->level->playerWon(this->players[i])){
+  return playersCountWon == this->playerCount;
+}
+
+void Game::checkWinners() {
+  for (int i = 0; i < this->playerCount; i++) {
+    if (this->level->playerWon(this->players[i]) && players[i]->getAddPoints()) {
       playersCountWon++;
     }
   }
-  return playersCountWon == this->playerCount;
 }
 
 int Game::getPlayerCount() {
@@ -250,6 +261,31 @@ bool Game::isPlayerActive(int playerNumber) {
   return players[playerNumber]->isPlaying();
 }
 
-int Game::getCurrentLevel(){
+int Game::getCurrentLevel() {
   return currentLevel;
+}
+
+void Game::addPointsPodium(int playerNumber, int position) {
+  if(players[playerNumber]->getAddPoints() && this->level->playerWon(players[playerNumber])) {
+    switch (position) {
+      case 1:
+        players[playerNumber]->addPoints(2000);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 2:
+        players[playerNumber]->addPoints(1500);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 3:
+        players[playerNumber]->addPoints(1000);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 4:
+        players[playerNumber]->addPoints(500);
+        players[playerNumber]->cantAddPoints();
+        break;
+      default:
+        break;
+    };
+  }
 }
