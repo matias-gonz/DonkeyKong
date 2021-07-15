@@ -202,6 +202,7 @@ void Server::handleEvents() {
   if (!levelHasTransitioned) {
     this->broadcast();
   } else {
+    SDL_Delay(1000);
     levelHasTransitioned = false;
   }
 
