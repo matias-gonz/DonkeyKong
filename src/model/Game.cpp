@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Collider.h"
 
 Game::Game(Configuration *configuration) {
   this->configuration = configuration;
@@ -223,24 +224,15 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->direction = entity->getDirection();
 }
 
-
-bool Game::anyPlayerWon() {
-  for (int i = 0; i < this->playerCount; i++) {
-    if (this->level->playerWon(this->players[i])) {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool Game::everyPlayerWon() {
   return playersCountWon == this->playerCount;
 }
 
 void Game::checkWinners() {
   for (int i = 0; i < this->playerCount; i++) {
-    if (this->level->playerWon(this->players[i]) && players[i]->getAddPoints()) {
+    if (Collider::RectCollides(this->players[i]->getRectangle(), this->princess->getRectangle()) && players[i]->getAddPoints()) {
       playersCountWon++;
+      players[i]->playerWon();
     }
   }
 }
@@ -266,7 +258,7 @@ int Game::getCurrentLevel() {
 }
 
 void Game::addPointsPodium(int playerNumber, int position) {
-  if(players[playerNumber]->getAddPoints() && this->level->playerWon(players[playerNumber])) {
+  if(players[playerNumber]->getAddPoints() && players[playerNumber]->hasplayerWon()) {
     switch (position) {
       case 1:
         players[playerNumber]->addPoints(2000);

@@ -17,7 +17,7 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
   //this->writeJSON();
   json jsonLevel;
   if (level == 1) {
-    std::string level1 = this->loadLevelFromJson("level2", levels);
+    std::string level1 = this->loadLevelFromJson("level1", levels);
     level1.replace(0, 1, "");
     level1.erase(level1.size() - 1);
     Logger::log(Logger::Info, "Se inicia la carga del nivel 1.");
@@ -28,7 +28,7 @@ void LevelLoader::loadLevel(int level, Platform ***platforms, Ladder ***ladders,
     }
     i >> jsonLevel;
   } else if (level == 2) {
-    std::string level2 = this->loadLevelFromJson("level1", levels);
+    std::string level2 = this->loadLevelFromJson("level2", levels);
     level2.replace(0, 1, "");
     level2.erase(level2.size() - 1);
     Logger::log(Logger::Info, "Se inicia la carga del nivel 2.");
