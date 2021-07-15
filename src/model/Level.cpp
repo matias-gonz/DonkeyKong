@@ -52,8 +52,10 @@ void Level::update() {
   if (this->currentLevel == 2) {
     this->counter += 1;
 
-    if (this->counter > 200) {
-      this->spawnBarrel();
+    if (this->counter > 50) {
+      if( rand()%100 < 30){
+        this->spawnBarrel();
+      }
       this->counter = 0;
     }
     for (int i = 0; i < this->barrelCount; i++) {
@@ -97,14 +99,6 @@ void Level::reset() {
   this->freeFires();
   this->freeSpawns();
   this->freeBarrels();
-  this->platforms = NULL;
-  this->platformCount = 0;
-  this->ladders = NULL;
-  this->ladderCount = 0;
-  this->fires = NULL;
-  this->fireCount = 0;
-  this->barrels = NULL;
-  this->barrelCount = 0;
 }
 
 void Level::freePlaforms() {
@@ -160,6 +154,8 @@ void Level::freeBarrels() {
     delete this->barrels[i];
   }
   free(this->barrels);
+  this->barrels = NULL;
+  this->barrelCount = 0;
 }
 
 void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **enemyFires, int enemyFireCount) {
