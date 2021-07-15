@@ -1,6 +1,13 @@
 {
-
-    "ladders": {
+    "fires": {
+        "0": {
+            "count": 2,
+            "dx": 0,
+            "dy": 0,
+            "x": 0,
+            "y": 0
+        }
+    },"ladders": {
         "0": {
             "count": 3,
             "dx": 0,
@@ -178,11 +185,11 @@
 },
     "platforms": {
         "0": {
-            "count": 16,
+            "count": 14,
             "direction": 0,
             "dx": 0,
             "dy": 0,
-            "x": 0,
+            "x": 2,
             "y": 0
         },
         "1": {
