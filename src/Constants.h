@@ -29,10 +29,10 @@ struct PlayerTexture {
 };
 
 struct BarrelTexture {
-    int width = 35;
-    int height = 35;
-    int wSep = 0;
-    int hSep = 1;
+    int width = 19;
+    int height = 27;
+    int wSep = 9;
+    int hSep = 9;
 };
 
 struct PlatformContainer {
