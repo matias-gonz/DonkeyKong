@@ -19,10 +19,11 @@ Configuration::Configuration() {
 void Configuration::setGameConfig() {
   if(hasKey(configuration_json, "game")) {
     this->game = configuration_json.at("game");
-    if(hasKey(game, "sprites") && hasKey(game, "probability_enemies") &&
+    if(hasKey(game, "sprites") && hasKey(game, "probability_enemies")&& hasKey(game, "probability_hammers") &&
     hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "client_max")) {
       this->sprites = game.at("sprites");
       this->enemiesCount = game.at("probability_enemies");
+      this->hammersCount = game.at("probability_hammers");
       this->levels = game.at("levels");
       this->clientMax = game.at("client_max");
       for(auto& td: game.at("users")) {
@@ -64,6 +65,10 @@ int Configuration::getEnemiesCount() {
   return this->enemiesCount;
 }
 
+int Configuration::getHammersCount(){
+  return this->hammersCount;
+}
+
 bool Configuration::hasKey(json json, std::string key) {
   auto validJson = json.find(key);
   return (validJson != json.end());
@@ -96,7 +101,7 @@ bool Configuration::checkCredentials(std::string *inputUser, std::string *inputP
 char **Configuration::getUsers() {
   char** users = (char**)malloc(this->users.size()*sizeof(char*));
   for (int i = 0; i < this->users.size(); ++i) {
-    users[i] = (char*)malloc(20*sizeof(char));//20 es la cantidad maxima de caracteres opr usuario
+    users[i] = (char*)malloc(20*sizeof(char));//20 es la cantidad maxima de caracteres por usuario
   }
   for(int i = 0; i < this->users.size(); i++){
     const char* aux = this->users[i].username.c_str();

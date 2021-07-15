@@ -96,7 +96,7 @@ set(SOURCE_FILES main.cpp
         src/model/player/GodState.cpp
         src/model/player/GodState.h
         src/model/player/DeadState.cpp
-        src/model/player/DeadState.h)
+        src/model/player/DeadState.h src/model/Hammer.cpp src/model/Hammer.h)
 
 
 # change to personal project name (as above)

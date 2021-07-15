@@ -56,4 +56,19 @@ void Collider::ResolvePlayerFireCollision(Player *player) {
   player->resetPos();
 }
 
+//Cambiar dx dy
+void Collider::ResolveHammerCollision(Hammer *hammer, SDL_Rect rect){
+  SDL_Rect hammerRect = hammer->getRectangle();
+  int dx;
+
+  if(hammerRect.y + hammerRect.h >= rect.y ){
+    dx = hammerRect.y + hammerRect.h - rect.y;
+    hammer->moveUp(dx); //moveLeft
+    hammer->resetVelX();
+  }
+}
+void Collider::ResolvePlayerHammerCollision(Player *player, Hammer *hammer) {
+  //player->changeToGodMode();
+}
+
 

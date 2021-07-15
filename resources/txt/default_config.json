@@ -7,6 +7,7 @@
     },
     "game": {
       "probability_enemies": 10,
+      "probability_hammers": 10,
       "client_max": 2,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_default.png",
@@ -24,7 +25,8 @@
         "barrel_right": "resources/sprites/barrel_right.png",
         "enemy": "resources/sprites/fire_walk_default.png",
         "boss": "resources/sprites/boss_default.png",
-        "princess": "resources/sprites/princess_default.png"
+        "princess": "resources/sprites/princess_default.png",
+        "hammer": "resources/sprites/hammer.png"
       },
       "levels": {
         "level1": "src/model/levels/level1.json",

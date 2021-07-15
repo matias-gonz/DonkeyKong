@@ -8,6 +8,7 @@
 #include "Princess.h"
 #include "../controller/Configuration.h"
 #include "Logger.h"
+#include "Hammer.h"
 
 class Game {
 
@@ -66,6 +67,8 @@ public:
 
   void getBarrelsInfo(EntityContainer *barrels, int *barrelCount);
 
+  void getHammersPos(EntityContainer *hammers, int *hammersCount);
+
 private:
   EnemyFire **enemyFires = NULL;
   int enemyFireCount = 0;
@@ -74,6 +77,8 @@ private:
   bool running;
   Level *level;
   Configuration *configuration;
+  Hammer **hammers = NULL;
+  int hammersCount = 0;
 
   void spawnEnemies(Position **spawns, int spawnCount, int probability);
 
@@ -91,6 +96,10 @@ private:
   bool anyPlayerWon();
 
   bool everyPlayerWon();
+
+  void resetHammers();
+
+  void spawnHammers(Position **spawns, int spawnCount, int probability);
 
 };
 

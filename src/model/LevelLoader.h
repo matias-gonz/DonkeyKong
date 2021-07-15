@@ -7,6 +7,7 @@
 #include "Ladder.h"
 #include "Barrel.h"
 #include "Fire.h"
+#include "Hammer.h"
 
 #include "../../resources/libraries/json.hpp"
 #include "../controller/Configuration.h"

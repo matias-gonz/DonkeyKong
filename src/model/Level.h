@@ -13,6 +13,7 @@
 #include "../controller/Configuration.h"
 #include "player/Player.h"
 #include "EnemyFire.h"
+#include "Hammer.h"
 
 class Level {
 
@@ -46,7 +47,7 @@ public:
 
     int getCurrentLevel();
 
-    void resolveCollisions(Player **players,int playerCount, EnemyFire **fires, int fireCount);
+    void resolveCollisions(Player **players,int playerCount, EnemyFire **fires, int fireCount, Hammer **hammers, int hammersCount);
 
     bool playerWon(Player *pPlayer);
 

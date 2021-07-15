@@ -60,15 +60,23 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
 
   SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
   bool barrelTextureSuccess = true;
-
   if (!barrelTexture) {
     barrelTexture = this->textureManager->getErrorTexture();
     barrelTextureSuccess = false;
   }
 
+  SDL_Texture *hammerTexture = this->textureManager->getHammerTexture();
+  bool hammerTextureSuccess = true;
+  if (!hammerTexture) {
+    hammerTexture = this->textureManager->getErrorTexture();
+    hammerTextureSuccess = false;
+  }
+
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
+  //modificar las posiciones de la imagen
+  this->hammerAnimator = new Animator(hammerTexture, 0, 0, 0, 10, 22, 24, 0, hammerTextureSuccess);
   this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
@@ -342,6 +350,11 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
                                positions.barrels[i].y, positions.barrels[i].distance);
   }
 
+  for (int i = 0; i < positions.hammersCount; i++) {
+    this->hammerAnimator->draw(this->renderer, positions.hammers[i].direction, positions.hammers[i].x,
+                              positions.hammers[i].y, positions.hammers[i].distance);
+  }
+
   // render my player
   int boxPosition;
   for (int j = 0; j < MAX_CLIENTS; j++) {
@@ -530,6 +543,7 @@ ViewManager::~ViewManager() {
   //delete this->renderer;
   delete this->textureManager;
   delete this->enemyAnimator;
+  delete this->hammerAnimator;
   //delete this->currentWindow;
   delete this->levelDrawer;
 }
