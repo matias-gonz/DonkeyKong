@@ -49,7 +49,7 @@ void Level::update() {
   for (int i = 0; i < this->fireCount; i++) {
     this->fires[i]->update();
   }
-  if (this->currentLevel == 1) {
+  if (this->currentLevel == 2) {
     this->counter += 1;
 
     if (this->counter > 200) {
@@ -181,7 +181,7 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
       }
     }
-    if (this->currentLevel == 1) {
+    if (this->currentLevel == 2) {
       for (int j = 0; j < barrelCount; j++) {
         SDL_Rect *barrelRect = barrels[j]->getDestRect();
         if (Collider::RectCollides(*barrelRect, platformRect)) {
@@ -204,7 +204,6 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       }
     }
     for (int j = 0; j < barrelCount; j++) {
-
       if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
         Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
       }
@@ -219,8 +218,6 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       }
     }
   }
-
-
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
   for (int i = 0; i < playerCount; i++) {

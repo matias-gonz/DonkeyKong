@@ -13,6 +13,10 @@ Princess::Princess(Position* pos){
 void Princess::update(){
 
 }
+
+SDL_Rect Princess::getRectangle() {
+  return SDL_Rect({this->pos->getX(),this->pos->getY(),51, 60});
+}
 /*
 void Princess::update(){
     pos->add(velX,velY);
