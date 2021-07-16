@@ -5,6 +5,7 @@
 #include "PlayerState.h"
 #include "NormalState.h"
 #include "DeadState.h"
+#include "WinState.h"
 
 PlayerTexture plyrTex;
 
@@ -133,15 +134,17 @@ void Player::startedPlaying() {
 }
 
 void Player::playerWon() {
-  this->hasWon = true;
+  delete this->modeState;
+  this->modeState = new WinState();
 }
 
 void Player::resetPlayerWon() {
-  this->hasWon = false;
+  delete this->modeState;
+  this->modeState = new NormalState();
 }
 
 bool Player::hasplayerWon() {
-  return this->hasWon;
+  return this->modeState->hasWon();
 }
 
 bool Player::getAddPoints(){
@@ -226,4 +229,21 @@ int Player::getPoints() {
 void Player::addPoints(int points)
 {
   this->points += points;
+}
+
+void Player::winUpdate() {
+  this->pos->add(0, velY);
+  if (this->counter == 2) {
+
+    if (this->velY == 5) {
+      this->velY = 4;
+      return;
+    }
+
+    this->velY += this->gravity;
+    this->counter = 0;
+    return;
+  }
+  counter++;
+
 }

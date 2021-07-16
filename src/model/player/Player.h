@@ -94,6 +94,7 @@ public:
 
   void normalUpdate();
 
+    void winUpdate();
 };
 
 

@@ -16,3 +16,7 @@ void DeadState::takeDamage(Player *pPlayer){
 void DeadState::update(Player *player) {
   return;
 }
+
+bool DeadState::hasWon() {
+  return false;
+}
