@@ -24,3 +24,7 @@ void WinState::update(Player *player) {
 bool WinState::hasWon() {
   return true;
 }
+
+bool WinState::isPlayingLevel(bool b) {
+  return b;
+}

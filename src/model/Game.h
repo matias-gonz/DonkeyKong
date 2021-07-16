@@ -97,6 +97,7 @@ private:
 
   void checkWinners();
 
+    bool levelIsOver();
 };
 
 

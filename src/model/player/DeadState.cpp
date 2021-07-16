@@ -20,3 +20,7 @@ void DeadState::update(Player *player) {
 bool DeadState::hasWon() {
   return false;
 }
+
+bool DeadState::isPlayingLevel(bool b) {
+  return b;
+}

@@ -95,6 +95,8 @@ public:
   void normalUpdate();
 
     void winUpdate();
+
+    bool isPlayingLevel(bool b);
 };
 
 

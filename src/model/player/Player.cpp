@@ -139,8 +139,10 @@ void Player::playerWon() {
 }
 
 void Player::resetPlayerWon() {
-  delete this->modeState;
-  this->modeState = new NormalState();
+  if(this->hp > 0){
+    delete this->modeState;
+    this->modeState = new NormalState();
+  }
 }
 
 bool Player::hasplayerWon() {
@@ -246,4 +248,8 @@ void Player::winUpdate() {
   }
   counter++;
 
+}
+
+bool Player::isPlayingLevel(bool b) {
+  return this->modeState->isPlayingLevel(b);
 }

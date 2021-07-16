@@ -39,14 +39,16 @@ void Game::update() {
   for (int i = 0; i < playerCount; i++) {
     this->addPointsPodium(i, playersCountWon);
   }
+
   this->level->update();
+
   for (int i = 0; i < this->playerCount; i++) {
     this->players[i]->update();
   }
   for (int i = 0; i < this->enemyFireCount; i++) {
     this->enemyFires[i]->update();
   }
-  if (this->everyPlayerWon()) {
+  if (this->levelIsOver()) {
     for (int i = 0; i < playerCount; i++) {
       this->players[i]->resetPlayerWon();
       this->players[i]->setAddPoints();
@@ -279,4 +281,12 @@ void Game::addPointsPodium(int playerNumber, int position) {
         break;
     };
   }
+}
+
+bool Game::levelIsOver() {
+  bool stillPlaying = false;
+  for(int i = 0; i < this->playerCount; i++){
+    stillPlaying = this->players[i]->isPlayingLevel(stillPlaying);
+  }
+  return !stillPlaying;
 }

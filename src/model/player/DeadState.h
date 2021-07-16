@@ -12,6 +12,7 @@ public:
     void takeDamage(Player *pPlayer);
     void update(Player *player);
     bool hasWon();
+    bool isPlayingLevel(bool b);
 };
 
 
