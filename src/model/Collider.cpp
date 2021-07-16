@@ -23,6 +23,9 @@ void Collider::ResolvePlayerCollision(Player *player, SDL_Rect rect) {
 }
 
 void Collider::ResolveEnemyCollision(EnemyFire *enemyFire, SDL_Rect rect) {
+  if(!enemyFire->isFalling()){
+    return;
+  }
     SDL_Rect enemyRect = enemyFire->getRectangle();
     int dy;
 

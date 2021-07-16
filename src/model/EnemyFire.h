@@ -16,6 +16,10 @@ public:
 
     void resetVelY();
 
+    void bounce();
+
+    bool isFalling();
+
 private:
 
     int choseDirection();

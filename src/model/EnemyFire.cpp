@@ -55,4 +55,12 @@ void EnemyFire::resetVelY() {
     this->velY = 0;
 }
 
+void EnemyFire::bounce() {
+  this->velY = -31;
+}
+
+bool EnemyFire::isFalling() {
+  return (this->velY >= 0);
+}
+
 

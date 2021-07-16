@@ -213,6 +213,11 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         j--;
       }
     }
+    for (int j = 0; j < enemyFireCount; j++) {
+      if (Collider::RectCollides(fires[i]->getRectangle(), enemyFires[j]->getRectangle())) {
+        enemyFires[j]->bounce();
+      }
+    }
   }
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
