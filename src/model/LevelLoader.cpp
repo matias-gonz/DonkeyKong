@@ -80,7 +80,7 @@ Platform **LevelLoader::loadPlatforms(json jsonLevel, int *platformCount) {
 
     Position pos;
     pos.setX(x * 32 + dx);
-    pos.setY(HEIGHT - (1 + y) * 21 - dy);
+    pos.setY(HEIGHT - (1 + y) * 24 - dy);
     Platform *platform = new Platform(pos, count, direction);
     tmpPlatforms[*platformCount] = platform;
     (*platformCount)++;
@@ -108,7 +108,7 @@ Ladder **LevelLoader::loadLadders(json jsonLevel, int *ladderCount) {
     }
     Position pos;
     pos.setX(x * 32 + dx);
-    pos.setY(HEIGHT - (1 + y) * 21 - dy);
+    pos.setY(HEIGHT - (1 + y) * 24 - dy);
     Ladder *ladder = new Ladder(pos, count);
     tmpLadders[*ladderCount] = ladder;
     (*ladderCount)++;

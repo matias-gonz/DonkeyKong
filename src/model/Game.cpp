@@ -26,8 +26,8 @@ void Game::start() {
   this->loadLevel(1);
 
   Logger::log(Logger::Info, "Inicio Donkey Kong");
-  this->boss = new Boss(new Position(100, 85));
-  this->princess = new Princess(new Position(450, 80));
+  this->boss = new Boss(new Position(100, 95));
+  this->princess = new Princess(new Position(450, 65));
 }
 
 void Game::quit() {
@@ -76,7 +76,6 @@ void Game::loadLevel(int levelnum) {
   this->currentLevel = levelnum;
   this->level->loadLevel(levelnum, this->configuration);
   this->resetEnemies();
-  //level should spawn enemies, not game
   this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getEnemiesCount());
 }
 
@@ -140,7 +139,7 @@ void Game::resolveCollisions() {
 
 void Game::addPlayer(char username[20]) {
   this->players = (Player **) realloc(this->players, (this->playerCount + 1) * sizeof(Player *));
-  this->players[this->playerCount] = new Player(new Position(200, 575), username);
+  this->players[this->playerCount] = new Player(new Position(200, HEIGHT-60), username);
   this->playerCount++;
 }
 
