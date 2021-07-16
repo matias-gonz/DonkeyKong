@@ -13,8 +13,8 @@ class PlayerState;
 class Player : public Entity {
 private:
   int counter, gravity, hp, points;
-  bool isClimbing, canClimb, active, hasWon, canAddPoints;
-  //PlayerState *state;
+  bool isClimbing, canClimb, active, canAddPoints;
+  PlayerState *modeState;
 
   static const int VEL = 3;
 public:
@@ -40,8 +40,6 @@ public:
 
   void resetVelY();
 
-  void moveDown(int i);
-
   int getVelY();
 
   void resetPos();
@@ -56,7 +54,7 @@ public:
 
   void stoppedPlaying();
 
-  bool hasplayerWon();
+  bool hasWon();
 
   bool getAddPoints();
 
@@ -80,10 +78,6 @@ public:
 
   void takeDamage();
 
-  bool dead;
-
-  PlayerState *modeState;
-
   void takeNormalDamage();
 
   int getHp();
@@ -94,6 +88,9 @@ public:
 
   void normalUpdate();
 
+  void winUpdate();
+
+  bool isPlayingLevel(bool b);
 };
 
 

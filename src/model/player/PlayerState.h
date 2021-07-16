@@ -16,6 +16,9 @@ public:
 
     virtual void update(Player *player) = 0;
 
+    virtual bool hasWon() = 0;
+
+    virtual bool isPlayingLevel(bool b) = 0;
 };
 
 

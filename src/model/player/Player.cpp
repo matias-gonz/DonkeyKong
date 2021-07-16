@@ -5,6 +5,7 @@
 #include "PlayerState.h"
 #include "NormalState.h"
 #include "DeadState.h"
+#include "WinState.h"
 
 PlayerTexture plyrTex;
 
@@ -20,7 +21,6 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->distance = 0;
   this->direction = left;
   this->active = true;
-  this->hasWon = false;
   this->canAddPoints = true;
   this->hp = 3;
   this->points = 0;
@@ -133,15 +133,19 @@ void Player::startedPlaying() {
 }
 
 void Player::playerWon() {
-  this->hasWon = true;
+  delete this->modeState;
+  this->modeState = new WinState();
 }
 
 void Player::resetPlayerWon() {
-  this->hasWon = false;
+  if(this->hp > 0){
+    delete this->modeState;
+    this->modeState = new NormalState();
+  }
 }
 
-bool Player::hasplayerWon() {
-  return this->hasWon;
+bool Player::hasWon() {
+  return this->modeState->hasWon();
 }
 
 bool Player::getAddPoints(){
@@ -175,12 +179,6 @@ void Player::takeNormalDamage() {
 }
 
 void Player::normalUpdate() {
-  if (this->hasWon) {
-    return;
-  }
-  if (this->dead) {
-    return;
-  }
 
   if (this->isClimbing) {
     this->resetVelX();
@@ -226,4 +224,25 @@ int Player::getPoints() {
 void Player::addPoints(int points)
 {
   this->points += points;
+}
+
+void Player::winUpdate() {
+  this->pos->add(0, velY);
+  if (this->counter == 2) {
+
+    if (this->velY == 5) {
+      this->velY = 4;
+      return;
+    }
+
+    this->velY += this->gravity;
+    this->counter = 0;
+    return;
+  }
+  counter++;
+
+}
+
+bool Player::isPlayingLevel(bool b) {
+  return this->modeState->isPlayingLevel(b);
 }
