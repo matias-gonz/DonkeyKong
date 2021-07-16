@@ -432,4 +432,5 @@ void Server::broadcastEndGame(){
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
   SDL_Delay(5000);
+
 }

@@ -21,7 +21,6 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->distance = 0;
   this->direction = left;
   this->active = true;
-  this->hasWon = false;
   this->canAddPoints = true;
   this->hp = 3;
   this->points = 0;
@@ -145,7 +144,7 @@ void Player::resetPlayerWon() {
   }
 }
 
-bool Player::hasplayerWon() {
+bool Player::hasWon() {
   return this->modeState->hasWon();
 }
 
@@ -180,12 +179,6 @@ void Player::takeNormalDamage() {
 }
 
 void Player::normalUpdate() {
-  if (this->hasWon) {
-    return;
-  }
-  if (this->dead) {
-    return;
-  }
 
   if (this->isClimbing) {
     this->resetVelX();

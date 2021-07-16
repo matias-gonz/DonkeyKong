@@ -259,7 +259,7 @@ int Game::getCurrentLevel() {
 }
 
 void Game::addPointsPodium(int playerNumber, int position) {
-  if(players[playerNumber]->getAddPoints() && players[playerNumber]->hasplayerWon()) {
+  if(players[playerNumber]->getAddPoints() && players[playerNumber]->hasWon()) {
     switch (position) {
       case 1:
         players[playerNumber]->addPoints(2000);
