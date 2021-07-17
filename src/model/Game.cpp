@@ -290,3 +290,8 @@ bool Game::levelIsOver() {
   }
   return !stillPlaying;
 }
+
+void Game::switchGod(int i) {
+  this->players[i]->switchGod();
+
+}

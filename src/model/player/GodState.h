@@ -6,7 +6,20 @@
 
 class GodState: public PlayerState  {
 public:
-    virtual void takeDamage(Player *pPlayer);
+
+  explicit GodState();
+
+  ~GodState();
+
+  void takeDamage(Player *player);
+
+  void update(Player *player);
+
+  bool hasWon();
+
+  bool isPlayingLevel(bool b);
+
+  PlayerState *switchGod();
 };
 
 

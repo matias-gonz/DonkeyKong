@@ -24,3 +24,7 @@ bool DeadState::hasWon() {
 bool DeadState::isPlayingLevel(bool b) {
   return b;
 }
+
+PlayerState *DeadState::switchGod() {
+  return new DeadState();
+}

@@ -1,4 +1,5 @@
 #include "NormalState.h"
+#include "GodState.h"
 
 NormalState::NormalState():PlayerState() {
 
@@ -9,9 +10,9 @@ NormalState::~NormalState() {
 }
 
 
-void NormalState::takeDamage(Player *pPlayer) {
-  pPlayer->takeNormalDamage();
-  pPlayer->resetPos();
+void NormalState::takeDamage(Player *player) {
+  player->takeNormalDamage();
+  player->resetPos();
 }
 
 
@@ -25,5 +26,9 @@ bool NormalState::hasWon() {
 
 bool NormalState::isPlayingLevel(bool b) {
   return true;
+}
+
+PlayerState *NormalState::switchGod() {
+  return new GodState();
 }
 

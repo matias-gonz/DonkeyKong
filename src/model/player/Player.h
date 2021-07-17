@@ -91,6 +91,8 @@ public:
   void winUpdate();
 
   bool isPlayingLevel(bool b);
+
+  void switchGod();
 };
 
 

@@ -246,3 +246,10 @@ void Player::winUpdate() {
 bool Player::isPlayingLevel(bool b) {
   return this->modeState->isPlayingLevel(b);
 }
+
+void Player::switchGod() {
+  PlayerState* newState = this->modeState->switchGod();
+  delete this->modeState;
+  this->modeState = newState;
+
+}

@@ -28,3 +28,7 @@ bool WinState::hasWon() {
 bool WinState::isPlayingLevel(bool b) {
   return b;
 }
+
+PlayerState *WinState::switchGod() {
+  return new WinState();
+}

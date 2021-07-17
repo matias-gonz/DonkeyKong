@@ -4,15 +4,22 @@
 
 #include "PlayerState.h"
 
-class NormalState: public PlayerState {
+class NormalState : public PlayerState {
 public:
 
-    explicit NormalState();
-    ~NormalState();
-    void takeDamage(Player *pPlayer);
-    void update(Player *player);
-    bool hasWon();
-    bool isPlayingLevel(bool b);
+  explicit NormalState();
+
+  ~NormalState();
+
+  void takeDamage(Player *pPlayer);
+
+  void update(Player *player);
+
+  bool hasWon();
+
+  bool isPlayingLevel(bool b);
+
+  PlayerState *switchGod();
 
 };
 

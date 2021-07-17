@@ -66,6 +66,8 @@ public:
 
   void getBarrelsInfo(EntityContainer *barrels, int *barrelCount);
 
+  void switchGod(int i);
+
 private:
   EnemyFire **enemyFires = NULL;
   int enemyFireCount = 0;

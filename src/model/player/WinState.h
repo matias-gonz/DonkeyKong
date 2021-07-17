@@ -4,14 +4,21 @@
 
 #include "PlayerState.h"
 
-class WinState: public PlayerState {
+class WinState : public PlayerState {
 public:
-    explicit WinState();
-    ~WinState();
-    void takeDamage(Player *player);
-    void update(Player *player);
-    bool hasWon();
-    bool isPlayingLevel(bool b);
+  explicit WinState();
+
+  ~WinState();
+
+  void takeDamage(Player *player);
+
+  void update(Player *player);
+
+  bool hasWon();
+
+  bool isPlayingLevel(bool b);
+
+  PlayerState *switchGod();
 };
 
 

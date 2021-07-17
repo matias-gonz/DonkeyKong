@@ -27,6 +27,9 @@ void GameController::handleEvents(SDL_Event event, int i) {
         } else if (event.key.keysym.sym == SDLK_l) {
             this->game->switchLevel();
             Logger::log(Logger::Debug, "presiono paso de nivel",i);
+        } else if (event.key.keysym.sym == SDLK_g) {
+            this->game->switchGod(i);
+            Logger::log(Logger::Debug, "Switched God Mode",i);
         }
     }
     if (event.type == SDL_KEYUP) {
