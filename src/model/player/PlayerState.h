@@ -13,7 +13,6 @@ public:
 
     virtual void takeDamage(Player *pPlayer) = 0;
 
-
     virtual void update(Player *player) = 0;
 
 };

@@ -32,7 +32,6 @@ public:
 
     void update();
 
-
     SDL_Rect getRectangle();
 
     void moveUp(int dy);
@@ -86,6 +85,8 @@ public:
     int getPoints();
 
     void normalUpdate();
+
+    void changeToGodMode();
 
 };
 

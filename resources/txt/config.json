@@ -7,7 +7,7 @@
     },
     "game": {
       "probability_enemies": 10,
-      "probability_hammers": 10,
+      "probability_hammers": 5,
       "client_max": 1,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_1.png",

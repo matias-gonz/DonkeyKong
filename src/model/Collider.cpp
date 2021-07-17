@@ -68,7 +68,7 @@ void Collider::ResolveHammerCollision(Hammer *hammer, SDL_Rect rect){
   }
 }
 void Collider::ResolvePlayerHammerCollision(Player *player, Hammer *hammer) {
-  //player->changeToGodMode();
+  player->changeToGodMode();
 }
 
 

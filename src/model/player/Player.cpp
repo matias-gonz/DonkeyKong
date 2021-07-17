@@ -5,6 +5,7 @@
 #include "PlayerState.h"
 #include "NormalState.h"
 #include "DeadState.h"
+#include "GodState.h"
 
 PlayerTexture plyrTex;
 
@@ -157,6 +158,11 @@ void Player::takeNormalDamage() {
   if (this->hp <= 0) {
     this->die();
   }
+}
+
+void Player::changeToGodMode(){
+  delete this->modeState;
+  this->modeState = new GodState();
 }
 
 void Player::normalUpdate() {

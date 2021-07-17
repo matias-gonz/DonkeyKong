@@ -76,7 +76,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
   //modificar las posiciones de la imagen
-  this->hammerAnimator = new Animator(hammerTexture, 0, 0, 0, 10, 22, 24, 0, hammerTextureSuccess);
+  //this->hammerAnimator = new Animator(hammerTexture, 0, 0, 0, 10, 22, 24, 0, hammerTextureSuccess);
   this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
@@ -324,6 +324,7 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
   SDL_Rect princessDstrect = {positions.princessInfo.x, positions.princessInfo.y, (int) (3 * texW), (int) (2 * texH)};;
   SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
   this->levelDrawer->drawFires(positions.fires, positions.fireCount);
+
   // render every player except "me"
   for (int i = 0; i < positions.playerCount; i++) {
     int boxIndex;
@@ -350,10 +351,14 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
                                positions.barrels[i].y, positions.barrels[i].distance);
   }
 
-  for (int i = 0; i < positions.hammersCount; i++) {
-    this->hammerAnimator->draw(this->renderer, positions.hammers[i].direction, positions.hammers[i].x,
-                              positions.hammers[i].y, positions.hammers[i].distance);
+  //for (int i = 0; i < positions.hammersCount; i++) {
+    //this->hammerAnimator->draw(this->renderer, positions.hammers[i].direction, positions.hammers[i].x,positions.hammers[i].y, positions.hammers[i].distance);
+  //}
+  for(int i=0; i < positions.hammersCount; i++){
+    SDL_Rect hammerRect = SDL_Rect({positions.hammers[i].x,positions.hammers[i].y-20, 40, 40});
+    SDL_RenderCopy(this->renderer, this->textureManager->getHammerTexture(), NULL, &hammerRect);
   }
+
 
   // render my player
   int boxPosition;

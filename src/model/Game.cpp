@@ -39,7 +39,7 @@ void Game::quit() {
 
 void Game::update() {
   if (this->everyPlayerWon()) {
-    for(int i = 0; i < playerCount; i++) {
+    for (int i = 0; i < playerCount; i++) {
       this->players[i]->resetPlayerWon();
     }
     this->switchLevel();
@@ -100,7 +100,7 @@ void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
   }
 }
 
-void Game::spawnHammers(Position **spawns, int spawnCount, int probability){
+void Game::spawnHammers(Position **spawns, int spawnCount, int probability) {
   Logger::log(Logger::Info, "Se spawnean los martillos");
   srand(time(NULL));
   for (int i = 0; i < spawnCount; i++) {
@@ -110,7 +110,9 @@ void Game::spawnHammers(Position **spawns, int spawnCount, int probability){
         Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnHammers");
         return;
       }
+      //spawns[i]->add(0,50);
       Hammer *hammer = new Hammer(spawns[i]);
+      //spawns[i]->add(0,-50);
       this->hammers[this->hammersCount] = hammer;
       (this->hammersCount)++;
     }
@@ -134,7 +136,7 @@ void Game::resetEnemies() {
   this->enemyFireCount = 0;
 }
 
-void Game::resetHammers(){
+void Game::resetHammers() {
   for (int i = 0; i < this->hammersCount; i++) {
     delete this->hammers[i];
   }
@@ -142,6 +144,7 @@ void Game::resetHammers(){
   this->hammers = NULL;
   this->hammersCount = 0;
 }
+
 void Game::switchLevel() {
   for (int i = 0; i < this->playerCount; i++) {
     this->players[i]->resetPos();
@@ -162,7 +165,8 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount, this->hammers, this->hammersCount);
+  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount,
+                                 this->hammers, this->hammersCount);
 
 }
 
@@ -213,21 +217,22 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
   }
 }
 
-void Game::getHammersPos(EntityContainer *hammers, int *count) {
-  *count = this->hammersCount;
-  for (int i = 0; i < *count; i++) {
-    this->getEntityInfo(&hammers[i], this->hammers[i]);
-  }
-}
-
-void Game::getBarrelsInfo(EntityContainer* barrels,int *barrelCount){
-  if(this->level->getCurrentLevel() == 2) {
+void Game::getBarrelsInfo(EntityContainer *barrels, int *barrelCount) {
+  if (this->level->getCurrentLevel() == 2) {
     *barrelCount = this->level->getBarrelCount();
     for (int i = 0; i < *barrelCount; i++) {
       this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
     }
   }
 }
+
+void Game::getHammersInfo(EntityContainer *hammers, int *hammersCount) {
+  *hammersCount = this->hammersCount;
+  for (int i = 0; i < *hammersCount; i++) {
+    this->getEntityInfo(&hammers[i], this->hammers[i]);
+  }
+}
+
 void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
   for (int i = 0; i < this->playerCount; i++) {
     playerInfo[i].distance = players[i]->getDistance();
@@ -272,8 +277,8 @@ bool Game::anyPlayerWon() {
 
 bool Game::everyPlayerWon() {
   int playersCountWon = 0;
-  for(int i = 0; i < this->playerCount; i++){
-    if(this->level->playerWon(this->players[i])){
+  for (int i = 0; i < this->playerCount; i++) {
+    if (this->level->playerWon(this->players[i])) {
       playersCountWon++;
     }
   }
@@ -296,6 +301,6 @@ bool Game::isPlayerActive(int playerNumber) {
   return players[playerNumber]->isPlaying();
 }
 
-int Game::getCurrentLevel(){
+int Game::getCurrentLevel() {
   return currentLevel;
 }

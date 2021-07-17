@@ -21,7 +21,7 @@ void EnemyFire::update() {
     }
     distance += abs(velX);
 
-    if (distance > 70) {
+    if (distance > 60) {
         changeDirection();
     }
     if(this->velY > 5){return;}//velocidad terminal
@@ -41,6 +41,7 @@ int EnemyFire::choseDirection() {
 }
 
 SDL_Rect EnemyFire::getRectangle() {
+
     return SDL_Rect({this->pos->getX(),this->pos->getY(),22, 24});
 }
 

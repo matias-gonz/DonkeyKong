@@ -67,7 +67,7 @@ public:
 
   void getBarrelsInfo(EntityContainer *barrels, int *barrelCount);
 
-  void getHammersPos(EntityContainer *hammers, int *hammersCount);
+  void getHammersInfo(EntityContainer *hammers, int *hammersCount);
 
 private:
   EnemyFire **enemyFires = NULL;

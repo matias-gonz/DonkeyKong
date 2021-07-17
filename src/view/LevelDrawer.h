@@ -21,6 +21,8 @@ public:
 
     void drawFires(FireContainer *fires, int fireCount);
 
+    void drawHammers(HammerContainer *hammers, int hammerCount);
+
 private:
     TextureManager *textureManager;
     SDL_Renderer *renderer;
@@ -29,6 +31,7 @@ private:
     void drawPlatform(PlatformContainer pPlatform);
     void drawFire(FireContainer fire);
     void drawBarrel(Barrel *barrel);
+    void drawHammer(HammerContainer hammer);
 
     int levelnum;
 };
