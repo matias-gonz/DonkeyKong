@@ -93,29 +93,36 @@ void Game::spawnEnemies(Position **spawns, int spawnCount, int probability) {
         Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnEnemies");
         return;
       }
-      EnemyFire *enemy = new EnemyFire(spawns[i]);
+      Position* pos = new Position();
+      pos->setX(spawns[i]->getX());
+      pos->setY(spawns[i]->getY());
+      EnemyFire *enemy = new EnemyFire(pos);
       this->enemyFires[this->enemyFireCount] = enemy;
       (this->enemyFireCount)++;
     }
   }
 }
 
-void Game::spawnHammers(Position **spawns, int spawnCount, int probability) {
+void Game::spawnHammers(Position **spawns, int spawnCount, int count) {
   Logger::log(Logger::Info, "Se spawnean los martillos");
   srand(time(NULL));
-  for (int i = 0; i < spawnCount; i++) {
-    if ((rand() % 100) < probability) {
-      this->hammers = (Hammer **) (realloc(this->hammers, (this->hammersCount + 1) * sizeof(Hammer *)));
-      if (!this->hammers) {
-        Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnHammers");
-        return;
-      }
-      //spawns[i]->add(0,50);
-      Hammer *hammer = new Hammer(spawns[i]);
-      //spawns[i]->add(0,-50);
-      this->hammers[this->hammersCount] = hammer;
-      (this->hammersCount)++;
+  for (int i = 0; i < count; i++) {
+
+    int index = rand()%spawnCount;
+    this->hammers = (Hammer **) (realloc(this->hammers, (this->hammersCount + 1) * sizeof(Hammer *)));
+    if (!this->hammers) {
+      Logger::log(Logger::Error, "Error al reservar memoria. Game::spawnHammers");
+      return;
     }
+
+    Position* pos = new Position();
+    pos->setX(spawns[index]->getX());
+    pos->setY(spawns[index]->getY());
+    Hammer *hammer = new Hammer(pos);
+
+    this->hammers[this->hammersCount] = hammer;
+    (this->hammersCount)++;
+
   }
 }
 

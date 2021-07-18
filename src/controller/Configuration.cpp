@@ -19,11 +19,11 @@ Configuration::Configuration() {
 void Configuration::setGameConfig() {
   if(hasKey(configuration_json, "game")) {
     this->game = configuration_json.at("game");
-    if(hasKey(game, "sprites") && hasKey(game, "probability_enemies")&& hasKey(game, "probability_hammers") &&
+    if(hasKey(game, "sprites") && hasKey(game, "probability_enemies")&& hasKey(game, "hammer_count") &&
     hasKey(game, "levels") && hasKey(game, "users") && hasKey(game, "client_max")) {
       this->sprites = game.at("sprites");
       this->enemiesCount = game.at("probability_enemies");
-      this->hammersCount = game.at("probability_hammers");
+      this->hammersCount = game.at("hammer_count");
       this->levels = game.at("levels");
       this->clientMax = game.at("client_max");
       for(auto& td: game.at("users")) {
