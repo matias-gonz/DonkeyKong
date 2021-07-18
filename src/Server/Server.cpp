@@ -1,4 +1,4 @@
-#include "Server.h"
+#include "Server.h"#include "Server.h"
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -119,7 +119,6 @@ void Server::addNewConnection() {
     char o = 'a';
     this->socket->sndChar(&o, newSocket);
     return;
-
   }
 
   //Case there are offline players, try to reconnect
@@ -199,7 +198,9 @@ void Server::handleEvents() {
   this->game->getHammersInfo(this->positions.hammers, &this->positions.hammersCount);
 
   levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
+
   pthread_mutex_lock(&this->mutex);
+
   if (!levelHasTransitioned) {
     this->broadcast();
   } else {
@@ -208,7 +209,6 @@ void Server::handleEvents() {
   }
 
   pthread_mutex_unlock(&this->mutex);
-
 }
 
 void Server::receive(int clientNum, int socketNumber) {
@@ -400,9 +400,13 @@ void Server::rejectConnection() {
 }
 
 bool Server::checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent) {
-  if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
+
+  if(this->game->allPlayersAreDead()){
+    this->broadcastEndGame();
+  }else if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
     if (levelNumberBeforeHandlingEvent < this->game->getCurrentLevel()) {
       // Pasar al segundo nivel
+      this->game->allPlayersAreDead();
       this->broadcastLevelTransition();
       return true;
     } else if (levelNumberBeforeHandlingEvent > this->game->getCurrentLevel()) {

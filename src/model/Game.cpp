@@ -305,6 +305,14 @@ bool Game::isPlayerActive(int playerNumber) {
   return players[playerNumber]->isPlaying();
 }
 
+bool Game::allPlayersAreDead(){
+  bool allPlayersAreDead = true;
+  for( int i = 0; i< this->playerCount; i++){
+    if(players[i]->isAlive()) allPlayersAreDead = false;
+  }
+  return allPlayersAreDead;
+}
+
 int Game::getCurrentLevel() {
   return currentLevel;
 }

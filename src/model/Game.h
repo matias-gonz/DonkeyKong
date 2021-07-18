@@ -63,6 +63,8 @@ public:
 
   bool isPlayerActive(int playerNumber);
 
+  bool allPlayersAreDead();
+
   int getCurrentLevel();
 
   void getBarrelsInfo(EntityContainer *barrels, int *barrelCount);
