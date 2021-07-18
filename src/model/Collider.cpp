@@ -58,3 +58,4 @@ void Collider::ResolveBarrelPLatformCollision(Barrel *pBarrel, SDL_Rect rect) {
 }
 
 
+

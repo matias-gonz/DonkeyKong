@@ -66,6 +66,13 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
     barrelTextureSuccess = false;
   }
 
+  SDL_Texture *hammerTexture = this->textureManager->getHammerTexture();
+  bool hammerTextureSuccess = true;
+  if (!hammerTexture) {
+    hammerTexture = this->textureManager->getErrorTexture();
+    hammerTextureSuccess = false;
+  }
+
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
@@ -348,6 +355,12 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
                                positions.barrels[i].y, positions.barrels[i].distance);
   }
 
+  for(int i=0; i < positions.hammersCount; i++){
+    SDL_Rect hammerRect = SDL_Rect({positions.hammers[i].x,positions.hammers[i].y, 25, 25});
+    SDL_RenderCopy(this->renderer, this->textureManager->getHammerTexture(), NULL, &hammerRect);
+  }
+
+
   // render my player
   int boxPosition;
   for (int j = 0; j < MAX_CLIENTS; j++) {
@@ -535,6 +548,7 @@ ViewManager::~ViewManager() {
   //delete this->renderer;
   delete this->textureManager;
   delete this->enemyAnimator;
+  delete this->hammerAnimator;
   //delete this->currentWindow;
   delete this->levelDrawer;
 }

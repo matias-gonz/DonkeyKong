@@ -15,7 +15,7 @@
 #define TRANSITION_WIDTH 550
 
 enum kindOfAnimation {
-  left = -1, up = 0, right = 1, jump = 2
+  left = -1, up = -1, right = 1, jump = 2, down =1
 };
 
 struct PlayerTexture {
@@ -46,6 +46,12 @@ struct LadderContainer {
 };
 
 struct FireContainer {
+  int count;
+  SDL_Rect src;
+  SDL_Rect dest;
+};
+
+struct HammerContainer {
   int count;
   SDL_Rect src;
   SDL_Rect dest;
@@ -91,6 +97,8 @@ struct Positions {
   EntityContainer barrels[100];
   int barrelCount;
   bool endGame;
+  EntityContainer hammers[50];
+  int hammersCount;
 };
 
 struct Credentials {

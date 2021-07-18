@@ -13,6 +13,7 @@ TextureManager::TextureManager(SDL_Renderer *aRenderer, json sprites) {
   this->loadInactivePlayerTexture();
   this->loadBarrelTexture();
   this->loadEnemyTexture();
+  this->loadHammerTexture();
   this->loadErrorTexture();
   this->loadBossTexture();
   this->loadPrincessTexture();
@@ -31,6 +32,7 @@ TextureManager::~TextureManager() {
   delete this->fireTexture;
   delete this->barrelTexture;
   delete this->enemyTexture;
+  delete this->hammerTexture;
   delete this->bossTexture;
   delete this->princessTexture;
 }
@@ -166,6 +168,17 @@ void TextureManager::loadHeartTexture() {
   this->heartTexture = texture;
 }
 
+void TextureManager::loadHammerTexture() {
+  Logger::log(Logger::Info, "Se inicia la carga de textura del martillo.");
+  SDL_Texture *texture = NULL;
+  texture = this->loadTexture(this->loadTextureFromJson("hammer"));
+  if (!texture) {
+    Logger::log(Logger::Error,
+                "Error al abrir archivo \"resources/sprites/hammer.png\". TextureManager::loadHammerTexture");
+  }
+  this->hammerTexture = texture;
+}
+
 void TextureManager::loadPrincessTexture() {
   SDL_Texture *texture = NULL;
   texture = this->loadTexture(this->loadTextureFromJson("princess"));
@@ -242,6 +255,10 @@ SDL_Texture *TextureManager::getBarrelTexture() {
 
 SDL_Texture *TextureManager::getHeartTexture() {
   return this->heartTexture;
+}
+
+SDL_Texture *TextureManager::getHammerTexture() {
+  return this->hammerTexture;
 }
 
 SDL_Texture *TextureManager::getInactivePlayerTexture() {

@@ -38,6 +38,8 @@ public:
 
   SDL_Texture *getHeartTexture();
 
+  SDL_Texture *getHammerTexture();
+
 private:
   SDL_Renderer *renderer;
   json sprites;
@@ -60,6 +62,8 @@ private:
 
   void loadHeartTexture();
 
+  void loadHammerTexture();
+
   std::string loadTextureFromJson(char const *spritePath);
 
   SDL_Texture *playersTextures[6];
@@ -70,6 +74,7 @@ private:
   SDL_Texture *bluePlatformTexture;
   SDL_Texture *redPlatformTexture;
   SDL_Texture *heartTexture;
+  SDL_Texture *hammerTexture;
 
   void loadErrorTexture();
 

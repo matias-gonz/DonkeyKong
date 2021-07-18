@@ -13,6 +13,7 @@
 #include "../controller/Configuration.h"
 #include "player/Player.h"
 #include "EnemyFire.h"
+#include "Hammer.h"
 
 class Level {
 

@@ -154,7 +154,7 @@ Position **LevelLoader::loadSpawns(json jsonLevel, int *spawnCount) {
     x = item.value()["x"];
     dx = item.value()["dx"];
     y = item.value()["y"];
-    dy = item.value()["dy"];
+    dy = 25+(int)item.value()["dy"];
     count = item.value()["count"];
 
     for (int i = 0; i < count; i++) {
@@ -164,7 +164,7 @@ Position **LevelLoader::loadSpawns(json jsonLevel, int *spawnCount) {
         *spawnCount = 0;
         return NULL;
       }
-      Position *pos = new Position((x * 32) + dx + i * (WIDTH / 32), HEIGHT - (1 + y) * 32 - dy);
+      Position *pos = new Position((x * 32) + dx + i * (WIDTH / 32), HEIGHT - (1 + y) * 24 - dy);
       tmpSpawns[*spawnCount] = pos;
       (*spawnCount)++;
     }

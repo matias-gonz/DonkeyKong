@@ -20,6 +20,8 @@ public:
 
   int getEnemiesCount();
 
+  int getHammersCount();
+
   json getLogLevel();
 
   bool isDefault();
@@ -37,6 +39,7 @@ private:
   json game;
   json levels;
   int enemiesCount;
+  int hammersCount;
   bool loadsDefault = false;
   int clientMax;
   struct User {

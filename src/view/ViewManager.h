@@ -83,6 +83,7 @@ private:
   Animator *enemyAnimator;
   //Animator* bossAnimator;
   //Animator* princessAnimator;
+  Animator *hammerAnimator;
   Configuration *configuration;
   bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
   TTF_Font *font;

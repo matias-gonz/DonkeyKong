@@ -106,7 +106,26 @@ void LevelDrawer::drawBarrel(Barrel *barrel) {
     SDL_RenderCopy(this->renderer, barrelTexture, NULL, tmpRect);
 
 }
+void LevelDrawer::drawHammer(HammerContainer hammer) {
+  SDL_Rect *srcRect = &hammer.src;
+  SDL_Rect *destRect = &hammer.dest;
+  SDL_Rect *tmpRect = new SDL_Rect();
+  tmpRect->x = destRect->x;
+  tmpRect->y = destRect->y;
+  tmpRect->h = destRect->h;
+  tmpRect->w = destRect->w;
 
+  SDL_Texture *hammerTexture = this->textureManager->getHammerTexture();
+  if(!hammerTexture){
+    hammerTexture = this->textureManager->getErrorTexture();
+    srcRect = NULL;
+  }
+
+  for (int i = 0; i < hammer.count; i++) {
+    SDL_RenderCopy(this->renderer, hammerTexture, srcRect, tmpRect);
+    tmpRect->x += destRect->w;
+  }
+}
 void LevelDrawer::drawPlatforms(PlatformContainer *platforms, int count) {
   for(int i = 0; i < count; i++){
     this->drawPlatform(platforms[i]);
@@ -122,6 +141,12 @@ void LevelDrawer::drawLadders(LadderContainer *ladders, int ladderCount) {
 void LevelDrawer::drawFires(FireContainer *fires, int fireCount) {
   for(int i = 0; i < fireCount; i++){
     this->drawFire(fires[i]);
+  }
+}
+
+void LevelDrawer::drawHammers(HammerContainer *hammers, int hammerCount){
+  for(int i = 0; i < hammerCount; i++){
+    this->drawHammer(hammers[i]);
   }
 }
 
