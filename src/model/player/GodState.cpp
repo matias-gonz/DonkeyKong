@@ -9,7 +9,7 @@ GodState::~GodState() {
 
 }
 
-void GodState::takeDamage(Player *player) {
+void GodState::takeDamage(Player *player, Entity *pEntity) {
   return;
 }
 

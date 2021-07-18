@@ -12,7 +12,7 @@ WinState::~WinState() {
 
 }
 
-void WinState::takeDamage(Player *player) {
+void WinState::takeDamage(Player *player, Entity *pEntity) {
   return;
 }
 

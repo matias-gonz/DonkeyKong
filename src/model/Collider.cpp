@@ -38,11 +38,11 @@ void Collider::ResolveEnemyCollision(EnemyFire *enemyFire, SDL_Rect rect) {
 }
 
 void Collider::ResolvePlayerEnemyCollision(Player *player, Entity *entity) {
-  player->takeDamage();
+  player->takeDamage(entity);
 }
 
 void Collider::ResolvePlayerFireCollision(Player *player) {
-  player->takeDamage();
+  player->takeDamage(nullptr);
   player->resetPos();
 }
 

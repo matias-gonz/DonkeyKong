@@ -165,8 +165,8 @@ void Player::die() {
   this->modeState = new DeadState();
 }
 
-void Player::takeDamage() {
-  this->modeState->takeDamage(this);
+void Player::takeDamage(Entity *entity) {
+  this->modeState->takeDamage(this, entity);
 }
 
 void Player::takeNormalDamage() {
@@ -257,4 +257,8 @@ void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
   PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index);
   delete this->modeState;
   this->modeState = newState;
+}
+
+void Player::kill() {
+
 }

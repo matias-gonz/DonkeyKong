@@ -25,6 +25,8 @@ Barrel::~Barrel() {
 }
 
 void Barrel::update() {
+  this->x = this->pos->getX();
+  this->y = this->pos->getY();
 
   if (this->pos->getX() <= 0 || this->pos->getX()  + this->width >= WIDTH) {
     this->x -= this->velX;
@@ -66,4 +68,14 @@ void Barrel::moveUp(int i) {
 void Barrel::resetVelY() {
   this->velY = 0;
 }
+
+SDL_Rect Barrel::getRectangle() {
+  auto rect = SDL_Rect();
+  rect.y = y;
+  rect.x = x;
+  rect.w = width;
+  rect.h = height;
+  return rect;
+}
+
 
