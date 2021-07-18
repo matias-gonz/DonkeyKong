@@ -22,9 +22,6 @@ public:
 
   static void ResolvePlayerFireCollision(Player *pPlayer);
 
-  static void ResolveHammerCollision(Hammer *pHammer, SDL_Rect rect);
-
-  static void ResolvePlayerHammerCollision(Player *pPlayer, Hammer *pHammer);
 };
 
 

@@ -41,7 +41,6 @@ int EnemyFire::choseDirection() {
 }
 
 SDL_Rect EnemyFire::getRectangle() {
-
     return SDL_Rect({this->pos->getX(),this->pos->getY(),22, 24});
 }
 

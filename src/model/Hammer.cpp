@@ -5,13 +5,13 @@ Hammer::Hammer(Position* pos){
   this->velX = 0;
   this->velY = 1;
   this->distance = 0;
-  this->direction = choseDirection();
+  this->direction = 0;
 }
 
 void Hammer::update() {
   this->pos->add(0, this->velY);
 
-  if(this->pos->getY() >= WIDTH or this->pos->getY() <= 0){
+  if(this->pos->getY() >= HEIGHT or this->pos->getY() <= 0){
     changeDirection();
     this->pos->add(0, this->velY);
   }

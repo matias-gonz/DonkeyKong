@@ -53,7 +53,7 @@ void Game::update() {
     this->enemyFires[i]->update();
   }
   for (int i = 0; i < this->hammersCount; i++) {
-    this->hammers[i]->update();
+    //this->hammers[i]->update();
   }
 
   this->princess->update();
