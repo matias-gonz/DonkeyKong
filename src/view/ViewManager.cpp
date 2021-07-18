@@ -85,6 +85,8 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   SDL_Color textColor = {255, 255, 0, 0xFF};
 
   this->font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  this->playersFont = TTF_OpenFont("resources/fonts/font.ttf", 30);
+
   for (int i = 0; i < MAX_CLIENTS; ++i) {
     //std::string u;
     //u.append(users[i]);
@@ -381,7 +383,6 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
 
 void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount) {
   SDL_Color textColor = {255, 255, 255, 0xFF};
-  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 30);
   std::string space = "    ";
   for (int i = 0; i < playersCount; i++) {
     // Create playerName with points
@@ -391,7 +392,7 @@ void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int players
       playerText.at(i) = toupper(playerText.at(i));
     }
     //Render players info
-    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
+    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, this->playersFont, this->renderer);
     playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
     int heartSeparator = 20;
     for (int j = 0; j < playersInfo[i].hp; j++) {

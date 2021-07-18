@@ -20,6 +20,8 @@ public:
 
     bool isFalling();
 
+    int getPoints();
+
 private:
 
     int choseDirection();

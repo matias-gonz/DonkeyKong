@@ -45,3 +45,7 @@ void Hammer::moveUp(int dx) {
 void Hammer::resetVelX() {
   //this->velX = 0;
 }
+
+int Hammer::getPoints() {
+  return 0;
+}

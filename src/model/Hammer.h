@@ -17,6 +17,7 @@ public:
   void moveUp(int i);
 
   void resetVelX();
+  int getPoints();
 
 private:
 

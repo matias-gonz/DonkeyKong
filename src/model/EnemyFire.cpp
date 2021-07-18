@@ -63,5 +63,9 @@ bool EnemyFire::isFalling() {
   return (this->velY >= 0);
 }
 
+int EnemyFire::getPoints() {
+  return 50;
+}
+
 
 

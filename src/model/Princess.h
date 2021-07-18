@@ -13,6 +13,7 @@ public:
     void update();
 
   SDL_Rect getRectangle();
+  int getPoints();
 };
 
 

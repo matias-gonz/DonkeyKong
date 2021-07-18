@@ -28,6 +28,8 @@ public:
 
     SDL_Rect getRectangle();
 
+    int getPoints();
+
 private:
     int width;
     int height;

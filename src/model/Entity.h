@@ -33,6 +33,8 @@ public:
 
   virtual SDL_Rect getRectangle() = 0;
 
+  virtual int getPoints() = 0;
+
   void kill();
 };
 

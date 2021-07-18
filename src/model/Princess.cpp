@@ -1,21 +1,28 @@
 #include "Princess.h"
 
-enum direction{left = -1,right = 1};
+enum direction {
+  left = -1, right = 1
+};
 
-Princess::Princess(Position* pos){
-    this->pos = pos;
-    this->direction = 0;
-    this->distance =0;
-    this->velX = 0;
-    this->velY = 0;
-    //this->movementCounter = 0;
+Princess::Princess(Position *pos) {
+  this->pos = pos;
+  this->direction = 0;
+  this->distance = 0;
+  this->velX = 0;
+  this->velY = 0;
+  //this->movementCounter = 0;
 }
-void Princess::update(){
+
+void Princess::update() {
 
 }
 
 SDL_Rect Princess::getRectangle() {
-  return SDL_Rect({this->pos->getX(),this->pos->getY(),51, 60});
+  return SDL_Rect({this->pos->getX(), this->pos->getY(), 51, 60});
+}
+
+int Princess::getPoints() {
+  return 0;
 }
 
 /*

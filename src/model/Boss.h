@@ -12,6 +12,7 @@ public:
     explicit Boss(Position* position);
     void update();
     SDL_Rect getRectangle();
+    int getPoints();
 };
 
 

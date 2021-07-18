@@ -1,28 +1,36 @@
 #include "Boss.h"
 #include <stdio.h>
-enum state{fall, landing,still};
 
-enum direction{left = -1,right = 1};
+enum state {
+  fall, landing, still
+};
+
+enum direction {
+  left = -1, right = 1
+};
 
 
-Boss::Boss(Position* pos){
-    this->pos = pos;
-    this->direction = right;
+Boss::Boss(Position *pos) {
+  this->pos = pos;
+  this->direction = right;
+  this->distance = 0;
+  //this->state = still;
+  //this->velY = 1;
+  //this->counter = 0;
+  //this->movementCounter = 0;
+
+}
+
+void Boss::update() {
+  this->distance += 1;
+  if (this->distance > 30) {
     this->distance = 0;
-    //this->state = still;
-    //this->velY = 1;
-    //this->counter = 0;
-    //this->movementCounter = 0;
-
-}
-void Boss::update(){
-    this->distance += 1;
-    if(this->distance > 30){
-        this->distance = 0;
-    }
-
+  }
 }
 
+int Boss::getPoints() {
+  return 0;
+}
 
 SDL_Rect Boss::getRectangle() {
   return SDL_Rect();

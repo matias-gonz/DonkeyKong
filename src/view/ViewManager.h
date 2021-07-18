@@ -87,6 +87,7 @@ private:
   Configuration *configuration;
   bool hasDefaultConfig, isLoginView, isInputUser, isInputPass;
   TTF_Font *font;
+  TTF_Font *playersFont;
   int inputUserPosX, inputUserPosY;
   int inputPasswordPosX, inputPasswordPosY;
   std::string inputTextUser, inputTextPass;
