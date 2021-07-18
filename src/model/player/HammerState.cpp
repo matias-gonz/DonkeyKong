@@ -17,6 +17,11 @@ bool enemyIsInRange(int playerX, int playerW, int playerDir, int enemyX, int ene
 }
 
 void HammerState::takeDamage(Player *player, Entity *entity) {
+  if(!entity){
+    player->takeNormalDamage();
+    player->resetPos();
+    return;
+  }
   SDL_Rect playerRect = player->getRectangle();
   SDL_Rect enemyRect = entity->getRectangle();
   if(this->durability <= 0 || !enemyIsInRange(playerRect.x,playerRect.w,player->getDirection(),enemyRect.x,enemyRect.w)){
