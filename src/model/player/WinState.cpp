@@ -32,3 +32,7 @@ bool WinState::isPlayingLevel(bool b) {
 PlayerState *WinState::switchGod() {
   return new WinState();
 }
+
+PlayerState* WinState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+  return new WinState();
+}

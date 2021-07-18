@@ -7,6 +7,7 @@
 #include "../../view/Animator.h"
 #include "../Entity.h"
 #include "PlayerState.h"
+#include "../Hammer.h"
 
 class PlayerState;
 
@@ -93,6 +94,8 @@ public:
   bool isPlayingLevel(bool b);
 
   void switchGod();
+
+  void grabHammer(Hammer ***hammers, int *hammerCount, int index);
 };
 
 

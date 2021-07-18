@@ -181,7 +181,7 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount);
+  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount, &this->hammers, &this->hammersCount);
 }
 
 void Game::addPlayer(char username[20]) {

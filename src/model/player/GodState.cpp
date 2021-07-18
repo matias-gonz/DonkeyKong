@@ -29,4 +29,8 @@ PlayerState *GodState::switchGod() {
   return new NormalState();
 }
 
+PlayerState *GodState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+  return new GodState();
+}
+
 
