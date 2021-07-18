@@ -339,10 +339,12 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
           break;
         }
       }
-      this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction,
-                                 positions.playersInfo[i].x,
-                                 positions.playersInfo[i].y, positions.playersInfo[i].distance,
-                                 positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
+      if(positions.playersInfo[i].alive) {
+        this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction,
+                                   positions.playersInfo[i].x,
+                                   positions.playersInfo[i].y, positions.playersInfo[i].distance,
+                                   positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
+      }
     }
   }
   for (int i = 0; i < positions.fireEnemyCount; i++) {
@@ -369,11 +371,14 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
       break;
     }
   }
-  this->playerAnimator->draw(this->renderer, positions.playersInfo[clientNumber].direction,
-                             positions.playersInfo[clientNumber].x,
-                             positions.playersInfo[clientNumber].y, positions.playersInfo[clientNumber].distance,
-                             positions.playersInfo[clientNumber].isActive, clientNumber,
-                             &this->boxes[boxPosition].box);
+
+  if(positions.playersInfo[clientNumber].alive) {
+    this->playerAnimator->draw(this->renderer, positions.playersInfo[clientNumber].direction,
+                               positions.playersInfo[clientNumber].x,
+                               positions.playersInfo[clientNumber].y, positions.playersInfo[clientNumber].distance,
+                               positions.playersInfo[clientNumber].isActive, clientNumber,
+                               &this->boxes[boxPosition].box);
+  }
 
   SDL_RenderPresent(renderer);
 

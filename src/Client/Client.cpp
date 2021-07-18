@@ -107,7 +107,7 @@ void Client::render() {
     this->running = false;
   }
 
-  if(!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions,clientNumber);
+  if(!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions, clientNumber);
 
 }
 
