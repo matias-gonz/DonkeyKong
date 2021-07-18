@@ -14,7 +14,7 @@ class PlayerState;
 class Player : public Entity {
 private:
   int counter, gravity, hp, points;
-  bool isClimbing, canClimb, active, canAddPoints;
+  bool isClimbing, canClimb, active, canAddPoints, alive;
   PlayerState *modeState;
 
   static const int VEL = 3;
@@ -98,6 +98,8 @@ public:
   void grabHammer(Hammer ***hammers, int *hammerCount, int index);
 
   void kill();
+
+  bool isAlive();
 };
 
 
