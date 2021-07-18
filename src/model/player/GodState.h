@@ -11,7 +11,7 @@ public:
 
   ~GodState();
 
-  void takeDamage(Player *player);
+  void takeDamage(Player *player, Entity *pEntity);
 
   void update(Player *player);
 

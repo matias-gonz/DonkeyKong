@@ -11,7 +11,7 @@ public:
 
   virtual ~PlayerState() {}
 
-  virtual void takeDamage(Player *pPlayer) = 0;
+  virtual void takeDamage(Player *pPlayer, Entity *pEntity) = 0;
 
 
   virtual void update(Player *player) = 0;

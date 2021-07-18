@@ -100,7 +100,7 @@ set(SOURCE_FILES main.cpp
         src/model/player/WinState.cpp
         src/model/player/WinState.h
         src/model/Hammer.cpp
-        src/model/Hammer.h)
+        src/model/Hammer.h src/model/player/HammerState.cpp src/model/player/HammerState.h)
 
 
 # change to personal project name (as above)

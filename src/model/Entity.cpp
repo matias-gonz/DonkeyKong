@@ -32,3 +32,7 @@ int Entity::getDirection() {
 
 Entity::Entity() {}
 
+void Entity::kill() {
+  this->pos->setY(1000);
+}
+

@@ -9,7 +9,7 @@ DeadState::~DeadState() {
 
 }
 
-void DeadState::takeDamage(Player *pPlayer){
+void DeadState::takeDamage(Player *pPlayer, Entity *pEntity) {
   return;
 }
 

@@ -1,14 +1,16 @@
-#ifndef TALLER_PROG_I_2021_1C_KIWI_WINSTATE_H
-#define TALLER_PROG_I_2021_1C_KIWI_WINSTATE_H
-
+#ifndef TALLER_PROG_I_2021_1C_KIWI_HAMMERSTATE_H
+#define TALLER_PROG_I_2021_1C_KIWI_HAMMERSTATE_H
 
 #include "PlayerState.h"
 
-class WinState : public PlayerState {
-public:
-  explicit WinState();
+class HammerState: public PlayerState {
+private:
+  int durability;
 
-  ~WinState();
+public:
+  explicit HammerState(int durability);
+
+  ~HammerState();
 
   void takeDamage(Player *player, Entity *pEntity);
 
@@ -21,7 +23,8 @@ public:
   PlayerState *switchGod();
 
   PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index);
+
 };
 
 
-#endif //TALLER_PROG_I_2021_1C_KIWI_WINSTATE_H
+#endif //TALLER_PROG_I_2021_1C_KIWI_HAMMERSTATE_H

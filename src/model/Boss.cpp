@@ -22,6 +22,11 @@ void Boss::update(){
     }
 
 }
+
+
+SDL_Rect Boss::getRectangle() {
+  return SDL_Rect();
+}
 /*void Boss::update() {
     if (this->state == still){
         this->movementCounter += 1;

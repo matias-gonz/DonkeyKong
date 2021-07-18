@@ -1,6 +1,7 @@
 #ifndef TALLER_PROG_I_2021_1C_KIWI_ENEMY_H
 #define TALLER_PROG_I_2021_1C_KIWI_ENEMY_H
 
+#include <SDL_rect.h>
 #include "Position.h"
 
 class Entity {
@@ -29,6 +30,10 @@ public:
     int getDirection();
 
     bool isGrounded;
+
+  virtual SDL_Rect getRectangle() = 0;
+
+  void kill();
 };
 
 

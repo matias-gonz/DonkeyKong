@@ -1,5 +1,6 @@
 #include "NormalState.h"
 #include "GodState.h"
+#include "HammerState.h"
 
 NormalState::NormalState():PlayerState() {
 
@@ -10,7 +11,7 @@ NormalState::~NormalState() {
 }
 
 
-void NormalState::takeDamage(Player *player) {
+void NormalState::takeDamage(Player *player, Entity *pEntity) {
   player->takeNormalDamage();
   player->resetPos();
 }
@@ -38,6 +39,6 @@ PlayerState *NormalState::grabHammer(Hammer ***hammers, int *hammerCount, int in
   (*hammerCount)--;
   *hammers = (Hammer**) realloc(*hammers,(*hammerCount)*sizeof(Hammer*));
 
-  return new NormalState();
+  return new HammerState(3);
 }
 

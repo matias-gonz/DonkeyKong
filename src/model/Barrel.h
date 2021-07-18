@@ -13,9 +13,9 @@
 class Barrel: public Entity
 {
 public:
-    Barrel();
+    explicit Barrel();
     //CAMBIOS BARREL
-    Barrel(Position *position);
+    explicit Barrel(Position *position);
     ~Barrel();
     SDL_Rect *getDestRect();
     SDL_Rect *getSrcRect();
@@ -25,6 +25,8 @@ public:
     void moveUp(int i);
 
     void resetVelY();
+
+    SDL_Rect getRectangle();
 
 private:
     int width;

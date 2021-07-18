@@ -11,7 +11,7 @@ public:
 
   ~DeadState();
 
-  void takeDamage(Player *pPlayer);
+  void takeDamage(Player *pPlayer, Entity *pEntity);
 
   void update(Player *player);
 

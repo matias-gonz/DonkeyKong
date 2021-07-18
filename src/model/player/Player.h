@@ -77,7 +77,7 @@ public:
 
   void die();
 
-  void takeDamage();
+  void takeDamage(Entity *pEntity);
 
   void takeNormalDamage();
 
@@ -96,6 +96,8 @@ public:
   void switchGod();
 
   void grabHammer(Hammer ***hammers, int *hammerCount, int index);
+
+  void kill();
 };
 
 
