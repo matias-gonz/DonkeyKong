@@ -15,7 +15,7 @@
 #define TRANSITION_WIDTH 550
 
 enum kindOfAnimation {
-  left = -1, up = -1, right = 1, jump = 2, down =1
+  left = -1, up = 0, right = 1, jump = 2
 };
 
 struct PlayerTexture {
