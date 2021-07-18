@@ -73,6 +73,7 @@ struct PlayersInformation{
     char username[20];
     int hp;
     int points;
+    bool alive;
 };
 
 struct EventContainer {
