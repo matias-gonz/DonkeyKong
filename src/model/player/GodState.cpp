@@ -1,15 +1,32 @@
 #include "GodState.h"
+#include "NormalState.h"
 
-GodState::GodState():PlayerState() {
+GodState::GodState() {
+
 }
 
 GodState::~GodState() {
+
 }
 
-void GodState::takeDamage(Player *pPlayer) {
+void GodState::takeDamage(Player *player) {
   return;
 }
 
 void GodState::update(Player *player) {
-  return;
+  player->normalUpdate();
 }
+
+bool GodState::hasWon() {
+  return false;
+}
+
+bool GodState::isPlayingLevel(bool b) {
+  return true;
+}
+
+PlayerState *GodState::switchGod() {
+  return new NormalState();
+}
+
+

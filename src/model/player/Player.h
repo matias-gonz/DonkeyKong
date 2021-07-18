@@ -12,82 +12,87 @@ class PlayerState;
 
 class Player : public Entity {
 private:
-    int counter, gravity, hp, points;
-    bool isClimbing, canClimb, active, hasWon;
-    //PlayerState *state;
+  int counter, gravity, hp, points;
+  bool isClimbing, canClimb, active, canAddPoints;
+  PlayerState *modeState;
 
-    static const int VEL = 3;
+  static const int VEL = 3;
 public:
-    explicit Player(Position *pos, char *string);
+  explicit Player(Position *pos, char *string);
 
-    ~Player();
+  ~Player();
 
-    void addLeftVel();
+  void addLeftVel();
 
-    void addRightVel();
+  void addRightVel();
 
-    void jumpUp();
+  void jumpUp();
 
-    void resetVelX();
+  void resetVelX();
 
-    void update();
+  void update();
 
-    SDL_Rect getRectangle();
+  SDL_Rect getRectangle();
 
-    void moveUp(int dy);
+  void moveUp(int dy);
 
-    void setGrounded();
+  void setGrounded();
 
-    void resetVelY();
+  void resetVelY();
 
-    void moveDown(int i);
+  int getVelY();
 
-    int getVelY();
+  void resetPos();
 
-    void resetPos();
+  Position *initialPos;
 
-    Position *initialPos;
+  bool isIn(Position *pPosition);
 
-    bool isIn(Position *pPosition);
+  void startClimbing(int i);
 
+  void setCanClimb(bool canClimb);
 
-    void startClimbing(int i);
+  void stoppedPlaying();
 
+  bool hasWon();
 
-    void setCanClimb(bool canClimb);
+  bool getAddPoints();
 
+  void setAddPoints();
 
-    void stoppedPlaying();
+  void cantAddPoints();
 
-    bool isPlaying();
+  bool isPlaying();
 
-    char username[20];
+  char username[20];
 
-    char *getUsername();
+  char *getUsername();
 
-    void startedPlaying();
+  void startedPlaying();
 
-    void playerWon();
+  void playerWon();
 
-    void resetPlayerWon();
+  void resetPlayerWon();
 
-    void die();
+  void die();
 
-    void takeDamage();
+  void takeDamage();
 
-    bool dead;
-    PlayerState *modeState;
+  void takeNormalDamage();
 
-    void takeNormalDamage();
+  int getHp();
 
-    int getHp();
+  int getPoints();
 
-    int getPoints();
+  void addPoints(int points);
 
-    void normalUpdate();
+  void normalUpdate();
 
-    void changeToGodMode();
+  void winUpdate();
 
+  bool isPlayingLevel(bool b);
+
+  void switchGod();
 };
 
 

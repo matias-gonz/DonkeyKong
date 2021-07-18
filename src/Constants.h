@@ -5,7 +5,7 @@
 #include "view/ltexture.h"
 
 #define MAX_CLIENTS 4
-#define HEIGHT 626
+#define HEIGHT 700
 #define WIDTH 1024
 #define LOGIN_HEIGHT 300
 #define LOGIN_WIDTH 450
@@ -29,10 +29,10 @@ struct PlayerTexture {
 };
 
 struct BarrelTexture {
-    int width = 35;
-    int height = 35;
-    int wSep = 0;
-    int hSep = 1;
+    int width = 19;
+    int height = 27;
+    int wSep = 9;
+    int hSep = 9;
 };
 
 struct PlatformContainer {
@@ -94,7 +94,7 @@ struct Positions {
   EntityContainer bossInfo;
   EntityContainer princessInfo;
   bool transitioningLevel;
-  EntityContainer barrels[10];
+  EntityContainer barrels[100];
   int barrelCount;
   bool endGame;
   EntityContainer hammers[50];

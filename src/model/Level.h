@@ -83,10 +83,12 @@ private:
 
     void freeBarrels();
 
-    Position* winningPosition = new Position(100,20);
+    Position* winningPosition = new Position(450,80);
     int counter;
 
     void spawnBarrel();
+
+    void burnBarrel(int i);
 };
 
 

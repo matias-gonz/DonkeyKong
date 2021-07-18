@@ -49,10 +49,10 @@ SDL_Rect Animator::updateAnimation(int direction, int distance) {
     if(distance>=3 && distance <= 30){
         amount = 1;
     }
-    else if( distance < 50){
+    else if( distance > 30 and distance < 50){
         amount = 2;
     }
-    else if(distance < 70) {
+    else if( distance >= 50 and distance < 70) {
         amount = 3;
     }
     if (direction == left){

@@ -203,6 +203,7 @@ void Server::handleEvents() {
   if (!levelHasTransitioned) {
     this->broadcast();
   } else {
+    SDL_Delay(1000);
     levelHasTransitioned = false;
   }
 
@@ -432,4 +433,5 @@ void Server::broadcastEndGame(){
   this->broadcast();
   pthread_mutex_unlock(&this->mutex);
   SDL_Delay(5000);
+
 }

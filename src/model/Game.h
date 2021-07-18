@@ -69,6 +69,8 @@ public:
 
   void getHammersInfo(EntityContainer *hammers, int *hammersCount);
 
+  void switchGod(int i);
+
 private:
   EnemyFire **enemyFires = NULL;
   int enemyFireCount = 0;
@@ -77,6 +79,7 @@ private:
   bool running;
   Level *level;
   Configuration *configuration;
+  int playersCountWon;
   Hammer **hammers = NULL;
   int hammersCount = 0;
 
@@ -96,6 +99,12 @@ private:
   bool anyPlayerWon();
 
   bool everyPlayerWon();
+
+  void addPointsPodium(int playerNumber, int position);
+
+  void checkWinners();
+
+  bool levelIsOver();
 
   void resetHammers();
 

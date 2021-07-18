@@ -138,7 +138,7 @@ void TextureManager::loadBarrelTexture() {
   texture = this->loadTexture(this->loadTextureFromJson("barrel"));
   if (!texture) {
     Logger::log(Logger::Error,
-                "Error al abrir archivo \"resources/sprites/barrel_move.png\". TextureManager::loadBarrelTexture");
+                "Error al abrir archivo \"resources/sprites/skeleton_move.png\". TextureManager::loadBarrelTexture");
   }
   this->barrelTexture = texture;
 }

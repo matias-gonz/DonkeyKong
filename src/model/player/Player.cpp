@@ -5,7 +5,7 @@
 #include "PlayerState.h"
 #include "NormalState.h"
 #include "DeadState.h"
-#include "GodState.h"
+#include "WinState.h"
 
 PlayerTexture plyrTex;
 
@@ -21,7 +21,7 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->distance = 0;
   this->direction = left;
   this->active = true;
-  this->hasWon = false;
+  this->canAddPoints = true;
   this->hp = 3;
   this->points = 0;
   this->modeState = new NormalState();
@@ -30,10 +30,8 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
 }
 
 void Player::update() {
-
   this->modeState->update(this);
-
-
+  printf("%d %d\n", pos->getX(), pos->getY());
 }
 
 void Player::addLeftVel() {
@@ -135,11 +133,31 @@ void Player::startedPlaying() {
 }
 
 void Player::playerWon() {
-  this->hasWon = true;
+  delete this->modeState;
+  this->modeState = new WinState();
 }
 
 void Player::resetPlayerWon() {
-  this->hasWon = false;
+  if(this->hp > 0){
+    delete this->modeState;
+    this->modeState = new NormalState();
+  }
+}
+
+bool Player::hasWon() {
+  return this->modeState->hasWon();
+}
+
+bool Player::getAddPoints(){
+  return this->canAddPoints;
+}
+
+void Player::setAddPoints(){
+  this->canAddPoints = true;
+}
+
+void Player::cantAddPoints(){
+  this->canAddPoints = false;
 }
 
 void Player::die() {
@@ -160,18 +178,7 @@ void Player::takeNormalDamage() {
   }
 }
 
-void Player::changeToGodMode(){
-  delete this->modeState;
-  this->modeState = new GodState();
-}
-
 void Player::normalUpdate() {
-  if (this->hasWon) {
-    return;
-  }
-  if (this->dead) {
-    return;
-  }
 
   if (this->isClimbing) {
     this->resetVelX();
@@ -206,10 +213,43 @@ void Player::normalUpdate() {
   counter++;
 }
 
-int Player::getHp(){
+int Player::getHp() {
   return this->hp;
 }
-int Player::getPoints()
-{
+
+int Player::getPoints() {
   return this->points;
+}
+
+void Player::addPoints(int points)
+{
+  this->points += points;
+}
+
+void Player::winUpdate() {
+  this->pos->add(0, velY);
+  if (this->counter == 2) {
+
+    if (this->velY == 5) {
+      this->velY = 4;
+      return;
+    }
+
+    this->velY += this->gravity;
+    this->counter = 0;
+    return;
+  }
+  counter++;
+
+}
+
+bool Player::isPlayingLevel(bool b) {
+  return this->modeState->isPlayingLevel(b);
+}
+
+void Player::switchGod() {
+  PlayerState* newState = this->modeState->switchGod();
+  delete this->modeState;
+  this->modeState = newState;
+
 }

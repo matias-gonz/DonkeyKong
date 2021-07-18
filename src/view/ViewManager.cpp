@@ -60,6 +60,7 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
 
   SDL_Texture *barrelTexture = this->textureManager->getBarrelTexture();
   bool barrelTextureSuccess = true;
+
   if (!barrelTexture) {
     barrelTexture = this->textureManager->getErrorTexture();
     barrelTextureSuccess = false;
@@ -75,9 +76,9 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   //this->playerAnimator = new Animator(playerTexture,LEFTSTARTW,LEFTSTARTH,RIGHTSTARTW,RIGHTSTARTH,texW,texH,SEPARATIONW,playerTextureSuccess);
   this->playerAnimator = new PlayerAnimator(playerTextures, inactivePlayerTexture, success);
   this->enemyAnimator = new Animator(enemyTexture, 0, 0, 0, 25, 22, 24, 2, enemyTextureSuccess);
-  //modificar las posiciones de la imagen
-  //this->hammerAnimator = new Animator(hammerTexture, 0, 0, 0, 10, 22, 24, 0, hammerTextureSuccess);
-  this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, 36, 35, 35, 0, barrelTextureSuccess);
+
+  BarrelTexture brrlTex;
+  this->barrelAnimator = new Animator(barrelTexture, 0, 0, 0, brrlTex.height + brrlTex.hSep, brrlTex.width, brrlTex.height, brrlTex.wSep, barrelTextureSuccess);
   char **users = this->configuration->getUsers();
   //aca creo boxes
 
@@ -246,6 +247,8 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
   }
 
   SDL_RenderPresent(renderer);
+  TTF_CloseFont(fontPlayerInfo);
+  TTF_CloseFont(fontMsjInformativo);
 
   SDL_Delay(5000);
   this->close();
@@ -282,6 +285,8 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
   mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
                             20);
 
+  TTF_CloseFont(fontMsjInformativo);
+
   TTF_Font *fontPlayerInfo = TTF_OpenFont("resources/fonts/font.ttf", 40);
 
   int separator = 0;
@@ -301,7 +306,7 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
 
     separator += 70;
   }
-
+  TTF_CloseFont(fontPlayerInfo);
   SDL_RenderPresent(renderer);
 
   SDL_Delay(2000);
@@ -324,7 +329,6 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
   SDL_Rect princessDstrect = {positions.princessInfo.x, positions.princessInfo.y, (int) (3 * texW), (int) (2 * texH)};;
   SDL_RenderCopy(this->renderer, this->textureManager->getPrincessTexture(), NULL, &princessDstrect);
   this->levelDrawer->drawFires(positions.fires, positions.fireCount);
-
   // render every player except "me"
   for (int i = 0; i < positions.playerCount; i++) {
     int boxIndex;
@@ -351,9 +355,6 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
                                positions.barrels[i].y, positions.barrels[i].distance);
   }
 
-  //for (int i = 0; i < positions.hammersCount; i++) {
-    //this->hammerAnimator->draw(this->renderer, positions.hammers[i].direction, positions.hammers[i].x,positions.hammers[i].y, positions.hammers[i].distance);
-  //}
   for(int i=0; i < positions.hammersCount; i++){
     SDL_Rect hammerRect = SDL_Rect({positions.hammers[i].x,positions.hammers[i].y-20, 40, 40});
     SDL_RenderCopy(this->renderer, this->textureManager->getHammerTexture(), NULL, &hammerRect);
@@ -380,7 +381,6 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
 
 void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount) {
   SDL_Color textColor = {255, 255, 255, 0xFF};
-  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 30);
   std::string space = "    ";
   for (int i = 0; i < playersCount; i++) {
     // Create playerName with points
@@ -390,7 +390,7 @@ void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int players
       playerText.at(i) = toupper(playerText.at(i));
     }
     //Render players info
-    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, font, this->renderer);
+    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, this->font, this->renderer);
     playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
     int heartSeparator = 20;
     for (int j = 0; j < playersInfo[i].hp; j++) {
@@ -576,7 +576,7 @@ void ViewManager::renderConnectionLostWindow() {
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 40);
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("Server Disconnected", textColor, font, this->renderer);
-
+  TTF_CloseFont(font);
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
@@ -677,7 +677,7 @@ void ViewManager::renderWrongCredentialsWindow() {
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("Credenciales incorrectas", textColor, font, this->renderer);
-
+  TTF_CloseFont(font);
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
@@ -715,7 +715,7 @@ void ViewManager::renderClientAlreadyConnectedWindow() {
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("Ya se ingreso con este usuario", textColor, font, this->renderer);
-
+  TTF_CloseFont(font);
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
@@ -754,7 +754,7 @@ void ViewManager::renderUnknownResponseWindow(char connectionResponse) {
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("Respuesta inesperada del servidor" + std::to_string(connectionResponse), textColor,
                                     font, this->renderer);
-
+  TTF_CloseFont(font);
   //Render window with exit button
   SDL_Event e;
   bool quit = false;
@@ -792,6 +792,7 @@ void ViewManager::renderLobbyIsFullWindow() {
   TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   LTexture errorMessage;
   errorMessage.loadFromRenderedText("El lobby esta completo", textColor, font, this->renderer);
+  TTF_CloseFont(font);
 
   //Render window with exit button
   SDL_Event e;

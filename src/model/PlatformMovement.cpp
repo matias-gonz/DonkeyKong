@@ -14,10 +14,10 @@ void PlatformMovement::update(SDL_Rect *rect) {
     }
 
     if(this->direction == -1){
-        if(rect->x == 96){
+        if(rect->x <= 96){
             rect->x = 864;
         }
-    }else if(rect->x == 864){
+    }else if(rect->x >= 864){
         rect->x = 96;
     }
     rect->x += this->speed*this->direction;

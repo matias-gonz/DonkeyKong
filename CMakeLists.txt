@@ -97,6 +97,8 @@ set(SOURCE_FILES main.cpp
         src/model/player/GodState.h
         src/model/player/DeadState.cpp
         src/model/player/DeadState.h
+        src/model/player/WinState.cpp
+        src/model/player/WinState.h
         src/model/Hammer.cpp
         src/model/Hammer.h)
 

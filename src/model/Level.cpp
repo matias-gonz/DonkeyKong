@@ -49,11 +49,13 @@ void Level::update() {
   for (int i = 0; i < this->fireCount; i++) {
     this->fires[i]->update();
   }
-  if(this->currentLevel == 2){
+  if (this->currentLevel == 2) {
     this->counter += 1;
 
-    if (this->counter > 10){
-      this->spawnBarrel();
+    if (this->counter > 50) {
+      if( rand()%100 < 30){
+        this->spawnBarrel();
+      }
       this->counter = 0;
     }
     for (int i = 0; i < this->barrelCount; i++) {
@@ -97,14 +99,6 @@ void Level::reset() {
   this->freeFires();
   this->freeSpawns();
   this->freeBarrels();
-  this->platforms = NULL;
-  this->platformCount = 0;
-  this->ladders = NULL;
-  this->ladderCount = 0;
-  this->fires = NULL;
-  this->fireCount = 0;
-  this->barrels = NULL;
-  this->barrelCount = 0;
 }
 
 void Level::freePlaforms() {
@@ -160,9 +154,11 @@ void Level::freeBarrels() {
     delete this->barrels[i];
   }
   free(this->barrels);
+  this->barrels = NULL;
+  this->barrelCount = 0;
 }
 
-void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **enemyFires, int enemyFireCount, Hammer **hammers, int hammersCount) {
+void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **enemyFires, int enemyFireCount) {
   SDL_Rect *playerRects = (SDL_Rect *) malloc(playerCount * sizeof(SDL_Rect));
 
   for (int i = 0; i < playerCount; i++) {
@@ -181,28 +177,47 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
       }
     }
-
-    if(this->currentLevel == 2){
-      for(int j = 0; j < barrelCount; j++){
+    if (this->currentLevel == 2) {
+      for (int j = 0; j < barrelCount; j++) {
         SDL_Rect *barrelRect = barrels[j]->getDestRect();
         if (Collider::RectCollides(*barrelRect, platformRect)) {
-          Collider::ResolveBarrelCollision(barrels[j], platformRect);
+          Collider::ResolveBarrelPLatformCollision(barrels[j], platformRect);
         }
       }
     }
   }
-  for(int i = 0; i < playerCount; i++){
-    for(int j = 0; j < enemyFireCount; j++){
+
+  for (int i = 0; i < playerCount; i++) {
+    for (int j = 0; j < enemyFireCount; j++) {
       if (Collider::RectCollides(playerRects[i], enemyFires[j]->getRectangle())) {
         Collider::ResolvePlayerEnemyCollision(players[i], enemyFires[j]);
       }
+
     }
-    for(int j = 0; j < this->fireCount; j++){
-      if(Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())){
+    for (int j = 0; j < this->fireCount; j++) {
+      if (Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())) {
         Collider::ResolvePlayerFireCollision(players[i]);
       }
     }
+    for (int j = 0; j < barrelCount; j++) {
+      if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
+        Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
+      }
+    }
+  }
 
+  for (int i = 0; i < fireCount; i++) {
+    for(int j = 0; j < this->barrelCount; j++){
+      if (Collider::RectCollides(fires[i]->getRectangle(), *barrels[j]->getDestRect())) {
+        this->burnBarrel(j);
+        j--;
+      }
+    }
+    for (int j = 0; j < enemyFireCount; j++) {
+      if (Collider::RectCollides(fires[i]->getRectangle(), enemyFires[j]->getRectangle())) {
+        enemyFires[j]->bounce();
+      }
+    }
   }
 
   bool *canClimb = (bool *) malloc(playerCount * sizeof(bool));
@@ -238,19 +253,27 @@ bool Level::playerWon(Player *player) {
 }
 
 void Level::spawnBarrel() {
-  if(this->barrelCount){
-    this->barrels = (Barrel**)realloc(this->barrels,(this->barrelCount+1)*sizeof(Barrel*));
-    if(!this->barrels){
-      Logger::log(Logger::Error,"Error al reservar memoria. Level::spawnBarrel().");
-      this->barrelCount = 0;
-      return;
-    }
+  this->barrels = (Barrel **) realloc(this->barrels, (this->barrelCount + 1) * sizeof(Barrel *));
+  if (!this->barrels) {
+    Logger::log(Logger::Error, "Error al reservar memoria. Level::spawnBarrel().");
+    this->barrelCount = 0;
+    return;
   }
-  else{
-    this->barrels = (Barrel**)malloc(sizeof (Barrel*));
-  }
+
   this->barrels[this->barrelCount] = new Barrel(new Position(100, 35));
   this->barrelCount += 1;
+
+}
+
+void Level::burnBarrel(int i) {
+  if(i >= this->barrelCount){
+    return;
+  }
+
+  delete this->barrels[i];
+  this->barrels[i] = this->barrels[this->barrelCount-1];
+  this->barrelCount--;
+  this->barrels = (Barrel**) realloc(this->barrels,this->barrelCount*sizeof(Barrel*));
 
 }
 

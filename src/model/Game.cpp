@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Collider.h"
 
 Game::Game(Configuration *configuration) {
   this->configuration = configuration;
@@ -26,11 +27,12 @@ void Game::start() {
   this->level = new Level();
   this->players = NULL;
   this->playerCount = 0;
+  this->playersCountWon = 0;
   this->loadLevel(1);
 
   Logger::log(Logger::Info, "Inicio Donkey Kong");
-  this->boss = new Boss(new Position(100, 85));
-  this->princess = new Princess(new Position(450, 80));
+  this->boss = new Boss(new Position(100, 95));
+  this->princess = new Princess(new Position(450, 65));
 }
 
 void Game::quit() {
@@ -38,22 +40,29 @@ void Game::quit() {
 }
 
 void Game::update() {
-  if (this->everyPlayerWon()) {
-    for (int i = 0; i < playerCount; i++) {
-      this->players[i]->resetPlayerWon();
-    }
-    this->switchLevel();
-    return;
+  this->checkWinners();
+  for (int i = 0; i < playerCount; i++) {
+    this->addPointsPodium(i, playersCountWon);
   }
+
   this->level->update();
+
   for (int i = 0; i < this->playerCount; i++) {
     this->players[i]->update();
   }
   for (int i = 0; i < this->enemyFireCount; i++) {
     this->enemyFires[i]->update();
   }
+  if (this->levelIsOver()) {
+    for (int i = 0; i < playerCount; i++) {
+      this->players[i]->resetPlayerWon();
+      this->players[i]->setAddPoints();
+    }
+    this->switchLevel();
+    return;
+  }
   for (int i = 0; i < this->hammersCount; i++) {
-    //this->hammers[i]->update();
+    this->hammers[i]->update();
   }
 
   this->princess->update();
@@ -78,7 +87,6 @@ void Game::loadLevel(int levelnum) {
   this->level->loadLevel(levelnum, this->configuration);
   this->resetEnemies();
   this->resetHammers();
-  //level should spawn enemies, not game
   this->spawnEnemies(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getEnemiesCount());
   this->spawnHammers(this->level->getSpawns(), this->level->getSpawnCount(), this->configuration->getHammersCount());
 }
@@ -161,6 +169,7 @@ void Game::switchLevel() {
   } else {
     this->loadLevel(1);
   }
+  playersCountWon = 0;
 }
 
 Boss *Game::getBoss() {
@@ -172,14 +181,12 @@ Princess *Game::getPrincess() {
 }
 
 void Game::resolveCollisions() {
-  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount,
-                                 this->hammers, this->hammersCount);
-
+  this->level->resolveCollisions(this->players, this->playerCount, this->enemyFires, this->enemyFireCount);
 }
 
 void Game::addPlayer(char username[20]) {
   this->players = (Player **) realloc(this->players, (this->playerCount + 1) * sizeof(Player *));
-  this->players[this->playerCount] = new Player(new Position(200, 575), username);
+  this->players[this->playerCount] = new Player(new Position(200, HEIGHT-60), username);
   this->playerCount++;
 }
 
@@ -225,14 +232,11 @@ void Game::getEnemyFiresPos(EntityContainer *enemyFires, int *count) {
 }
 
 void Game::getBarrelsInfo(EntityContainer *barrels, int *barrelCount) {
-  if (this->level->getCurrentLevel() == 2) {
-    *barrelCount = this->level->getBarrelCount();
-    for (int i = 0; i < *barrelCount; i++) {
-      this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
-    }
+  *barrelCount = this->level->getBarrelCount();
+  for (int i = 0; i < *barrelCount; i++) {
+    this->getEntityInfo(&barrels[i], this->level->getBarrel(i));
   }
 }
-
 void Game::getHammersInfo(EntityContainer *hammers, int *hammersCount) {
   *hammersCount = this->hammersCount;
   for (int i = 0; i < *hammersCount; i++) {
@@ -272,24 +276,17 @@ void Game::getEntityInfo(EntityContainer *entityInfo, Entity *entity) {
   entityInfo->direction = entity->getDirection();
 }
 
-
-bool Game::anyPlayerWon() {
-  for (int i = 0; i < this->playerCount; i++) {
-    if (this->level->playerWon(this->players[i])) {
-      return true;
-    }
-  }
-  return false;
+bool Game::everyPlayerWon() {
+  return playersCountWon == this->playerCount;
 }
 
-bool Game::everyPlayerWon() {
-  int playersCountWon = 0;
+void Game::checkWinners() {
   for (int i = 0; i < this->playerCount; i++) {
-    if (this->level->playerWon(this->players[i])) {
+    if (Collider::RectCollides(this->players[i]->getRectangle(), this->princess->getRectangle()) && players[i]->getAddPoints()) {
       playersCountWon++;
+      players[i]->playerWon();
     }
   }
-  return playersCountWon == this->playerCount;
 }
 
 int Game::getPlayerCount() {
@@ -310,4 +307,42 @@ bool Game::isPlayerActive(int playerNumber) {
 
 int Game::getCurrentLevel() {
   return currentLevel;
+}
+
+void Game::addPointsPodium(int playerNumber, int position) {
+  if(players[playerNumber]->getAddPoints() && players[playerNumber]->hasWon()) {
+    switch (position) {
+      case 1:
+        players[playerNumber]->addPoints(2000);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 2:
+        players[playerNumber]->addPoints(1500);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 3:
+        players[playerNumber]->addPoints(1000);
+        players[playerNumber]->cantAddPoints();
+        break;
+      case 4:
+        players[playerNumber]->addPoints(500);
+        players[playerNumber]->cantAddPoints();
+        break;
+      default:
+        break;
+    };
+  }
+}
+
+bool Game::levelIsOver() {
+  bool stillPlaying = false;
+  for(int i = 0; i < this->playerCount; i++){
+    stillPlaying = this->players[i]->isPlayingLevel(stillPlaying);
+  }
+  return !stillPlaying;
+}
+
+void Game::switchGod(int i) {
+  this->players[i]->switchGod();
+
 }
