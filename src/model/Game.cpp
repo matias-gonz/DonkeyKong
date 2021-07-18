@@ -162,7 +162,7 @@ void Game::resetHammers() {
 
 void Game::switchLevel() {
   for (int i = 0; i < this->playerCount; i++) {
-    this->players[i]->resetPos();
+    this->players[i]->resetSpawn();
   }
   if (this->currentLevel == 1) {
     this->loadLevel(2);

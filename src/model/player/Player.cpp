@@ -267,3 +267,9 @@ void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
 void Player::kill() {
 
 }
+
+void Player::resetSpawn() {
+  this->resetPos();
+  delete this->modeState;
+  this->modeState = new NormalState();
+}
