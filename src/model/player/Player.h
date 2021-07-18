@@ -100,6 +100,8 @@ public:
   void kill();
 
   bool isAlive();
+
+  void resetSpawn();
 };
 
 
