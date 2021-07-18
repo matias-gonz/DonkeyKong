@@ -2,6 +2,7 @@
 #define TALLER_PROG_I_2021_1C_KIWI_PLAYERSTATE_H
 
 #include "Player.h"
+#include "../Hammer.h"
 
 class Player;
 
@@ -20,6 +21,8 @@ public:
   virtual bool isPlayingLevel(bool b) = 0;
 
   virtual PlayerState *switchGod() = 0;
+
+  virtual PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index) = 0;
 };
 
 

@@ -19,6 +19,8 @@ public:
   bool isPlayingLevel(bool b);
 
   PlayerState *switchGod();
+
+  PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index);
 };
 
 

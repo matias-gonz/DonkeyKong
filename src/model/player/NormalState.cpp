@@ -32,3 +32,12 @@ PlayerState *NormalState::switchGod() {
   return new GodState();
 }
 
+PlayerState *NormalState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+  delete (*hammers)[index];
+  (*hammers)[index] = (*hammers)[(*hammerCount)-1];
+  (*hammerCount)--;
+  *hammers = (Hammer**) realloc(*hammers,(*hammerCount)*sizeof(Hammer*));
+
+  return new NormalState();
+}
+

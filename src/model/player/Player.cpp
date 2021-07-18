@@ -25,13 +25,12 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->hp = 3;
   this->points = 0;
   this->modeState = new NormalState();
-  //this->moveState = new WalkingState();
+
 
 }
 
 void Player::update() {
   this->modeState->update(this);
-  printf("%d %d\n", pos->getX(), pos->getY());
 }
 
 void Player::addLeftVel() {
@@ -252,4 +251,10 @@ void Player::switchGod() {
   delete this->modeState;
   this->modeState = newState;
 
+}
+
+void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+  PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index);
+  delete this->modeState;
+  this->modeState = newState;
 }

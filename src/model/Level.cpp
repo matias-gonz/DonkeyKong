@@ -158,7 +158,7 @@ void Level::freeBarrels() {
   this->barrelCount = 0;
 }
 
-void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **enemyFires, int enemyFireCount) {
+void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **fires, int fireCount, Hammer ***hammers, int *hammerCount) {
   SDL_Rect *playerRects = (SDL_Rect *) malloc(playerCount * sizeof(SDL_Rect));
 
   for (int i = 0; i < playerCount; i++) {
@@ -171,10 +171,10 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         Collider::ResolvePlayerCollision(players[j], platformRect);
       }
     }
-    for (int j = 0; j < enemyFireCount; j++) {
-      SDL_Rect fireRect = enemyFires[j]->getRectangle();
+    for (int j = 0; j < fireCount; j++) {
+      SDL_Rect fireRect = fires[j]->getRectangle();
       if (Collider::RectCollides(fireRect, platformRect)) {
-        Collider::ResolveEnemyCollision(enemyFires[j], platformRect);
+        Collider::ResolveEnemyCollision(fires[j], platformRect);
       }
     }
     if (this->currentLevel == 2) {
@@ -188,11 +188,18 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
   }
 
   for (int i = 0; i < playerCount; i++) {
-    for (int j = 0; j < enemyFireCount; j++) {
-      if (Collider::RectCollides(playerRects[i], enemyFires[j]->getRectangle())) {
-        Collider::ResolvePlayerEnemyCollision(players[i], enemyFires[j]);
-      }
 
+    for(int j = 0; j < *hammerCount; j++){
+      if(Collider::RectCollides(playerRects[i], ((*hammers)[j])->getRectangle())){
+        players[i]->grabHammer(hammers,hammerCount,j);
+      }
+    }
+
+
+    for (int j = 0; j < fireCount; j++) {
+      if (Collider::RectCollides(playerRects[i], fires[j]->getRectangle())) {
+        Collider::ResolvePlayerEnemyCollision(players[i], fires[j]);
+      }
     }
     for (int j = 0; j < this->fireCount; j++) {
       if (Collider::RectCollides(playerRects[i], this->fires[j]->getRectangle())) {
@@ -206,16 +213,16 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
     }
   }
 
-  for (int i = 0; i < fireCount; i++) {
+  for (int i = 0; i < this->fireCount; i++) {
     for(int j = 0; j < this->barrelCount; j++){
       if (Collider::RectCollides(fires[i]->getRectangle(), *barrels[j]->getDestRect())) {
         this->burnBarrel(j);
         j--;
       }
     }
-    for (int j = 0; j < enemyFireCount; j++) {
-      if (Collider::RectCollides(fires[i]->getRectangle(), enemyFires[j]->getRectangle())) {
-        enemyFires[j]->bounce();
+    for (int j = 0; j < fireCount; j++) {
+      if (Collider::RectCollides(this->fires[i]->getRectangle(), fires[j]->getRectangle())) {
+        fires[j]->bounce();
       }
     }
   }
