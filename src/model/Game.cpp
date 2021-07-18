@@ -254,6 +254,7 @@ void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
     strcpy(playerInfo[i].username, players[i]->getUsername());
     playerInfo[i].hp = players[i]->getHp();
     playerInfo[i].points = players[i]->getPoints();
+    playerInfo[i].alive =players[i]->isAlive();
   }
   *playerCount = this->playerCount;
 }
