@@ -1,6 +1,7 @@
 #include "Hammer.h"
 
 Hammer::Hammer(Position* pos){
+  pos->setY(pos->getY()-10);
   this->pos = pos;
   this->velX = 0;
   this->velY = 1;
@@ -16,12 +17,10 @@ void Hammer::update() {
     this->pos->add(0, this->velY);
   }
   distance += abs(velY);
-  //distance += this->velY;
-  if (distance > 20) {
+
+  if (distance > 10) {
     changeDirection();
   }
-  if(this->velY > 3 ){return;}//velocidad terminal
-  this->velY += 0;
 }
 
 void Hammer::changeDirection(){
@@ -36,7 +35,7 @@ int Hammer::choseDirection() {
 }
 
 SDL_Rect Hammer::getRectangle() {
-  return SDL_Rect({this->pos->getX(),this->pos->getY(),30, 30});
+  return SDL_Rect({this->pos->getX(),this->pos->getY(),25, 25});
 }
 
 void Hammer::moveUp(int dx) {

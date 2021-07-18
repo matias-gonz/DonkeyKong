@@ -356,7 +356,7 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
   }
 
   for(int i=0; i < positions.hammersCount; i++){
-    SDL_Rect hammerRect = SDL_Rect({positions.hammers[i].x,positions.hammers[i].y-20, 40, 40});
+    SDL_Rect hammerRect = SDL_Rect({positions.hammers[i].x,positions.hammers[i].y, 25, 25});
     SDL_RenderCopy(this->renderer, this->textureManager->getHammerTexture(), NULL, &hammerRect);
   }
 
