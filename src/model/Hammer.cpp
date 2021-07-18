@@ -22,7 +22,6 @@ void Hammer::update() {
   }
   if(this->velY > 3 ){return;}//velocidad terminal
   this->velY += 0;
-
 }
 
 void Hammer::changeDirection(){
