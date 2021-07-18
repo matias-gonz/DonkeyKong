@@ -25,7 +25,7 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->hp = 3;
   this->points = 0;
   this->modeState = new NormalState();
-
+  this->alive = true;
 
 }
 
@@ -162,7 +162,12 @@ void Player::cantAddPoints(){
 void Player::die() {
   delete this->modeState;
   this->resetPos();
+  this->alive=false;
   this->modeState = new DeadState();
+}
+
+bool Player::isAlive(){
+  return this->alive;
 }
 
 void Player::takeDamage(Entity *entity) {

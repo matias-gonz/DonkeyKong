@@ -309,7 +309,7 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
   TTF_CloseFont(fontPlayerInfo);
   SDL_RenderPresent(renderer);
 
-  SDL_Delay(2000);
+  SDL_Delay(10000);
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
