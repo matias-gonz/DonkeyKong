@@ -87,14 +87,14 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   this->playersFont = TTF_OpenFont("resources/fonts/font.ttf", 30);
 
-  for (int i = 0; i < MAX_CLIENTS; ++i) {
+  for (int i = 0; i < MAX_CLIENTS; i++) {
     //std::string u;
     //u.append(users[i]);
     this->boxes[i].box.loadFromRenderedText(users[i], textColor, this->font, this->renderer);
     strcpy(this->boxes[i].username, users[i]);
   }
   //aca libero users
-  for (int i = 0; i < MAX_CLIENTS; ++i) {
+  for (int i = 0; i < MAX_CLIENTS; i++) {
     free(users[i]);
   }
   free(users);

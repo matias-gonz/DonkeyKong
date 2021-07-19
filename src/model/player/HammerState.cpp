@@ -29,6 +29,7 @@ void HammerState::takeDamage(Player *player, Entity *entity) {
     player->resetPos();
     return;
   }
+  player->killedAnEnemy();
   entity->kill();
   player->addPoints(entity->getPoints());
   this->durability--;
@@ -46,10 +47,10 @@ bool HammerState::isPlayingLevel(bool b) {
   return true;
 }
 
-PlayerState *HammerState::switchGod() {
+PlayerState *HammerState::switchGod(Player *player) {
   return new GodState();
 }
 
-PlayerState *HammerState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+PlayerState *HammerState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new HammerState(this->durability);
 }

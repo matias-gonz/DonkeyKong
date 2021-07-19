@@ -74,6 +74,7 @@ struct PlayersInformation{
     int hp;
     int points;
     bool alive;
+    char lastEvent;
 };
 
 struct EventContainer {

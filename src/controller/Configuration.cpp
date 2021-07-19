@@ -100,7 +100,7 @@ bool Configuration::checkCredentials(std::string *inputUser, std::string *inputP
 
 char **Configuration::getUsers() {
   char** users = (char**)malloc(this->users.size()*sizeof(char*));
-  for (int i = 0; i < this->users.size(); ++i) {
+  for (int i = 0; i < this->users.size(); i++) {
     users[i] = (char*)malloc(20*sizeof(char));//20 es la cantidad maxima de caracteres por usuario
   }
   for(int i = 0; i < this->users.size(); i++){

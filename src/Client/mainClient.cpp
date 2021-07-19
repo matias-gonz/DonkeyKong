@@ -9,10 +9,12 @@ int mainClient(char *IP, char *port) {
     return 0;
   }
   client->goToLobby();
+  client->playMusic();
 
   while (client->isRunning()) {
     client->send();
     client->receive();
+    client->playSounds();
     client->render();
   }
   return 0;
