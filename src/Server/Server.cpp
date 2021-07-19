@@ -90,6 +90,7 @@ void Server::start() {
 }
 
 bool Server::hasAllClientsOnline() {
+  std::printf("CANTIDAD %d\n", onlineClientsCount);
   return (this->onlineClientsCount >= this->clientMax);
 }
 
@@ -99,8 +100,9 @@ void Server::addNewConnection() {
   pthread_mutex_unlock(&this->mutex);
   //Create socket
   int newSocket = this->socket->accept();
-  char playerCount = this->game->getPlayerCount();
-  this->socket->sndChar(&playerCount, newSocket);
+  int playerCount = this->game->getPlayerCount();
+  std::cout << playerCount << std::endl;
+  this->socket->sndChar(reinterpret_cast<char *>(&playerCount), newSocket);
   //enviar al cliente el game->playerCount
   pthread_mutex_lock(&this->mutex);
   Logger::log(Logger::Info, "Se acepta nueva conexion con socket");
@@ -194,7 +196,7 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
   this->game->getFires(this->positions.fires, &this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
-  this->game->getBarrelsInfo(this->positions.barrels,&this->positions.barrelCount);
+  this->game->getBarrelsInfo(this->positions.barrels, &this->positions.barrelCount);
   this->game->getHammersInfo(this->positions.hammers, &this->positions.hammersCount);
 
   levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
@@ -401,9 +403,9 @@ void Server::rejectConnection() {
 
 bool Server::checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent) {
 
-  if(this->game->allPlayersAreDead()){
+  if (this->game->allPlayersAreDead()) {
     this->broadcastEndGame();
-  }else if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
+  } else if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
     if (levelNumberBeforeHandlingEvent < this->game->getCurrentLevel()) {
       // Pasar al segundo nivel
       this->game->allPlayersAreDead();
@@ -429,7 +431,7 @@ void Server::broadcastLevelTransition() {
 
 }
 
-void Server::broadcastEndGame(){
+void Server::broadcastEndGame() {
 
   this->positions.endGame = true;
 
