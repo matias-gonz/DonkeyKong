@@ -25,11 +25,11 @@ bool GodState::isPlayingLevel(bool b) {
   return true;
 }
 
-PlayerState *GodState::switchGod() {
+PlayerState *GodState::switchGod(Player *player) {
   return new NormalState();
 }
 
-PlayerState *GodState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+PlayerState *GodState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new GodState();
 }
 

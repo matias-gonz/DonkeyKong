@@ -25,10 +25,10 @@ bool DeadState::isPlayingLevel(bool b) {
   return b;
 }
 
-PlayerState *DeadState::switchGod() {
+PlayerState *DeadState::switchGod(Player *player) {
   return new DeadState();
 }
 
-PlayerState *DeadState::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+PlayerState *DeadState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new DeadState();
 }

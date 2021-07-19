@@ -38,3 +38,20 @@ void PlayerEvent::playerMutedMusic() {
   type = PlayerMutedMusic;
 }
 
+void PlayerEvent::playerStartedGodMode() {
+  type = PlayerStartedGodMode;
+}
+
+void PlayerEvent::playermutedSoundEffects() {
+  type = PlayerMutedSoundEffects;
+}
+
+void PlayerEvent::playerDied() {
+  type = PlayerLost;
+}
+
+void PlayerEvent::playerReachedThePrincess() {
+  type = PlayerWon;
+
+}
+

@@ -26,7 +26,6 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->points = 0;
   this->modeState = new NormalState();
   this->alive = true;
-
 }
 
 void Player::update() {
@@ -138,6 +137,8 @@ void Player::startedPlaying() {
 }
 
 void Player::playerWon() {
+  lastEvent.playerReachedThePrincess();
+
   delete this->modeState;
   this->modeState = new WinState();
 }
@@ -150,6 +151,7 @@ void Player::resetPlayerWon() {
 }
 
 bool Player::hasWon() {
+
   return this->modeState->hasWon();
 }
 
@@ -166,8 +168,9 @@ void Player::cantAddPoints(){
 }
 
 void Player::die() {
+  lastEvent.playerDied();
+
   delete this->modeState;
-  //die event
   this->resetPos();
   this->alive=false;
   this->modeState = new DeadState();
@@ -240,6 +243,8 @@ void Player::addPoints(int points)
 }
 
 void Player::winUpdate() {
+
+
   this->pos->add(0, velY);
   if (this->counter == 2) {
 
@@ -261,16 +266,14 @@ bool Player::isPlayingLevel(bool b) {
 }
 
 void Player::switchGod() {
-  PlayerState* newState = this->modeState->switchGod();
+  PlayerState* newState = this->modeState->switchGod(this);
   delete this->modeState;
   this->modeState = newState;
 
 }
 
 void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
-  lastEvent.playerGrabbedAHammer();
-
-  PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index);
+  PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index, this);
   delete this->modeState;
   this->modeState = newState;
 }
@@ -291,4 +294,16 @@ char Player::extractLastEvent() {
 
 void Player::mutedMusic() {
   lastEvent.playerMutedMusic();
+}
+
+void Player::mutedSoundEffects() {
+  lastEvent.playermutedSoundEffects();
+}
+
+void Player::grabbedAHammer() {
+  lastEvent.playerGrabbedAHammer();
+}
+
+void Player::switchedToGod() {
+  lastEvent.playerStartedGodMode();
 }

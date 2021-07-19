@@ -8,6 +8,8 @@ enum EventType {
     PlayerKilledAnEnemy,
     PlayerClimbedALadder,
     PlayerMutedMusic,
+    PlayerMutedSoundEffects,
+    PlayerStartedGodMode,
     PlayerWon,
     PlayerLost,
     NoEvent
@@ -16,7 +18,7 @@ enum EventType {
 class PlayerEvent {
 private:
     EventType type;
-    char eventSymbol [9] = {'j', 'd', 'h', 'k', 'c', 'm', 'w', 'l', 'n'};
+    char eventSymbol [11] = {'j', 'd', 'h', 'k', 'c', 'm', 'e','g','w', 'l', 'n'};
 
 public:
     PlayerEvent();
@@ -35,6 +37,14 @@ public:
     void playerClimbedALadder();
 
     void playerMutedMusic();
+
+    void playerStartedGodMode();
+
+    void playermutedSoundEffects();
+
+    void playerDied();
+
+    void playerReachedThePrincess();
 };
 
 

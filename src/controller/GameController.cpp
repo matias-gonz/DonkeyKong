@@ -34,6 +34,9 @@ void GameController::handleEvents(SDL_Event event, int i) {
         } else if (event.key.keysym.sym == SDLK_m) {
           this->player->mutedMusic();
           Logger::log(Logger::Debug, "Muted the music",i);
+        } else if (event.key.keysym.sym == SDLK_e) {
+          this->player->mutedSoundEffects();
+          Logger::log(Logger::Debug, "Muted the sound effects",i);
         }
 
     }

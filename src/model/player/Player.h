@@ -108,6 +108,12 @@ public:
   char extractLastEvent();
 
     void mutedMusic();
+
+    void mutedSoundEffects();
+
+    void grabbedAHammer();
+
+    void switchedToGod();
 };
 
 

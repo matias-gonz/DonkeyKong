@@ -21,9 +21,20 @@ private:
     Mix_Chunk *grabHammerSoundEffect ;
     Mix_Chunk *killEnemySoundEffect ;
     Mix_Chunk *climbLadderSoundEffect ;
+    Mix_Chunk *startGodModeSoundEffect ;
+    Mix_Chunk *reachThePrincessSoundEffect ;
+    Mix_Chunk *playerDieSoundEffect ;
 
 
     void changeMusicReprductionStatus();
+
+    void manageSoundSystemWith(char i);
+
+    bool soundEffectsActive;
+
+    void reproduceSoundEffectBasedOn(char event);
+
+    void changeSoundEffectReprductionStatus();
 };
 
 
