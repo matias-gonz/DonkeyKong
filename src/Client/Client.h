@@ -11,6 +11,7 @@
 #include "../controller/Configuration.h"
 #include "../controller/LoginController.h"
 #include "credentials.h"
+#include "SoundSystem.h"
 
 class Client {
 
@@ -34,6 +35,12 @@ public:
 
     void goToLobby();
 
+    void playSounds();
+
+    void playMusic();
+
+    ~Client();
+
 private:
     Positions positions;
     ViewManager *viewManagerLogin, *viewManagerGame;
@@ -48,8 +55,10 @@ private:
 
     bool running;
     bool sended;
-    bool _isInLobby;
+    bool isInLobby;
     ViewManager *viewManagerLobby;
+    SoundSystem *soundSystem;
+
 
     void setPositionsDefault();
 

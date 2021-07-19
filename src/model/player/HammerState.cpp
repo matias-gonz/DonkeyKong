@@ -29,6 +29,7 @@ void HammerState::takeDamage(Player *player, Entity *entity) {
     player->resetPos();
     return;
   }
+  player->killedAnEnemy();
   entity->kill();
   player->addPoints(entity->getPoints());
   this->durability--;

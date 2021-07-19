@@ -55,6 +55,9 @@ void Player::jumpUp() {
   if (!isGrounded) {
     return;
   }
+
+  lastEvent.playerJumped();
+
   velY -= 2 * VEL;
   isGrounded = false;
   isClimbing = false;
@@ -101,6 +104,9 @@ bool Player::isIn(Position *pPosition) {
 
 void Player::startClimbing(int vel) {
   if (!this->canClimb) return;
+
+  lastEvent.playerClimbedALadder();
+
   this->velY = vel;
   this->isClimbing = true;
   this->isGrounded = true;
@@ -161,6 +167,7 @@ void Player::cantAddPoints(){
 
 void Player::die() {
   delete this->modeState;
+  //die event
   this->resetPos();
   this->alive=false;
   this->modeState = new DeadState();
@@ -175,6 +182,8 @@ void Player::takeDamage(Entity *entity) {
 }
 
 void Player::takeNormalDamage() {
+  lastEvent.playerGotDamaged();
+
   this->hp -= 1;
 
   if (this->hp <= 0) {
@@ -259,17 +268,27 @@ void Player::switchGod() {
 }
 
 void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
+  lastEvent.playerGrabbedAHammer();
+
   PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index);
   delete this->modeState;
   this->modeState = newState;
 }
 
-void Player::kill() {
-
+void Player::killedAnEnemy() {
+  lastEvent.playerKilledAnEnemy();
 }
 
 void Player::resetSpawn() {
   this->resetPos();
   delete this->modeState;
   this->modeState = new NormalState();
+}
+
+char Player::extractLastEvent() {
+  return lastEvent.extractEvent();
+}
+
+void Player::mutedMusic() {
+  lastEvent.playerMutedMusic();
 }

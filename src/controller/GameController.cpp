@@ -2,6 +2,7 @@
 
 GameController::GameController(Game* aGame){
     this->game = aGame;
+
 }
 void GameController::handleEvents(SDL_Event event, int i) {
     this->player = this->game->getPlayer(i);
@@ -30,7 +31,11 @@ void GameController::handleEvents(SDL_Event event, int i) {
         } else if (event.key.keysym.sym == SDLK_g) {
             this->game->switchGod(i);
             Logger::log(Logger::Debug, "Switched God Mode",i);
+        } else if (event.key.keysym.sym == SDLK_m) {
+          this->player->mutedMusic();
+          Logger::log(Logger::Debug, "Muted the music",i);
         }
+
     }
     if (event.type == SDL_KEYUP) {
         if (event.key.keysym.sym == SDLK_LEFT or event.key.keysym.sym == SDLK_a) {

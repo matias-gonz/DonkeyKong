@@ -8,6 +8,7 @@
 #include "../Entity.h"
 #include "PlayerState.h"
 #include "../Hammer.h"
+#include "PlayerEvent.h"
 
 class PlayerState;
 
@@ -16,6 +17,7 @@ private:
   int counter, gravity, hp, points;
   bool isClimbing, canClimb, active, canAddPoints, alive;
   PlayerState *modeState;
+  PlayerEvent lastEvent;
 
   static const int VEL = 3;
 public:
@@ -97,11 +99,15 @@ public:
 
   void grabHammer(Hammer ***hammers, int *hammerCount, int index);
 
-  void kill();
+  void killedAnEnemy();
 
   bool isAlive();
 
   void resetSpawn();
+
+  char extractLastEvent();
+
+    void mutedMusic();
 };
 
 
