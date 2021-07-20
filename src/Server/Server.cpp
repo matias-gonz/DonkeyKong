@@ -1,4 +1,4 @@
-#include "Server.h"#include "Server.h"
+#include "Server.h"
 
 Server::Server(char *port, char *IP) {
   this->configuration = new Configuration();
@@ -37,6 +37,7 @@ bool Server::isRunning() {
 void Server::broadcast() {
   SDL_Delay(25);
   for (int i = 0; i < this->totalClientsCount; i++) {
+    this->positions.currentPlayer = i;
     this->socket->snd(&this->positions, this->sockets[i]);
   }
 
@@ -49,8 +50,8 @@ void *acceptConnections(void *serv) {
   }
   server->broadcastGameStart();
 
-  while (server->hasAllClientsOnline()) {
-    server->rejectConnection();
+  while (!server->hasNoClientsOnline()) {
+    server->addNewConnection();
   }
 
 }
@@ -90,18 +91,20 @@ void Server::start() {
 }
 
 bool Server::hasAllClientsOnline() {
-  return (this->onlineClientsCount >= this->clientMax);
+  pthread_mutex_lock(&this->mutex);
+  bool hasAllClientsOnline = (this->onlineClientsCount >= this->clientMax);
+  pthread_mutex_unlock(&this->mutex);
+  return hasAllClientsOnline;
 }
 
 void Server::addNewConnection() {
   pthread_mutex_lock(&this->mutex);
   Logger::log(Logger::Info, "Esperando accept");
   pthread_mutex_unlock(&this->mutex);
+
   //Create socket
   int newSocket = this->socket->accept();
-  char playerCount = this->game->getPlayerCount();
-  this->socket->sndChar(&playerCount, newSocket);
-  //enviar al cliente el game->playerCount
+
   pthread_mutex_lock(&this->mutex);
   Logger::log(Logger::Info, "Se acepta nueva conexion con socket");
   pthread_mutex_unlock(&this->mutex);
@@ -115,7 +118,6 @@ void Server::addNewConnection() {
 
   //Case client already online
   if (this->clientIsOnline(credentials)) {
-
     char o = 'a';
     this->socket->sndChar(&o, newSocket);
     return;
@@ -134,7 +136,6 @@ void Server::addNewConnection() {
   }
 
   if (hasReconnected) {
-
     //Case has reconected send c to skip lobby
     char c = 'c';
     this->socket->sndChar(&c, newSocket);
@@ -194,7 +195,7 @@ void Server::handleEvents() {
   this->game->getLadders(this->positions.ladders, &this->positions.ladderCount);
   this->game->getFires(this->positions.fires, &this->positions.fireCount);
   this->game->getEnemyFiresPos(this->positions.fireEnemies, &this->positions.fireEnemyCount);
-  this->game->getBarrelsInfo(this->positions.barrels,&this->positions.barrelCount);
+  this->game->getBarrelsInfo(this->positions.barrels, &this->positions.barrelCount);
   this->game->getHammersInfo(this->positions.hammers, &this->positions.hammersCount);
 
   levelHasTransitioned = this->checkIfTheLevelHasTransitioned(levelNumberBeforeHandlingEvent);
@@ -404,9 +405,9 @@ void Server::rejectConnection() {
 
 bool Server::checkIfTheLevelHasTransitioned(int levelNumberBeforeHandlingEvent) {
 
-  if(this->game->allPlayersAreDead()){
+  if (this->game->allPlayersAreDead()) {
     this->broadcastEndGame();
-  }else if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
+  } else if (levelNumberBeforeHandlingEvent != this->game->getCurrentLevel()) {
     if (levelNumberBeforeHandlingEvent < this->game->getCurrentLevel()) {
       // Pasar al segundo nivel
       this->game->allPlayersAreDead();
@@ -432,7 +433,7 @@ void Server::broadcastLevelTransition() {
 
 }
 
-void Server::broadcastEndGame(){
+void Server::broadcastEndGame() {
 
   this->positions.endGame = true;
 
@@ -441,4 +442,11 @@ void Server::broadcastEndGame(){
   pthread_mutex_unlock(&this->mutex);
   SDL_Delay(5000);
 
+}
+
+bool Server::hasNoClientsOnline() {
+  pthread_mutex_lock(&this->mutex);
+  bool hasNoClientsOnline = (this->onlineClientsCount == 0);
+  pthread_mutex_unlock(&this->mutex);
+  return hasNoClientsOnline;
 }

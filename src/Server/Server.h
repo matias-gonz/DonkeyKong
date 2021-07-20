@@ -51,6 +51,8 @@ public:
 
   void rejectConnection();
 
+    bool hasNoClientsOnline();
+
 private:
   ServerSocket *socket;
   Configuration *configuration;

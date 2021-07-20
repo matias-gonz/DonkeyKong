@@ -1,6 +1,4 @@
 #include "Client.h"
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
 Client::Client(char *port, char *IP) {
   this->quit = false;
@@ -81,7 +79,6 @@ void Client::send() {
     }
     if (this->eventIsValid(event)) {
       this->socket->snd(&event, 0);
-      printf("manda evento\n");
       //return;
     }
   }
@@ -96,7 +93,7 @@ bool Client::isRunning() {
 }
 
 void Client::render() {
-  int clientNumber = this->socket->getClientNumber();
+  int clientNumber = this->positions.currentPlayer;
 
   if(this->positions.transitioningLevel){
     viewManagerGame->renderTransitionWindow(this->positions.playersInfo, this->positions.playerCount);
@@ -153,7 +150,7 @@ void Client::playMusic() {
 }
 
 void Client::playSounds(){
-  int playerNumber = this->socket->getClientNumber();
+  int playerNumber = this->positions.currentPlayer;
   soundSystem->reproducePlayerSoundBasedOn(positions.playersInfo[playerNumber].lastEvent);
 }
 
