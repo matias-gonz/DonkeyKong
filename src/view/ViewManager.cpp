@@ -257,7 +257,7 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
 }
 
 
-void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado, SDL_Event *e) {
+SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado) {
   //Clear the renderer and window
   this->close();
   //Create new renderer and window
@@ -317,12 +317,15 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
   //SDL_Delay(1000000);
 
   bool quit = false;
+  SDL_Event e;
 
   while (!quit) {
-    while (SDL_PollEvent(e) != 0 && !quit) {
+    while (SDL_PollEvent(&e) != 0 && !quit) {
       quit = e.type == SDL_QUIT;
     }
   }
+
+  return e;
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
@@ -577,17 +580,17 @@ void ViewManager::renderConnectionLostWindow() {
   //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
-    this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height = CONNECTION_LOST_HEIGHT;
     this->currentWindow = this->createWindow("Donkey Kong - Connection lost", SDL_WINDOWPOS_CENTERED,
                                              SDL_WINDOWPOS_CENTERED,
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
-    SDL_RenderClear(this->renderer);
+
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 0, 0, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
+
+  SDL_RenderClear(this->renderer);
 
   //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};
@@ -678,17 +681,16 @@ void ViewManager::renderWrongCredentialsWindow() {
   //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
-    this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height = CONNECTION_LOST_HEIGHT;
     this->currentWindow = this->createWindow("Donkey Kong - Wrong credentials", SDL_WINDOWPOS_CENTERED,
                                              SDL_WINDOWPOS_CENTERED,
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
-    SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
+
+  SDL_RenderClear(this->renderer);
 
   //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};
@@ -716,17 +718,17 @@ void ViewManager::renderClientAlreadyConnectedWindow() {
   //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
-    this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height = CONNECTION_LOST_HEIGHT;
     this->currentWindow = this->createWindow("Donkey Kong - User already playing", SDL_WINDOWPOS_CENTERED,
                                              SDL_WINDOWPOS_CENTERED,
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
-    SDL_RenderClear(this->renderer);
+
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 250, 0, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
+
+  SDL_RenderClear(this->renderer);
 
   //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};
@@ -754,17 +756,16 @@ void ViewManager::renderUnknownResponseWindow(char connectionResponse) {
   //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
-    this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height = CONNECTION_LOST_HEIGHT;
     this->currentWindow = this->createWindow("Donkey Kong - Unknown server connection response", SDL_WINDOWPOS_CENTERED,
                                              SDL_WINDOWPOS_CENTERED,
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
-    SDL_RenderClear(this->renderer);
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
+
+  SDL_RenderClear(this->renderer);
 
   //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};
@@ -793,17 +794,17 @@ void ViewManager::renderLobbyIsFullWindow() {
   //Create new renderer and window
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
     this->setTextureLinear();
-    this->screen_width = CONNECTION_LOST_WIDTH;
-    this->screen_height = CONNECTION_LOST_HEIGHT;
     this->currentWindow = this->createWindow("Donkey Kong - Lobby is full", SDL_WINDOWPOS_CENTERED,
                                              SDL_WINDOWPOS_CENTERED,
                                              CONNECTION_LOST_WIDTH, CONNECTION_LOST_HEIGHT, 0);
-    SDL_RenderClear(this->renderer);
+
     if (this->currentWindow != NULL) this->createRenderer();
     if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 200, 100, 200, 0);
   } else {
     this->showSDLError("SDL could not initialize! SDL Error: %s\n");
   }
+
+  SDL_RenderClear(this->renderer);
 
   //Set font color, size and text
   SDL_Color textColor = {255, 0, 0, 0xFF};

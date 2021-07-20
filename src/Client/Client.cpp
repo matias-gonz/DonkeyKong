@@ -104,18 +104,16 @@ void Client::render() {
   }
   if (this->positions.endGame) {
     int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
-    SDL_Event e;
+    SDL_Event event;
     if (this->myPlayerHasMorePoints(newClientNumber)) {
-      viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
-                                           " felicitaciones - GANASTE", &e);
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " felicitaciones - GANASTE");
     } else {
-      viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
-                                           " perdiste ", &e);
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " perdiste ");
     }
-    quitEndGame(e);
-
+    quitEndGame(event);
   }
-
   if (!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions, clientNumber);
 
 }
