@@ -34,11 +34,15 @@ public:
 
     void goToLobby();
 
+  bool myPlayerHasMorePoints(int clientNumber);
+
+  int playersInfoOrderByPoints(int clientNumber);
+
 private:
     Positions positions;
     ViewManager *viewManagerLogin, *viewManagerGame;
 
-    bool quit, gameStarted;
+    bool quit, quitEndView, gameStarted;
     LoginController *loginController;
 
     ClientSocket *socket;
@@ -54,6 +58,8 @@ private:
     void setPositionsDefault();
 
     void informConnectionOutcome(char connectionResponse);
+
+    void handleQuitEndGame();
 };
 
 

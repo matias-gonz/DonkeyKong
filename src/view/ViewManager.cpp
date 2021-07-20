@@ -257,7 +257,7 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
 }
 
 
-void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount) {
+void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado) {
   //Clear the renderer and window
   this->close();
   //Create new renderer and window
@@ -280,10 +280,11 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
   //Set font color, size and text
   SDL_Color textColor = {255, 255, 255, 0xFF};
 
-  TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 60);
+  TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 50);
 
+  std::string winnerText = playerInfo[clientNumber].username + estado;
   LTexture mensajeInformativo;
-  mensajeInformativo.loadFromRenderedText(" FIN DEL JUEGO", textColor, fontMsjInformativo, this->renderer);
+  mensajeInformativo.loadFromRenderedText(winnerText, textColor, fontMsjInformativo, this->renderer);
   mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
                             20);
 
@@ -293,25 +294,27 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
 
   int separator = 0;
 
-  for (int i = 0; i < playerCount; i++) {
+  //PlayersInformation playersInfoOrdered = orderPlayerInfoByPoints( playerInfo[]);
+
+  for (int i = playerCount; i > 0; i--) {
 
     std::string obtuvo = " obtuvo ";
     std::string puntos = " puntos ";
-    std::string playerText = playerInfo[i].username + obtuvo + std::to_string(playerInfo[i].points) + puntos;
+    std::string playerText = playerInfo[i-1].username + obtuvo + std::to_string(playerInfo[i-1].points) + puntos;
 
     //SDL_Rect heartDstrect = {0, 0, (int) (1.5 * texW), (int) (0.7*texH)};
     //SDL_RenderCopy(this->renderer, this->textureManager->getHeartTexture(), NULL, &heartDstrect);
 
-    usernameAndPointsTexture[i].loadFromRenderedText(playerText.c_str(), textColor, fontPlayerInfo, this->renderer);
-    usernameAndPointsTexture[i].render((this->screen_width / 2) - (usernameAndPointsTexture[i].getWidth() / 2),
+    usernameAndPointsTexture[i-1].loadFromRenderedText(playerText.c_str(), textColor, fontPlayerInfo, this->renderer);
+    usernameAndPointsTexture[i-1].render((this->screen_width / 2) - (usernameAndPointsTexture[i-1].getWidth() / 2),
                                        this->screen_height / (playerCount + 1) + separator);
 
-    separator += 70;
+    separator += 50;
   }
   TTF_CloseFont(fontPlayerInfo);
   SDL_RenderPresent(renderer);
 
-  SDL_Delay(10000);
+  SDL_Delay(1000000);
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber) {

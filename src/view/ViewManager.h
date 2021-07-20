@@ -65,7 +65,7 @@ public:
 
   void renderTransitionWindow(PlayersInformation playerInfo[], int playerCount);
 
-  void renderEndGameWindow(PlayersInformation playerInfo[], int playerCount);
+  void renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado);
 
   void initializeTextInputsForPlayersInfo(PlayersInformation playerInfo[]);
 
