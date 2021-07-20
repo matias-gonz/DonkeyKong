@@ -23,10 +23,7 @@ public:
 
   char rcvChar();
 
-  int getClientNumber();
-
 private:
-  int socketClient, clientNumber;
   struct sockaddr_in serv_addr;
   Socket *socket;
   bool connected;

@@ -103,6 +103,7 @@ struct Positions {
   bool endGame;
   EntityContainer hammers[50];
   int hammersCount;
+  int currentPlayer;
 };
 
 struct Credentials {

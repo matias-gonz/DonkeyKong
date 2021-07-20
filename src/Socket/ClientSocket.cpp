@@ -13,7 +13,6 @@ ClientSocket::ClientSocket(char *port, char *IP) {
 
   this->convertToHost(atoi(port), IP);
   this->connected = this->connect();
-  this->clientNumber = this->rcvChar();
 }
 
 
@@ -130,6 +129,3 @@ char ClientSocket::rcvChar() {
   return received;
 }
 
-int ClientSocket::getClientNumber() {
-  return this->clientNumber;
-}
