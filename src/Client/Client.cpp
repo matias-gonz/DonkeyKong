@@ -103,19 +103,16 @@ void Client::render() {
                                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
   }
   if (this->positions.endGame) {
-    while (!this->quitEndView) {
-      handleQuitEndGame();
-      int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
-      if (this->myPlayerHasMorePoints(newClientNumber)) {
-        viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
-                                             " felicitaciones - GANASTE");
-        this->running = false;
-      } else {
-        viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
-                                             " perdiste ");
-        this->running = false;
-      }
+    int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
+    SDL_Event e;
+    if (this->myPlayerHasMorePoints(newClientNumber)) {
+      viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " felicitaciones - GANASTE", &e);
+    } else {
+      viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " perdiste ", &e);
     }
+    quitEndGame(e);
 
   }
 
@@ -123,16 +120,11 @@ void Client::render() {
 
 }
 
-void Client::handleQuitEndGame(){
-  SDL_Event event;
-
-  while (SDL_PollEvent(&event) != 0) {
-    if (event.type == SDL_QUIT) {
-      this->quitEndView = true;
-    }
-  }
+void Client::quitEndGame(SDL_Event event) {
+  this->quit = true;
+  this->running = false;
+  this->socket->snd(&event, 0);
 }
-
 
 
 int Client::playersInfoOrderByPoints(int clientNumber) {

@@ -1,0 +1,138 @@
+2021-07-20 14:50:26 [INFO]Inicio del log
+2021-07-20 14:50:26 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 14:50:26 [INFO]Puerto del servidor: 8080
+2021-07-20 14:50:26 [DEBUG]Se resetea el nivel
+2021-07-20 14:50:26 [INFO]Se inicia la carga del nivel 1.
+2021-07-20 14:50:26 [INFO]Se inicia la carga de Platform.
+2021-07-20 14:50:26 [INFO]Se inicia la carga de Ladder.
+2021-07-20 14:50:26 [INFO]Se inicia la carga de Fire.
+2021-07-20 14:50:26 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 14:50:26 [INFO]Se finaliza la carga del nivel.
+2021-07-20 14:50:26 [INFO]Se spawnean enemigos type_1
+2021-07-20 14:50:26 [INFO]Se spawnean los martillos
+2021-07-20 14:50:26 [INFO]Inicio Donkey Kong
+2021-07-20 14:50:26 [INFO]Se lanza accepter thread
+2021-07-20 14:50:26 [INFO]Se lanza eventHandler thread
+2021-07-20 14:50:26 [INFO]Esperando accept
+2021-07-20 14:50:41 [INFO]Se acepta nueva conexion con socket
+2021-07-20 14:50:47 [INFO]Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego
+2021-07-20 14:50:48 [INFO]Esperando accept para rechazar
+2021-07-20 14:50:52 [INFO]Jugador numero 0 : dejo de jugar
+2021-07-20 14:50:52 [INFO]Jugador numero 0 : se desconecto
+2021-07-20 14:50:52 [INFO]Esperando accept
+2021-07-20 14:50:52 [DEBUG]Servidor cerrado
+2021-07-20 14:50:52 [INFO]Fin del Log
+--------------------------------------------------------------------------
+
+2021-07-20 14:51:13 [INFO]Inicio del log
+2021-07-20 14:51:13 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 14:51:13 [INFO]Puerto del servidor: 8080
+2021-07-20 14:51:13 [DEBUG]Se resetea el nivel
+2021-07-20 14:51:13 [INFO]Se inicia la carga del nivel 1.
+2021-07-20 14:51:13 [INFO]Se inicia la carga de Platform.
+2021-07-20 14:51:13 [INFO]Se inicia la carga de Ladder.
+2021-07-20 14:51:13 [INFO]Se inicia la carga de Fire.
+2021-07-20 14:51:13 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 14:51:13 [INFO]Se finaliza la carga del nivel.
+2021-07-20 14:51:13 [INFO]Se spawnean enemigos type_1
+2021-07-20 14:51:13 [INFO]Se spawnean los martillos
+2021-07-20 14:51:13 [INFO]Inicio Donkey Kong
+2021-07-20 14:51:13 [INFO]Se lanza accepter thread
+2021-07-20 14:51:13 [INFO]Se lanza eventHandler thread
+2021-07-20 14:51:13 [INFO]Esperando accept
+2021-07-20 14:51:19 [INFO]Se acepta nueva conexion con socket
+2021-07-20 14:51:24 [INFO]Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego
+2021-07-20 14:51:26 [INFO]Esperando accept para rechazar
+2021-07-20 14:51:28 [INFO]Jugador numero 0 : dejo de jugar
+2021-07-20 14:51:28 [INFO]Jugador numero 0 : se desconecto
+2021-07-20 14:51:28 [INFO]Esperando accept
+2021-07-20 14:51:28 [DEBUG]Servidor cerrado
+2021-07-20 14:51:28 [INFO]Fin del Log
+--------------------------------------------------------------------------
+
+2021-07-20 14:56:59 [INFO]Inicio del log
+2021-07-20 14:56:59 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 14:56:59 [INFO]Puerto del servidor: 8080
+2021-07-20 14:56:59 [DEBUG]Se resetea el nivel
+2021-07-20 14:56:59 [INFO]Se inicia la carga del nivel 1.
+2021-07-20 14:56:59 [INFO]Se inicia la carga de Platform.
+2021-07-20 14:56:59 [INFO]Se inicia la carga de Ladder.
+2021-07-20 14:56:59 [INFO]Se inicia la carga de Fire.
+2021-07-20 14:56:59 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 14:56:59 [INFO]Se finaliza la carga del nivel.
+2021-07-20 14:56:59 [INFO]Se spawnean enemigos type_1
+2021-07-20 14:56:59 [INFO]Se spawnean los martillos
+2021-07-20 14:56:59 [INFO]Inicio Donkey Kong
+2021-07-20 14:56:59 [INFO]Se lanza accepter thread
+2021-07-20 14:56:59 [INFO]Se lanza eventHandler thread
+2021-07-20 14:56:59 [INFO]Esperando accept
+2021-07-20 14:57:05 [INFO]Se acepta nueva conexion con socket
+2021-07-20 14:57:11 [INFO]Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego
+2021-07-20 14:57:12 [INFO]Esperando accept para rechazar
+2021-07-20 14:57:13 [INFO]Jugador numero 0 : dejo de jugar
+2021-07-20 14:57:13 [INFO]Jugador numero 0 : se desconecto
+2021-07-20 14:57:13 [INFO]Esperando accept
+2021-07-20 14:57:13 [DEBUG]Servidor cerrado
+2021-07-20 14:57:13 [INFO]Fin del Log
+--------------------------------------------------------------------------
+
+2021-07-20 15:01:46 [INFO]Inicio del log
+2021-07-20 15:01:46 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 15:01:46 [INFO]Puerto del servidor: 8080
+2021-07-20 15:01:46 [DEBUG]Se resetea el nivel
+2021-07-20 15:01:46 [INFO]Se inicia la carga del nivel 1.
+2021-07-20 15:01:46 [INFO]Se inicia la carga de Platform.
+2021-07-20 15:01:46 [INFO]Se inicia la carga de Ladder.
+2021-07-20 15:01:46 [INFO]Se inicia la carga de Fire.
+2021-07-20 15:01:46 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 15:01:46 [INFO]Se finaliza la carga del nivel.
+2021-07-20 15:01:46 [INFO]Se spawnean enemigos type_1
+2021-07-20 15:01:46 [INFO]Se spawnean los martillos
+2021-07-20 15:01:46 [INFO]Inicio Donkey Kong
+2021-07-20 15:01:46 [INFO]Se lanza accepter thread
+2021-07-20 15:01:46 [INFO]Se lanza eventHandler thread
+2021-07-20 15:01:46 [INFO]Esperando accept
+2021-07-20 15:01:54 [INFO]Se acepta nueva conexion con socket
+2021-07-20 15:02:00 [INFO]Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego
+2021-07-20 15:02:01 [INFO]Esperando accept para rechazar
+2021-07-20 15:02:02 [INFO]Jugador numero 0 : dejo de jugar
+2021-07-20 15:02:02 [INFO]Jugador numero 0 : se desconecto
+2021-07-20 15:02:02 [DEBUG]Servidor cerrado
+2021-07-20 15:02:02 [INFO]Fin del Log
+--------------------------------------------------------------------------
+
+2021-07-20 15:03:07 [INFO]Inicio del log
+2021-07-20 15:03:07 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 15:03:07 [INFO]Puerto del servidor: 8080
+2021-07-20 15:03:07 [DEBUG]Se resetea el nivel
+2021-07-20 15:03:07 [INFO]Se inicia la carga del nivel 1.
+2021-07-20 15:03:07 [INFO]Se inicia la carga de Platform.
+2021-07-20 15:03:07 [INFO]Se inicia la carga de Ladder.
+2021-07-20 15:03:07 [INFO]Se inicia la carga de Fire.
+2021-07-20 15:03:07 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 15:03:07 [INFO]Se finaliza la carga del nivel.
+2021-07-20 15:03:07 [INFO]Se spawnean enemigos type_1
+2021-07-20 15:03:07 [INFO]Se spawnean los martillos
+2021-07-20 15:03:07 [INFO]Inicio Donkey Kong
+2021-07-20 15:03:07 [INFO]Se lanza accepter thread
+2021-07-20 15:03:07 [INFO]Se lanza eventHandler thread
+2021-07-20 15:03:07 [INFO]Esperando accept
+2021-07-20 15:03:34 [INFO]Se acepta nueva conexion con socket
+2021-07-20 15:03:42 [INFO]Cantidad necesaria de jugadores alcanzada. Enviando confimarcion de comienzo de juego
+2021-07-20 15:03:43 [INFO]Esperando accept para rechazar
+2021-07-20 15:03:45 [DEBUG]Se resetea el nivel
+2021-07-20 15:03:45 [INFO]Se inicia la carga del nivel 2.
+2021-07-20 15:03:45 [INFO]Se inicia la carga de Platform.
+2021-07-20 15:03:45 [INFO]Se inicia la carga de Ladder.
+2021-07-20 15:03:45 [INFO]Se inicia la carga de Fire.
+2021-07-20 15:03:45 [INFO]Se inicia la carga de Spawnpoints.
+2021-07-20 15:03:45 [INFO]Se finaliza la carga del nivel.
+2021-07-20 15:03:45 [INFO]Se spawnean enemigos type_1
+2021-07-20 15:03:45 [INFO]Se spawnean los martillos
+2021-07-20 15:03:45 [DEBUG]Jugador numero 0 : presiono paso de nivel
+2021-07-20 15:03:52 [INFO]Jugador numero 0 : dejo de jugar
+2021-07-20 15:03:52 [INFO]Jugador numero 0 : se desconecto
+2021-07-20 15:03:52 [DEBUG]Servidor cerrado
+2021-07-20 15:03:52 [INFO]Fin del Log
+--------------------------------------------------------------------------
+

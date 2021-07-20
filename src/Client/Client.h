@@ -42,7 +42,7 @@ private:
     Positions positions;
     ViewManager *viewManagerLogin, *viewManagerGame;
 
-    bool quit, quitEndView, gameStarted;
+    bool quit, gameStarted;
     LoginController *loginController;
 
     ClientSocket *socket;
@@ -59,7 +59,7 @@ private:
 
     void informConnectionOutcome(char connectionResponse);
 
-    void handleQuitEndGame();
+    void quitEndGame(SDL_Event event);
 };
 
 

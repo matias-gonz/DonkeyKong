@@ -228,8 +228,8 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
 
   LTexture mensajeInformativo;
   mensajeInformativo.loadFromRenderedText(" Puntajes parciales", textColor, fontMsjInformativo, this->renderer);
-  mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
-                            mensajeInformativo.getHeight());
+  mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth()/2,
+                            mensajeInformativo.getHeight()/2);
 
   int separator = 0;
 
@@ -257,7 +257,7 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
 }
 
 
-void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado) {
+void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado, SDL_Event *e) {
   //Clear the renderer and window
   this->close();
   //Create new renderer and window
@@ -282,9 +282,9 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
 
   TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 50);
 
-  std::string winnerText = playerInfo[clientNumber].username + estado;
+  std::string stateText = playerInfo[clientNumber].username + estado;
   LTexture mensajeInformativo;
-  mensajeInformativo.loadFromRenderedText(winnerText, textColor, fontMsjInformativo, this->renderer);
+  mensajeInformativo.loadFromRenderedText(stateText, textColor, fontMsjInformativo, this->renderer);
   mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
                             20);
 
@@ -314,7 +314,15 @@ void ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playe
   TTF_CloseFont(fontPlayerInfo);
   SDL_RenderPresent(renderer);
 
-  SDL_Delay(1000000);
+  //SDL_Delay(1000000);
+
+  bool quit = false;
+
+  while (!quit) {
+    while (SDL_PollEvent(e) != 0 && !quit) {
+      quit = e.type == SDL_QUIT;
+    }
+  }
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
