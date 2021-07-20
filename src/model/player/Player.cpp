@@ -311,3 +311,9 @@ void Player::switchedToGod() {
 bool Player::hasHammer() {
   return this->modeState->hasHammer();
 }
+
+void Player::setNormal() {
+  PlayerState* newState = new NormalState();
+  delete this->modeState;
+  this->modeState = newState;
+}
