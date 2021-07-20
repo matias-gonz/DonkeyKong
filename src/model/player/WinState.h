@@ -21,6 +21,8 @@ public:
   PlayerState *switchGod(Player *player);
 
   PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player);
+
+  bool hasHammer();
 };
 
 

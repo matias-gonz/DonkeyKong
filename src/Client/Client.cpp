@@ -81,6 +81,7 @@ void Client::send() {
     }
     if (this->eventIsValid(event)) {
       this->socket->snd(&event, 0);
+      printf("manda evento\n");
       //return;
     }
   }

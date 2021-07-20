@@ -307,3 +307,7 @@ void Player::grabbedAHammer() {
 void Player::switchedToGod() {
   lastEvent.playerStartedGodMode();
 }
+
+bool Player::hasHammer() {
+  return this->modeState->hasHammer();
+}

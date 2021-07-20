@@ -33,4 +33,8 @@ PlayerState *GodState::grabHammer(Hammer ***hammers, int *hammerCount, int index
   return new GodState();
 }
 
+bool GodState::hasHammer() {
+  return false;
+}
+
 
