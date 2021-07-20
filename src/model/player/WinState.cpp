@@ -36,3 +36,7 @@ PlayerState *WinState::switchGod(Player *player) {
 PlayerState* WinState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new WinState();
 }
+
+bool WinState::hasHammer() {
+  return false;
+}

@@ -54,3 +54,7 @@ PlayerState *HammerState::switchGod(Player *player) {
 PlayerState *HammerState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new HammerState(this->durability);
 }
+
+bool HammerState::hasHammer() {
+  return true;
+}

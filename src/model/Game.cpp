@@ -256,6 +256,7 @@ void Game::getPLayerInfo(PlayersInformation *playerInfo, int *playerCount) {
     playerInfo[i].points = players[i]->getPoints();
     playerInfo[i].alive =players[i]->isAlive();
     playerInfo[i].lastEvent =players[i]->extractLastEvent();
+    playerInfo[i].hammer = players[i]->hasHammer();
   }
   *playerCount = this->playerCount;
 }

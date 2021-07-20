@@ -46,3 +46,7 @@ PlayerState *NormalState::grabHammer(Hammer ***hammers, int *hammerCount, int in
   return new HammerState(3);
 }
 
+bool NormalState::hasHammer() {
+  return false;
+}
+

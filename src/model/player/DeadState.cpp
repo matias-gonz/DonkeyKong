@@ -32,3 +32,7 @@ PlayerState *DeadState::switchGod(Player *player) {
 PlayerState *DeadState::grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) {
   return new DeadState();
 }
+
+bool DeadState::hasHammer() {
+  return false;
+}

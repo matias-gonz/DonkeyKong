@@ -114,6 +114,8 @@ public:
     void grabbedAHammer();
 
     void switchedToGod();
+
+    bool hasHammer();
 };
 
 

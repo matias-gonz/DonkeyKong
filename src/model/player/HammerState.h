@@ -24,6 +24,8 @@ public:
 
   PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player);
 
+  bool hasHammer();
+
 };
 
 

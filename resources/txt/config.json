@@ -8,7 +8,7 @@
     "game": {
       "probability_enemies": 10,
       "hammer_count": 5,
-      "client_max": 2,
+      "client_max": 4,
       "sprites": {
         "player_1": "resources/sprites/sans_walk_1.png",
         "player_2": "resources/sprites/sans_walk_2.png",
