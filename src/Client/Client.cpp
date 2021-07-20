@@ -95,19 +95,57 @@ bool Client::isRunning() {
 void Client::render() {
   int clientNumber = this->positions.currentPlayer;
 
-  if(this->positions.transitioningLevel){
+  if (this->positions.transitioningLevel) {
     viewManagerGame->renderTransitionWindow(this->positions.playersInfo, this->positions.playerCount);
-    this->positions.transitioningLevel=false;
+    this->positions.transitioningLevel = false;
     this->viewManagerGame = new ViewManager(configuration, "Donkey Kong", SDL_WINDOWPOS_CENTERED,
                                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
   }
-  if(this->positions.endGame){
-    viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount);
-    this->running = false;
+  if (this->positions.endGame) {
+    int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
+    SDL_Event event;
+    if (this->myPlayerHasMorePoints(newClientNumber)) {
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " felicitaciones - GANASTE");
+    } else {
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+                                           " perdiste ");
+    }
+    quitEndGame(event);
   }
+  if (!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions, clientNumber);
 
-  if(!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions, clientNumber);
+}
 
+void Client::quitEndGame(SDL_Event event) {
+  this->quit = true;
+  this->running = false;
+  this->socket->snd(&event, 0);
+}
+
+
+int Client::playersInfoOrderByPoints(int clientNumber) {
+  int newClientNumber = clientNumber;
+  for (int i = 0; i < this->positions.playerCount; i++) {
+    for (int j = i + 1; j < this->positions.playerCount; j++) {
+      if (positions.playersInfo[i].points > positions.playersInfo[j].points) {
+        if (i == clientNumber) newClientNumber = j;
+        else if (j == clientNumber) newClientNumber = i;
+        PlayersInformation aux = positions.playersInfo[j];
+        positions.playersInfo[j] = positions.playersInfo[i];
+        positions.playersInfo[i] = aux;
+      }
+    }
+  }
+  return newClientNumber;
+}
+
+bool Client::myPlayerHasMorePoints(int clientNumber) {
+  int actualPoints = positions.playersInfo[clientNumber].points;
+  for (int i = 0; i < this->positions.playerCount; i++) {
+    if (positions.playersInfo[i].points > actualPoints) return false;
+  }
+  return true;
 }
 
 void Client::setSended(bool b) {

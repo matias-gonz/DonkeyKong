@@ -41,6 +41,10 @@ public:
 
     ~Client();
 
+  bool myPlayerHasMorePoints(int clientNumber);
+
+  int playersInfoOrderByPoints(int clientNumber);
+
 private:
     Positions positions;
     ViewManager *viewManagerLogin, *viewManagerGame;
@@ -63,6 +67,8 @@ private:
     void setPositionsDefault();
 
     void informConnectionOutcome(char connectionResponse);
+
+    void quitEndGame(SDL_Event event);
 };
 
 
