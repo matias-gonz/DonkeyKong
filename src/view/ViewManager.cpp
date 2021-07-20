@@ -87,14 +87,14 @@ ViewManager::ViewManager(Configuration *configurations, char *title, int xPos, i
   this->font = TTF_OpenFont("resources/fonts/font.ttf", 20);
   this->playersFont = TTF_OpenFont("resources/fonts/font.ttf", 30);
 
-  for (int i = 0; i < MAX_CLIENTS; ++i) {
+  for (int i = 0; i < MAX_CLIENTS; i++) {
     //std::string u;
     //u.append(users[i]);
     this->boxes[i].box.loadFromRenderedText(users[i], textColor, this->font, this->renderer);
     strcpy(this->boxes[i].username, users[i]);
   }
   //aca libero users
-  for (int i = 0; i < MAX_CLIENTS; ++i) {
+  for (int i = 0; i < MAX_CLIENTS; i++) {
     free(users[i]);
   }
   free(users);
@@ -359,7 +359,8 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
         this->playerAnimator->draw(this->renderer, positions.playersInfo[i].direction,
                                    positions.playersInfo[i].x,
                                    positions.playersInfo[i].y, positions.playersInfo[i].distance,
-                                   positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box);
+                                   positions.playersInfo[i].isActive, i, &this->boxes[boxIndex].box,
+                                   positions.playersInfo[i].hammer);
       }
     }
   }
@@ -393,7 +394,7 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
                                positions.playersInfo[clientNumber].x,
                                positions.playersInfo[clientNumber].y, positions.playersInfo[clientNumber].distance,
                                positions.playersInfo[clientNumber].isActive, clientNumber,
-                               &this->boxes[boxPosition].box);
+                               &this->boxes[boxPosition].box, positions.playersInfo[clientNumber].hammer);
   }
 
   SDL_RenderPresent(renderer);

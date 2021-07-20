@@ -25,6 +25,7 @@ struct PlayerTexture {
   int climbHeight = 30;
   int wSeparation = 5;
   int hSeparation = 1;
+  int hammerHeightStart = 93;
 
 };
 
@@ -74,6 +75,8 @@ struct PlayersInformation{
     int hp;
     int points;
     bool alive;
+    char lastEvent;
+    bool hammer;
 };
 
 struct EventContainer {
@@ -100,6 +103,7 @@ struct Positions {
   bool endGame;
   EntityContainer hammers[50];
   int hammersCount;
+  int currentPlayer;
 };
 
 struct Credentials {

@@ -1,6 +1,4 @@
 #include "Client.h"
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
 Client::Client(char *port, char *IP) {
   this->quit = false;
@@ -16,9 +14,10 @@ Client::Client(char *port, char *IP) {
   strcat(messagePort, "Puerto del servidor: ");
   strcat(messagePort, port);
   Logger::log(Logger::Info, messagePort);
-  this->_isInLobby = false;
+  this->isInLobby = false;
   this->socket = new ClientSocket(port, IP);
   this->positions = Positions();
+  this->soundSystem = new SoundSystem();
 }
 
 bool Client::checkCredentials() {
@@ -41,7 +40,7 @@ bool Client::checkCredentials() {
 
       if (loginController->isValid()) {
         viewManagerLogin->close();
-        this->_isInLobby = true;
+        this->isInLobby = true;
         quit = true;
       } else if (this->loginController->hasAResponse()) {
         char connectionResponseChar = this->loginController->getConnectionResponse();
@@ -51,7 +50,7 @@ bool Client::checkCredentials() {
       }
     }
   }
-  return this->_isInLobby;
+  return this->isInLobby;
 }
 
 void Client::receive() {
@@ -94,7 +93,7 @@ bool Client::isRunning() {
 }
 
 void Client::render() {
-  int clientNumber = this->socket->getClientNumber();
+  int clientNumber = this->positions.currentPlayer;
 
   if (this->positions.transitioningLevel) {
     viewManagerGame->renderTransitionWindow(this->positions.playersInfo, this->positions.playerCount);
@@ -182,4 +181,17 @@ void Client::informConnectionOutcome(char connectionResponse) {
   } else {
     viewManagerLogin->renderUnknownResponseWindow(connectionResponse);
   }
+}
+
+void Client::playMusic() {
+  soundSystem->playGameMusic();
+}
+
+void Client::playSounds(){
+  int playerNumber = this->positions.currentPlayer;
+  soundSystem->reproducePlayerSoundBasedOn(positions.playersInfo[playerNumber].lastEvent);
+}
+
+Client::~Client() {
+  delete soundSystem;
 }

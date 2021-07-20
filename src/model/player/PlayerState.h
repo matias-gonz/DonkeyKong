@@ -20,9 +20,11 @@ public:
 
   virtual bool isPlayingLevel(bool b) = 0;
 
-  virtual PlayerState *switchGod() = 0;
+  virtual PlayerState *switchGod(Player *player) = 0;
 
-  virtual PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index) = 0;
+  virtual PlayerState* grabHammer(Hammer ***hammers, int *hammerCount, int index, Player *player) = 0;
+
+  virtual bool hasHammer() = 0;
 };
 
 

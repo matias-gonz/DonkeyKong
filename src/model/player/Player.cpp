@@ -26,7 +26,6 @@ Player::Player(Position *pos, char *username) : Entity(pos) {
   this->points = 0;
   this->modeState = new NormalState();
   this->alive = true;
-
 }
 
 void Player::update() {
@@ -55,6 +54,9 @@ void Player::jumpUp() {
   if (!isGrounded) {
     return;
   }
+
+  lastEvent.playerJumped();
+
   velY -= 2 * VEL;
   isGrounded = false;
   isClimbing = false;
@@ -101,6 +103,9 @@ bool Player::isIn(Position *pPosition) {
 
 void Player::startClimbing(int vel) {
   if (!this->canClimb) return;
+
+  lastEvent.playerClimbedALadder();
+
   this->velY = vel;
   this->isClimbing = true;
   this->isGrounded = true;
@@ -132,6 +137,8 @@ void Player::startedPlaying() {
 }
 
 void Player::playerWon() {
+  lastEvent.playerReachedThePrincess();
+
   delete this->modeState;
   this->modeState = new WinState();
 }
@@ -144,6 +151,7 @@ void Player::resetPlayerWon() {
 }
 
 bool Player::hasWon() {
+
   return this->modeState->hasWon();
 }
 
@@ -160,6 +168,8 @@ void Player::cantAddPoints(){
 }
 
 void Player::die() {
+  lastEvent.playerDied();
+
   delete this->modeState;
   this->resetPos();
   this->alive=false;
@@ -175,6 +185,8 @@ void Player::takeDamage(Entity *entity) {
 }
 
 void Player::takeNormalDamage() {
+  lastEvent.playerGotDamaged();
+
   this->hp -= 1;
 
   if (this->hp <= 0) {
@@ -231,6 +243,8 @@ void Player::addPoints(int points)
 }
 
 void Player::winUpdate() {
+
+
   this->pos->add(0, velY);
   if (this->counter == 2) {
 
@@ -252,24 +266,54 @@ bool Player::isPlayingLevel(bool b) {
 }
 
 void Player::switchGod() {
-  PlayerState* newState = this->modeState->switchGod();
+  PlayerState* newState = this->modeState->switchGod(this);
   delete this->modeState;
   this->modeState = newState;
 
 }
 
 void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {
-  PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index);
+  PlayerState* newState = this->modeState->grabHammer(hammers, hammerCount, index, this);
   delete this->modeState;
   this->modeState = newState;
 }
 
-void Player::kill() {
-
+void Player::killedAnEnemy() {
+  lastEvent.playerKilledAnEnemy();
 }
 
 void Player::resetSpawn() {
   this->resetPos();
   delete this->modeState;
   this->modeState = new NormalState();
+}
+
+char Player::extractLastEvent() {
+  return lastEvent.extractEvent();
+}
+
+void Player::mutedMusic() {
+  lastEvent.playerMutedMusic();
+}
+
+void Player::mutedSoundEffects() {
+  lastEvent.playermutedSoundEffects();
+}
+
+void Player::grabbedAHammer() {
+  lastEvent.playerGrabbedAHammer();
+}
+
+void Player::switchedToGod() {
+  lastEvent.playerStartedGodMode();
+}
+
+bool Player::hasHammer() {
+  return this->modeState->hasHammer();
+}
+
+void Player::setNormal() {
+  PlayerState* newState = new NormalState();
+  delete this->modeState;
+  this->modeState = newState;
 }

@@ -3,12 +3,14 @@ project(Taller_Prog_I_2021_1C_KIWI)
 
 # includes cmake/FindSDL2.cmake
 set(CMAKE_MODULE_PATH cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_mixer)
+
 include_directories(${SDL2_INCLUDE_DIR})
 
 set(SOURCE_FILES main.cpp
-        src/controller/handlers/flechaArriba.cpp
         src/model/player/Player.cpp
         src/model/player/Player.h
         src/model/Position.cpp
@@ -100,7 +102,7 @@ set(SOURCE_FILES main.cpp
         src/model/player/WinState.cpp
         src/model/player/WinState.h
         src/model/Hammer.cpp
-        src/model/Hammer.h src/model/player/HammerState.cpp src/model/player/HammerState.h)
+        src/model/Hammer.h src/model/player/HammerState.cpp src/model/player/HammerState.h src/Client/SoundSystem.cpp src/Client/SoundSystem.h src/model/player/PlayerEvent.cpp src/model/player/PlayerEvent.h)
 
 
 # change to personal project name (as above)
@@ -112,7 +114,8 @@ PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
 PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(Taller_Prog_I_2021_1C_KIWI ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
+
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIR})
+TARGET_LINK_LIBRARIES(Taller_Prog_I_2021_1C_KIWI ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARY} )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
