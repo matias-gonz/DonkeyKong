@@ -241,7 +241,10 @@ void Server::quit() {
 }
 
 bool Server::isPlayerConnected(int playerNumber) {
-  return game->isPlayerActive(playerNumber);
+  pthread_mutex_lock(&this->mutex);
+  bool isPlaying = game->isPlayerActive(playerNumber);
+  pthread_mutex_unlock(&this->mutex);
+  return isPlaying;
 }
 
 void Server::broadcastGameStart() {
