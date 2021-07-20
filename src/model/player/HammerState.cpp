@@ -24,7 +24,10 @@ void HammerState::takeDamage(Player *player, Entity *entity) {
   }
   SDL_Rect playerRect = player->getRectangle();
   SDL_Rect enemyRect = entity->getRectangle();
-  if(this->durability <= 0 || !enemyIsInRange(playerRect.x,playerRect.w,player->getDirection(),enemyRect.x,enemyRect.w)){
+  if(this->durability <= 0){
+    player->setNormal();
+  }
+  if(!enemyIsInRange(playerRect.x,playerRect.w,player->getDirection(),enemyRect.x,enemyRect.w)){
     player->takeNormalDamage();
     player->resetPos();
     return;

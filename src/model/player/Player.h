@@ -116,6 +116,8 @@ public:
     void switchedToGod();
 
     bool hasHammer();
+
+    void setNormal();
 };
 
 
