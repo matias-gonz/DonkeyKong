@@ -661,11 +661,10 @@ void ViewManager::loadLobbyMedia() {
 
 void ViewManager::renderLobbyWindow() {
   SDL_Color textColor = {255, 255, 255, 0xFF};
-  gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
-  SDL_StartTextInput();
-  this->initializeLobbyTextInputs();
-
-
+  this->gPromptInfoTextTexture.loadFromRenderedText("Esperando a que ingresen mas usuarios...", textColor,
+                                                    this->font,
+                                                    this->renderer);
+  SDL_SetRenderDrawColor(this->renderer, 60, 125, 200, 0);
   SDL_RenderClear(this->renderer);
   gPromptInfoTextTexture.render(gPromptInfoTextTexture.getWidth() / 10, gPromptInfoTextTexture.getHeight() + 80);
 
