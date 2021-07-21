@@ -124,7 +124,7 @@ private:
 
   void loadLobbyMedia();
 
-  void renderPlayersInfo(PlayersInformation playersInfo[], int playersCount);
+  void renderPlayersInfo(PlayersInformation playersInfo[], int playersCount, int clientnumber);
 
   void initializeLobbyTextInputs();
 

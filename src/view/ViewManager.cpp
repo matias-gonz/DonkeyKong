@@ -330,14 +330,12 @@ SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int 
 }
 
 void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
-
-
   SDL_RenderClear(this->renderer);
 /*
     //this->princessAnimator->draw(this->renderer,princessDirection,princessPos,princessDistance);
     //this->bossAnimator->draw(this->renderer,bossDirection,bossPos,bossDistance);
 */
-  this->renderPlayersInfo(positions.playersInfo, positions.playerCount);
+  this->renderPlayersInfo(positions.playersInfo, positions.playerCount, clientNumber);
   this->levelDrawer->drawLadders(positions.ladders, positions.ladderCount);
   this->levelDrawer->drawPlatforms(positions.platforms, positions.platformCount);
   SDL_Rect bossDstrect = {positions.bossInfo.x, positions.bossInfo.y, 170, 119};;
@@ -402,8 +400,9 @@ void ViewManager::renderGameWindow(Positions positions, int clientNumber) {
 
 }
 
-void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount) {
+void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int playersCount, int clientNumber) {
   SDL_Color textColor = {255, 255, 255, 0xFF};
+  SDL_Color myTextColor = {60, 120, 0, 0xFF};
   std::string space = "    ";
   for (int i = 0; i < playersCount; i++) {
     // Create playerName with points
@@ -413,7 +412,11 @@ void ViewManager::renderPlayersInfo(PlayersInformation *playersInfo, int players
       playerText.at(i) = toupper(playerText.at(i));
     }
     //Render players info
-    playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, this->playersFont, this->renderer);
+    if(i == clientNumber) {
+      playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), myTextColor, this->playersFont, this->renderer);
+    } else {
+      playersInfoTexture[i].loadFromRenderedText(playerText.c_str(), textColor, this->playersFont, this->renderer);
+    }
     playersInfoTexture[i].render(((this->screen_width/(playersCount+1))*(i+1))-playersInfoTexture[i].getWidth()/2,  0);
     int heartSeparator = 20;
     for (int j = 0; j < playersInfo[i].hp; j++) {
