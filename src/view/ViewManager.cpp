@@ -283,7 +283,7 @@ SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int 
   TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 50);
   int count = 0;
   for(int i = 0; i < playerCount; i++) {
-    if(playerInfo[i].points == 0) {
+    if(playerInfo[i].hp == 0) {
       count++;
     }
   }
