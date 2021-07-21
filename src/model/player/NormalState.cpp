@@ -43,7 +43,7 @@ PlayerState *NormalState::grabHammer(Hammer ***hammers, int *hammerCount, int in
   (*hammerCount)--;
   *hammers = (Hammer**) realloc(*hammers,(*hammerCount)*sizeof(Hammer*));
 
-  return new HammerState(3);
+  return new HammerState(2);
 }
 
 bool NormalState::hasHammer() {
