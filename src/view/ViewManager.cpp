@@ -581,11 +581,10 @@ void ViewManager::loadMedia() {
 
 ViewManager::~ViewManager() {
   delete this->playerAnimator;
-  //delete this->renderer;
+  delete this->barrelAnimator;
   delete this->textureManager;
   delete this->enemyAnimator;
   delete this->hammerAnimator;
-  //delete this->currentWindow;
   delete this->levelDrawer;
 }
 

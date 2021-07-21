@@ -183,6 +183,7 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
         if (Collider::RectCollides(*barrelRect, platformRect)) {
           Collider::ResolveBarrelPLatformCollision(barrels[j], platformRect);
         }
+        delete barrelRect;
       }
     }
   }
@@ -207,18 +208,22 @@ void Level::resolveCollisions(Player **players, int playerCount, EnemyFire **ene
       }
     }
     for (int j = 0; j < barrelCount; j++) {
-      if (Collider::RectCollides(playerRects[i], *barrels[j]->getDestRect())) {
+      SDL_Rect* brrlRect = barrels[j]->getDestRect();
+      if (Collider::RectCollides(playerRects[i], *brrlRect)) {
         Collider::ResolvePlayerEnemyCollision(players[i], barrels[j]);
       }
+      delete brrlRect;
     }
   }
 
   for (int i = 0; i < this->fireCount; i++) {
     for(int j = 0; j < this->barrelCount; j++){
-      if (Collider::RectCollides(this->fires[i]->getRectangle(), *barrels[j]->getDestRect())) {
+      SDL_Rect *brrlRect = barrels[j]->getDestRect();
+      if (Collider::RectCollides(this->fires[i]->getRectangle(), *brrlRect)) {
         this->burnBarrel(j);
         j--;
       }
+      delete brrlRect;
     }
     for (int j = 0; j < enemyFireCount; j++) {
       if (Collider::RectCollides(this->fires[i]->getRectangle(), enemyFires[j]->getRectangle())) {

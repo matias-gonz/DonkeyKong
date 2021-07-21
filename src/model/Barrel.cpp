@@ -23,6 +23,7 @@ Barrel::Barrel(Position *position) {
 }
 
 Barrel::~Barrel() {
+  delete this->pos;
 }
 
 void Barrel::update() {
