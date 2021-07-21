@@ -281,8 +281,18 @@ SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int 
   SDL_Color textColor = {255, 255, 255, 0xFF};
 
   TTF_Font *fontMsjInformativo = TTF_OpenFont("resources/fonts/font.ttf", 50);
-
-  std::string stateText = playerInfo[clientNumber].username + estado;
+  int count = 0;
+  for(int i = 0; i < playerCount; i++) {
+    if(playerInfo[i].points == 0) {
+      count++;
+    }
+  }
+  std::string stateText;
+  if(count == playerCount) {
+    stateText = "GAME OVER";
+  } else {
+    stateText = playerInfo[clientNumber].username + estado;
+  }
   LTexture mensajeInformativo;
   mensajeInformativo.loadFromRenderedText(stateText, textColor, fontMsjInformativo, this->renderer);
   mensajeInformativo.render(this->screen_width / 2 - mensajeInformativo.getWidth() / 2,
