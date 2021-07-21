@@ -75,7 +75,6 @@ set(SOURCE_FILES main.cpp
         src/view/PlayerAnimator.cpp
         src/view/PlayerAnimator.h
         src/Constants.h
-        src/Queue.cpp src/Queue.h
         src/controller/LoginController.cpp
         src/controller/LoginController.h
         src/view/LoginButton.cpp
