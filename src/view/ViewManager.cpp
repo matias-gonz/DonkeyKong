@@ -196,7 +196,6 @@ void ViewManager::close() {
   this->currentWindow = NULL;
 }
 
-
 void ViewManager::drawTexture(SDL_Texture *texture, SDL_Rect *srcRect, SDL_Rect *destRect) {
   SDL_RenderCopy(renderer, texture, srcRect, destRect);
 }
@@ -255,7 +254,6 @@ void ViewManager::renderTransitionWindow(PlayersInformation playerInfo[], int pl
   SDL_Delay(5000);
   this->close();
 }
-
 
 SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int playerCount, int clientNumber, std::string estado) {
   //Clear the renderer and window
@@ -465,6 +463,35 @@ void ViewManager::renderLoginWindow(bool &quit) {
   }
 }
 
+void ViewManager::renderLobbyWindow() {
+  //Create new renderer and window
+  if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
+    this->setTextureLinear();
+    if (this->currentWindow != NULL) this->createRenderer();
+    if (this->renderer != NULL) SDL_SetRenderDrawColor(this->renderer, 0, 100, 100, 0);
+  } else {
+    this->showSDLError("SDL could not initialize! SDL Error: %s\n");
+  }
+  SDL_RenderClear(this->renderer);
+
+  SDL_Color textColor = {0, 0, 0, 0xFF};
+  TTF_Font *font = TTF_OpenFont("resources/fonts/font.ttf", 20);
+  LTexture errorMessage;
+  errorMessage.loadFromRenderedText("Esperando a que ingresen mas usuarios...", textColor, font, this->renderer);
+
+  //Render window with exit button
+  SDL_Event e;
+  bool quit = false;
+
+  while (!quit) {
+    while (SDL_PollEvent(&e) != 0 && !quit) {
+      quit = e.type == SDL_QUIT;
+    }
+    errorMessage.render(errorMessage.getWidth() / 10, errorMessage.getHeight() + 80);
+    SDL_RenderPresent(renderer);
+  }
+}
+
 void ViewManager::initializeTextInputs() {
   this->inputUserPosX = (this->screen_width - gPromptUserTextTexture.getWidth()) / 2;
   this->inputUserPosY = 0;
@@ -654,22 +681,6 @@ void ViewManager::loadLobbyMedia() {
       this->success = false;
     }
   }
-}
-
-void ViewManager::renderLobbyWindow() {
-  SDL_Color textColor = {255, 255, 255, 0xFF};
-  gInputUserTextTexture.loadFromRenderedText(inputTextUser.c_str(), textColor, this->font, this->renderer);
-  SDL_StartTextInput();
-  this->initializeLobbyTextInputs();
-
-
-  SDL_RenderClear(this->renderer);
-  gPromptInfoTextTexture.render(gPromptInfoTextTexture.getWidth() / 10, gPromptInfoTextTexture.getHeight() + 80);
-
-  //Update screen
-  SDL_RenderPresent(this->renderer);
-  //Disable text input
-  SDL_StopTextInput();
 }
 
 void ViewManager::initializeLobbyTextInputs() {

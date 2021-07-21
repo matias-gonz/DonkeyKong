@@ -102,13 +102,12 @@ void Client::render() {
                                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
   }
   if (this->positions.endGame) {
-    int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
     SDL_Event event;
-    if (this->myPlayerHasMorePoints(newClientNumber)) {
-      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+    if (this->myPlayerHasMorePoints(clientNumber)) {
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, clientNumber,
                                            " felicitaciones - GANASTE");
     } else {
-      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, clientNumber,
                                            " perdiste ");
     }
     quitEndGame(event);
@@ -154,8 +153,8 @@ void Client::setSended(bool b) {
 
 void Client::goToLobby() {
   Logger::log(Logger::Info, "Entrando al Lobby");
-  this->viewManagerLobby = new ViewManager("Lobby", SDL_WINDOWPOS_CENTERED,
-                                           SDL_WINDOWPOS_CENTERED, 600, LOGIN_HEIGHT);
+  this->viewManagerLobby = new ViewManager("Donkey Kong", SDL_WINDOWPOS_CENTERED,
+                                           SDL_WINDOWPOS_CENTERED, LOGIN_WIDTH, LOGIN_HEIGHT);
   this->viewManagerLobby->renderLobbyWindow();
 
   char message = this->socket->rcvChar();

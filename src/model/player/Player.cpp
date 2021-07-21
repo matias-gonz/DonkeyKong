@@ -269,7 +269,6 @@ void Player::switchGod() {
   PlayerState* newState = this->modeState->switchGod(this);
   delete this->modeState;
   this->modeState = newState;
-
 }
 
 void Player::grabHammer(Hammer ***hammers, int *hammerCount, int index) {

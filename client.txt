@@ -1,76 +1,56 @@
-2021-07-20 19:49:13 [INFO]Inicio del log
-2021-07-20 19:49:13 [INFO]IP del servidor: 127.0.0.1
-2021-07-20 19:49:13 [INFO]Puerto del servidor: 8080
-2021-07-20 19:49:18 [INFO]Entrando al Lobby
-2021-07-20 19:49:18 [INFO]Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Platform.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Ladder.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Fire.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de EnemyFire.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura del martillo.
-2021-07-20 19:49:18 [INFO]Se inicia la carga de textura de error.
-2021-07-20 19:49:18 [INFO]Se finaliza la carga de texturas.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Platform.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Ladder.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Fire.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de EnemyFire.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura del martillo.
-2021-07-20 19:49:25 [INFO]Se inicia la carga de textura de error.
-2021-07-20 19:49:25 [INFO]Se finaliza la carga de texturas.
-2021-07-20 19:49:34 [INFO]Fin del Log
+2021-07-20 23:57:33 [INFO]Inicio del log
+2021-07-20 23:57:33 [INFO]IP del servidor: 127.0.0.1
+2021-07-20 23:57:33 [INFO]Puerto del servidor: 8085
+2021-07-20 23:57:59 [ERROR]Credenciales invalidas
+2021-07-20 23:57:59 [INFO]Fin del Log
 --------------------------------------------------------------------------
 
-2021-07-20 19:50:02 [INFO]Inicio del log
-2021-07-20 19:50:02 [INFO]IP del servidor: 127.0.0.1
-2021-07-20 19:50:02 [INFO]Puerto del servidor: 8080
-2021-07-20 19:50:07 [INFO]Entrando al Lobby
-2021-07-20 19:50:11 [INFO]Inicio del log
-2021-07-20 19:50:11 [INFO]IP del servidor: 127.0.0.1
-2021-07-20 19:50:11 [INFO]Puerto del servidor: 8080
-2021-07-20 19:50:16 [INFO]Entrando al Lobby
-2021-07-20 19:50:20 [INFO]Inicio del log
-2021-07-20 19:50:20 [INFO]IP del servidor: 127.0.0.1
-2021-07-20 19:50:20 [INFO]Puerto del servidor: 8080
-2021-07-20 19:50:25 [INFO]Entrando al Lobby
-2021-07-20 19:50:29 [INFO]Inicio del log
-2021-07-20 19:50:29 [INFO]IP del servidor: 127.0.0.1
-2021-07-20 19:50:29 [INFO]Puerto del servidor: 8080
-2021-07-20 19:50:39 [INFO]Entrando al Lobby
-2021-07-20 19:50:40 [INFO]Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Platform.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Ladder.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Fire.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de EnemyFire.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura del martillo.
-2021-07-20 19:50:40 [INFO]Se inicia la carga de textura de error.
-2021-07-20 19:50:40 [INFO]Se finaliza la carga de texturas.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Platform.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Ladder.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Fire.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de Player.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de EnemyFire.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura del martillo.
-2021-07-20 19:50:47 [INFO]Se inicia la carga de textura de error.
-2021-07-20 19:50:47 [INFO]Se finaliza la carga de texturas.
-2021-07-20 19:51:01 [INFO]Fin del Log
+2021-07-21 00:00:12 [INFO]Inicio del log
+2021-07-21 00:00:12 [INFO]IP del servidor: 127.0.0.1
+2021-07-21 00:00:12 [INFO]Puerto del servidor: 8085
+2021-07-21 00:00:19 [INFO]Entrando al Lobby
+2021-07-21 00:00:23 [INFO]Inicio del log
+2021-07-21 00:00:23 [INFO]IP del servidor: 127.0.0.1
+2021-07-21 00:00:23 [INFO]Puerto del servidor: 8085
+2021-07-21 00:00:29 [INFO]Entrando al Lobby
+2021-07-21 00:00:32 [INFO]Inicio del log
+2021-07-21 00:00:32 [INFO]IP del servidor: 127.0.0.1
+2021-07-21 00:00:32 [INFO]Puerto del servidor: 8085
+2021-07-21 00:00:40 [INFO]Entrando al Lobby
+2021-07-21 00:01:04 [INFO]Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Platform.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Ladder.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Fire.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de EnemyFire.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura del martillo.
+2021-07-21 00:01:04 [INFO]Se inicia la carga de textura de error.
+2021-07-21 00:01:04 [INFO]Se finaliza la carga de texturas.
+2021-07-21 00:01:05 [DEBUG]Client Socket disconected
+2021-07-21 00:01:05 [DEBUG]Client has been disconnected
+2021-07-21 00:02:06 [INFO]Inicio del log
+2021-07-21 00:02:06 [INFO]IP del servidor: 127.0.0.1
+2021-07-21 00:02:06 [INFO]Puerto del servidor: 8085
+2021-07-21 00:02:11 [INFO]Entrando al Lobby
+2021-07-21 00:02:26 [INFO]Se recibe confirmacion sobre cantidad de jugadores necesarios alcanzada. Empezando juego
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Platform.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Ladder.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Fire.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de Player.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de EnemyFire.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura del martillo.
+2021-07-21 00:02:26 [INFO]Se inicia la carga de textura de error.
+2021-07-21 00:02:26 [INFO]Se finaliza la carga de texturas.
+2021-07-21 00:02:26 [DEBUG]Client Socket disconected
+2021-07-21 00:02:26 [DEBUG]Client has been disconnected
+2021-07-21 00:02:28 [INFO]Fin del Log
 --------------------------------------------------------------------------
 
