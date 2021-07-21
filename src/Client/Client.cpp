@@ -102,13 +102,12 @@ void Client::render() {
                                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
   }
   if (this->positions.endGame) {
-    int newClientNumber = this->playersInfoOrderByPoints(clientNumber);
     SDL_Event event;
-    if (this->myPlayerHasMorePoints(newClientNumber)) {
-      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+    if (this->myPlayerHasMorePoints(clientNumber)) {
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, clientNumber,
                                            " felicitaciones - GANASTE");
     } else {
-      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, newClientNumber,
+      event = viewManagerGame->renderEndGameWindow(this->positions.playersInfo, this->positions.playerCount, clientNumber,
                                            " perdiste ");
     }
     quitEndGame(event);
@@ -121,23 +120,6 @@ void Client::quitEndGame(SDL_Event event) {
   this->quit = true;
   this->running = false;
   this->socket->snd(&event, 0);
-}
-
-
-int Client::playersInfoOrderByPoints(int clientNumber) {
-  int newClientNumber = clientNumber;
-  for (int i = 0; i < this->positions.playerCount; i++) {
-    for (int j = i + 1; j < this->positions.playerCount; j++) {
-      if (positions.playersInfo[i].points > positions.playersInfo[j].points) {
-        if (i == clientNumber) newClientNumber = j;
-        else if (j == clientNumber) newClientNumber = i;
-        PlayersInformation aux = positions.playersInfo[j];
-        positions.playersInfo[j] = positions.playersInfo[i];
-        positions.playersInfo[i] = aux;
-      }
-    }
-  }
-  return newClientNumber;
 }
 
 bool Client::myPlayerHasMorePoints(int clientNumber) {
