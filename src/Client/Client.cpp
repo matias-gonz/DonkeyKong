@@ -175,5 +175,7 @@ void Client::playSounds(){
 }
 
 Client::~Client() {
-  delete soundSystem;
+  delete this->soundSystem;
+  delete this->socket;
+  delete this->configuration;
 }
