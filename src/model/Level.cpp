@@ -283,5 +283,3 @@ void Level::burnBarrel(int i) {
   this->barrels = (Barrel**) realloc(this->barrels,this->barrelCount*sizeof(Barrel*));
 
 }
-
-
