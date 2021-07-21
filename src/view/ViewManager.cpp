@@ -296,6 +296,8 @@ SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int 
 
   //PlayersInformation playersInfoOrdered = orderPlayerInfoByPoints( playerInfo[]);
 
+  std::sort(playerInfo, playerInfo + playerCount, ViewManager::sortPlayers);
+
   for (int i = playerCount; i > 0; i--) {
 
     std::string obtuvo = " obtuvo ";
@@ -314,7 +316,6 @@ SDL_Event ViewManager::renderEndGameWindow(PlayersInformation playerInfo[], int 
   TTF_CloseFont(fontPlayerInfo);
   SDL_RenderPresent(renderer);
 
-  //SDL_Delay(1000000);
 
   bool quit = false;
   SDL_Event e;
@@ -826,5 +827,14 @@ void ViewManager::renderLobbyIsFullWindow() {
                         (this->screen_height / 2) - errorMessage.getHeight());
     SDL_RenderPresent(renderer);
   }
+}
+
+bool ViewManager::sortPlayers(PlayersInformation player1, PlayersInformation player2){
+ if(player1.points != player2.points){
+   if(player1.points < player2.points) return true;
+   return false;
+ }
+ if(player1.username < player2.username) return true;
+ return false;
 }
 

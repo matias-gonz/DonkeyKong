@@ -128,6 +128,8 @@ private:
 
   void initializeLobbyTextInputs();
 
+  static bool sortPlayers(PlayersInformation player1, PlayersInformation player2);
+
     Animator *barrelAnimator;
 };
 

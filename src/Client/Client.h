@@ -43,8 +43,6 @@ public:
 
   bool myPlayerHasMorePoints(int clientNumber);
 
-  int playersInfoOrderByPoints(int clientNumber);
-
 private:
     Positions positions;
     ViewManager *viewManagerLogin, *viewManagerGame;
