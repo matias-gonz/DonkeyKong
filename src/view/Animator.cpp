@@ -40,6 +40,8 @@ void Animator::draw(SDL_Renderer *pRenderer, int direction, int x, int y,int dis
 
     SDL_RenderCopy(pRenderer, texture, srcrect, &dstrect);
 
+    delete srcrect;
+
 }
 
 

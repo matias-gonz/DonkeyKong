@@ -41,6 +41,9 @@ PlayerAnimator::draw(SDL_Renderer *pRenderer, int kindOfAnimation, int plyrX, in
   } else if (kindOfAnimation == jump) {
     this->drawJumping();
   }
+
+  delete dstrect;
+  delete srcrect;
 }
 
 void PlayerAnimator::drawJumping() {

@@ -114,6 +114,7 @@ void Client::render() {
   }
   if (!this->positions.endGame) viewManagerGame->renderGameWindow(this->positions, clientNumber);
 
+
 }
 
 void Client::quitEndGame(SDL_Event event) {

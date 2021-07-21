@@ -47,14 +47,14 @@ void Collider::ResolvePlayerFireCollision(Player *player) {
 }
 
 void Collider::ResolveBarrelPLatformCollision(Barrel *pBarrel, SDL_Rect rect) {
-  SDL_Rect barrelRect = *pBarrel->getDestRect();
+  SDL_Rect *barrelRect = pBarrel->getDestRect();
   int dy;
-  if(barrelRect.y + barrelRect.h >= rect.y and barrelRect.y + barrelRect.h <= rect.y + rect.h/2){
-    dy = barrelRect.y + barrelRect.h - rect.y;
+  if(barrelRect->y + barrelRect->h >= rect.y and barrelRect->y + barrelRect->h <= rect.y + rect.h/2){
+    dy = barrelRect->y + barrelRect->h - rect.y;
     pBarrel->moveUp(dy);
     pBarrel->resetVelY();
   }
-
+  delete barrelRect;
 }
 
 

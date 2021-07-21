@@ -17,5 +17,7 @@ int mainClient(char *IP, char *port) {
     client->playSounds();
     client->render();
   }
+
+  delete client;
   return 0;
 }
